@@ -11,6 +11,7 @@
         "moduleResolution": "node",
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
+        "traceResolution": true,
         "target": "es5",
         "typeRoots": [
             "typings.d.ts",
@@ -21,7 +22,9 @@
             "dom"
         ],
         "paths": {
-            "*": [ "../node_modules/*", "*"]
+            "@angular/*": ["../node_modules/@angular/*"],
+            "rxjs/*": ["../node_modules/rxjs/*"],
+            "xxxxx*": [ "../node_modules/*", "*"]
         }
     }
 }
