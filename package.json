@@ -4,7 +4,7 @@
   "license": "MIT",
   "angular-cli": {},
   "scripts": {
-    "build": "mv _node_modules node_modules || rm -fr dist && mkdir dist && tsc && cp -ra src/* dist/"
+    "build": "mv _node_modules node_modules & rm -fr dist && mkdir dist && tsc"
   },
   "main": "dist/",
   "types": "dist/",
