@@ -11,7 +11,7 @@
         "moduleResolution": "node",
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
-        "traceResolution": true,
+        "traceResolution": false,
         "target": "es5",
         "typeRoots": [
             "typings.d.ts",
