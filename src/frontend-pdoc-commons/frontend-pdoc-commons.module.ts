@@ -41,5 +41,5 @@ import {SectionPageComponent} from './components/sectionpage/section-page.compon
         SectionPageComponent
     ]
 })
-export class FrontendPdocCommonsModule {
+export class FrontendPDocCommonsModule {
 }

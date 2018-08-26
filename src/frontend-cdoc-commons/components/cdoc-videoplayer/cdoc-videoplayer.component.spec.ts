@@ -6,7 +6,7 @@ import {Router} from '@angular/router';
 import {CommonDocRoutingService} from '../../services/cdoc-routing.service';
 import {TranslateModule} from '@ngx-translate/core';
 import {CommonDocContentUtils} from '../../services/cdoc-contentutils.service';
-import {AngularCommonsModuleD} from '../../../angular-commons/angular-commons.module';
+import {AngularCommonsModule} from '../../../angular-commons/angular-commons.module';
 import {GenericAppService} from '@dps/mycms-commons/dist/commons/services/generic-app.service';
 import {AppServiceStub} from '../../../angular-commons/testing/appservice-stubs';
 import {CommonRoutingService} from '../../../angular-commons/services/common-routing.service';
@@ -33,7 +33,7 @@ describe('CommonDocVideoplayerComponent', () => {
             schemas: [NO_ERRORS_SCHEMA],
             imports: [NgbModule.forRoot(),
                 TranslateModule.forRoot(),
-                AngularCommonsModuleD]
+                AngularCommonsModule]
         })
             .compileComponents();
     }));
