@@ -1,0 +1,29 @@
+import { ChangeDetectorRef, OnInit, ViewContainerRef } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { PDocRecord } from '@dps/mycms-commons/dist/pdoc-commons/model/records/pdoc-record';
+import { ToastsManager } from 'ng2-toastr';
+import { PDocDataService } from '@dps/mycms-commons/dist/pdoc-commons/services/pdoc-data.service';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { ErrorResolver } from '../../../frontend-cdoc-commons/resolver/error.resolver';
+import { IdValidationRule } from '@dps/mycms-commons/dist/search-commons/model/forms/generic-validator.util';
+import { PageUtils } from '../../../angular-commons/services/page.utils';
+import { CommonRoutingService } from '../../../angular-commons/services/common-routing.service';
+export declare class SectionBarComponent implements OnInit {
+    fb: FormBuilder;
+    private route;
+    private pdocDataService;
+    private commonRoutingService;
+    private errorResolver;
+    private toastr;
+    private router;
+    private pageUtils;
+    private cd;
+    idValidationRule: IdValidationRule;
+    pdoc: PDocRecord;
+    sections: PDocRecord[];
+    themeFormGroup: FormGroup;
+    constructor(fb: FormBuilder, route: ActivatedRoute, pdocDataService: PDocDataService, commonRoutingService: CommonRoutingService, errorResolver: ErrorResolver, toastr: ToastsManager, router: Router, vcr: ViewContainerRef, pageUtils: PageUtils, cd: ChangeDetectorRef);
+    ngOnInit(): void;
+    onThemeChange(): boolean;
+    getSubSections(pdoc: PDocRecord): PDocRecord[];
+}
