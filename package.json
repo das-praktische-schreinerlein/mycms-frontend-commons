@@ -1,7 +1,7 @@
 {
   "name": "@dps/mycms-frontend-commons",
   "version": "1.0.0-alpha",
-  "license": "MIT",
+  "license": "Apache-2.0",
   "angular-cli": {},
   "scripts": {
     "build": "mv _node_modules node_modules & rm -fr dist && mkdir dist && tsc"
