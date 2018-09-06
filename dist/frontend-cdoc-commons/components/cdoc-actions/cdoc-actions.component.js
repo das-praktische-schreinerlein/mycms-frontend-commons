@@ -24,93 +24,28 @@ var dynamic_component_host_directive_1 = require("../../../angular-commons/compo
 var inline_component_1 = require("../../../angular-commons/components/inline.component");
 var CommonDocActionsComponent = /** @class */ (function (_super) {
     __extends(CommonDocActionsComponent, _super);
-    function CommonDocActionsComponent(dynamicComponentService, router, cdocDataService, toastr, vcr, cdocAlbumService, cd, appService) {
+    function CommonDocActionsComponent(dynamicComponentService, toastr, vcr, cd, appService, actionTagService) {
         var _this = _super.call(this, cd) || this;
         _this.dynamicComponentService = dynamicComponentService;
-        _this.router = router;
-        _this.cdocDataService = cdocDataService;
         _this.toastr = toastr;
-        _this.cdocAlbumService = cdocAlbumService;
         _this.cd = cd;
         _this.appService = appService;
+        _this.actionTagService = actionTagService;
         _this.actionTagEvent = new core_1.EventEmitter();
         _this.childActionTagEvent = new core_1.EventEmitter();
         _this.toastr.setRootViewContainerRef(vcr);
         _this.configureActionListener();
         return _this;
     }
-    CommonDocActionsComponent.prototype.getComponentConfig = function (config) {
-        return {
-            baseEditPath: 'cdocadmin'
-        };
-    };
-    CommonDocActionsComponent.prototype.configureComponent = function (config) {
-        var componentConfig = this.getComponentConfig(config);
-        this.baseEditPath = componentConfig.baseEditPath;
-    };
     CommonDocActionsComponent.prototype.configureActionListener = function () {
         var _this = this;
         this.childActionTagEvent.asObservable().subscribe(function (actionTagEvent) {
-            if (actionTagEvent.config.key === 'edit') {
-                actionTagEvent.processed = true;
-                actionTagEvent.error = undefined;
-                _this.actionTagEvent.emit(actionTagEvent);
-                _this.router.navigate([_this.baseEditPath, 'edit', 'anonym', actionTagEvent.record.id]);
-            }
-            else if (actionTagEvent.config.key === 'createBy') {
-                var payload = JSON.parse(JSON.stringify(actionTagEvent.config.payload));
-                actionTagEvent.processed = true;
-                actionTagEvent.error = undefined;
-                _this.actionTagEvent.emit(actionTagEvent);
-                _this.router.navigate([_this.baseEditPath, 'create', payload.type, actionTagEvent.record.id]);
-            }
-            else if (actionTagEvent.config.type === 'albumtag') {
-                var payload = JSON.parse(JSON.stringify(actionTagEvent.config.payload));
-                var key = payload['albumkey'];
-                if (actionTagEvent.set) {
-                    _this.cdocAlbumService.addToAlbum(key, actionTagEvent.record);
-                }
-                else {
-                    _this.cdocAlbumService.removeFromAlbum(key, actionTagEvent.record);
-                }
-                actionTagEvent.processed = true;
-                actionTagEvent.error = undefined;
-                actionTagEvent.result = actionTagEvent.record;
-                _this.updateData();
-                _this.actionTagEvent.emit(actionTagEvent);
-            }
-            else if (actionTagEvent.config.type === 'tag') {
-                var payload = JSON.parse(JSON.stringify(actionTagEvent.config.payload));
-                payload['set'] = actionTagEvent.set;
-                payload['name'] = actionTagEvent.config.name;
-                var actinTagForm = {
-                    key: actionTagEvent.config.key,
-                    payload: payload,
-                    recordId: actionTagEvent.record.id,
-                    type: actionTagEvent.config.type
-                };
-                var me_1 = _this;
-                me_1.cdocDataService.doActionTag(actionTagEvent.record, actinTagForm).then(function (cdoc) {
-                    actionTagEvent.processed = true;
-                    actionTagEvent.error = undefined;
-                    actionTagEvent.result = cdoc;
-                    me_1.actionTagEvent.emit(actionTagEvent);
-                }).catch(function (reason) {
-                    actionTagEvent.processed = true;
-                    actionTagEvent.error = reason;
-                    me_1.actionTagEvent.emit(actionTagEvent);
-                    me_1.toastr.error('Es gibt leider Probleme - am besten noch einmal probieren :-(', 'Oje!');
-                    console.error('cdocactions failed:', reason);
-                });
-            }
-            else {
-                _this.actionTagEvent.emit(actionTagEvent);
-            }
+            _this.actionTagService.processActionTagEvent(actionTagEvent, _this.actionTagEvent).catch(function (reason) {
+                _this.toastr.error('Es gibt leider Probleme - am besten noch einmal probieren :-(', 'Oje!');
+            });
         });
     };
     CommonDocActionsComponent.prototype.updateData = function () {
-        var config = this.appService.getAppConfig();
-        this.configureComponent(config);
         var componentRef = this.dynamicComponentService.createComponentByName(this.type, this.widgetHost);
         if (componentRef === undefined || componentRef === null) {
             return;
