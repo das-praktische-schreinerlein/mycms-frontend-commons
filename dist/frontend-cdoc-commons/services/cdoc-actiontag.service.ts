@@ -19,6 +19,7 @@ export abstract class CommonDocActionTagService <R extends CommonDocRecord, F ex
 
     constructor(protected router: Router, protected cdocDataService: D,
                 protected cdocAlbumService: CommonDocAlbumService, protected appService: GenericAppService) {
+        this.configureComponent({});
     }
 
     protected getComponentConfig(config: {}): CommonDocActionTagServiceConfig {

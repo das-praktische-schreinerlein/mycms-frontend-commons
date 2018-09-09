@@ -6,6 +6,7 @@ var CommonDocActionTagService = /** @class */ (function () {
         this.cdocDataService = cdocDataService;
         this.cdocAlbumService = cdocAlbumService;
         this.appService = appService;
+        this.configureComponent({});
     }
     CommonDocActionTagService.prototype.getComponentConfig = function (config) {
         return {
