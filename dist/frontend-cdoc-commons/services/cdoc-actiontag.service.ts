@@ -8,6 +8,7 @@ import {CommonDocSearchForm} from '@dps/mycms-commons/dist/search-commons/model/
 import {CommonDocSearchResult} from '@dps/mycms-commons/dist/search-commons/model/container/cdoc-searchresult';
 import {CommonDocDataService} from '@dps/mycms-commons/dist/search-commons/services/cdoc-data.service';
 import {ActionTagEvent} from '../components/cdoc-actiontags/cdoc-actiontags.component';
+import {utils} from 'js-data';
 
 export interface CommonDocActionTagServiceConfig {
     baseEditPath: string;
@@ -100,11 +101,13 @@ export abstract class CommonDocActionTagService <R extends CommonDocRecord, F ex
             actionTagEvent.error = undefined;
             actionTagEvent.result = cdoc;
             actionTagEventEmitter.emit(actionTagEvent);
+            return utils.resolve(actionTagEvent);
         }).catch(reason => {
             actionTagEvent.processed = true;
             actionTagEvent.error = reason;
             actionTagEventEmitter.emit(actionTagEvent);
             console.error('cdocactions failed:', reason);
+            return utils.reject(reason);
         });
     }
 

@@ -77,11 +77,13 @@ var CommonDocActionTagService = /** @class */ (function () {
             actionTagEvent.error = undefined;
             actionTagEvent.result = cdoc;
             actionTagEventEmitter.emit(actionTagEvent);
+            return utils.resolve(actionTagEvent);
         }).catch(function (reason) {
             actionTagEvent.processed = true;
             actionTagEvent.error = reason;
             actionTagEventEmitter.emit(actionTagEvent);
             console.error('cdocactions failed:', reason);
+            return utils.reject(reason);
         });
     };
     CommonDocActionTagService.prototype.processActionTagEventUnknown = function (actionTagEvent, actionTagEventEmitter) {

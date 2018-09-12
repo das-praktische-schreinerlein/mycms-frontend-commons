@@ -13,7 +13,7 @@
 - added CommonDocActionTagService
  
 ### bug fixes
-- none
+- fixed tests
  
 ### breaking changes
 - new constructor for CommonDocActionsComponent

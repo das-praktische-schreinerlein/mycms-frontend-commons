@@ -15,7 +15,20 @@ export class CommonDocDataServiceStub {
         return new CommonDocRecord({id: '1', name: 'Test'});
     }
 
+    cloneSanitizedSearchForm(values: CommonDocSearchForm): CommonDocSearchForm {
+        return new CommonDocSearchForm(values);
+    }
+
+    newSearchForm(values: {}): CommonDocSearchForm {
+        return new CommonDocSearchForm(values);
+    }
+
     search(searchForm: CommonDocSearchForm): Promise<CommonDocSearchResult<CommonDocRecord, CommonDocSearchForm>> {
         return Promise.resolve(new CommonDocSearchResult(searchForm, 0, [], new Facets()));
     };
+
+    newSearchResult(tdocSearchForm: CommonDocSearchForm, recordCount: number,
+                    currentRecords: CommonDocRecord[], facets: Facets): CommonDocSearchResult {
+        return new CommonDocSearchResult(tdocSearchForm, recordCount, currentRecords, facets);
+    }
 }
