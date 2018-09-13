@@ -24,6 +24,7 @@ var layout_service_1 = require("../../../angular-commons/services/layout.service
 var cdoc_contentutils_service_1 = require("../../services/cdoc-contentutils.service");
 var cdoc_entity_record_1 = require("@dps/mycms-commons/dist/search-commons/model/records/cdoc-entity-record");
 var inline_component_1 = require("../../../angular-commons/components/inline.component");
+var cdoc_multiaction_manager_1 = require("../../services/cdoc-multiaction.manager");
 var CommonDocListItemComponent = /** @class */ (function (_super) {
     __extends(CommonDocListItemComponent, _super);
     function CommonDocListItemComponent(contentUtils, cd, layoutService) {
@@ -72,8 +73,32 @@ var CommonDocListItemComponent = /** @class */ (function (_super) {
         }
         return false;
     };
+    CommonDocListItemComponent.prototype.isMultiActionTagSelected = function () {
+        return this.multiActionManager && this.multiActionManager.getSelectedMultiActionTags().length > 0;
+    };
+    CommonDocListItemComponent.prototype.isMultiActionAvailableForRecord = function () {
+        return this.multiActionManager &&
+            !this.multiActionManager.isMultiActionTagAvailableForRecord(this.listItem.currentRecord);
+    };
+    CommonDocListItemComponent.prototype.isMultiActionSelectedForRecord = function () {
+        return this.multiActionManager && this.multiActionManager.isRecordOnMultiActionTag(this.listItem.currentRecord);
+    };
+    CommonDocListItemComponent.prototype.onChangeMultiActionForRecord = function (event) {
+        if (this.multiActionManager) {
+            event.target.checked ?
+                this.multiActionManager.appendRecordToMultiActionTag(this.listItem.currentRecord)
+                : this.multiActionManager.removeRecordFromMultiActionTag(this.listItem.currentRecord);
+        }
+        return true;
+    };
     CommonDocListItemComponent.prototype.updateData = function () {
+        var _this = this;
         this.contentUtils.updateItemData(this.listItem, this.record, this.listLayoutName);
+        if (this.multiActionManager) {
+            this.multiActionManager.getSelectedMultiActionTagsObservable().subscribe(function (value) {
+                _this.cd.markForCheck();
+            });
+        }
         this.cd.markForCheck();
     };
     __decorate([
@@ -92,6 +117,10 @@ var CommonDocListItemComponent = /** @class */ (function (_super) {
         core_1.Input(),
         __metadata("design:type", Object)
     ], CommonDocListItemComponent.prototype, "short", void 0);
+    __decorate([
+        core_1.Input(),
+        __metadata("design:type", cdoc_multiaction_manager_1.CommonDocMultiActionManager)
+    ], CommonDocListItemComponent.prototype, "multiActionManager", void 0);
     __decorate([
         core_1.Output(),
         __metadata("design:type", core_1.EventEmitter)

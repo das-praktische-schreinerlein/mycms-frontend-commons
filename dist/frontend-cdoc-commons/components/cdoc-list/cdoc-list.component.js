@@ -22,6 +22,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var layout_service_1 = require("../../../angular-commons/services/layout.service");
 var inline_component_1 = require("../../../angular-commons/components/inline.component");
+var cdoc_multiaction_manager_1 = require("../../services/cdoc-multiaction.manager");
 var CommonDocListComponent = /** @class */ (function (_super) {
     __extends(CommonDocListComponent, _super);
     function CommonDocListComponent(cd) {
@@ -57,6 +58,10 @@ var CommonDocListComponent = /** @class */ (function (_super) {
         core_1.Input(),
         __metadata("design:type", Object)
     ], CommonDocListComponent.prototype, "short", void 0);
+    __decorate([
+        core_1.Input(),
+        __metadata("design:type", cdoc_multiaction_manager_1.CommonDocMultiActionManager)
+    ], CommonDocListComponent.prototype, "multiActionManager", void 0);
     __decorate([
         core_1.Output(),
         __metadata("design:type", core_1.EventEmitter)

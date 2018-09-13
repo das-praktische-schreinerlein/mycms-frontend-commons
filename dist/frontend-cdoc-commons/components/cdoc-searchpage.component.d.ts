@@ -19,6 +19,10 @@ import { CommonDocDataService } from '@dps/mycms-commons/dist/search-commons/ser
 import { GenericSearchFormSearchFormConverter } from '@dps/mycms-commons/dist/search-commons/services/generic-searchform.converter';
 import { AbstractPageComponent } from '../../frontend-pdoc-commons/components/pdoc-page.component';
 import { CommonEnvironment } from '../../frontend-pdoc-commons/common-environment';
+import { CommonDocMultiActionManager } from '../services/cdoc-multiaction.manager';
+import { IMultiSelectOption } from 'angular-2-dropdown-multiselect';
+import { SearchFormUtils } from '../../angular-commons/services/searchform-utils.service';
+import { CommonDocSearchFormUtils } from '..//services/cdoc-searchform-utils.service';
 export interface CommonDocSearchpageComponentConfig {
     baseSearchUrl: string;
     baseSearchUrlDefault: string;
@@ -37,6 +41,9 @@ export declare abstract class CommonDocSearchpageComponent<R extends CommonDocRe
     protected appService: GenericAppService;
     protected platformService: PlatformService;
     protected layoutService: LayoutService;
+    protected searchFormUtils: SearchFormUtils;
+    protected cdocSearchFormUtils: CommonDocSearchFormUtils;
+    protected multiActionManager: CommonDocMultiActionManager<R, F, S, D>;
     protected environment: CommonEnvironment;
     idValidationRule: IdValidationRule;
     Layout: typeof Layout;
@@ -52,7 +59,8 @@ export declare abstract class CommonDocSearchpageComponent<R extends CommonDocRe
     showSearchFormElements: boolean;
     pauseAutoPlay: boolean;
     anchor: string;
-    constructor(route: ActivatedRoute, commonRoutingService: CommonRoutingService, errorResolver: ErrorResolver, cdocDataService: D, searchFormConverter: GenericSearchFormSearchFormConverter<F>, cdocRoutingService: CommonDocRoutingService, toastr: ToastsManager, vcr: ViewContainerRef, pageUtils: PageUtils, cd: ChangeDetectorRef, trackingProvider: GenericTrackingService, appService: GenericAppService, platformService: PlatformService, layoutService: LayoutService, environment: CommonEnvironment);
+    multiActionSelectValueMap: Map<string, IMultiSelectOption[]>;
+    constructor(route: ActivatedRoute, commonRoutingService: CommonRoutingService, errorResolver: ErrorResolver, cdocDataService: D, searchFormConverter: GenericSearchFormSearchFormConverter<F>, cdocRoutingService: CommonDocRoutingService, toastr: ToastsManager, vcr: ViewContainerRef, pageUtils: PageUtils, cd: ChangeDetectorRef, trackingProvider: GenericTrackingService, appService: GenericAppService, platformService: PlatformService, layoutService: LayoutService, searchFormUtils: SearchFormUtils, cdocSearchFormUtils: CommonDocSearchFormUtils, multiActionManager: CommonDocMultiActionManager<R, F, S, D>, environment: CommonEnvironment);
     protected configureProcessing(): void;
     onShowDoc(cdoc: R): boolean;
     onPageChange(page: number, scroll: boolean): boolean;
@@ -66,6 +74,7 @@ export declare abstract class CommonDocSearchpageComponent<R extends CommonDocRe
     onTagcloudClicked(filterValue: any, filter: string): boolean;
     onPlayerStarted(cdoc: R): void;
     onPlayerStopped(cdoc: R): void;
+    onSubmitSelectedMultiActions(event: any): boolean;
     protected redirectToSearch(): boolean;
     protected onResize(layoutSizeData: LayoutSizeData): void;
     protected abstract getComponentConfig(config: {}): CommonDocSearchpageComponentConfig;
@@ -81,6 +90,7 @@ export declare abstract class CommonDocSearchpageComponent<R extends CommonDocRe
         baseSearchUrl: ResolvedData<string>;
     }): boolean;
     protected doPreChecksBeforeSearch(): boolean;
+    protected generateMultiActionSelectValueMapFromSearchResult(searchResult: S, valueMap: Map<string, IMultiSelectOption[]>): void;
     protected doCheckSearchResultAfterSearch(searchResult: S): void;
     protected doSearch(): void;
 }

@@ -1,0 +1,36 @@
+<ng-container *ngIf="searchResult && searchResult.currentRecords.length > 0 !== undefined && tags.length > 0">
+    <div class="row">
+        <div class="col-sm-1 form-inline input-group input-group-sm hidden-print">
+            <label class="col-form-label" i18n="checkall label|Label for select: checkall@@label.multiactionheader.checkall">All:</label>
+            <input type="checkbox" (click)="onCheckAll($event)" class="form-control input-sm">
+        </div>
+        <div class="col-sm-4 form-inline input-group input-group-sm hidden-print">
+            <label class="col-form-label" i18n="multiaction label|Label for select: multiaction@@label.multiactionheader.action">Action:</label>
+            <ss-multiselect-dropdown [options]="tagsOptions"
+                                     [settings]="tagsSettings"
+                                     [texts]="tagsTexts"
+                                     class=""
+                                     required="required"
+                                     [(ngModel)]="tagsValues"
+                                     (ngModelChange)="onChangeSelectedMultiAction($event)"></ss-multiselect-dropdown>
+            <button type="submit" (click)="onSubmitSelectedMultiActions($event)"
+                    [disabled]="!flgRecordsSelected"
+                    class="btn btn-action btn-sm" i18n="button multiaction mdoc|Buttontext to multiaction mdoc@@button.multiaction.mdoc.submit">Ausführen</button>
+        </div>
+        <div class="col-sm-4 form-inline input-group input-group-sm hidden-print" *ngIf="flgShowSelectParam">
+            <label class="col-form-label" i18n="selectparam label|Label for multiaction: selectparam@@label.multiactionheader.selectparam">Parameter:</label>
+            <ss-multiselect-dropdown [options]="selectParamOptions"
+                                     [settings]="selectParamSettings"
+                                     [texts]="selectParamTexts"
+                                     class=""
+                                     required="required"
+                                     [(ngModel)]="selectParamValues"
+                                     (ngModelChange)="onSelectParamValue($event)"></ss-multiselect-dropdown>
+
+        </div>
+        <div class="col-sm-3 form-inline input-group input-group-sm hidden-print" *ngIf="flgShowInputParam">
+            <label class="col-form-label" i18n="inputparam label|Label for multiaction: inputparam@@label.multiactionheader.inputparam">Parameter:</label>
+            <input type="text" class="form-control input-sm" (input)="onInputParamValue($event)" [value]="inputParamValue" *ngIf="flgShowInputParam">
+        </div>
+    </div>
+</ng-container>

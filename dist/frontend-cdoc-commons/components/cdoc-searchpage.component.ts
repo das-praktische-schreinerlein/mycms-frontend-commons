@@ -21,6 +21,10 @@ import {GenericSearchFormSearchFormConverter} from '@dps/mycms-commons/dist/sear
 import {CommonSectionSearchFormResolver} from '../resolver/cdoc-section-searchform.resolver';
 import {AbstractPageComponent} from '../../frontend-pdoc-commons/components/pdoc-page.component';
 import {CommonEnvironment} from '../../frontend-pdoc-commons/common-environment';
+import {CommonDocMultiActionManager} from '../services/cdoc-multiaction.manager';
+import {IMultiSelectOption} from 'angular-2-dropdown-multiselect';
+import {SearchFormUtils} from '../../angular-commons/services/searchform-utils.service';
+import {CommonDocSearchFormUtils} from '..//services/cdoc-searchform-utils.service';
 
 export interface CommonDocSearchpageComponentConfig {
     baseSearchUrl: string;
@@ -45,6 +49,8 @@ export abstract class CommonDocSearchpageComponent<R extends CommonDocRecord, F 
     pauseAutoPlay = false;
     anchor = '';
 
+    multiActionSelectValueMap = new Map<string, IMultiSelectOption[]>();
+
     constructor(protected route: ActivatedRoute, protected commonRoutingService: CommonRoutingService,
                 protected errorResolver: ErrorResolver, protected cdocDataService: D,
                 protected searchFormConverter: GenericSearchFormSearchFormConverter<F>,
@@ -52,7 +58,8 @@ export abstract class CommonDocSearchpageComponent<R extends CommonDocRecord, F 
                 vcr: ViewContainerRef, protected pageUtils: PageUtils, protected cd: ChangeDetectorRef,
                 protected trackingProvider: GenericTrackingService, protected appService: GenericAppService,
                 protected platformService: PlatformService, protected layoutService: LayoutService,
-                protected environment: CommonEnvironment) {
+                protected searchFormUtils: SearchFormUtils, protected cdocSearchFormUtils: CommonDocSearchFormUtils,
+                protected multiActionManager: CommonDocMultiActionManager<R, F, S, D>, protected environment: CommonEnvironment) {
         super(route, toastr, vcr, pageUtils, cd, trackingProvider, appService, platformService, layoutService, environment);
         this.searchForm = cdocDataService.newSearchForm({});
         this.searchResult = cdocDataService.newSearchResult(this.searchForm, 0, [], new Facets());
@@ -213,6 +220,22 @@ export abstract class CommonDocSearchpageComponent<R extends CommonDocRecord, F 
         this.pauseAutoPlay = false;
     }
 
+    onSubmitSelectedMultiActions(event): boolean {
+        this.showLoadingSpinner = true;
+        this.cd.markForCheck();
+
+        this.multiActionManager.processActionTags().then(value => {
+            this.toastr.info('Aktionen wurden erfolgreich ausgeführt.', 'Juhu!');
+            this.doSearch();
+        }).catch(reason => {
+            this.toastr.error('Leider trat ein Fehler auf :-(.', 'Oje!');
+            this.showLoadingSpinner = false;
+            this.cd.markForCheck();
+        });
+
+        return false;
+    }
+
     protected redirectToSearch() {
         // reset initialized
         this.initialized = false;
@@ -356,8 +379,19 @@ export abstract class CommonDocSearchpageComponent<R extends CommonDocRecord, F 
         }
     }
 
+    protected generateMultiActionSelectValueMapFromSearchResult(searchResult: S, valueMap: Map<string, IMultiSelectOption[]>): void {
+        if (searchResult !== undefined) {
+            valueMap.set('playlists', this.searchFormUtils.getIMultiSelectOptionsFromExtractedFacetValuesList(
+                this.cdocSearchFormUtils.getPlaylistValues(searchResult), true, [], true));
+        }
+    }
+
     protected doCheckSearchResultAfterSearch(searchResult: S): void {
         this.pauseAutoPlay = false;
+
+        const valueMap = new Map<string, IMultiSelectOption[]>();
+        this.generateMultiActionSelectValueMapFromSearchResult(searchResult, valueMap);
+        this.multiActionSelectValueMap = valueMap;
     }
 
     protected doSearch() {
@@ -375,6 +409,17 @@ export abstract class CommonDocSearchpageComponent<R extends CommonDocRecord, F 
             loadTrack: true,
             showForm: true
         }).then(function doneSearch(cdocSearchResult) {
+            if (cdocSearchResult === undefined) {
+                // console.log('empty searchResult', mdocSearchResult);
+                me.initialized = true;
+                me.searchResult = me.cdocDataService.newSearchResult(me.searchForm, 0, [], new Facets());
+            } else {
+                // console.log('update searchResult', mdocSearchResult);
+                me.initialized = true;
+                me.searchResult = cdocSearchResult;
+                me.searchForm = cdocSearchResult.searchForm;
+            }
+
             me.doCheckSearchResultAfterSearch(cdocSearchResult);
 
             me.showLoadingSpinner = false;
@@ -383,6 +428,9 @@ export abstract class CommonDocSearchpageComponent<R extends CommonDocRecord, F 
         }).catch(function errorSearch(reason) {
             me.toastr.error('Es gibt leider Probleme bei der Suche - am besten noch einmal probieren :-(', 'Oje!');
             console.error('doSearch failed:', reason);
+
+            me.initialized = true;
+            me.searchResult = me.cdocDataService.newSearchResult(me.searchForm, 0, [], new Facets());
             me.showLoadingSpinner = false;
             me.cd.markForCheck();
         });

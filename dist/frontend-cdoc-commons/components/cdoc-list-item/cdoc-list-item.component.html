@@ -2,6 +2,11 @@
     <div class="card-block" [ngClass]="listItem.styleClassFor">
         <a [name]="listItem.currentRecord.id"></a>
         <div>
+            <div class="multiaction-checkbox" *ngIf="isMultiActionTagSelected()">
+                <input type="checkbox" [disabled]="isMultiActionAvailableForRecord()"
+                       [checked]="isMultiActionSelectedForRecord()"
+                       (click)="onChangeMultiActionForRecord($event)">
+            </div>
             <div style="width: 100px; float: left">
                 <h5 class="listItem.currentRecord-subtype">{{listItem.currentRecord.subtype | translate }}</h5>
             </div>

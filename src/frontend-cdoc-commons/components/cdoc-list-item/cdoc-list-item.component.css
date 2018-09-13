@@ -5,3 +5,7 @@ div.card-block h5 {
 div.card-footer div.card-action-buttons {
     float: right;
 }
+
+div.multiaction-checkbox {
+    display: inline-block;
+}

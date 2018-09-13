@@ -1,10 +1,22 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, OnDestroy, Output} from '@angular/core';
+import {
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    EventEmitter,
+    Input,
+    OnDestroy,
+    Output
+} from '@angular/core';
 import {Layout, LayoutService, LayoutSize, LayoutSizeData} from '../../../angular-commons/services/layout.service';
 import {CommonDocContentUtils, CommonItemData} from '../../services/cdoc-contentutils.service';
 import {CommonDocRecord} from '@dps/mycms-commons/dist/search-commons/model/records/cdoc-entity-record';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 import {AbstractInlineComponent} from '../../../angular-commons/components/inline.component';
 import {ActionTagEvent} from '../cdoc-actiontags/cdoc-actiontags.component';
+import {CommonDocMultiActionManager} from '../../services/cdoc-multiaction.manager';
+import {CommonDocSearchForm} from '@dps/mycms-commons/dist/search-commons/model/forms/cdoc-searchform';
+import {CommonDocSearchResult} from '@dps/mycms-commons/dist/search-commons/model/container/cdoc-searchresult';
+import {CommonDocDataService} from '@dps/mycms-commons/dist/search-commons/services/cdoc-data.service';
 
 @Component({
     selector: 'app-cdoc-list-item',
@@ -41,6 +53,11 @@ export class CommonDocListItemComponent extends AbstractInlineComponent implemen
 
     @Input()
     public short? = false;
+
+    @Input()
+    public multiActionManager?: CommonDocMultiActionManager<CommonDocRecord, CommonDocSearchForm,
+        CommonDocSearchResult<CommonDocRecord, CommonDocSearchForm>,
+        CommonDocDataService<CommonDocRecord, CommonDocSearchForm, CommonDocSearchResult<CommonDocRecord, CommonDocSearchForm>>>;
 
     @Output()
     public show: EventEmitter<CommonDocRecord> = new EventEmitter();
@@ -82,8 +99,36 @@ export class CommonDocListItemComponent extends AbstractInlineComponent implemen
         return false;
     }
 
+    isMultiActionTagSelected(): boolean {
+        return this.multiActionManager && this.multiActionManager.getSelectedMultiActionTags().length > 0;
+    }
+
+    isMultiActionAvailableForRecord(): boolean {
+        return this.multiActionManager &&
+            !this.multiActionManager.isMultiActionTagAvailableForRecord(<CommonDocRecord>this.listItem.currentRecord);
+    }
+
+    isMultiActionSelectedForRecord(): boolean {
+        return this.multiActionManager && this.multiActionManager.isRecordOnMultiActionTag(<CommonDocRecord>this.listItem.currentRecord);
+    }
+
+    onChangeMultiActionForRecord(event): boolean {
+        if (this.multiActionManager) {
+            event.target.checked ?
+                this.multiActionManager.appendRecordToMultiActionTag(<CommonDocRecord>this.listItem.currentRecord)
+                : this.multiActionManager.removeRecordFromMultiActionTag(<CommonDocRecord>this.listItem.currentRecord);
+        }
+
+        return true;
+    }
+
     protected updateData() {
         this.contentUtils.updateItemData(this.listItem, this.record, this.listLayoutName);
+        if (this.multiActionManager) {
+            this.multiActionManager.getSelectedMultiActionTagsObservable().subscribe(value => {
+                this.cd.markForCheck();
+            });
+        }
         this.cd.markForCheck();
     }
 }

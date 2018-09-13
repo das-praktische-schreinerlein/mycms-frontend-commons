@@ -20,7 +20,7 @@ var cdoc_section_searchform_resolver_1 = require("../resolver/cdoc-section-searc
 var pdoc_page_component_1 = require("../../frontend-pdoc-commons/components/pdoc-page.component");
 var CommonDocSearchpageComponent = /** @class */ (function (_super) {
     __extends(CommonDocSearchpageComponent, _super);
-    function CommonDocSearchpageComponent(route, commonRoutingService, errorResolver, cdocDataService, searchFormConverter, cdocRoutingService, toastr, vcr, pageUtils, cd, trackingProvider, appService, platformService, layoutService, environment) {
+    function CommonDocSearchpageComponent(route, commonRoutingService, errorResolver, cdocDataService, searchFormConverter, cdocRoutingService, toastr, vcr, pageUtils, cd, trackingProvider, appService, platformService, layoutService, searchFormUtils, cdocSearchFormUtils, multiActionManager, environment) {
         var _this = _super.call(this, route, toastr, vcr, pageUtils, cd, trackingProvider, appService, platformService, layoutService, environment) || this;
         _this.route = route;
         _this.commonRoutingService = commonRoutingService;
@@ -35,6 +35,9 @@ var CommonDocSearchpageComponent = /** @class */ (function (_super) {
         _this.appService = appService;
         _this.platformService = platformService;
         _this.layoutService = layoutService;
+        _this.searchFormUtils = searchFormUtils;
+        _this.cdocSearchFormUtils = cdocSearchFormUtils;
+        _this.multiActionManager = multiActionManager;
         _this.environment = environment;
         _this.idValidationRule = new generic_validator_util_1.IdValidationRule(true);
         _this.Layout = layout_service_1.Layout;
@@ -47,6 +50,7 @@ var CommonDocSearchpageComponent = /** @class */ (function (_super) {
         _this.showSearchFormElements = true;
         _this.pauseAutoPlay = false;
         _this.anchor = '';
+        _this.multiActionSelectValueMap = new Map();
         _this.searchForm = cdocDataService.newSearchForm({});
         _this.searchResult = cdocDataService.newSearchResult(_this.searchForm, 0, [], new facets_1.Facets());
         return _this;
@@ -176,6 +180,20 @@ var CommonDocSearchpageComponent = /** @class */ (function (_super) {
     CommonDocSearchpageComponent.prototype.onPlayerStopped = function (cdoc) {
         this.pauseAutoPlay = false;
     };
+    CommonDocSearchpageComponent.prototype.onSubmitSelectedMultiActions = function (event) {
+        var _this = this;
+        this.showLoadingSpinner = true;
+        this.cd.markForCheck();
+        this.multiActionManager.processActionTags().then(function (value) {
+            _this.toastr.info('Aktionen wurden erfolgreich ausgeführt.', 'Juhu!');
+            _this.doSearch();
+        }).catch(function (reason) {
+            _this.toastr.error('Leider trat ein Fehler auf :-(.', 'Oje!');
+            _this.showLoadingSpinner = false;
+            _this.cd.markForCheck();
+        });
+        return false;
+    };
     CommonDocSearchpageComponent.prototype.redirectToSearch = function () {
         // reset initialized
         this.initialized = false;
@@ -301,8 +319,16 @@ var CommonDocSearchpageComponent = /** @class */ (function (_super) {
             return this.redirectToSearch();
         }
     };
+    CommonDocSearchpageComponent.prototype.generateMultiActionSelectValueMapFromSearchResult = function (searchResult, valueMap) {
+        if (searchResult !== undefined) {
+            valueMap.set('playlists', this.searchFormUtils.getIMultiSelectOptionsFromExtractedFacetValuesList(this.cdocSearchFormUtils.getPlaylistValues(searchResult), true, [], true));
+        }
+    };
     CommonDocSearchpageComponent.prototype.doCheckSearchResultAfterSearch = function (searchResult) {
         this.pauseAutoPlay = false;
+        var valueMap = new Map();
+        this.generateMultiActionSelectValueMapFromSearchResult(searchResult, valueMap);
+        this.multiActionSelectValueMap = valueMap;
     };
     CommonDocSearchpageComponent.prototype.doSearch = function () {
         this.doPreChecksBeforeSearch();
@@ -317,6 +343,17 @@ var CommonDocSearchpageComponent = /** @class */ (function (_super) {
             loadTrack: true,
             showForm: true
         }).then(function doneSearch(cdocSearchResult) {
+            if (cdocSearchResult === undefined) {
+                // console.log('empty searchResult', mdocSearchResult);
+                me.initialized = true;
+                me.searchResult = me.cdocDataService.newSearchResult(me.searchForm, 0, [], new facets_1.Facets());
+            }
+            else {
+                // console.log('update searchResult', mdocSearchResult);
+                me.initialized = true;
+                me.searchResult = cdocSearchResult;
+                me.searchForm = cdocSearchResult.searchForm;
+            }
             me.doCheckSearchResultAfterSearch(cdocSearchResult);
             me.showLoadingSpinner = false;
             me.pageUtils.goToLinkAnchor(me.anchor);
@@ -324,6 +361,8 @@ var CommonDocSearchpageComponent = /** @class */ (function (_super) {
         }).catch(function errorSearch(reason) {
             me.toastr.error('Es gibt leider Probleme bei der Suche - am besten noch einmal probieren :-(', 'Oje!');
             console.error('doSearch failed:', reason);
+            me.initialized = true;
+            me.searchResult = me.cdocDataService.newSearchResult(me.searchForm, 0, [], new facets_1.Facets());
             me.showLoadingSpinner = false;
             me.cd.markForCheck();
         });

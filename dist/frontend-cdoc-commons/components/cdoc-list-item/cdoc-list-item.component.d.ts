@@ -4,6 +4,10 @@ import { CommonDocContentUtils, CommonItemData } from '../../services/cdoc-conte
 import { CommonDocRecord } from '@dps/mycms-commons/dist/search-commons/model/records/cdoc-entity-record';
 import { AbstractInlineComponent } from '../../../angular-commons/components/inline.component';
 import { ActionTagEvent } from '../cdoc-actiontags/cdoc-actiontags.component';
+import { CommonDocMultiActionManager } from '../../services/cdoc-multiaction.manager';
+import { CommonDocSearchForm } from '@dps/mycms-commons/dist/search-commons/model/forms/cdoc-searchform';
+import { CommonDocSearchResult } from '@dps/mycms-commons/dist/search-commons/model/container/cdoc-searchresult';
+import { CommonDocDataService } from '@dps/mycms-commons/dist/search-commons/services/cdoc-data.service';
 export declare class CommonDocListItemComponent extends AbstractInlineComponent implements OnDestroy {
     protected cd: ChangeDetectorRef;
     protected layoutService: LayoutService;
@@ -17,6 +21,7 @@ export declare class CommonDocListItemComponent extends AbstractInlineComponent 
     backToSearchUrl: string;
     layout: Layout;
     short?: boolean;
+    multiActionManager?: CommonDocMultiActionManager<CommonDocRecord, CommonDocSearchForm, CommonDocSearchResult<CommonDocRecord, CommonDocSearchForm>, CommonDocDataService<CommonDocRecord, CommonDocSearchForm, CommonDocSearchResult<CommonDocRecord, CommonDocSearchForm>>>;
     show: EventEmitter<CommonDocRecord>;
     showImage: EventEmitter<CommonDocRecord>;
     constructor(contentUtils: CommonDocContentUtils, cd: ChangeDetectorRef, layoutService: LayoutService);
@@ -24,5 +29,9 @@ export declare class CommonDocListItemComponent extends AbstractInlineComponent 
     submitShow(cdoc: CommonDocRecord): boolean;
     submitShowImage(cdoc: CommonDocRecord): boolean;
     onActionTagEvent(event: ActionTagEvent): boolean;
+    isMultiActionTagSelected(): boolean;
+    isMultiActionAvailableForRecord(): boolean;
+    isMultiActionSelectedForRecord(): boolean;
+    onChangeMultiActionForRecord(event: any): boolean;
     protected updateData(): void;
 }

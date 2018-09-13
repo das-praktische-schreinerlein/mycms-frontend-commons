@@ -28,7 +28,7 @@ export class CommonDocDataServiceStub {
     };
 
     newSearchResult(tdocSearchForm: CommonDocSearchForm, recordCount: number,
-                    currentRecords: CommonDocRecord[], facets: Facets): CommonDocSearchResult {
+                    currentRecords: CommonDocRecord[], facets: Facets): CommonDocSearchResult<CommonDocRecord, CommonDocSearchForm> {
         return new CommonDocSearchResult(tdocSearchForm, recordCount, currentRecords, facets);
     }
 }

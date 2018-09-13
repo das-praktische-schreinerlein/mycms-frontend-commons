@@ -4,6 +4,8 @@ import {CommonDocRecord} from '@dps/mycms-commons/dist/search-commons/model/reco
 import {CommonDocSearchResult} from '@dps/mycms-commons/dist/search-commons/model/container/cdoc-searchresult';
 import {CommonDocSearchForm} from '@dps/mycms-commons/dist/search-commons/model/forms/cdoc-searchform';
 import {AbstractInlineComponent} from '../../../angular-commons/components/inline.component';
+import {CommonDocMultiActionManager} from '../../services/cdoc-multiaction.manager';
+import {CommonDocDataService} from '@dps/mycms-commons/dist/search-commons/services/cdoc-data.service';
 
 @Component({
     selector: 'app-cdoc-list',
@@ -24,6 +26,9 @@ export class CommonDocListComponent <R extends CommonDocRecord, F extends Common
 
     @Input()
     public short? = false;
+
+    @Input()
+    public multiActionManager?: CommonDocMultiActionManager<R, F, S, CommonDocDataService<R, F, S>>;
 
     @Output()
     public show: EventEmitter<R> = new EventEmitter();

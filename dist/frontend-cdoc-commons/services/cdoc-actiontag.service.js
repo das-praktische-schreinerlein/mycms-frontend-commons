@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+var js_data_1 = require("js-data");
 var CommonDocActionTagService = /** @class */ (function () {
     function CommonDocActionTagService(router, cdocDataService, cdocAlbumService, appService) {
         this.router = router;
@@ -77,13 +78,13 @@ var CommonDocActionTagService = /** @class */ (function () {
             actionTagEvent.error = undefined;
             actionTagEvent.result = cdoc;
             actionTagEventEmitter.emit(actionTagEvent);
-            return utils.resolve(actionTagEvent);
+            return js_data_1.utils.resolve(actionTagEvent);
         }).catch(function (reason) {
             actionTagEvent.processed = true;
             actionTagEvent.error = reason;
             actionTagEventEmitter.emit(actionTagEvent);
             console.error('cdocactions failed:', reason);
-            return utils.reject(reason);
+            return js_data_1.utils.reject(reason);
         });
     };
     CommonDocActionTagService.prototype.processActionTagEventUnknown = function (actionTagEvent, actionTagEventEmitter) {

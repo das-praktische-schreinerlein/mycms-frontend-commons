@@ -13,6 +13,10 @@ import {CommonDocSearchResult} from '@dps/mycms-commons/dist/search-commons/mode
 import {GenericSearchFormSearchFormConverter} from '@dps/mycms-commons/dist/search-commons/services/generic-searchform.converter';
 import {AbstractInlineComponent} from '../../../angular-commons/components/inline.component';
 import {Subscription} from 'rxjs/Subscription';
+import {IMultiSelectOption} from 'angular-2-dropdown-multiselect';
+import {SearchFormUtils} from '../../../angular-commons/services/searchform-utils.service';
+import {CommonDocSearchFormUtils} from '../../services/cdoc-searchform-utils.service';
+import {CommonDocMultiActionManager} from '../../services/cdoc-multiaction.manager';
 
 export class CommonDocInlineSearchpageComponent <R extends CommonDocRecord, F extends CommonDocSearchForm,
     S extends CommonDocSearchResult<R, F>, D extends CommonDocDataService<R, F, S>> extends AbstractInlineComponent
@@ -25,6 +29,7 @@ export class CommonDocInlineSearchpageComponent <R extends CommonDocRecord, F ex
 
     searchResult: S;
     searchForm: F;
+    multiActionSelectValueMap = new Map<string, IMultiSelectOption[]>();
 
     @Input()
     public params = {};
@@ -49,6 +54,9 @@ export class CommonDocInlineSearchpageComponent <R extends CommonDocRecord, F ex
 
     @Input()
     public showOnlyIfRecordsFound = true;
+
+    @Input()
+    public showMultiActionHeader? = false;
 
     @Input()
     public label: string;
@@ -80,7 +88,9 @@ export class CommonDocInlineSearchpageComponent <R extends CommonDocRecord, F ex
     constructor(protected appService: GenericAppService, protected commonRoutingService: CommonRoutingService,
                 protected cdocDataService: D, protected searchFormConverter: GenericSearchFormSearchFormConverter<F>,
                 protected cdocRoutingService: CommonDocRoutingService, protected toastr: ToastsManager, vcr: ViewContainerRef,
-                protected cd: ChangeDetectorRef, protected elRef: ElementRef, protected pageUtils: PageUtils) {
+                protected cd: ChangeDetectorRef, protected elRef: ElementRef, protected pageUtils: PageUtils,
+                protected searchFormUtils: SearchFormUtils, protected cdocSearchFormUtils: CommonDocSearchFormUtils,
+                protected multiActionManager: CommonDocMultiActionManager<R, F, S, D>) {
         super(cd);
         this.searchForm = this.cdocDataService.newSearchForm({});
         this.searchResult = this.cdocDataService.newSearchResult(this.searchForm, 0, [], new Facets());
@@ -176,6 +186,22 @@ export class CommonDocInlineSearchpageComponent <R extends CommonDocRecord, F ex
         return false;
     }
 
+    onSubmitSelectedMultiActions(event): boolean {
+        this.showLoadingSpinner = true;
+        this.cd.markForCheck();
+
+        this.multiActionManager.processActionTags().then(value => {
+            this.toastr.info('Aktionen wurden erfolgreich ausgeführt.', 'Juhu!');
+            this.doSearch();
+        }).catch(reason => {
+            this.toastr.error('Leider trat ein Fehler auf :-(.', 'Oje!');
+            this.showLoadingSpinner = false;
+            this.cd.markForCheck();
+        });
+
+        return false;
+    }
+
     protected updateData(): void {
         if (this.initialized) {
             return this.doSearchWithParams(this.params);
@@ -200,8 +226,9 @@ export class CommonDocInlineSearchpageComponent <R extends CommonDocRecord, F ex
                 showFacets: this.showForm || this.loadFacets || (this.showTimetable ? ['week_is', 'month_is'] : false),
                 loadTrack: this.loadTrack,
                 showForm: this.showForm
-            }).then(function doneSearch(cdocSearchResult) {
+         }).then(function doneSearch(cdocSearchResult) {
             me.showLoadingSpinner = false;
+
             if (cdocSearchResult === undefined) {
                 // console.log('empty searchResult', cdocSearchResult);
                 me.searchResult = me.cdocDataService.newSearchResult(me.searchForm, 0, [], new Facets());
@@ -211,6 +238,7 @@ export class CommonDocInlineSearchpageComponent <R extends CommonDocRecord, F ex
                 me.searchResult = cdocSearchResult;
                 me.searchForm = cdocSearchResult.searchForm;
             }
+            me.doCheckSearchResultAfterSearch(cdocSearchResult);
             me.searchResultFound.emit(me.searchResult);
 
             me.cd.markForCheck();
@@ -222,5 +250,18 @@ export class CommonDocInlineSearchpageComponent <R extends CommonDocRecord, F ex
             me.searchResultFound.emit(me.searchResult);
             me.cd.markForCheck();
         });
+    }
+
+    protected generateMultiActionSelectValueMapFromSearchResult(searchResult: S, valueMap: Map<string, IMultiSelectOption[]>): void {
+        if (searchResult !== undefined) {
+            valueMap.set('playlists', this.searchFormUtils.getIMultiSelectOptionsFromExtractedFacetValuesList(
+                this.cdocSearchFormUtils.getPlaylistValues(searchResult), true, [], true));
+        }
+    }
+
+    protected doCheckSearchResultAfterSearch(searchResult: S): void {
+        const valueMap = new Map<string, IMultiSelectOption[]>();
+        this.generateMultiActionSelectValueMapFromSearchResult(searchResult, valueMap);
+        this.multiActionSelectValueMap = valueMap;
     }
 }

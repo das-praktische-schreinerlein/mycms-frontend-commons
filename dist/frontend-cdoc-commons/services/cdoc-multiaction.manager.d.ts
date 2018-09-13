@@ -1,0 +1,30 @@
+import { GenericAppService } from '@dps/mycms-commons/dist/commons/services/generic-app.service';
+import { CommonDocActionTagService } from './cdoc-actiontag.service';
+import { CommonDocRecord } from '@dps/mycms-commons/dist/search-commons/model/records/cdoc-entity-record';
+import { CommonDocSearchForm } from '@dps/mycms-commons/dist/search-commons/model/forms/cdoc-searchform';
+import { CommonDocSearchResult } from '@dps/mycms-commons/dist/search-commons/model/container/cdoc-searchresult';
+import { CommonDocDataService } from '@dps/mycms-commons/dist/search-commons/services/cdoc-data.service';
+import { Subject } from 'rxjs/Subject';
+import { MultiActionTagConfig } from '@dps/mycms-commons/dist/commons/utils/actiontag.utils';
+export declare class CommonDocMultiActionManager<R extends CommonDocRecord, F extends CommonDocSearchForm, S extends CommonDocSearchResult<R, F>, D extends CommonDocDataService<R, F, S>> {
+    protected appService: GenericAppService;
+    protected actionTagService: CommonDocActionTagService<R, F, S, D>;
+    protected selectedActionTags: MultiActionTagConfig[];
+    protected selectedRecords: R[];
+    private selectedMultiActionTagsObservable;
+    private selectedRecordsObservable;
+    constructor(appService: GenericAppService, actionTagService: CommonDocActionTagService<R, F, S, D>);
+    protected configureComponent(config: {}): void;
+    getSelectedMultiActionTags(): MultiActionTagConfig[];
+    getSelectedMultiActionTagsObservable(): Subject<MultiActionTagConfig[]>;
+    getSelectedRecords(): R[];
+    getSelectedRecordsObservable(): Subject<R[]>;
+    setSelectedMultiActionTags(actionTags: MultiActionTagConfig[]): void;
+    removeRecordFromMultiActionTag(record: R): void;
+    appendRecordToMultiActionTag(record: R): void;
+    isRecordOnMultiActionTag(record: R): boolean;
+    isMultiActionTagAvailableForRecord(record: R): boolean;
+    processActionTags(): Promise<any>;
+    private processActionTagsForRecord(record);
+    private processActionTagForRecord(actionTagConfig, record);
+}

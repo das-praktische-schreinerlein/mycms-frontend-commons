@@ -26,7 +26,7 @@ var generic_app_service_1 = require("@dps/mycms-commons/dist/commons/services/ge
 var inline_component_1 = require("../../../angular-commons/components/inline.component");
 var CommonDocInlineSearchpageComponent = /** @class */ (function (_super) {
     __extends(CommonDocInlineSearchpageComponent, _super);
-    function CommonDocInlineSearchpageComponent(appService, commonRoutingService, cdocDataService, searchFormConverter, cdocRoutingService, toastr, vcr, cd, elRef, pageUtils) {
+    function CommonDocInlineSearchpageComponent(appService, commonRoutingService, cdocDataService, searchFormConverter, cdocRoutingService, toastr, vcr, cd, elRef, pageUtils, searchFormUtils, cdocSearchFormUtils, multiActionManager) {
         var _this = _super.call(this, cd) || this;
         _this.appService = appService;
         _this.commonRoutingService = commonRoutingService;
@@ -37,9 +37,13 @@ var CommonDocInlineSearchpageComponent = /** @class */ (function (_super) {
         _this.cd = cd;
         _this.elRef = elRef;
         _this.pageUtils = pageUtils;
+        _this.searchFormUtils = searchFormUtils;
+        _this.cdocSearchFormUtils = cdocSearchFormUtils;
+        _this.multiActionManager = multiActionManager;
         _this.initialized = false;
         _this.showLoadingSpinner = false;
         _this.Layout = layout_service_1.Layout;
+        _this.multiActionSelectValueMap = new Map();
         _this.params = {};
         _this.showForm = false;
         _this.showTimetable = false;
@@ -48,6 +52,7 @@ var CommonDocInlineSearchpageComponent = /** @class */ (function (_super) {
         _this.loadFacets = false;
         _this.loadTrack = false;
         _this.showOnlyIfRecordsFound = true;
+        _this.showMultiActionHeader = false;
         _this.baseSearchUrl = 'cdoc/';
         _this.short = false;
         _this.perPageOnToSearchPage = 10;
@@ -129,6 +134,20 @@ var CommonDocInlineSearchpageComponent = /** @class */ (function (_super) {
         this.commonRoutingService.navigateByUrl(this.getToSearchUrl());
         return false;
     };
+    CommonDocInlineSearchpageComponent.prototype.onSubmitSelectedMultiActions = function (event) {
+        var _this = this;
+        this.showLoadingSpinner = true;
+        this.cd.markForCheck();
+        this.multiActionManager.processActionTags().then(function (value) {
+            _this.toastr.info('Aktionen wurden erfolgreich ausgeführt.', 'Juhu!');
+            _this.doSearch();
+        }).catch(function (reason) {
+            _this.toastr.error('Leider trat ein Fehler auf :-(.', 'Oje!');
+            _this.showLoadingSpinner = false;
+            _this.cd.markForCheck();
+        });
+        return false;
+    };
     CommonDocInlineSearchpageComponent.prototype.updateData = function () {
         if (this.initialized) {
             return this.doSearchWithParams(this.params);
@@ -161,6 +180,7 @@ var CommonDocInlineSearchpageComponent = /** @class */ (function (_super) {
                 me.searchResult = cdocSearchResult;
                 me.searchForm = cdocSearchResult.searchForm;
             }
+            me.doCheckSearchResultAfterSearch(cdocSearchResult);
             me.searchResultFound.emit(me.searchResult);
             me.cd.markForCheck();
         }).catch(function errorSearch(reason) {
@@ -171,6 +191,16 @@ var CommonDocInlineSearchpageComponent = /** @class */ (function (_super) {
             me.searchResultFound.emit(me.searchResult);
             me.cd.markForCheck();
         });
+    };
+    CommonDocInlineSearchpageComponent.prototype.generateMultiActionSelectValueMapFromSearchResult = function (searchResult, valueMap) {
+        if (searchResult !== undefined) {
+            valueMap.set('playlists', this.searchFormUtils.getIMultiSelectOptionsFromExtractedFacetValuesList(this.cdocSearchFormUtils.getPlaylistValues(searchResult), true, [], true));
+        }
+    };
+    CommonDocInlineSearchpageComponent.prototype.doCheckSearchResultAfterSearch = function (searchResult) {
+        var valueMap = new Map();
+        this.generateMultiActionSelectValueMapFromSearchResult(searchResult, valueMap);
+        this.multiActionSelectValueMap = valueMap;
     };
     __decorate([
         core_1.Input(),
@@ -204,6 +234,10 @@ var CommonDocInlineSearchpageComponent = /** @class */ (function (_super) {
         core_1.Input(),
         __metadata("design:type", Object)
     ], CommonDocInlineSearchpageComponent.prototype, "showOnlyIfRecordsFound", void 0);
+    __decorate([
+        core_1.Input(),
+        __metadata("design:type", Object)
+    ], CommonDocInlineSearchpageComponent.prototype, "showMultiActionHeader", void 0);
     __decorate([
         core_1.Input(),
         __metadata("design:type", String)

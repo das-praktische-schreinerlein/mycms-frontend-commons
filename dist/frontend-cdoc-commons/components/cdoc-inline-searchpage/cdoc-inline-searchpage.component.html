@@ -36,6 +36,12 @@
                                   (layoutChange)="onLayoutChange($event)"
                                   (pageChange)="onPageChange($event)" ></app-cdoc-list-header>
         </div>
+        <div class="container" *ngIf="showMultiActionHeader && showResultList">
+            <app-cdoc-multiactionheader [multiActionManager]="multiActionManager"
+                                        [searchResult]="searchResult"
+                                        [selectValueMap]="multiActionSelectValueMap"
+                                        (submitSelectedMultiActions)="onSubmitSelectedMultiActions($event)"></app-cdoc-multiactionheader>
+        </div>
         <div class="container" *ngIf="showResultList">
             <app-cdoc-list [searchResult]="searchResult"
                            [layout]="layout"

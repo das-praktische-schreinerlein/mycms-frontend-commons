@@ -20,10 +20,19 @@ var CommonDocDataServiceStub = /** @class */ (function () {
     CommonDocDataServiceStub.defaultRecord = function () {
         return new cdoc_entity_record_1.CommonDocRecord({ id: '1', name: 'Test' });
     };
+    CommonDocDataServiceStub.prototype.cloneSanitizedSearchForm = function (values) {
+        return new cdoc_searchform_1.CommonDocSearchForm(values);
+    };
+    CommonDocDataServiceStub.prototype.newSearchForm = function (values) {
+        return new cdoc_searchform_1.CommonDocSearchForm(values);
+    };
     CommonDocDataServiceStub.prototype.search = function (searchForm) {
         return Promise.resolve(new cdoc_searchresult_1.CommonDocSearchResult(searchForm, 0, [], new facets_1.Facets()));
     };
     ;
+    CommonDocDataServiceStub.prototype.newSearchResult = function (tdocSearchForm, recordCount, currentRecords, facets) {
+        return new cdoc_searchresult_1.CommonDocSearchResult(tdocSearchForm, recordCount, currentRecords, facets);
+    };
     CommonDocDataServiceStub = __decorate([
         core_1.Injectable()
     ], CommonDocDataServiceStub);
