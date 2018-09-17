@@ -19,6 +19,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {CommonDocListComponent} from './components/cdoc-list/cdoc-list.component';
 import {CommonDocAudioplayerComponent} from './components/cdoc-audioplayer/cdoc-audioplayer.component';
 import {CommonDocActionTagsComponent} from './components/cdoc-actiontags/cdoc-actiontags.component';
+import {FileDropModule} from 'ngx-file-drop';
 
 @NgModule({
     declarations: [
@@ -44,6 +45,7 @@ import {CommonDocActionTagsComponent} from './components/cdoc-actiontags/cdoc-ac
         BrowserAnimationsModule,
         FormsModule,
         ReactiveFormsModule,
+        FileDropModule,
         AngularCommonsModule
     ],
     exports: [

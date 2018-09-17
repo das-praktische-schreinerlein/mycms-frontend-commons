@@ -11,16 +11,17 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 var generic_validator_util_1 = require("@dps/mycms-commons/dist/search-commons/model/forms/generic-validator.util");
-var layout_service_1 = require("../../angular-commons/services/layout.service");
-var common_routing_service_1 = require("../../angular-commons/services/common-routing.service");
-var error_resolver_1 = require("../resolver/error.resolver");
+var layout_service_1 = require("../../../angular-commons/services/layout.service");
+var common_routing_service_1 = require("../../../angular-commons/services/common-routing.service");
+var error_resolver_1 = require("../../resolver/error.resolver");
 var generic_app_service_1 = require("@dps/mycms-commons/dist/commons/services/generic-app.service");
 var facets_1 = require("@dps/mycms-commons/dist/search-commons/model/container/facets");
-var cdoc_album_resolver_1 = require("../resolver/cdoc-album.resolver");
-var pdoc_page_component_1 = require("../../frontend-pdoc-commons/components/pdoc-page.component");
+var cdoc_album_resolver_1 = require("../../resolver/cdoc-album.resolver");
+var pdoc_page_component_1 = require("../../../frontend-pdoc-commons/components/pdoc-page.component");
+var angular_html_service_1 = require("../../../angular-commons/services/angular-html.service");
 var CommonDocAlbumpageComponent = /** @class */ (function (_super) {
     __extends(CommonDocAlbumpageComponent, _super);
-    function CommonDocAlbumpageComponent(route, commonRoutingService, errorResolver, cdocDataService, searchFormConverter, cdocRoutingService, toastr, vcr, pageUtils, cd, trackingProvider, fb, cdocAlbumService, appService, platformService, layoutService, environment) {
+    function CommonDocAlbumpageComponent(route, commonRoutingService, errorResolver, cdocDataService, searchFormConverter, cdocRoutingService, toastr, vcr, pageUtils, cd, trackingProvider, fb, cdocAlbumService, appService, platformService, layoutService, searchFormUtils, cdocSearchFormUtils, playlistService, multiActionManager, environment) {
         var _this = _super.call(this, route, toastr, vcr, pageUtils, cd, trackingProvider, appService, platformService, layoutService, environment) || this;
         _this.route = route;
         _this.commonRoutingService = commonRoutingService;
@@ -37,6 +38,10 @@ var CommonDocAlbumpageComponent = /** @class */ (function (_super) {
         _this.appService = appService;
         _this.platformService = platformService;
         _this.layoutService = layoutService;
+        _this.searchFormUtils = searchFormUtils;
+        _this.cdocSearchFormUtils = cdocSearchFormUtils;
+        _this.playlistService = playlistService;
+        _this.multiActionManager = multiActionManager;
         _this.environment = environment;
         _this.idCsvValidationRule = new generic_validator_util_1.IdCsvValidationRule(true);
         _this.idValidationRule = new generic_validator_util_1.IdValidationRule(true);
@@ -47,6 +52,8 @@ var CommonDocAlbumpageComponent = /** @class */ (function (_super) {
         _this.autoPlayAllowed = false;
         _this.maxAllowedItems = -1;
         _this.pauseAutoPlay = false;
+        _this.m3uAvailable = false;
+        _this.multiActionSelectValueMap = new Map();
         _this.editFormGroup = _this.fb.group({
             albumIds: ''
         });
@@ -76,13 +83,16 @@ var CommonDocAlbumpageComponent = /** @class */ (function (_super) {
             _this.baseSearchUrl = (data.baseSearchUrl.data ? data.baseSearchUrl.data : _this.baseSearchUrl);
             if (data.flgDoEdit === true) {
                 _this.mode = 'edit';
+                _this.setEditPageLayoutAndStyles();
+            }
+            else {
+                _this.setShowPageLayoutAndStyles();
             }
             // console.log('route: search for ', data);
             _this.searchForm = _this.cdocDataService.cloneSanitizedSearchForm(data.searchForm.data);
             _this.listSearchForm = _this.cdocDataService.cloneSanitizedSearchForm(data.searchForm.data);
             _this.setMetaTags(_this.config, null, null);
             _this.trackingProvider.trackPageView();
-            _this.setPageLayoutAndStyles();
             _this.curRecordNr = _this.listSearchForm.pageNum;
             return _this.doSearch();
         });
@@ -101,7 +111,7 @@ var CommonDocAlbumpageComponent = /** @class */ (function (_super) {
         this.curRecordNr = page;
         this.searchForm.pageNum = this.curRecordNr;
         this.listSearchForm.pageNum = this.curRecordNr;
-        this.redictToSearch();
+        this.redirectToSearch();
         return false;
     };
     CommonDocAlbumpageComponent.prototype.onShowDoc = function (cdoc) {
@@ -193,26 +203,43 @@ var CommonDocAlbumpageComponent = /** @class */ (function (_super) {
             ((this.listSearchForm.pageNum - 1) * this.listSearchForm.perPage) + 1].join('/'));
         return false;
     };
-    CommonDocAlbumpageComponent.prototype.redictToSearch = function () {
+    CommonDocAlbumpageComponent.prototype.redirectToSearch = function () {
         this.commonRoutingService.navigateByUrl([this.baseAlbumUrl + '/show', this.albumKey, this.listSearchForm.sort, 1,
             this.curRecordNr].join('/'));
         return false;
     };
+    CommonDocAlbumpageComponent.prototype.redirectToEdit = function () {
+        this.commonRoutingService.navigateByUrl([this.baseAlbumUrl + '/edit', this.albumKey, this.listSearchForm.sort,
+            this.listSearchForm.perPage, this.listSearchForm.pageNum].join('/'));
+        return false;
+    };
     CommonDocAlbumpageComponent.prototype.doSaveAsFile = function () {
         var albumEntry = { key: this.albumKey, ids: this.editFormGroup.getRawValue()['albumIds'] };
-        var blob = new Blob([JSON.stringify(albumEntry, null, 2)], { type: 'application/json' });
         var filename = this.albumKey + '.mytbalbum.json';
-        if (window.navigator && window.navigator.msSaveOrOpenBlob) {
-            window.navigator.msSaveOrOpenBlob(blob, filename);
+        angular_html_service_1.AngularHtmlService.browserSaveTextAsFile(JSON.stringify(albumEntry, null, 2), filename, 'application/json');
+        return true;
+    };
+    CommonDocAlbumpageComponent.prototype.doSaveAsM3U = function () {
+        if (this.m3uAvailable !== true) {
+            return true;
         }
-        else {
-            var e = document.createEvent('MouseEvents'), a = document.createElement('a');
-            a.download = filename;
-            a.href = window.URL.createObjectURL(blob);
-            a.dataset.downloadurl = ['text/json', a.download, a.href].join(':');
-            e.initEvent('click', true, false);
-            a.dispatchEvent(e);
-        }
+        var filename = this.albumKey + '.mytbalbum.m3u';
+        var ids = this.searchForm.moreFilter.replace(/id:/g, '').split(',');
+        var m3uSearchForm = this.cdocDataService.cloneSanitizedSearchForm(this.searchForm);
+        m3uSearchForm.perPage = 99999;
+        m3uSearchForm.pageNum = 1;
+        this.showLoadingSpinner = true;
+        var me = this;
+        this.cdocDataService.doMultiSearch(m3uSearchForm, ids).then(function doneSearch(cdocSearchResult) {
+            me.showLoadingSpinner = false;
+            me.cd.markForCheck();
+            angular_html_service_1.AngularHtmlService.browserSaveTextAsFile(me.playlistService.generateM3uForRecords('', cdocSearchResult.currentRecords), filename, 'application/m3u');
+        }).catch(function errorSearch(reason) {
+            me.toastr.error('Es gibt leider Probleme bei der Suche - am besten noch einmal probieren :-(', 'Oje!');
+            console.error('doSearch failed:', reason);
+            me.showLoadingSpinner = false;
+            me.cd.markForCheck();
+        });
         return true;
     };
     CommonDocAlbumpageComponent.prototype.onFileSelected = function (event) {
@@ -244,7 +271,7 @@ var CommonDocAlbumpageComponent = /** @class */ (function (_super) {
             return false;
         }
         me.onCurRecordChange(me.curRecordNr + 1);
-        this.redictToSearch();
+        this.redirectToSearch();
         return false;
     };
     CommonDocAlbumpageComponent.prototype.onAlbumIntervalStarted = function () {
@@ -260,6 +287,21 @@ var CommonDocAlbumpageComponent = /** @class */ (function (_super) {
         this.editFormGroup.patchValue({ albumIds: '' });
         return this.doSave() && this.doShow();
     };
+    CommonDocAlbumpageComponent.prototype.onSubmitSelectedMultiActions = function (event) {
+        var _this = this;
+        this.showLoadingSpinner = true;
+        this.cd.markForCheck();
+        this.multiActionManager.processActionTags().then(function (value) {
+            _this.toastr.info('Aktionen wurden erfolgreich ausgeführt.', 'Juhu!');
+            _this.searchForm.moreFilter = 'id:' + _this.cdocAlbumService.getDocIds(_this.albumKey).join(',');
+            _this.doSearch();
+        }).catch(function (reason) {
+            _this.toastr.error('Leider trat ein Fehler auf :-(.', 'Oje!');
+            _this.showLoadingSpinner = false;
+            _this.cd.markForCheck();
+        });
+        return false;
+    };
     CommonDocAlbumpageComponent.prototype.configureComponent = function (config) {
         var componentConfig = this.getComponentConfig(config);
         this.baseAlbumUrl = componentConfig.baseAlbumUrl;
@@ -267,6 +309,7 @@ var CommonDocAlbumpageComponent = /** @class */ (function (_super) {
         this.baseSearchUrlDefault = componentConfig.baseSearchUrlDefault;
         this.autoPlayAllowed = componentConfig.autoPlayAllowed;
         this.maxAllowedItems = componentConfig.maxAllowedItems;
+        this.m3uAvailable = componentConfig.m3uAvailable;
     };
     CommonDocAlbumpageComponent.prototype.configureProcessingOfResolvedData = function (config) {
     };
@@ -319,11 +362,16 @@ var CommonDocAlbumpageComponent = /** @class */ (function (_super) {
         this.pageUtils.setMetaLanguage();
     };
     CommonDocAlbumpageComponent.prototype.setPageLayoutAndStyles = function () {
+    };
+    CommonDocAlbumpageComponent.prototype.setShowPageLayoutAndStyles = function () {
         this.pageUtils.setGlobalStyle('', 'sectionStyle');
         this.pageUtils.setGlobalStyle('.hide-on-fullpage { display: none; } ' +
             '.show-on-fullpage-block { display: block; } ' +
             'body { background: #130b0b; } ' +
             '.image-content-container {background: #130b0b !IMPORTANT; border: none !IMPORTANT;} ', 'fullPageStyle');
+    };
+    CommonDocAlbumpageComponent.prototype.setEditPageLayoutAndStyles = function () {
+        this.pageUtils.setGlobalStyle('', 'fullPageStyle');
     };
     CommonDocAlbumpageComponent.prototype.processFile = function (file) {
         var me = this;
@@ -354,7 +402,9 @@ var CommonDocAlbumpageComponent = /** @class */ (function (_super) {
             this.cdocAlbumService.removeDocIds(this.albumKey);
             for (var _i = 0, _a = ids.split(','); _i < _a.length; _i++) {
                 var id = _a[_i];
-                this.cdocAlbumService.addIdToAlbum(this.albumKey, id);
+                if (id !== '') {
+                    this.cdocAlbumService.addIdToAlbum(this.albumKey, id);
+                }
             }
             return true;
         }
@@ -383,6 +433,7 @@ var CommonDocAlbumpageComponent = /** @class */ (function (_super) {
         me.cdocDataService.doMultiSearch(me.searchForm, ids).then(function doneSearch(cdocSearchResult) {
             me.initialized = true;
             me.searchResult = cdocSearchResult;
+            me.doCheckSearchResultAfterSearch(cdocSearchResult);
             me.loadListResult();
             me.loadRecord(me.curRecordNr);
             me.showLoadingSpinner = false;
@@ -394,6 +445,16 @@ var CommonDocAlbumpageComponent = /** @class */ (function (_super) {
             me.showLoadingSpinner = false;
             me.cd.markForCheck();
         });
+    };
+    CommonDocAlbumpageComponent.prototype.generateMultiActionSelectValueMapFromSearchResult = function (searchResult, valueMap) {
+        if (searchResult !== undefined) {
+            valueMap.set('playlists', this.searchFormUtils.getIMultiSelectOptionsFromExtractedFacetValuesList(this.cdocSearchFormUtils.getPlaylistValues(searchResult), true, [], true));
+        }
+    };
+    CommonDocAlbumpageComponent.prototype.doCheckSearchResultAfterSearch = function (searchResult) {
+        var valueMap = new Map();
+        this.generateMultiActionSelectValueMapFromSearchResult(searchResult, valueMap);
+        this.multiActionSelectValueMap = valueMap;
     };
     CommonDocAlbumpageComponent.prototype.loadRecord = function (nr) {
         this.curRecordNr = nr;

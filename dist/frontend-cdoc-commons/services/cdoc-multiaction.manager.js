@@ -103,6 +103,9 @@ var CommonDocMultiActionManager = /** @class */ (function () {
             processed: false,
             set: true
         };
+        if (actionTagConfig.payload['set'] === false) {
+            actionTagEvent.set = false;
+        }
         var actionTagEventEmitter = new core_1.EventEmitter();
         return this.actionTagService.processActionTagEvent(actionTagEvent, actionTagEventEmitter).catch(function (reason) {
             return js_data_1.utils.reject(reason);

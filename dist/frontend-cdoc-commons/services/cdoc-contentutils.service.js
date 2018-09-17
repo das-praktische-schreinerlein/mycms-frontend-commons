@@ -40,6 +40,21 @@ var CommonDocContentUtils = /** @class */ (function () {
     CommonDocContentUtils.prototype.getAudios = function (cdocRecord) {
         return cdocRecord[this.cdocAudiosKey];
     };
+    CommonDocContentUtils.prototype.getPreferredFullMediaUrl = function (record) {
+        var videos = this.getVideos(record);
+        if (videos && videos.length > 0) {
+            return this.getVideoUrl(videos[0], 'x600');
+        }
+        var audios = this.getAudios(record);
+        if (audios && audios.length > 0) {
+            return this.getAudioUrl(audios[0], 'x600');
+        }
+        var images = this.getImages(record);
+        if (images && images.length > 0) {
+            return this.getImageUrl(images[0], 'x600');
+        }
+        return undefined;
+    };
     CommonDocContentUtils.prototype.getThumbnail = function (image) {
         return this.getImageUrl(image, 'x100');
     };
@@ -115,7 +130,7 @@ var CommonDocContentUtils = /** @class */ (function () {
             return this.appService.getAppConfig()['audioBaseUrl'] + resolution + '/' + audio[this.cdocRecordRefIdField];
         }
         else {
-            return this.appService.getAppConfig()['audioBaseUrl'] + 'audio_' + resolution + '/' + audio.fileName + (suffix ? suffix : '');
+            return this.appService.getAppConfig()['audioBaseUrl'] + audio.fileName + (suffix ? suffix : '');
         }
     };
     CommonDocContentUtils.prototype.getSuggestedKeywords = function (suggestionConfigs, prefix, values) {

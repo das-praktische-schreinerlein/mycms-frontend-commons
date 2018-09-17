@@ -34,6 +34,7 @@ export declare class CommonDocMultiActionHeaderComponent<R extends CommonDocReco
     searchResult: S;
     multiActionManager: CommonDocMultiActionManager<R, F, S, D>;
     selectValueMap?: Map<string, IMultiSelectOption[]>;
+    type?: string;
     submitSelectedMultiActions: EventEmitter<MultiActionTagConfig[]>;
     constructor(appService: GenericAppService, contentUtils: CommonDocContentUtils, cd: ChangeDetectorRef);
     ngOnInit(): void;

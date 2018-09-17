@@ -15,6 +15,24 @@ var AngularHtmlService = /** @class */ (function () {
     function AngularHtmlService(commonRoutingService) {
         this.commonRoutingService = commonRoutingService;
     }
+    AngularHtmlService_1 = AngularHtmlService;
+    AngularHtmlService.browserSaveBlobAsFile = function (blob, fileName, mimeType) {
+        if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+            window.navigator.msSaveOrOpenBlob(blob, fileName);
+        }
+        else {
+            var e = document.createEvent('MouseEvents'), a = document.createElement('a');
+            a.download = fileName;
+            a.href = window.URL.createObjectURL(blob);
+            a.dataset.downloadurl = [mimeType, a.download, a.href].join(':');
+            e.initEvent('click', true, false);
+            a.dispatchEvent(e);
+        }
+    };
+    AngularHtmlService.browserSaveTextAsFile = function (text, fileName, mimeType) {
+        var blob = new Blob([text], { type: mimeType });
+        AngularHtmlService_1.browserSaveBlobAsFile(blob, fileName, mimeType);
+    };
     AngularHtmlService.prototype.renderHtml = function (parentSelector, html, routeLocalLinkWithAngularRouter) {
         var inputEl = document.querySelector(parentSelector);
         if (!inputEl || inputEl === undefined || inputEl === null) {
@@ -44,11 +62,12 @@ var AngularHtmlService = /** @class */ (function () {
         }
         return true;
     };
-    AngularHtmlService = __decorate([
+    AngularHtmlService = AngularHtmlService_1 = __decorate([
         core_1.Injectable(),
         __metadata("design:paramtypes", [common_routing_service_1.CommonRoutingService])
     ], AngularHtmlService);
     return AngularHtmlService;
+    var AngularHtmlService_1;
 }());
 exports.AngularHtmlService = AngularHtmlService;
 //# sourceMappingURL=angular-html.service.js.map

@@ -40,7 +40,9 @@ var CommonDocActionsComponent = /** @class */ (function (_super) {
     CommonDocActionsComponent.prototype.configureActionListener = function () {
         var _this = this;
         this.childActionTagEvent.asObservable().subscribe(function (actionTagEvent) {
-            _this.actionTagService.processActionTagEvent(actionTagEvent, _this.actionTagEvent).catch(function (reason) {
+            _this.actionTagService.processActionTagEvent(actionTagEvent, _this.actionTagEvent).then(function (value) {
+                _this.updateData();
+            }).catch(function (reason) {
                 _this.toastr.error('Es gibt leider Probleme - am besten noch einmal probieren :-(', 'Oje!');
             });
         });

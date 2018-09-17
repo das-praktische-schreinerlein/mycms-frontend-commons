@@ -206,7 +206,7 @@ var CommonDocMultiActionHeaderComponent = /** @class */ (function (_super) {
             this.tags = [];
         }
         else {
-            this.tags = actiontag_utils_1.ActionTagUtils.generateTagsForRecords(this.tagConfigs, this.searchResult.currentRecords, this.config);
+            this.tags = actiontag_utils_1.ActionTagUtils.generateTagsForRecords(this.tagConfigs, this.searchResult.currentRecords, this.config, { type: this.type });
             this.tags.map(function (value) {
                 if (value.available) {
                     _this.tagsOptions.push({ id: value.config.key, name: value.config.name });
@@ -251,6 +251,10 @@ var CommonDocMultiActionHeaderComponent = /** @class */ (function (_super) {
         core_1.Input(),
         __metadata("design:type", Map)
     ], CommonDocMultiActionHeaderComponent.prototype, "selectValueMap", void 0);
+    __decorate([
+        core_1.Input(),
+        __metadata("design:type", String)
+    ], CommonDocMultiActionHeaderComponent.prototype, "type", void 0);
     __decorate([
         core_1.Output(),
         __metadata("design:type", core_1.EventEmitter)

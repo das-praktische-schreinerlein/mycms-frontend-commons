@@ -71,6 +71,23 @@ export class CommonDocContentUtils {
         return cdocRecord[this.cdocAudiosKey];
     }
 
+    getPreferredFullMediaUrl(record: CommonDocRecord): string {
+        const videos = this.getVideos(record);
+        if (videos && videos.length > 0) {
+            return this.getVideoUrl(videos[0], 'x600');
+        }
+        const audios = this.getAudios(record);
+        if (audios && audios.length > 0) {
+            return this.getAudioUrl(audios[0], 'x600');
+        }
+        const images = this.getImages(record);
+        if (images && images.length > 0) {
+            return this.getImageUrl(images[0], 'x600');
+        }
+
+        return undefined;
+    }
+
     getThumbnail(image: BaseImageRecord): string {
         return this.getImageUrl(image, 'x100');
     }
@@ -163,7 +180,7 @@ export class CommonDocContentUtils {
         if (this.appService.getAppConfig()['useAudioAssetStoreUrls'] === true) {
             return this.appService.getAppConfig()['audioBaseUrl'] + resolution + '/' + audio[this.cdocRecordRefIdField];
         } else {
-            return this.appService.getAppConfig()['audioBaseUrl'] + 'audio_' + resolution + '/' + audio.fileName + (suffix ? suffix : '');
+            return this.appService.getAppConfig()['audioBaseUrl'] + audio.fileName + (suffix ? suffix : '');
         }
     }
 

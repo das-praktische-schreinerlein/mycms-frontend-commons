@@ -2,17 +2,19 @@
  
 # Versions
  
-## 2.1.0
-- none
+## 3.0.0
+- improvements on albumpage
 
 ### new features
-- none
+- frontend: added m3u-Export to albumpage
  
 ### improvements
-- none
+- frontend: service-functions to save content as file in browser
+- frontend: check profileConfigs on actiontags
+- frontend: added template for albumpage
  
 ### bug fixes
-- none
+- frontend: fixed action-handling 
  
 ### breaking changes
 - none

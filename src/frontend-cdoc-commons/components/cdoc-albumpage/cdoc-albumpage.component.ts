@@ -11,22 +11,28 @@ import {CommonDocRecord} from '@dps/mycms-commons/dist/search-commons/model/reco
 import {CommonDocSearchForm} from '@dps/mycms-commons/dist/search-commons/model/forms/cdoc-searchform';
 import {CommonDocSearchResult} from '@dps/mycms-commons/dist/search-commons/model/container/cdoc-searchresult';
 import {CommonDocDataService} from '@dps/mycms-commons/dist/search-commons/services/cdoc-data.service';
-import {Layout, LayoutService} from '../../angular-commons/services/layout.service';
-import {CommonRoutingService, RoutingState} from '../../angular-commons/services/common-routing.service';
-import {ErrorResolver} from '../resolver/error.resolver';
-import {CommonDocRoutingService} from '../services/cdoc-routing.service';
+import {Layout, LayoutService} from '../../../angular-commons/services/layout.service';
+import {CommonRoutingService, RoutingState} from '../../../angular-commons/services/common-routing.service';
+import {ErrorResolver} from '../../resolver/error.resolver';
+import {CommonDocRoutingService} from '../../services/cdoc-routing.service';
 import {GenericSearchFormSearchFormConverter} from '@dps/mycms-commons/dist/search-commons/services/generic-searchform.converter';
-import {PageUtils} from '../../angular-commons/services/page.utils';
-import {GenericTrackingService} from '../../angular-commons/services/generic-tracking.service';
-import {CommonDocAlbumService} from '../services/cdoc-album.service';
+import {PageUtils} from '../../../angular-commons/services/page.utils';
+import {GenericTrackingService} from '../../../angular-commons/services/generic-tracking.service';
+import {CommonDocAlbumService} from '../../services/cdoc-album.service';
 import {GenericAppService} from '@dps/mycms-commons/dist/commons/services/generic-app.service';
 import {Facets} from '@dps/mycms-commons/dist/search-commons/model/container/facets';
-import {ResolvedData} from '../../angular-commons/resolver/resolver.utils';
-import {CommonDocAlbumResolver} from '../resolver/cdoc-album.resolver';
-import {AbstractPageComponent} from '../../frontend-pdoc-commons/components/pdoc-page.component';
-import {PlatformService} from '../../angular-commons/services/platform.service';
+import {ResolvedData} from '../../../angular-commons/resolver/resolver.utils';
+import {CommonDocAlbumResolver} from '../../resolver/cdoc-album.resolver';
+import {AbstractPageComponent} from '../../../frontend-pdoc-commons/components/pdoc-page.component';
+import {PlatformService} from '../../../angular-commons/services/platform.service';
 import {PDocRecord} from '@dps/mycms-commons/dist/pdoc-commons/model/records/pdoc-record';
-import {CommonEnvironment} from '../../frontend-pdoc-commons/common-environment';
+import {CommonEnvironment} from '../../../frontend-pdoc-commons/common-environment';
+import {CommonDocPlaylistService} from '@dps/mycms-commons/dist/search-commons/services/cdoc-playlist.service';
+import {AngularHtmlService} from '../../../angular-commons/services/angular-html.service';
+import {CommonDocMultiActionManager} from '../../services/cdoc-multiaction.manager';
+import {IMultiSelectOption} from 'angular-2-dropdown-multiselect';
+import {SearchFormUtils} from '../../../angular-commons/services/searchform-utils.service';
+import {CommonDocSearchFormUtils} from '../../services/cdoc-searchform-utils.service';
 
 export interface CommonDocAlbumpageComponentConfig {
     baseSearchUrl: string;
@@ -34,6 +40,7 @@ export interface CommonDocAlbumpageComponentConfig {
     baseAlbumUrl: string;
     autoPlayAllowed: boolean;
     maxAllowedItems: number;
+    m3uAvailable?: boolean;
 }
 
 export abstract class CommonDocAlbumpageComponent <R extends CommonDocRecord, F extends CommonDocSearchForm,
@@ -55,6 +62,8 @@ export abstract class CommonDocAlbumpageComponent <R extends CommonDocRecord, F 
     autoPlayAllowed = false;
     maxAllowedItems = -1;
     pauseAutoPlay = false;
+    m3uAvailable = false;
+    multiActionSelectValueMap = new Map<string, IMultiSelectOption[]>();
 
     public editFormGroup: FormGroup = this.fb.group({
         albumIds: ''
@@ -67,6 +76,9 @@ export abstract class CommonDocAlbumpageComponent <R extends CommonDocRecord, F 
                 protected pageUtils: PageUtils, protected cd: ChangeDetectorRef, protected trackingProvider: GenericTrackingService,
                 public fb: FormBuilder, protected cdocAlbumService: CommonDocAlbumService, protected appService: GenericAppService,
                 protected platformService: PlatformService, protected layoutService: LayoutService,
+                protected searchFormUtils: SearchFormUtils, protected cdocSearchFormUtils: CommonDocSearchFormUtils,
+                protected playlistService: CommonDocPlaylistService<R>,
+                protected multiActionManager: CommonDocMultiActionManager<R, F, S, D>,
                 protected environment: CommonEnvironment) {
         super(route, toastr, vcr, pageUtils, cd, trackingProvider, appService, platformService, layoutService, environment);
         this.searchForm = cdocDataService.newSearchForm({});
@@ -100,6 +112,9 @@ export abstract class CommonDocAlbumpageComponent <R extends CommonDocRecord, F 
 
                 if (data.flgDoEdit === true) {
                     this.mode = 'edit';
+                    this.setEditPageLayoutAndStyles();
+                } else {
+                    this.setShowPageLayoutAndStyles();
                 }
 
                 // console.log('route: search for ', data);
@@ -109,7 +124,6 @@ export abstract class CommonDocAlbumpageComponent <R extends CommonDocRecord, F 
 
                 this.setMetaTags(this.config, null, null);
                 this.trackingProvider.trackPageView();
-                this.setPageLayoutAndStyles();
 
                 this.curRecordNr = this.listSearchForm.pageNum;
                 return this.doSearch();
@@ -131,7 +145,7 @@ export abstract class CommonDocAlbumpageComponent <R extends CommonDocRecord, F 
         this.curRecordNr = page;
         this.searchForm.pageNum = this.curRecordNr;
         this.listSearchForm.pageNum = this.curRecordNr;
-        this.redictToSearch();
+        this.redirectToSearch();
 
         return false;
     }
@@ -246,27 +260,51 @@ export abstract class CommonDocAlbumpageComponent <R extends CommonDocRecord, F 
         return false;
     }
 
-    redictToSearch(): boolean {
+    redirectToSearch(): boolean {
         this.commonRoutingService.navigateByUrl([this.baseAlbumUrl + '/show', this.albumKey, this.listSearchForm.sort, 1,
             this.curRecordNr].join('/'));
         return false;
     }
 
+    redirectToEdit(): boolean {
+        this.commonRoutingService.navigateByUrl([this.baseAlbumUrl + '/edit', this.albumKey, this.listSearchForm.sort,
+            this.listSearchForm.perPage, this.listSearchForm.pageNum].join('/'));
+        return false;
+    }
+
     doSaveAsFile(): boolean {
         const albumEntry = { key: this.albumKey, ids: this.editFormGroup.getRawValue()['albumIds']};
-        const blob = new Blob([JSON.stringify(albumEntry, null, 2)], {type : 'application/json'});
         const filename = this.albumKey + '.mytbalbum.json';
-        if (window.navigator && window.navigator.msSaveOrOpenBlob) {
-            window.navigator.msSaveOrOpenBlob(blob, filename);
-        } else {
-            const e = document.createEvent('MouseEvents'),
-                a = document.createElement('a');
-            a.download = filename;
-            a.href = window.URL.createObjectURL(blob);
-            a.dataset.downloadurl = ['text/json', a.download, a.href].join(':');
-            e.initEvent('click', true, false);
-            a.dispatchEvent(e);
+        AngularHtmlService.browserSaveTextAsFile(JSON.stringify(albumEntry, null, 2), filename, 'application/json');
+
+        return true;
+    }
+
+    doSaveAsM3U(): boolean {
+        if (this.m3uAvailable !== true) {
+            return true;
         }
+
+        const filename = this.albumKey + '.mytbalbum.m3u';
+        const ids = this.searchForm.moreFilter.replace(/id:/g, '').split(',');
+        const m3uSearchForm = this.cdocDataService.cloneSanitizedSearchForm(this.searchForm);
+        m3uSearchForm.perPage = 99999;
+        m3uSearchForm.pageNum = 1;
+
+        this.showLoadingSpinner = true;
+        const me = this;
+        this.cdocDataService.doMultiSearch(m3uSearchForm, ids).then(function doneSearch(cdocSearchResult: S) {
+            me.showLoadingSpinner = false;
+            me.cd.markForCheck();
+            AngularHtmlService.browserSaveTextAsFile(
+                me.playlistService.generateM3uForRecords('', cdocSearchResult.currentRecords), filename, 'application/m3u');
+        }).catch(function errorSearch(reason) {
+            me.toastr.error('Es gibt leider Probleme bei der Suche - am besten noch einmal probieren :-(', 'Oje!');
+            console.error('doSearch failed:', reason);
+            me.showLoadingSpinner = false;
+            me.cd.markForCheck();
+        });
+
         return true;
     }
 
@@ -302,7 +340,7 @@ export abstract class CommonDocAlbumpageComponent <R extends CommonDocRecord, F 
         }
 
         me.onCurRecordChange(me.curRecordNr + 1);
-        this.redictToSearch();
+        this.redirectToSearch();
 
         return false;
     }
@@ -324,6 +362,23 @@ export abstract class CommonDocAlbumpageComponent <R extends CommonDocRecord, F 
         return this.doSave() && this.doShow();
     }
 
+    onSubmitSelectedMultiActions(event): boolean {
+        this.showLoadingSpinner = true;
+        this.cd.markForCheck();
+
+        this.multiActionManager.processActionTags().then(value => {
+            this.toastr.info('Aktionen wurden erfolgreich ausgeführt.', 'Juhu!');
+            this.searchForm.moreFilter = 'id:' + this.cdocAlbumService.getDocIds(this.albumKey).join(',');
+            this.doSearch();
+        }).catch(reason => {
+            this.toastr.error('Leider trat ein Fehler auf :-(.', 'Oje!');
+            this.showLoadingSpinner = false;
+            this.cd.markForCheck();
+        });
+
+        return false;
+    }
+
     protected abstract getComponentConfig(config: {}): CommonDocAlbumpageComponentConfig;
 
     protected configureComponent(config: {}): void {
@@ -334,6 +389,7 @@ export abstract class CommonDocAlbumpageComponent <R extends CommonDocRecord, F 
         this.baseSearchUrlDefault = componentConfig.baseSearchUrlDefault;
         this.autoPlayAllowed = componentConfig.autoPlayAllowed;
         this.maxAllowedItems = componentConfig.maxAllowedItems;
+        this.m3uAvailable = componentConfig.m3uAvailable;
     }
 
     protected configureProcessingOfResolvedData(config: {}): void {
@@ -394,11 +450,19 @@ export abstract class CommonDocAlbumpageComponent <R extends CommonDocRecord, F 
     }
 
     protected setPageLayoutAndStyles(): void {
+    }
+
+
+    protected setShowPageLayoutAndStyles(): void {
         this.pageUtils.setGlobalStyle('', 'sectionStyle');
         this.pageUtils.setGlobalStyle('.hide-on-fullpage { display: none; } ' +
             '.show-on-fullpage-block { display: block; } ' +
             'body { background: #130b0b; } ' +
             '.image-content-container {background: #130b0b !IMPORTANT; border: none !IMPORTANT;} ', 'fullPageStyle');
+    }
+
+    protected setEditPageLayoutAndStyles(): void {
+        this.pageUtils.setGlobalStyle('', 'fullPageStyle');
     }
 
     protected processFile(file: File): boolean {
@@ -432,7 +496,9 @@ export abstract class CommonDocAlbumpageComponent <R extends CommonDocRecord, F 
         if (this.idCsvValidationRule.isValid(ids)) {
             this.cdocAlbumService.removeDocIds(this.albumKey);
             for (const id of ids.split(',')) {
-                this.cdocAlbumService.addIdToAlbum(this.albumKey, id);
+                if (id !== '') {
+                    this.cdocAlbumService.addIdToAlbum(this.albumKey, id);
+                }
             }
             return true;
         } else {
@@ -464,6 +530,7 @@ export abstract class CommonDocAlbumpageComponent <R extends CommonDocRecord, F 
         me.cdocDataService.doMultiSearch(me.searchForm, ids).then(function doneSearch(cdocSearchResult: S) {
             me.initialized = true;
             me.searchResult = cdocSearchResult;
+            me.doCheckSearchResultAfterSearch(cdocSearchResult);
             me.loadListResult();
             me.loadRecord(me.curRecordNr);
             me.showLoadingSpinner = false;
@@ -475,6 +542,19 @@ export abstract class CommonDocAlbumpageComponent <R extends CommonDocRecord, F 
             me.showLoadingSpinner = false;
             me.cd.markForCheck();
         });
+    }
+
+    protected generateMultiActionSelectValueMapFromSearchResult(searchResult: S, valueMap: Map<string, IMultiSelectOption[]>): void {
+        if (searchResult !== undefined) {
+            valueMap.set('playlists', this.searchFormUtils.getIMultiSelectOptionsFromExtractedFacetValuesList(
+                this.cdocSearchFormUtils.getPlaylistValues(searchResult), true, [], true));
+        }
+    }
+
+    protected doCheckSearchResultAfterSearch(searchResult: S): void {
+        const valueMap = new Map<string, IMultiSelectOption[]>();
+        this.generateMultiActionSelectValueMapFromSearchResult(searchResult, valueMap);
+        this.multiActionSelectValueMap = valueMap;
     }
 
     protected loadRecord(nr: number): void {

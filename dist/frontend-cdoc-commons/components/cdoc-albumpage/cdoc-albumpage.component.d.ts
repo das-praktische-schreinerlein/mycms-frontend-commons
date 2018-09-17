@@ -8,26 +8,32 @@ import { CommonDocRecord } from '@dps/mycms-commons/dist/search-commons/model/re
 import { CommonDocSearchForm } from '@dps/mycms-commons/dist/search-commons/model/forms/cdoc-searchform';
 import { CommonDocSearchResult } from '@dps/mycms-commons/dist/search-commons/model/container/cdoc-searchresult';
 import { CommonDocDataService } from '@dps/mycms-commons/dist/search-commons/services/cdoc-data.service';
-import { Layout, LayoutService } from '../../angular-commons/services/layout.service';
-import { CommonRoutingService } from '../../angular-commons/services/common-routing.service';
-import { ErrorResolver } from '../resolver/error.resolver';
-import { CommonDocRoutingService } from '../services/cdoc-routing.service';
+import { Layout, LayoutService } from '../../../angular-commons/services/layout.service';
+import { CommonRoutingService } from '../../../angular-commons/services/common-routing.service';
+import { ErrorResolver } from '../../resolver/error.resolver';
+import { CommonDocRoutingService } from '../../services/cdoc-routing.service';
 import { GenericSearchFormSearchFormConverter } from '@dps/mycms-commons/dist/search-commons/services/generic-searchform.converter';
-import { PageUtils } from '../../angular-commons/services/page.utils';
-import { GenericTrackingService } from '../../angular-commons/services/generic-tracking.service';
-import { CommonDocAlbumService } from '../services/cdoc-album.service';
+import { PageUtils } from '../../../angular-commons/services/page.utils';
+import { GenericTrackingService } from '../../../angular-commons/services/generic-tracking.service';
+import { CommonDocAlbumService } from '../../services/cdoc-album.service';
 import { GenericAppService } from '@dps/mycms-commons/dist/commons/services/generic-app.service';
-import { ResolvedData } from '../../angular-commons/resolver/resolver.utils';
-import { AbstractPageComponent } from '../../frontend-pdoc-commons/components/pdoc-page.component';
-import { PlatformService } from '../../angular-commons/services/platform.service';
+import { ResolvedData } from '../../../angular-commons/resolver/resolver.utils';
+import { AbstractPageComponent } from '../../../frontend-pdoc-commons/components/pdoc-page.component';
+import { PlatformService } from '../../../angular-commons/services/platform.service';
 import { PDocRecord } from '@dps/mycms-commons/dist/pdoc-commons/model/records/pdoc-record';
-import { CommonEnvironment } from '../../frontend-pdoc-commons/common-environment';
+import { CommonEnvironment } from '../../../frontend-pdoc-commons/common-environment';
+import { CommonDocPlaylistService } from '@dps/mycms-commons/dist/search-commons/services/cdoc-playlist.service';
+import { CommonDocMultiActionManager } from '../../services/cdoc-multiaction.manager';
+import { IMultiSelectOption } from 'angular-2-dropdown-multiselect';
+import { SearchFormUtils } from '../../../angular-commons/services/searchform-utils.service';
+import { CommonDocSearchFormUtils } from '../../services/cdoc-searchform-utils.service';
 export interface CommonDocAlbumpageComponentConfig {
     baseSearchUrl: string;
     baseSearchUrlDefault: string;
     baseAlbumUrl: string;
     autoPlayAllowed: boolean;
     maxAllowedItems: number;
+    m3uAvailable?: boolean;
 }
 export declare abstract class CommonDocAlbumpageComponent<R extends CommonDocRecord, F extends CommonDocSearchForm, S extends CommonDocSearchResult<R, F>, D extends CommonDocDataService<R, F, S>> extends AbstractPageComponent {
     protected route: ActivatedRoute;
@@ -45,6 +51,10 @@ export declare abstract class CommonDocAlbumpageComponent<R extends CommonDocRec
     protected appService: GenericAppService;
     protected platformService: PlatformService;
     protected layoutService: LayoutService;
+    protected searchFormUtils: SearchFormUtils;
+    protected cdocSearchFormUtils: CommonDocSearchFormUtils;
+    protected playlistService: CommonDocPlaylistService<R>;
+    protected multiActionManager: CommonDocMultiActionManager<R, F, S, D>;
     protected environment: CommonEnvironment;
     protected idCsvValidationRule: IdCsvValidationRule;
     idValidationRule: IdValidationRule;
@@ -61,8 +71,10 @@ export declare abstract class CommonDocAlbumpageComponent<R extends CommonDocRec
     autoPlayAllowed: boolean;
     maxAllowedItems: number;
     pauseAutoPlay: boolean;
+    m3uAvailable: boolean;
+    multiActionSelectValueMap: Map<string, IMultiSelectOption[]>;
     editFormGroup: FormGroup;
-    constructor(route: ActivatedRoute, commonRoutingService: CommonRoutingService, errorResolver: ErrorResolver, cdocDataService: D, searchFormConverter: GenericSearchFormSearchFormConverter<F>, cdocRoutingService: CommonDocRoutingService, toastr: ToastsManager, vcr: ViewContainerRef, pageUtils: PageUtils, cd: ChangeDetectorRef, trackingProvider: GenericTrackingService, fb: FormBuilder, cdocAlbumService: CommonDocAlbumService, appService: GenericAppService, platformService: PlatformService, layoutService: LayoutService, environment: CommonEnvironment);
+    constructor(route: ActivatedRoute, commonRoutingService: CommonRoutingService, errorResolver: ErrorResolver, cdocDataService: D, searchFormConverter: GenericSearchFormSearchFormConverter<F>, cdocRoutingService: CommonDocRoutingService, toastr: ToastsManager, vcr: ViewContainerRef, pageUtils: PageUtils, cd: ChangeDetectorRef, trackingProvider: GenericTrackingService, fb: FormBuilder, cdocAlbumService: CommonDocAlbumService, appService: GenericAppService, platformService: PlatformService, layoutService: LayoutService, searchFormUtils: SearchFormUtils, cdocSearchFormUtils: CommonDocSearchFormUtils, playlistService: CommonDocPlaylistService<R>, multiActionManager: CommonDocMultiActionManager<R, F, S, D>, environment: CommonEnvironment);
     protected configureProcessing(): void;
     onCurRecordChange(page: number): boolean;
     onShowDoc(cdoc: R): boolean;
@@ -75,13 +87,16 @@ export declare abstract class CommonDocAlbumpageComponent<R extends CommonDocRec
     submitSave(event: Event): boolean;
     doEdit(): boolean;
     doShow(): boolean;
-    redictToSearch(): boolean;
+    redirectToSearch(): boolean;
+    redirectToEdit(): boolean;
     doSaveAsFile(): boolean;
+    doSaveAsM3U(): boolean;
     onFileSelected(event: any): void;
     onFileDropped(event: UploadEvent): void;
     onAlbumIntervalNext(): boolean;
     onAlbumIntervalStarted(): boolean;
     onAlbumReset(): boolean;
+    onSubmitSelectedMultiActions(event: any): boolean;
     protected abstract getComponentConfig(config: {}): CommonDocAlbumpageComponentConfig;
     protected configureComponent(config: {}): void;
     protected configureProcessingOfResolvedData(config: {}): void;
@@ -92,9 +107,13 @@ export declare abstract class CommonDocAlbumpageComponent<R extends CommonDocRec
     }): boolean;
     protected setMetaTags(config: {}, pdoc: PDocRecord, record: CommonDocRecord): void;
     protected setPageLayoutAndStyles(): void;
+    protected setShowPageLayoutAndStyles(): void;
+    protected setEditPageLayoutAndStyles(): void;
     protected processFile(file: File): boolean;
     protected doSave(): boolean;
     protected doSearch(): void;
+    protected generateMultiActionSelectValueMapFromSearchResult(searchResult: S, valueMap: Map<string, IMultiSelectOption[]>): void;
+    protected doCheckSearchResultAfterSearch(searchResult: S): void;
     protected loadRecord(nr: number): void;
     protected loadListResult(): void;
 }

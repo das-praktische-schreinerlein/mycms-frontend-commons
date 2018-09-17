@@ -27,6 +27,7 @@ var animations_1 = require("@angular/platform-browser/animations");
 var cdoc_list_component_1 = require("./components/cdoc-list/cdoc-list.component");
 var cdoc_audioplayer_component_1 = require("./components/cdoc-audioplayer/cdoc-audioplayer.component");
 var cdoc_actiontags_component_1 = require("./components/cdoc-actiontags/cdoc-actiontags.component");
+var ngx_file_drop_1 = require("ngx-file-drop");
 var FrontendCommonDocCommonsModule = /** @class */ (function () {
     function FrontendCommonDocCommonsModule() {
     }
@@ -55,6 +56,7 @@ var FrontendCommonDocCommonsModule = /** @class */ (function () {
                 animations_1.BrowserAnimationsModule,
                 forms_1.FormsModule,
                 forms_1.ReactiveFormsModule,
+                ngx_file_drop_1.FileDropModule,
                 angular_commons_module_1.AngularCommonsModule
             ],
             exports: [

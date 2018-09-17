@@ -106,7 +106,7 @@ var CommonDocActionTagsComponent = /** @class */ (function (_super) {
         }
         else {
             this.cdocAlbumService.initAlbenForDocId(this.item.currentRecord);
-            this.tags = actiontag_utils_1.ActionTagUtils.generateTags(this.tagConfigs, this.item.currentRecord, this.config);
+            this.tags = actiontag_utils_1.ActionTagUtils.generateTags(this.tagConfigs, this.item.currentRecord, this.config, { type: this.type });
         }
         this.hideInactive();
         if (this.type === 'actionTagsBig') {

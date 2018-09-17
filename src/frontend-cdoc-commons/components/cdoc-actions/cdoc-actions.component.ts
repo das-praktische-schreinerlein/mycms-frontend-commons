@@ -42,7 +42,9 @@ export class CommonDocActionsComponent <R extends CommonDocRecord, F extends Com
 
     protected configureActionListener(): void {
         this.childActionTagEvent.asObservable().subscribe(actionTagEvent => {
-            this.actionTagService.processActionTagEvent(actionTagEvent, this.actionTagEvent).catch(reason => {
+            this.actionTagService.processActionTagEvent(actionTagEvent, this.actionTagEvent).then(value => {
+                this.updateData();
+            }).catch(reason => {
                 this.toastr.error('Es gibt leider Probleme - am besten noch einmal probieren :-(', 'Oje!');
             });
         });

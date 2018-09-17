@@ -77,6 +77,9 @@ export class CommonDocMultiActionHeaderComponent <R extends CommonDocRecord, F e
     @Input()
     public selectValueMap?: Map<string, IMultiSelectOption[]>;
 
+    @Input()
+    public type?: string;
+
     @Output()
     public submitSelectedMultiActions: EventEmitter<MultiActionTagConfig[]> = new EventEmitter();
 
@@ -217,7 +220,8 @@ export class CommonDocMultiActionHeaderComponent <R extends CommonDocRecord, F e
         if (this.searchResult === undefined) {
             this.tags = [];
         } else {
-            this.tags = ActionTagUtils.generateTagsForRecords(this.tagConfigs, this.searchResult.currentRecords, this.config);
+            this.tags = ActionTagUtils.generateTagsForRecords(this.tagConfigs, this.searchResult.currentRecords,
+                this.config, { type: this.type});
             this.tags.map(value => {
                 if (value.available) {
                     this.tagsOptions.push({id: value.config.key, name: value.config.name});

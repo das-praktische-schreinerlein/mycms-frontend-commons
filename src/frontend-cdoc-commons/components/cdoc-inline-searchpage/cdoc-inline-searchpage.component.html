@@ -40,6 +40,7 @@
             <app-cdoc-multiactionheader [multiActionManager]="multiActionManager"
                                         [searchResult]="searchResult"
                                         [selectValueMap]="multiActionSelectValueMap"
+                                        [type]="'inline-searchpage'"
                                         (submitSelectedMultiActions)="onSubmitSelectedMultiActions($event)"></app-cdoc-multiactionheader>
         </div>
         <div class="container" *ngIf="showResultList">

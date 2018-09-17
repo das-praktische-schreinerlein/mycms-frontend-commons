@@ -116,6 +116,9 @@ export class CommonDocMultiActionManager <R extends CommonDocRecord, F extends C
             processed: false,
             set: true
         };
+        if (actionTagConfig.payload['set'] === false) {
+            actionTagEvent.set = false;
+        }
         const actionTagEventEmitter: EventEmitter<ActionTagEvent> = new EventEmitter<ActionTagEvent>();
 
         return this.actionTagService.processActionTagEvent(actionTagEvent, actionTagEventEmitter).catch(reason => {

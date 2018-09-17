@@ -56,6 +56,7 @@ export declare class CommonDocContentUtils {
     getImages(cdocRecord: CommonDocRecord): BaseImageRecord[];
     getVideos(cdocRecord: CommonDocRecord): BaseVideoRecord[];
     getAudios(cdocRecord: CommonDocRecord): BaseAudioRecord[];
+    getPreferredFullMediaUrl(record: CommonDocRecord): string;
     getThumbnail(image: BaseImageRecord): string;
     getVideoThumbnail(video: BaseVideoRecord): string;
     getAudioThumbnail(audio: BaseAudioRecord): string;

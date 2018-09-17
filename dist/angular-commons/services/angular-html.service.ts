@@ -3,6 +3,25 @@ import {CommonRoutingService} from './common-routing.service';
 
 @Injectable()
 export class AngularHtmlService {
+    public static browserSaveBlobAsFile(blob: Blob, fileName: string, mimeType: string) {
+        if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+            window.navigator.msSaveOrOpenBlob(blob, fileName);
+        } else {
+            const e = document.createEvent('MouseEvents'),
+                a = document.createElement('a');
+            a.download = fileName;
+            a.href = window.URL.createObjectURL(blob);
+            a.dataset.downloadurl = [mimeType, a.download, a.href].join(':');
+            e.initEvent('click', true, false);
+            a.dispatchEvent(e);
+        }
+    }
+
+    public static browserSaveTextAsFile(text: string, fileName: string, mimeType: string) {
+        const blob = new Blob([text], { type: mimeType });
+        AngularHtmlService.browserSaveBlobAsFile(blob, fileName, mimeType);
+    }
+
     constructor(private commonRoutingService: CommonRoutingService) {
     }
 
