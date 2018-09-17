@@ -43,7 +43,7 @@
                                           [perPage]="listSearchForm.perPage"
                                           [layout]="layout"
                                           [sort]="listSearchForm.sort"
-                                          [availableSorts]="cdocDataService.getAvailableSorts()"
+                                          [availableSorts]="cdocDataService.getSearchService().getAvailableSorts()"
                                           [pauseAutoplay]="pauseAutoPlay"
                                           (perPageChange)="onPerPageChange($event)"
                                           (sortChange)="onSortChange($event)"
