@@ -35,6 +35,9 @@ var CommonDocSearchFormUtils = /** @class */ (function () {
     CommonDocSearchFormUtils.prototype.getPlaylistValues = function (searchResult) {
         return this.searchFormUtils.getFacetValues(searchResult, 'playlists_txt', '', '');
     };
+    CommonDocSearchFormUtils.prototype.getInitialValues = function (searchResult) {
+        return this.searchFormUtils.getFacetValues(searchResult, 'initial_s', '', '');
+    };
     CommonDocSearchFormUtils = __decorate([
         core_1.Injectable(),
         __metadata("design:paramtypes", [searchform_utils_service_1.SearchFormUtils, searchparameter_utils_1.SearchParameterUtils])

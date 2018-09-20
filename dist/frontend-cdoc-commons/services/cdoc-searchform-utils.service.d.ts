@@ -12,4 +12,5 @@ export declare class CommonDocSearchFormUtils {
     getTypeValues(searchResult: CommonDocSearchResult<CommonDocRecord, CommonDocSearchForm>): any[];
     getTypeLimit(searchResult: CommonDocSearchResult<CommonDocRecord, CommonDocSearchForm>): number;
     getPlaylistValues(searchResult: CommonDocSearchResult<CommonDocRecord, CommonDocSearchForm>): any[];
+    getInitialValues(searchResult: CommonDocSearchResult<CommonDocRecord, CommonDocSearchForm>): any[];
 }

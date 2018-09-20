@@ -71,6 +71,7 @@ export declare abstract class CommonDocSearchpageComponent<R extends CommonDocRe
     onShowFormChanged(showForm: boolean): boolean;
     onTimeTableColumnClicked(month: string): boolean;
     onTypeTableColumnClicked(type: string): boolean;
+    onInitialTableColumnClicked(initial: string): boolean;
     onTagcloudClicked(filterValue: any, filter: string): boolean;
     onPlayerStarted(cdoc: R): void;
     onPlayerStopped(cdoc: R): void;

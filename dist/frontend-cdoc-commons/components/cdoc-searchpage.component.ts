@@ -204,6 +204,13 @@ export abstract class CommonDocSearchpageComponent<R extends CommonDocRecord, F 
         return false;
     }
 
+    onInitialTableColumnClicked(initial: string) {
+        this.searchForm.initial = initial;
+        this.searchForm.pageNum = 1;
+        this.redirectToSearch();
+        return false;
+    }
+
     onTagcloudClicked(filterValue: any, filter: string) {
         this.searchForm[filter] = filterValue;
         this.searchForm.pageNum = 1;

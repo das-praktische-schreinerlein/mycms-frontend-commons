@@ -168,6 +168,12 @@ var CommonDocSearchpageComponent = /** @class */ (function (_super) {
         this.redirectToSearch();
         return false;
     };
+    CommonDocSearchpageComponent.prototype.onInitialTableColumnClicked = function (initial) {
+        this.searchForm.initial = initial;
+        this.searchForm.pageNum = 1;
+        this.redirectToSearch();
+        return false;
+    };
     CommonDocSearchpageComponent.prototype.onTagcloudClicked = function (filterValue, filter) {
         this.searchForm[filter] = filterValue;
         this.searchForm.pageNum = 1;

@@ -37,4 +37,8 @@ export class CommonDocSearchFormUtils {
     getPlaylistValues(searchResult: CommonDocSearchResult<CommonDocRecord, CommonDocSearchForm>): any[] {
          return this.searchFormUtils.getFacetValues(searchResult, 'playlists_txt', '', '');
     }
+
+    getInitialValues(searchResult: CommonDocSearchResult<CommonDocRecord, CommonDocSearchForm>): any[] {
+        return this.searchFormUtils.getFacetValues(searchResult, 'initial_s', '', '');
+    }
 }
