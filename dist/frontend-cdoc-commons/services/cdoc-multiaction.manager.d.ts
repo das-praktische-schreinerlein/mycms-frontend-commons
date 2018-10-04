@@ -25,6 +25,7 @@ export declare class CommonDocMultiActionManager<R extends CommonDocRecord, F ex
     isRecordOnMultiActionTag(record: R): boolean;
     isMultiActionTagAvailableForRecord(record: R): boolean;
     processActionTags(): Promise<any>;
-    private processActionTagsForRecord(record);
+    private processRecordsForActionTag(actionTag);
     private processActionTagForRecord(actionTagConfig, record);
+    private processMultiActionTagForRecords(actionTagConfig, records);
 }

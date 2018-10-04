@@ -7,8 +7,10 @@ import {GenericAppService} from '@dps/mycms-commons/dist/commons/services/generi
 import {CommonDocSearchForm} from '@dps/mycms-commons/dist/search-commons/model/forms/cdoc-searchform';
 import {CommonDocSearchResult} from '@dps/mycms-commons/dist/search-commons/model/container/cdoc-searchresult';
 import {CommonDocDataService} from '@dps/mycms-commons/dist/search-commons/services/cdoc-data.service';
-import {ActionTagEvent} from '../components/cdoc-actiontags/cdoc-actiontags.component';
+import {ActionTagEvent, MultiRecordActionTagEvent} from '../components/cdoc-actiontags/cdoc-actiontags.component';
 import {utils} from 'js-data';
+import {AngularHtmlService} from '../../angular-commons/services/angular-html.service';
+import {CommonDocPlaylistService} from '@dps/mycms-commons/dist/search-commons/services/cdoc-playlist.service';
 
 export interface CommonDocActionTagServiceConfig {
     baseEditPath: string;
@@ -19,6 +21,7 @@ export abstract class CommonDocActionTagService <R extends CommonDocRecord, F ex
     protected baseEditPath: string;
 
     constructor(protected router: Router, protected cdocDataService: D,
+                protected cdocPlaylistService: CommonDocPlaylistService<R>,
                 protected cdocAlbumService: CommonDocAlbumService, protected appService: GenericAppService) {
         this.configureComponent({});
     }
@@ -113,6 +116,35 @@ export abstract class CommonDocActionTagService <R extends CommonDocRecord, F ex
 
     protected processActionTagEventUnknown(actionTagEvent: ActionTagEvent,
                                            actionTagEventEmitter: EventEmitter<ActionTagEvent>): Promise<any> {
+        actionTagEventEmitter.emit(actionTagEvent);
+        return Promise.resolve(true);
+    }
+
+    public processMultiRecordActionTagEvent(actionTagEvent: MultiRecordActionTagEvent,
+                                            actionTagEventEmitter: EventEmitter<MultiRecordActionTagEvent>): Promise<any> {
+        if (actionTagEvent.config.key === 'm3uplaylistexport') {
+            return this.processMultiRecordActionTagEventPlaylistExport(actionTagEvent, actionTagEventEmitter);
+        } else {
+            return this.processActionMultiRecordTagEventUnknown(actionTagEvent, actionTagEventEmitter);
+        }
+    }
+
+    protected processMultiRecordActionTagEventPlaylistExport(actionTagEvent: MultiRecordActionTagEvent,
+                                                             actionTagEventEmitter: EventEmitter<MultiRecordActionTagEvent>): Promise<any> {
+        AngularHtmlService.browserSaveTextAsFile(
+            this.cdocPlaylistService.generateM3uForRecords('', <R[]>actionTagEvent.records),
+            'playlist.m3u', 'application/m3u');
+        actionTagEvent.processed = true;
+        actionTagEvent.error = undefined;
+        actionTagEvent.results = actionTagEvent.records;
+        actionTagEventEmitter.emit(actionTagEvent);
+        return Promise.resolve(true);
+
+    }
+
+
+    protected processActionMultiRecordTagEventUnknown(actionTagEvent: MultiRecordActionTagEvent,
+                                                      actionTagEventEmitter: EventEmitter<MultiRecordActionTagEvent>): Promise<any> {
         actionTagEventEmitter.emit(actionTagEvent);
         return Promise.resolve(true);
     }

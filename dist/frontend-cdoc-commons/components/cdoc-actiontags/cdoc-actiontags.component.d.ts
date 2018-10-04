@@ -14,6 +14,14 @@ export interface ActionTagEvent {
     processed: boolean;
     error: any;
 }
+export interface MultiRecordActionTagEvent {
+    records: BaseEntityRecord[];
+    results: BaseEntityRecord[];
+    config: ActionTagConfig;
+    set: boolean;
+    processed: boolean;
+    error: any;
+}
 export interface CommonDocActionTagsComponentConfig {
     tagConfigs: ActionTagConfig[];
 }

@@ -55,14 +55,14 @@ var CommonDocMultiActionManager = /** @class */ (function () {
         return new Promise(function (allresolve, allreject) {
             var funcs = [];
             var me = _this;
-            var _loop_1 = function (record) {
+            var _loop_1 = function (actionTag) {
                 funcs.push(function () {
-                    return me.processActionTagsForRecord(record);
+                    return me.processRecordsForActionTag(actionTag);
                 });
             };
-            for (var _i = 0, _a = _this.selectedRecords; _i < _a.length; _i++) {
-                var record = _a[_i];
-                _loop_1(record);
+            for (var _i = 0, _a = _this.selectedActionTags; _i < _a.length; _i++) {
+                var actionTag = _a[_i];
+                _loop_1(actionTag);
             }
             Promise_serial(funcs, { parallelize: 1 }).then(function (arrayOfResults) {
                 return allresolve();
@@ -72,24 +72,31 @@ var CommonDocMultiActionManager = /** @class */ (function () {
             });
         });
     };
-    CommonDocMultiActionManager.prototype.processActionTagsForRecord = function (record) {
+    CommonDocMultiActionManager.prototype.processRecordsForActionTag = function (actionTag) {
         var _this = this;
         return new Promise(function (allresolve, allreject) {
             var funcs = [];
             var me = _this;
-            var _loop_2 = function (actionTag) {
+            if (actionTag.multiRecordTag) {
                 funcs.push(function () {
-                    return me.processActionTagForRecord(actionTag, record);
+                    return me.processMultiActionTagForRecords(actionTag, me.selectedRecords);
                 });
-            };
-            for (var _i = 0, _a = _this.selectedActionTags; _i < _a.length; _i++) {
-                var actionTag = _a[_i];
-                _loop_2(actionTag);
+            }
+            else {
+                var _loop_2 = function (record) {
+                    funcs.push(function () {
+                        return me.processActionTagForRecord(actionTag, record);
+                    });
+                };
+                for (var _i = 0, _a = _this.selectedRecords; _i < _a.length; _i++) {
+                    var record = _a[_i];
+                    _loop_2(record);
+                }
             }
             Promise_serial(funcs, { parallelize: 1 }).then(function (arrayOfResults) {
                 return allresolve();
             }).catch(function errorSearch(reason) {
-                console.error('processActionTagsForRecord failed:', reason);
+                console.error('processRecordsForActionTag failed:', reason);
                 return allreject(reason);
             });
         });
@@ -103,11 +110,22 @@ var CommonDocMultiActionManager = /** @class */ (function () {
             processed: false,
             set: true
         };
-        if (actionTagConfig.payload['set'] === false) {
-            actionTagEvent.set = false;
-        }
         var actionTagEventEmitter = new core_1.EventEmitter();
         return this.actionTagService.processActionTagEvent(actionTagEvent, actionTagEventEmitter).catch(function (reason) {
+            return js_data_1.utils.reject(reason);
+        });
+    };
+    CommonDocMultiActionManager.prototype.processMultiActionTagForRecords = function (actionTagConfig, records) {
+        var actionTagEvent = {
+            config: actionTagConfig,
+            records: records,
+            results: undefined,
+            error: undefined,
+            processed: false,
+            set: true
+        };
+        var actionTagEventEmitter = new core_1.EventEmitter();
+        return this.actionTagService.processMultiRecordActionTagEvent(actionTagEvent, actionTagEventEmitter).catch(function (reason) {
             return js_data_1.utils.reject(reason);
         });
     };

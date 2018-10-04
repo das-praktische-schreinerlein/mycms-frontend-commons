@@ -1,10 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var js_data_1 = require("js-data");
+var angular_html_service_1 = require("../../angular-commons/services/angular-html.service");
 var CommonDocActionTagService = /** @class */ (function () {
-    function CommonDocActionTagService(router, cdocDataService, cdocAlbumService, appService) {
+    function CommonDocActionTagService(router, cdocDataService, cdocPlaylistService, cdocAlbumService, appService) {
         this.router = router;
         this.cdocDataService = cdocDataService;
+        this.cdocPlaylistService = cdocPlaylistService;
         this.cdocAlbumService = cdocAlbumService;
         this.appService = appService;
         this.configureComponent({});
@@ -88,6 +90,26 @@ var CommonDocActionTagService = /** @class */ (function () {
         });
     };
     CommonDocActionTagService.prototype.processActionTagEventUnknown = function (actionTagEvent, actionTagEventEmitter) {
+        actionTagEventEmitter.emit(actionTagEvent);
+        return Promise.resolve(true);
+    };
+    CommonDocActionTagService.prototype.processMultiRecordActionTagEvent = function (actionTagEvent, actionTagEventEmitter) {
+        if (actionTagEvent.config.key === 'm3uplaylistexport') {
+            return this.processMultiRecordActionTagEventPlaylistExport(actionTagEvent, actionTagEventEmitter);
+        }
+        else {
+            return this.processActionMultiRecordTagEventUnknown(actionTagEvent, actionTagEventEmitter);
+        }
+    };
+    CommonDocActionTagService.prototype.processMultiRecordActionTagEventPlaylistExport = function (actionTagEvent, actionTagEventEmitter) {
+        angular_html_service_1.AngularHtmlService.browserSaveTextAsFile(this.cdocPlaylistService.generateM3uForRecords('', actionTagEvent.records), 'playlist.m3u', 'application/m3u');
+        actionTagEvent.processed = true;
+        actionTagEvent.error = undefined;
+        actionTagEvent.results = actionTagEvent.records;
+        actionTagEventEmitter.emit(actionTagEvent);
+        return Promise.resolve(true);
+    };
+    CommonDocActionTagService.prototype.processActionMultiRecordTagEventUnknown = function (actionTagEvent, actionTagEventEmitter) {
         actionTagEventEmitter.emit(actionTagEvent);
         return Promise.resolve(true);
     };

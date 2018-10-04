@@ -3,10 +3,13 @@
 # Versions
  
 ## 3.0.0
-- improvements on albumpage
+- improvements on albumpage and actiontags
 
 ### new features
 - frontend: added m3u-Export to albumpage
+- frontend: multirecord-actions to mulatiaction-manager
+- frontend: added playlist-export to action-service
+- frontend: new component to show/filter listheader with initals of the name 
  
 ### improvements
 - frontend: service-functions to save content as file in browser

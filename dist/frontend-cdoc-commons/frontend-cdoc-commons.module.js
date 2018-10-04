@@ -28,6 +28,7 @@ var cdoc_list_component_1 = require("./components/cdoc-list/cdoc-list.component"
 var cdoc_audioplayer_component_1 = require("./components/cdoc-audioplayer/cdoc-audioplayer.component");
 var cdoc_actiontags_component_1 = require("./components/cdoc-actiontags/cdoc-actiontags.component");
 var ngx_file_drop_1 = require("ngx-file-drop");
+var cdoc_initialtable_component_1 = require("./components/cdoc-initialtable/cdoc-initialtable.component");
 var FrontendCommonDocCommonsModule = /** @class */ (function () {
     function FrontendCommonDocCommonsModule() {
     }
@@ -47,7 +48,8 @@ var FrontendCommonDocCommonsModule = /** @class */ (function () {
                 cdoc_tagsstate_component_1.CommonDocTagsStateComponent,
                 cdoc_videoplayer_component_1.CommonDocVideoplayerComponent,
                 cdoc_audioplayer_component_1.CommonDocAudioplayerComponent,
-                cdoc_actiontags_component_1.CommonDocActionTagsComponent
+                cdoc_actiontags_component_1.CommonDocActionTagsComponent,
+                cdoc_initialtable_component_1.CommonDocInitialtableComponent
             ],
             imports: [
                 ng_bootstrap_1.NgbModule,
@@ -73,7 +75,8 @@ var FrontendCommonDocCommonsModule = /** @class */ (function () {
                 cdoc_tagsstate_component_1.CommonDocTagsStateComponent,
                 cdoc_videoplayer_component_1.CommonDocVideoplayerComponent,
                 cdoc_audioplayer_component_1.CommonDocAudioplayerComponent,
-                cdoc_actiontags_component_1.CommonDocActionTagsComponent
+                cdoc_actiontags_component_1.CommonDocActionTagsComponent,
+                cdoc_initialtable_component_1.CommonDocInitialtableComponent
             ]
         })
     ], FrontendCommonDocCommonsModule);

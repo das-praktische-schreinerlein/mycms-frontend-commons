@@ -5,7 +5,7 @@ import {CommonDocSearchForm} from '@dps/mycms-commons/dist/search-commons/model/
 import {CommonDocSearchResult} from '@dps/mycms-commons/dist/search-commons/model/container/cdoc-searchresult';
 import {CommonDocDataService} from '@dps/mycms-commons/dist/search-commons/services/cdoc-data.service';
 import * as Promise_serial from 'promise-serial';
-import {ActionTagEvent} from '../components/cdoc-actiontags/cdoc-actiontags.component';
+import {ActionTagEvent, MultiRecordActionTagEvent} from '../components/cdoc-actiontags/cdoc-actiontags.component';
 import {EventEmitter} from '@angular/core';
 import {Subject} from 'rxjs/Subject';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
@@ -73,9 +73,9 @@ export class CommonDocMultiActionManager <R extends CommonDocRecord, F extends C
         return new Promise<R[]>((allresolve, allreject) => {
             const funcs = [];
             const me = this;
-            for (const record of this.selectedRecords) {
+            for (const actionTag of this.selectedActionTags) {
                 funcs.push(function () {
-                    return me.processActionTagsForRecord(record);
+                    return me.processRecordsForActionTag(actionTag);
                 });
             }
 
@@ -88,20 +88,26 @@ export class CommonDocMultiActionManager <R extends CommonDocRecord, F extends C
         });
     }
 
-    private processActionTagsForRecord(record: R): Promise<any> {
+    private processRecordsForActionTag(actionTag: MultiActionTagConfig): Promise<any> {
         return new Promise<R[]>((allresolve, allreject) => {
             const funcs = [];
             const me = this;
-            for (const actionTag of this.selectedActionTags) {
+            if (actionTag.multiRecordTag) {
                 funcs.push(function () {
-                    return me.processActionTagForRecord(actionTag, record);
+                    return me.processMultiActionTagForRecords(actionTag, me.selectedRecords);
                 });
+            } else {
+                for (const record of this.selectedRecords) {
+                    funcs.push(function () {
+                        return me.processActionTagForRecord(actionTag, record);
+                    });
+                }
             }
 
             Promise_serial(funcs, {parallelize: 1}).then(arrayOfResults => {
                 return allresolve();
             }).catch(function errorSearch(reason) {
-                console.error('processActionTagsForRecord failed:', reason);
+                console.error('processRecordsForActionTag failed:', reason);
                 return allreject(reason);
             });
         });
@@ -116,12 +122,25 @@ export class CommonDocMultiActionManager <R extends CommonDocRecord, F extends C
             processed: false,
             set: true
         };
-        if (actionTagConfig.payload['set'] === false) {
-            actionTagEvent.set = false;
-        }
         const actionTagEventEmitter: EventEmitter<ActionTagEvent> = new EventEmitter<ActionTagEvent>();
 
         return this.actionTagService.processActionTagEvent(actionTagEvent, actionTagEventEmitter).catch(reason => {
+            return utils.reject(reason);
+        });
+    }
+
+    private processMultiActionTagForRecords(actionTagConfig: MultiActionTagConfig, records: R[]): Promise<any> {
+        const actionTagEvent: MultiRecordActionTagEvent = {
+            config: actionTagConfig,
+            records: records,
+            results: undefined,
+            error: undefined,
+            processed: false,
+            set: true
+        };
+        const actionTagEventEmitter: EventEmitter<MultiRecordActionTagEvent> = new EventEmitter<MultiRecordActionTagEvent>();
+
+        return this.actionTagService.processMultiRecordActionTagEvent(actionTagEvent, actionTagEventEmitter).catch(reason => {
             return utils.reject(reason);
         });
     }

@@ -14,7 +14,7 @@ export class GeoLoader  {
             }).catch(function onError(error: any) {
                     console.error('loading geofeature failed:' + LogUtils.sanitizeLogMsg(url), error);
                     return reject(error);
-                });
+            });
         });
     }
 
