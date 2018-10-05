@@ -17,6 +17,12 @@ import {IMultiSelectOption} from 'angular-2-dropdown-multiselect';
 import {SearchFormUtils} from '../../../angular-commons/services/searchform-utils.service';
 import {CommonDocSearchFormUtils} from '../../services/cdoc-searchform-utils.service';
 import {CommonDocMultiActionManager} from '../../services/cdoc-multiaction.manager';
+import {AngularHtmlService} from '../../../angular-commons/services/angular-html.service';
+import {BeanUtils} from '@dps/mycms-commons/dist/commons/utils/bean.utils';
+
+export interface CommonDocInlineSearchpageComponentConfig {
+    maxAllowedM3UExportItems: number;
+}
 
 export class CommonDocInlineSearchpageComponent <R extends CommonDocRecord, F extends CommonDocSearchForm,
     S extends CommonDocSearchResult<R, F>, D extends CommonDocDataService<R, F, S>> extends AbstractInlineComponent
@@ -26,6 +32,8 @@ export class CommonDocInlineSearchpageComponent <R extends CommonDocRecord, F ex
 
     showLoadingSpinner = false;
     Layout = Layout;
+    m3uExportAvailable = false;
+    maxAllowedM3UExportItems = -1;
 
     searchResult: S;
     searchForm: F;
@@ -68,6 +76,9 @@ export class CommonDocInlineSearchpageComponent <R extends CommonDocRecord, F ex
     public searchLinkLabel?: string;
 
     @Input()
+    public m3uLinkLabel?: string;
+
+    @Input()
     public htmlId?: string;
 
     @Input()
@@ -104,6 +115,7 @@ export class CommonDocInlineSearchpageComponent <R extends CommonDocRecord, F ex
         // do search
         this.appStateSubscription = this.appService.getAppState().subscribe(appState => {
             if (appState === AppState.Ready) {
+                this.configureComponent(this.appService.getAppConfig());
                 return this.doSearchWithParams(this.params);
             }
         });
@@ -202,6 +214,36 @@ export class CommonDocInlineSearchpageComponent <R extends CommonDocRecord, F ex
         return false;
     }
 
+    onM3UExport(): boolean {
+        this.showLoadingSpinner = true;
+        this.cd.markForCheck();
+
+        this.cdocDataService.export(this.searchForm, 'm3uplaylist', undefined).then(value => {
+            this.toastr.info('Export wurde erfolgreich ausgeführt.', 'Juhu!');
+            this.showLoadingSpinner = false;
+            this.cd.markForCheck();
+            AngularHtmlService.browserSaveTextAsFile(value, 'playlist.m3u', 'application/m3u');
+        }).catch(reason => {
+            this.toastr.error('Leider trat ein Fehler auf :-(.', 'Oje!');
+            this.showLoadingSpinner = false;
+            this.cd.markForCheck();
+        });
+
+        return true;
+    }
+
+    protected getComponentConfig(config: {}): CommonDocInlineSearchpageComponentConfig {
+        return {
+            maxAllowedM3UExportItems: BeanUtils.getValue(config, 'services.serverItemExport.maxAllowedM3UItems')
+        };
+    }
+
+    protected configureComponent(config: {}): void {
+        const componentConfig = this.getComponentConfig(config);
+
+        this.maxAllowedM3UExportItems = componentConfig.maxAllowedM3UExportItems;
+    }
+
     protected updateData(): void {
         if (this.initialized) {
             return this.doSearchWithParams(this.params);
@@ -260,6 +302,15 @@ export class CommonDocInlineSearchpageComponent <R extends CommonDocRecord, F ex
     }
 
     protected doCheckSearchResultAfterSearch(searchResult: S): void {
+        const config = this.appService.getAppConfig();
+        const maxAllowedItems = BeanUtils.getValue(config, 'services.serverItemExport.maxAllowedM3UItems');
+        if (maxAllowedItems > 0 && this.m3uLinkLabel && searchResult && searchResult.recordCount > 0 &&
+            maxAllowedItems > searchResult.recordCount) {
+            this.m3uExportAvailable = true;
+        } else {
+            this.m3uExportAvailable = false;
+        }
+
         const valueMap = new Map<string, IMultiSelectOption[]>();
         this.generateMultiActionSelectValueMapFromSearchResult(searchResult, valueMap);
         this.multiActionSelectValueMap = valueMap;

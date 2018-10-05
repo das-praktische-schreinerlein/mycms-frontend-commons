@@ -16,6 +16,9 @@ import { IMultiSelectOption } from 'angular-2-dropdown-multiselect';
 import { SearchFormUtils } from '../../../angular-commons/services/searchform-utils.service';
 import { CommonDocSearchFormUtils } from '../../services/cdoc-searchform-utils.service';
 import { CommonDocMultiActionManager } from '../../services/cdoc-multiaction.manager';
+export interface CommonDocInlineSearchpageComponentConfig {
+    maxAllowedM3UExportItems: number;
+}
 export declare class CommonDocInlineSearchpageComponent<R extends CommonDocRecord, F extends CommonDocSearchForm, S extends CommonDocSearchResult<R, F>, D extends CommonDocDataService<R, F, S>> extends AbstractInlineComponent implements OnInit, OnDestroy {
     protected appService: GenericAppService;
     protected commonRoutingService: CommonRoutingService;
@@ -33,6 +36,8 @@ export declare class CommonDocInlineSearchpageComponent<R extends CommonDocRecor
     protected appStateSubscription: Subscription;
     showLoadingSpinner: boolean;
     Layout: typeof Layout;
+    m3uExportAvailable: boolean;
+    maxAllowedM3UExportItems: number;
     searchResult: S;
     searchForm: F;
     multiActionSelectValueMap: Map<string, IMultiSelectOption[]>;
@@ -48,6 +53,7 @@ export declare class CommonDocInlineSearchpageComponent<R extends CommonDocRecor
     label: string;
     baseSearchUrl?: string;
     searchLinkLabel?: string;
+    m3uLinkLabel?: string;
     htmlId?: string;
     layout: Layout;
     short?: boolean;
@@ -66,6 +72,9 @@ export declare class CommonDocInlineSearchpageComponent<R extends CommonDocRecor
     getToSearchUrl(): string;
     onToSearchPage(event: any): boolean;
     onSubmitSelectedMultiActions(event: any): boolean;
+    onM3UExport(): boolean;
+    protected getComponentConfig(config: {}): CommonDocInlineSearchpageComponentConfig;
+    protected configureComponent(config: {}): void;
     protected updateData(): void;
     protected doSearchWithParams(params: any): void;
     protected doSearch(): void;

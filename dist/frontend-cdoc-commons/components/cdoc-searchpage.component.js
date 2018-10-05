@@ -18,6 +18,7 @@ var generic_app_service_1 = require("@dps/mycms-commons/dist/commons/services/ge
 var common_routing_service_1 = require("../../angular-commons/services/common-routing.service");
 var cdoc_section_searchform_resolver_1 = require("../resolver/cdoc-section-searchform.resolver");
 var pdoc_page_component_1 = require("../../frontend-pdoc-commons/components/pdoc-page.component");
+var angular_html_service_1 = require("../../angular-commons/services/angular-html.service");
 var CommonDocSearchpageComponent = /** @class */ (function (_super) {
     __extends(CommonDocSearchpageComponent, _super);
     function CommonDocSearchpageComponent(route, commonRoutingService, errorResolver, cdocDataService, searchFormConverter, cdocRoutingService, toastr, vcr, pageUtils, cd, trackingProvider, appService, platformService, layoutService, searchFormUtils, cdocSearchFormUtils, multiActionManager, environment) {
@@ -50,6 +51,8 @@ var CommonDocSearchpageComponent = /** @class */ (function (_super) {
         _this.showSearchFormElements = true;
         _this.pauseAutoPlay = false;
         _this.anchor = '';
+        _this.m3uExportAvailable = false;
+        _this.maxAllowedM3UExportItems = -1;
         _this.multiActionSelectValueMap = new Map();
         _this.searchForm = cdocDataService.newSearchForm({});
         _this.searchResult = cdocDataService.newSearchResult(_this.searchForm, 0, [], new facets_1.Facets());
@@ -200,6 +203,22 @@ var CommonDocSearchpageComponent = /** @class */ (function (_super) {
         });
         return false;
     };
+    CommonDocSearchpageComponent.prototype.onM3UExport = function () {
+        var _this = this;
+        this.showLoadingSpinner = true;
+        this.cd.markForCheck();
+        this.cdocDataService.export(this.searchForm, 'm3uplaylist', undefined).then(function (value) {
+            _this.toastr.info('Export wurde erfolgreich ausgeführt.', 'Juhu!');
+            _this.showLoadingSpinner = false;
+            _this.cd.markForCheck();
+            angular_html_service_1.AngularHtmlService.browserSaveTextAsFile(value, 'playlist.m3u', 'application/m3u');
+        }).catch(function (reason) {
+            _this.toastr.error('Leider trat ein Fehler auf :-(.', 'Oje!');
+            _this.showLoadingSpinner = false;
+            _this.cd.markForCheck();
+        });
+        return true;
+    };
     CommonDocSearchpageComponent.prototype.redirectToSearch = function () {
         // reset initialized
         this.initialized = false;
@@ -222,6 +241,7 @@ var CommonDocSearchpageComponent = /** @class */ (function (_super) {
         var componentConfig = this.getComponentConfig(config);
         this.baseSearchUrl = componentConfig.baseSearchUrl;
         this.baseSearchUrlDefault = componentConfig.baseSearchUrlDefault;
+        this.maxAllowedM3UExportItems = componentConfig.maxAllowedM3UExportItems;
     };
     CommonDocSearchpageComponent.prototype.configureProcessingOfResolvedData = function (config) {
     };
@@ -332,6 +352,13 @@ var CommonDocSearchpageComponent = /** @class */ (function (_super) {
     };
     CommonDocSearchpageComponent.prototype.doCheckSearchResultAfterSearch = function (searchResult) {
         this.pauseAutoPlay = false;
+        if (this.maxAllowedM3UExportItems > 0 && searchResult && searchResult.recordCount > 0 &&
+            this.maxAllowedM3UExportItems > searchResult.recordCount) {
+            this.m3uExportAvailable = true;
+        }
+        else {
+            this.m3uExportAvailable = false;
+        }
         var valueMap = new Map();
         this.generateMultiActionSelectValueMapFromSearchResult(searchResult, valueMap);
         this.multiActionSelectValueMap = valueMap;

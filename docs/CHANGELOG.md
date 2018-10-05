@@ -8,8 +8,8 @@
 ### new features
 - frontend: added m3u-Export to albumpage
 - frontend: multirecord-actions to mulatiaction-manager
-- frontend: added playlist-export to action-service
-- frontend: new component to show/filter listheader with initals of the name 
+- frontend: added playlist-export to action-service and search-components
+- frontend: new component to show/filter listheader with initials of the name 
  
 ### improvements
 - frontend: service-functions to save content as file in browser

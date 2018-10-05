@@ -24,6 +24,8 @@ var facets_1 = require("@dps/mycms-commons/dist/search-commons/model/container/f
 var layout_service_1 = require("../../../angular-commons/services/layout.service");
 var generic_app_service_1 = require("@dps/mycms-commons/dist/commons/services/generic-app.service");
 var inline_component_1 = require("../../../angular-commons/components/inline.component");
+var angular_html_service_1 = require("../../../angular-commons/services/angular-html.service");
+var bean_utils_1 = require("@dps/mycms-commons/dist/commons/utils/bean.utils");
 var CommonDocInlineSearchpageComponent = /** @class */ (function (_super) {
     __extends(CommonDocInlineSearchpageComponent, _super);
     function CommonDocInlineSearchpageComponent(appService, commonRoutingService, cdocDataService, searchFormConverter, cdocRoutingService, toastr, vcr, cd, elRef, pageUtils, searchFormUtils, cdocSearchFormUtils, multiActionManager) {
@@ -43,6 +45,8 @@ var CommonDocInlineSearchpageComponent = /** @class */ (function (_super) {
         _this.initialized = false;
         _this.showLoadingSpinner = false;
         _this.Layout = layout_service_1.Layout;
+        _this.m3uExportAvailable = false;
+        _this.maxAllowedM3UExportItems = -1;
         _this.multiActionSelectValueMap = new Map();
         _this.params = {};
         _this.showForm = false;
@@ -70,6 +74,7 @@ var CommonDocInlineSearchpageComponent = /** @class */ (function (_super) {
         // do search
         this.appStateSubscription = this.appService.getAppState().subscribe(function (appState) {
             if (appState === generic_app_service_1.AppState.Ready) {
+                _this.configureComponent(_this.appService.getAppConfig());
                 return _this.doSearchWithParams(_this.params);
             }
         });
@@ -148,6 +153,31 @@ var CommonDocInlineSearchpageComponent = /** @class */ (function (_super) {
         });
         return false;
     };
+    CommonDocInlineSearchpageComponent.prototype.onM3UExport = function () {
+        var _this = this;
+        this.showLoadingSpinner = true;
+        this.cd.markForCheck();
+        this.cdocDataService.export(this.searchForm, 'm3uplaylist', undefined).then(function (value) {
+            _this.toastr.info('Export wurde erfolgreich ausgeführt.', 'Juhu!');
+            _this.showLoadingSpinner = false;
+            _this.cd.markForCheck();
+            angular_html_service_1.AngularHtmlService.browserSaveTextAsFile(value, 'playlist.m3u', 'application/m3u');
+        }).catch(function (reason) {
+            _this.toastr.error('Leider trat ein Fehler auf :-(.', 'Oje!');
+            _this.showLoadingSpinner = false;
+            _this.cd.markForCheck();
+        });
+        return true;
+    };
+    CommonDocInlineSearchpageComponent.prototype.getComponentConfig = function (config) {
+        return {
+            maxAllowedM3UExportItems: bean_utils_1.BeanUtils.getValue(config, 'services.serverItemExport.maxAllowedM3UItems')
+        };
+    };
+    CommonDocInlineSearchpageComponent.prototype.configureComponent = function (config) {
+        var componentConfig = this.getComponentConfig(config);
+        this.maxAllowedM3UExportItems = componentConfig.maxAllowedM3UExportItems;
+    };
     CommonDocInlineSearchpageComponent.prototype.updateData = function () {
         if (this.initialized) {
             return this.doSearchWithParams(this.params);
@@ -198,6 +228,15 @@ var CommonDocInlineSearchpageComponent = /** @class */ (function (_super) {
         }
     };
     CommonDocInlineSearchpageComponent.prototype.doCheckSearchResultAfterSearch = function (searchResult) {
+        var config = this.appService.getAppConfig();
+        var maxAllowedItems = bean_utils_1.BeanUtils.getValue(config, 'services.serverItemExport.maxAllowedM3UItems');
+        if (maxAllowedItems > 0 && this.m3uLinkLabel && searchResult && searchResult.recordCount > 0 &&
+            maxAllowedItems > searchResult.recordCount) {
+            this.m3uExportAvailable = true;
+        }
+        else {
+            this.m3uExportAvailable = false;
+        }
         var valueMap = new Map();
         this.generateMultiActionSelectValueMapFromSearchResult(searchResult, valueMap);
         this.multiActionSelectValueMap = valueMap;
@@ -250,6 +289,10 @@ var CommonDocInlineSearchpageComponent = /** @class */ (function (_super) {
         core_1.Input(),
         __metadata("design:type", String)
     ], CommonDocInlineSearchpageComponent.prototype, "searchLinkLabel", void 0);
+    __decorate([
+        core_1.Input(),
+        __metadata("design:type", String)
+    ], CommonDocInlineSearchpageComponent.prototype, "m3uLinkLabel", void 0);
     __decorate([
         core_1.Input(),
         __metadata("design:type", String)

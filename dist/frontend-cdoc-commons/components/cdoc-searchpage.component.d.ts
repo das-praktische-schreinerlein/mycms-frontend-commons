@@ -22,10 +22,11 @@ import { CommonEnvironment } from '../../frontend-pdoc-commons/common-environmen
 import { CommonDocMultiActionManager } from '../services/cdoc-multiaction.manager';
 import { IMultiSelectOption } from 'angular-2-dropdown-multiselect';
 import { SearchFormUtils } from '../../angular-commons/services/searchform-utils.service';
-import { CommonDocSearchFormUtils } from '..//services/cdoc-searchform-utils.service';
+import { CommonDocSearchFormUtils } from '../services/cdoc-searchform-utils.service';
 export interface CommonDocSearchpageComponentConfig {
     baseSearchUrl: string;
     baseSearchUrlDefault: string;
+    maxAllowedM3UExportItems: number;
 }
 export declare abstract class CommonDocSearchpageComponent<R extends CommonDocRecord, F extends CommonDocSearchForm, S extends CommonDocSearchResult<R, F>, D extends CommonDocDataService<R, F, S>> extends AbstractPageComponent {
     protected route: ActivatedRoute;
@@ -59,6 +60,8 @@ export declare abstract class CommonDocSearchpageComponent<R extends CommonDocRe
     showSearchFormElements: boolean;
     pauseAutoPlay: boolean;
     anchor: string;
+    m3uExportAvailable: boolean;
+    maxAllowedM3UExportItems: number;
     multiActionSelectValueMap: Map<string, IMultiSelectOption[]>;
     constructor(route: ActivatedRoute, commonRoutingService: CommonRoutingService, errorResolver: ErrorResolver, cdocDataService: D, searchFormConverter: GenericSearchFormSearchFormConverter<F>, cdocRoutingService: CommonDocRoutingService, toastr: ToastsManager, vcr: ViewContainerRef, pageUtils: PageUtils, cd: ChangeDetectorRef, trackingProvider: GenericTrackingService, appService: GenericAppService, platformService: PlatformService, layoutService: LayoutService, searchFormUtils: SearchFormUtils, cdocSearchFormUtils: CommonDocSearchFormUtils, multiActionManager: CommonDocMultiActionManager<R, F, S, D>, environment: CommonEnvironment);
     protected configureProcessing(): void;
@@ -76,6 +79,7 @@ export declare abstract class CommonDocSearchpageComponent<R extends CommonDocRe
     onPlayerStarted(cdoc: R): void;
     onPlayerStopped(cdoc: R): void;
     onSubmitSelectedMultiActions(event: any): boolean;
+    onM3UExport(): boolean;
     protected redirectToSearch(): boolean;
     protected onResize(layoutSizeData: LayoutSizeData): void;
     protected abstract getComponentConfig(config: {}): CommonDocSearchpageComponentConfig;

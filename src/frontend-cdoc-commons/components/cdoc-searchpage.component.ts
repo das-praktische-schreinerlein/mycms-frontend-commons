@@ -24,11 +24,14 @@ import {CommonEnvironment} from '../../frontend-pdoc-commons/common-environment'
 import {CommonDocMultiActionManager} from '../services/cdoc-multiaction.manager';
 import {IMultiSelectOption} from 'angular-2-dropdown-multiselect';
 import {SearchFormUtils} from '../../angular-commons/services/searchform-utils.service';
-import {CommonDocSearchFormUtils} from '..//services/cdoc-searchform-utils.service';
+import {AngularHtmlService} from '../../angular-commons/services/angular-html.service';
+import {BeanUtils} from '@dps/mycms-commons/dist/commons/utils/bean.utils';
+import {CommonDocSearchFormUtils} from '../services/cdoc-searchform-utils.service';
 
 export interface CommonDocSearchpageComponentConfig {
     baseSearchUrl: string;
     baseSearchUrlDefault: string;
+    maxAllowedM3UExportItems: number;
 }
 
 export abstract class CommonDocSearchpageComponent<R extends CommonDocRecord, F extends CommonDocSearchForm,
@@ -48,6 +51,8 @@ export abstract class CommonDocSearchpageComponent<R extends CommonDocRecord, F 
     showSearchFormElements = true;
     pauseAutoPlay = false;
     anchor = '';
+    m3uExportAvailable = false;
+    maxAllowedM3UExportItems = -1;
 
     multiActionSelectValueMap = new Map<string, IMultiSelectOption[]>();
 
@@ -243,6 +248,24 @@ export abstract class CommonDocSearchpageComponent<R extends CommonDocRecord, F 
         return false;
     }
 
+    onM3UExport(): boolean {
+        this.showLoadingSpinner = true;
+        this.cd.markForCheck();
+
+        this.cdocDataService.export(this.searchForm, 'm3uplaylist', undefined).then(value => {
+            this.toastr.info('Export wurde erfolgreich ausgeführt.', 'Juhu!');
+            this.showLoadingSpinner = false;
+            this.cd.markForCheck();
+            AngularHtmlService.browserSaveTextAsFile(value, 'playlist.m3u', 'application/m3u');
+        }).catch(reason => {
+            this.toastr.error('Leider trat ein Fehler auf :-(.', 'Oje!');
+            this.showLoadingSpinner = false;
+            this.cd.markForCheck();
+        });
+
+        return true;
+    }
+
     protected redirectToSearch() {
         // reset initialized
         this.initialized = false;
@@ -272,6 +295,7 @@ export abstract class CommonDocSearchpageComponent<R extends CommonDocRecord, F 
 
         this.baseSearchUrl = componentConfig.baseSearchUrl;
         this.baseSearchUrlDefault = componentConfig.baseSearchUrlDefault;
+        this.maxAllowedM3UExportItems = componentConfig.maxAllowedM3UExportItems;
     }
 
     protected configureProcessingOfResolvedData(config: {}): void {
@@ -395,6 +419,13 @@ export abstract class CommonDocSearchpageComponent<R extends CommonDocRecord, F 
 
     protected doCheckSearchResultAfterSearch(searchResult: S): void {
         this.pauseAutoPlay = false;
+
+        if (this.maxAllowedM3UExportItems > 0 && searchResult && searchResult.recordCount > 0 &&
+            this.maxAllowedM3UExportItems > searchResult.recordCount) {
+            this.m3uExportAvailable = true;
+        } else {
+            this.m3uExportAvailable = false;
+        }
 
         const valueMap = new Map<string, IMultiSelectOption[]>();
         this.generateMultiActionSelectValueMapFromSearchResult(searchResult, valueMap);
