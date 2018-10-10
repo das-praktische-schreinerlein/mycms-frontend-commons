@@ -73,11 +73,11 @@ var SimpleAngularBackendHttpClient = /** @class */ (function (_super) {
         request = this.http.request(httpConfig.url, requestConfig);
         result = request.map(function (res) {
             // console.log('response makeHttpRequest:' + httpConfig.url, res);
-            var contentType = res.headers.get("content-type");
+            var contentType = res.headers.get('content-type');
             return {
                 headers: res.headers,
                 method: httpConfig.method,
-                data: contentType && contentType.indexOf("application/json") !== -1 ? res.json() : undefined,
+                data: contentType && contentType.indexOf('application/json') !== -1 ? res.json() : undefined,
                 text: function () { return res.text(); },
                 json: function () { return res.json(); },
                 status: res.status,
