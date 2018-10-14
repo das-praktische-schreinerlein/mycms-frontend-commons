@@ -19,8 +19,8 @@ var common_routing_service_1 = require("../../angular-commons/services/common-ro
 var generic_app_service_1 = require("@dps/mycms-commons/dist/commons/services/generic-app.service");
 var CommonDocEditpageComponent = /** @class */ (function (_super) {
     __extends(CommonDocEditpageComponent, _super);
-    function CommonDocEditpageComponent(route, cdocRoutingService, toastr, vcr, contentUtils, errorResolver, pageUtils, commonRoutingService, angularMarkdownService, angularHtmlService, cd, trackingProvider, appService, platformService, layoutService, environment, cdocDataService) {
-        var _this = _super.call(this, route, toastr, vcr, pageUtils, cd, trackingProvider, appService, platformService, layoutService, environment) || this;
+    function CommonDocEditpageComponent(route, cdocRoutingService, toastr, contentUtils, errorResolver, pageUtils, commonRoutingService, angularMarkdownService, angularHtmlService, cd, trackingProvider, appService, platformService, layoutService, environment, cdocDataService) {
+        var _this = _super.call(this, route, toastr, pageUtils, cd, trackingProvider, appService, platformService, layoutService, environment) || this;
         _this.route = route;
         _this.cdocRoutingService = cdocRoutingService;
         _this.toastr = toastr;
@@ -41,7 +41,6 @@ var CommonDocEditpageComponent = /** @class */ (function (_super) {
         _this.Layout = layout_service_1.Layout;
         _this.editAllowed = false;
         _this.contentUtils = contentUtils;
-        _this.toastr.setRootViewContainerRef(vcr);
         return _this;
     }
     CommonDocEditpageComponent.prototype.configureProcessing = function () {

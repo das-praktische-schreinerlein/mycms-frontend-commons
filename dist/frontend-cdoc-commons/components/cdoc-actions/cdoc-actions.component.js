@@ -24,7 +24,7 @@ var dynamic_component_host_directive_1 = require("../../../angular-commons/compo
 var inline_component_1 = require("../../../angular-commons/components/inline.component");
 var CommonDocActionsComponent = /** @class */ (function (_super) {
     __extends(CommonDocActionsComponent, _super);
-    function CommonDocActionsComponent(dynamicComponentService, toastr, vcr, cd, appService, actionTagService) {
+    function CommonDocActionsComponent(dynamicComponentService, toastr, cd, appService, actionTagService) {
         var _this = _super.call(this, cd) || this;
         _this.dynamicComponentService = dynamicComponentService;
         _this.toastr = toastr;
@@ -33,7 +33,6 @@ var CommonDocActionsComponent = /** @class */ (function (_super) {
         _this.actionTagService = actionTagService;
         _this.actionTagEvent = new core_1.EventEmitter();
         _this.childActionTagEvent = new core_1.EventEmitter();
-        _this.toastr.setRootViewContainerRef(vcr);
         _this.configureActionListener();
         return _this;
     }

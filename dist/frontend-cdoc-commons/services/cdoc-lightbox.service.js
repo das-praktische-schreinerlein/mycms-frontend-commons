@@ -10,7 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
-var angular2_lightbox_1 = require("angular2-lightbox");
+var ngx_lightbox_1 = require("ngx-lightbox");
 var cdoc_contentutils_service_1 = require("./cdoc-contentutils.service");
 var CommonDocLightBoxService = /** @class */ (function () {
     function CommonDocLightBoxService(contentUtils, lightbox) {
@@ -51,7 +51,7 @@ var CommonDocLightBoxService = /** @class */ (function () {
     };
     CommonDocLightBoxService = __decorate([
         core_1.Injectable(),
-        __metadata("design:paramtypes", [cdoc_contentutils_service_1.CommonDocContentUtils, angular2_lightbox_1.Lightbox])
+        __metadata("design:paramtypes", [cdoc_contentutils_service_1.CommonDocContentUtils, ngx_lightbox_1.Lightbox])
     ], CommonDocLightBoxService);
     return CommonDocLightBoxService;
 }());

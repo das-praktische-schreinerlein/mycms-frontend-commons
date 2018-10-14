@@ -20,8 +20,8 @@ var cdoc_details_resolver_1 = require("../resolver/cdoc-details.resolver");
 var pdoc_page_component_1 = require("../../frontend-pdoc-commons/components/pdoc-page.component");
 var CommonDocShowpageComponent = /** @class */ (function (_super) {
     __extends(CommonDocShowpageComponent, _super);
-    function CommonDocShowpageComponent(route, cdocRoutingService, toastr, vcr, contentUtils, errorResolver, pageUtils, commonRoutingService, angularMarkdownService, angularHtmlService, cd, trackingProvider, appService, platformService, layoutService, environment) {
-        var _this = _super.call(this, route, toastr, vcr, pageUtils, cd, trackingProvider, appService, platformService, layoutService, environment) || this;
+    function CommonDocShowpageComponent(route, cdocRoutingService, toastr, contentUtils, errorResolver, pageUtils, commonRoutingService, angularMarkdownService, angularHtmlService, cd, trackingProvider, appService, platformService, layoutService, environment) {
+        var _this = _super.call(this, route, toastr, pageUtils, cd, trackingProvider, appService, platformService, layoutService, environment) || this;
         _this.route = route;
         _this.cdocRoutingService = cdocRoutingService;
         _this.toastr = toastr;

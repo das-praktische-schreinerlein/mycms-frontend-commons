@@ -1,6 +1,6 @@
 import {ChangeDetectorRef, ViewContainerRef} from '@angular/core';
 import {ActivatedRoute, ParamMap} from '@angular/router';
-import {ToastsManager} from 'ng2-toastr';
+import {ToastrService} from 'ngx-toastr';
 import {CommonDocRoutingService} from '../services/cdoc-routing.service';
 import {Layout, LayoutService} from '../../angular-commons/services/layout.service';
 import {PDocRecord} from '@dps/mycms-commons/dist/pdoc-commons/model/records/pdoc-record';
@@ -42,14 +42,14 @@ export abstract class CommonDocShowpageComponent<R extends CommonDocRecord, F ex
     queryParamMap: ParamMap = undefined;
 
     constructor(protected route: ActivatedRoute, protected cdocRoutingService: CommonDocRoutingService,
-                protected toastr: ToastsManager, vcr: ViewContainerRef, contentUtils: CommonDocContentUtils,
+                protected toastr: ToastrService, contentUtils: CommonDocContentUtils,
                 protected errorResolver: ErrorResolver, protected pageUtils: PageUtils,
                 protected commonRoutingService: CommonRoutingService, protected angularMarkdownService: AngularMarkdownService,
                 protected angularHtmlService: AngularHtmlService, protected cd: ChangeDetectorRef,
                 protected trackingProvider: GenericTrackingService, protected appService: GenericAppService,
                 protected platformService: PlatformService, protected layoutService: LayoutService,
                 protected environment: CommonEnvironment) {
-        super(route, toastr, vcr, pageUtils, cd, trackingProvider, appService, platformService, layoutService, environment);
+        super(route, toastr, pageUtils, cd, trackingProvider, appService, platformService, layoutService, environment);
         this.contentUtils = contentUtils;
     }
 

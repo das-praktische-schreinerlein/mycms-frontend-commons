@@ -11,7 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var router_1 = require("@angular/router");
-var ng2_toastr_1 = require("ng2-toastr");
+var ngx_toastr_1 = require("ngx-toastr");
 var pdoc_data_service_1 = require("@dps/mycms-commons/dist/pdoc-commons/services/pdoc-data.service");
 var forms_1 = require("@angular/forms");
 var error_resolver_1 = require("../../../frontend-cdoc-commons/resolver/error.resolver");
@@ -19,7 +19,7 @@ var generic_validator_util_1 = require("@dps/mycms-commons/dist/search-commons/m
 var page_utils_1 = require("../../../angular-commons/services/page.utils");
 var common_routing_service_1 = require("../../../angular-commons/services/common-routing.service");
 var SectionBarComponent = /** @class */ (function () {
-    function SectionBarComponent(fb, route, pdocDataService, commonRoutingService, errorResolver, toastr, router, vcr, pageUtils, cd) {
+    function SectionBarComponent(fb, route, pdocDataService, commonRoutingService, errorResolver, toastr, router, pageUtils, cd) {
         this.fb = fb;
         this.route = route;
         this.pdocDataService = pdocDataService;
@@ -34,7 +34,6 @@ var SectionBarComponent = /** @class */ (function () {
         this.themeFormGroup = this.fb.group({
             theme: undefined
         });
-        this.toastr.setRootViewContainerRef(vcr);
     }
     SectionBarComponent.prototype.ngOnInit = function () {
         var _this = this;
@@ -82,8 +81,9 @@ var SectionBarComponent = /** @class */ (function () {
             changeDetection: core_1.ChangeDetectionStrategy.OnPush
         }),
         __metadata("design:paramtypes", [forms_1.FormBuilder, router_1.ActivatedRoute, pdoc_data_service_1.PDocDataService,
-            common_routing_service_1.CommonRoutingService, error_resolver_1.ErrorResolver, ng2_toastr_1.ToastsManager,
-            router_1.Router, core_1.ViewContainerRef, page_utils_1.PageUtils, core_1.ChangeDetectorRef])
+            common_routing_service_1.CommonRoutingService, error_resolver_1.ErrorResolver,
+            ngx_toastr_1.ToastrService, router_1.Router, page_utils_1.PageUtils,
+            core_1.ChangeDetectorRef])
     ], SectionBarComponent);
     return SectionBarComponent;
 }());

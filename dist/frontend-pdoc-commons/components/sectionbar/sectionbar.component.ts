@@ -1,7 +1,7 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewContainerRef} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {PDocRecord} from '@dps/mycms-commons/dist/pdoc-commons/model/records/pdoc-record';
-import {ToastsManager} from 'ng2-toastr';
+import {ToastrService} from 'ngx-toastr';
 import {PDocDataService} from '@dps/mycms-commons/dist/pdoc-commons/services/pdoc-data.service';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {ResolvedData} from '../../../angular-commons/resolver/resolver.utils';
@@ -26,9 +26,9 @@ export class SectionBarComponent implements OnInit {
     });
 
     constructor(public fb: FormBuilder, private route: ActivatedRoute, private pdocDataService: PDocDataService,
-                private commonRoutingService: CommonRoutingService, private errorResolver: ErrorResolver, private toastr: ToastsManager,
-                private router: Router, vcr: ViewContainerRef, private pageUtils: PageUtils, private cd: ChangeDetectorRef) {
-        this.toastr.setRootViewContainerRef(vcr);
+                private commonRoutingService: CommonRoutingService, private errorResolver: ErrorResolver,
+                private toastr: ToastrService, private router: Router, private pageUtils: PageUtils,
+                private cd: ChangeDetectorRef) {
     }
 
     ngOnInit() {

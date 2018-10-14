@@ -1,7 +1,7 @@
-import { ChangeDetectorRef, OnInit, ViewContainerRef } from '@angular/core';
+import { ChangeDetectorRef, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { PDocRecord } from '@dps/mycms-commons/dist/pdoc-commons/model/records/pdoc-record';
-import { ToastsManager } from 'ng2-toastr';
+import { ToastrService } from 'ngx-toastr';
 import { Layout, LayoutService, LayoutSizeData, SearchFormLayout } from '../../../angular-commons/services/layout.service';
 import { PDocDataService } from '@dps/mycms-commons/dist/pdoc-commons/services/pdoc-data.service';
 import { ErrorResolver } from '../../../frontend-cdoc-commons/resolver/error.resolver';
@@ -19,7 +19,7 @@ export declare class SectionPageComponent implements OnInit {
     protected pdocDataService: PDocDataService;
     protected commonRoutingService: CommonRoutingService;
     protected errorResolver: ErrorResolver;
-    protected toastr: ToastsManager;
+    protected toastr: ToastrService;
     protected pageUtils: PageUtils;
     protected angularMarkdownService: AngularMarkdownService;
     protected angularHtmlService: AngularHtmlService;
@@ -37,7 +37,7 @@ export declare class SectionPageComponent implements OnInit {
     Layout: typeof Layout;
     SearchFormLayout: typeof SearchFormLayout;
     searchFormLayout: SearchFormLayout;
-    constructor(route: ActivatedRoute, pdocDataService: PDocDataService, commonRoutingService: CommonRoutingService, errorResolver: ErrorResolver, toastr: ToastsManager, vcr: ViewContainerRef, pageUtils: PageUtils, angularMarkdownService: AngularMarkdownService, angularHtmlService: AngularHtmlService, cd: ChangeDetectorRef, trackingProvider: GenericTrackingService, platformService: PlatformService, layoutService: LayoutService, appService: GenericAppService);
+    constructor(route: ActivatedRoute, pdocDataService: PDocDataService, commonRoutingService: CommonRoutingService, errorResolver: ErrorResolver, toastr: ToastrService, pageUtils: PageUtils, angularMarkdownService: AngularMarkdownService, angularHtmlService: AngularHtmlService, cd: ChangeDetectorRef, trackingProvider: GenericTrackingService, platformService: PlatformService, layoutService: LayoutService, appService: GenericAppService);
     ngOnInit(): void;
     renderDesc(): string;
     onShow(record: PDocRecord): boolean;

@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Lightbox} from 'angular2-lightbox';
+import {Lightbox} from 'ngx-lightbox';
 import {CommonDocContentUtils} from './cdoc-contentutils.service';
 import {CommonDocRecord} from '@dps/mycms-commons/dist/search-commons/model/records/cdoc-entity-record';
 import {CommonDocSearchForm} from '@dps/mycms-commons/dist/search-commons/model/forms/cdoc-searchform';

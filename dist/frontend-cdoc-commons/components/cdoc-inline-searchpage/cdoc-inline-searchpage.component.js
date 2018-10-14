@@ -28,7 +28,7 @@ var angular_html_service_1 = require("../../../angular-commons/services/angular-
 var bean_utils_1 = require("@dps/mycms-commons/dist/commons/utils/bean.utils");
 var CommonDocInlineSearchpageComponent = /** @class */ (function (_super) {
     __extends(CommonDocInlineSearchpageComponent, _super);
-    function CommonDocInlineSearchpageComponent(appService, commonRoutingService, cdocDataService, searchFormConverter, cdocRoutingService, toastr, vcr, cd, elRef, pageUtils, searchFormUtils, cdocSearchFormUtils, multiActionManager) {
+    function CommonDocInlineSearchpageComponent(appService, commonRoutingService, cdocDataService, searchFormConverter, cdocRoutingService, toastr, cd, elRef, pageUtils, searchFormUtils, cdocSearchFormUtils, multiActionManager) {
         var _this = _super.call(this, cd) || this;
         _this.appService = appService;
         _this.commonRoutingService = commonRoutingService;
@@ -64,7 +64,6 @@ var CommonDocInlineSearchpageComponent = /** @class */ (function (_super) {
         _this.searchResultFound = new core_1.EventEmitter();
         _this.searchForm = _this.cdocDataService.newSearchForm({});
         _this.searchResult = _this.cdocDataService.newSearchResult(_this.searchForm, 0, [], new facets_1.Facets());
-        _this.toastr.setRootViewContainerRef(vcr);
         return _this;
     }
     CommonDocInlineSearchpageComponent.prototype.ngOnInit = function () {

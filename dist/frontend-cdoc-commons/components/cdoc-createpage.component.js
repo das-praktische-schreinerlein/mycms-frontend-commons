@@ -19,8 +19,8 @@ var layout_service_1 = require("../../angular-commons/services/layout.service");
 var cdoc_create_resolver_1 = require("../resolver/cdoc-create.resolver");
 var CommonDocCreatepageComponent = /** @class */ (function (_super) {
     __extends(CommonDocCreatepageComponent, _super);
-    function CommonDocCreatepageComponent(route, cdocRoutingService, toastr, vcr, contentUtils, errorResolver, pageUtils, commonRoutingService, angularMarkdownService, angularHtmlService, cd, trackingProvider, appService, platformService, layoutService, environment, cdocDataService) {
-        var _this = _super.call(this, route, toastr, vcr, pageUtils, cd, trackingProvider, appService, platformService, layoutService, environment) || this;
+    function CommonDocCreatepageComponent(route, cdocRoutingService, toastr, contentUtils, errorResolver, pageUtils, commonRoutingService, angularMarkdownService, angularHtmlService, cd, trackingProvider, appService, platformService, layoutService, environment, cdocDataService) {
+        var _this = _super.call(this, route, toastr, pageUtils, cd, trackingProvider, appService, platformService, layoutService, environment) || this;
         _this.route = route;
         _this.cdocRoutingService = cdocRoutingService;
         _this.toastr = toastr;
@@ -41,7 +41,6 @@ var CommonDocCreatepageComponent = /** @class */ (function (_super) {
         _this.Layout = layout_service_1.Layout;
         _this.editAllowed = false;
         _this.contentUtils = contentUtils;
-        _this.toastr.setRootViewContainerRef(vcr);
         return _this;
     }
     CommonDocCreatepageComponent.prototype.configureProcessing = function () {

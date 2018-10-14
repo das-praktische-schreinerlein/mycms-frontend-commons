@@ -1,6 +1,6 @@
 import {ChangeDetectorRef, ViewContainerRef} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {ToastsManager} from 'ng2-toastr';
+import {ToastrService} from 'ngx-toastr';
 import {CommonDocRecord} from '@dps/mycms-commons/dist/search-commons/model/records/cdoc-entity-record';
 import {CommonDocSearchForm} from '@dps/mycms-commons/dist/search-commons/model/forms/cdoc-searchform';
 import {CommonDocSearchResult} from '@dps/mycms-commons/dist/search-commons/model/container/cdoc-searchresult';
@@ -41,16 +41,15 @@ export abstract class CommonDocCreatepageComponent <R extends CommonDocRecord, F
     editAllowed = false;
 
     constructor(protected route: ActivatedRoute, protected cdocRoutingService: CommonDocRoutingService,
-                protected toastr: ToastsManager, vcr: ViewContainerRef, contentUtils: CommonDocContentUtils,
+                protected toastr: ToastrService, contentUtils: CommonDocContentUtils,
                 protected errorResolver: ErrorResolver, protected pageUtils: PageUtils,
                 protected commonRoutingService: CommonRoutingService, protected angularMarkdownService: AngularMarkdownService,
                 protected angularHtmlService: AngularHtmlService, protected cd: ChangeDetectorRef,
                 protected trackingProvider: GenericTrackingService, protected appService: GenericAppService,
                 protected platformService: PlatformService, protected layoutService: LayoutService,
                 protected environment: CommonEnvironment, protected cdocDataService: D) {
-        super(route, toastr, vcr, pageUtils, cd, trackingProvider, appService, platformService, layoutService, environment);
+        super(route, toastr, pageUtils, cd, trackingProvider, appService, platformService, layoutService, environment);
         this.contentUtils = contentUtils;
-        this.toastr.setRootViewContainerRef(vcr);
     }
 
     protected configureProcessing() {

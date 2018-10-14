@@ -1,7 +1,7 @@
-import { ChangeDetectorRef, OnInit, ViewContainerRef } from '@angular/core';
+import { ChangeDetectorRef, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PDocRecord } from '@dps/mycms-commons/dist/pdoc-commons/model/records/pdoc-record';
-import { ToastsManager } from 'ng2-toastr';
+import { ToastrService } from 'ngx-toastr';
 import { PDocDataService } from '@dps/mycms-commons/dist/pdoc-commons/services/pdoc-data.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ErrorResolver } from '../../../frontend-cdoc-commons/resolver/error.resolver';
@@ -22,7 +22,7 @@ export declare class SectionBarComponent implements OnInit {
     pdoc: PDocRecord;
     sections: PDocRecord[];
     themeFormGroup: FormGroup;
-    constructor(fb: FormBuilder, route: ActivatedRoute, pdocDataService: PDocDataService, commonRoutingService: CommonRoutingService, errorResolver: ErrorResolver, toastr: ToastsManager, router: Router, vcr: ViewContainerRef, pageUtils: PageUtils, cd: ChangeDetectorRef);
+    constructor(fb: FormBuilder, route: ActivatedRoute, pdocDataService: PDocDataService, commonRoutingService: CommonRoutingService, errorResolver: ErrorResolver, toastr: ToastrService, router: Router, pageUtils: PageUtils, cd: ChangeDetectorRef);
     ngOnInit(): void;
     onThemeChange(): boolean;
     getSubSections(pdoc: PDocRecord): PDocRecord[];

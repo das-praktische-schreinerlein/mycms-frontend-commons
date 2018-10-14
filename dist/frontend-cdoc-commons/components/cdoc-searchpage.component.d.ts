@@ -1,6 +1,6 @@
-import { ChangeDetectorRef, ViewContainerRef } from '@angular/core';
+import { ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ToastsManager } from 'ng2-toastr';
+import { ToastrService } from 'ngx-toastr';
 import { CommonDocRoutingService } from '../services/cdoc-routing.service';
 import { Layout, LayoutService, LayoutSize, LayoutSizeData, SearchFormLayout } from '../../angular-commons/services/layout.service';
 import { ResolvedData } from '../../angular-commons/resolver/resolver.utils';
@@ -35,7 +35,7 @@ export declare abstract class CommonDocSearchpageComponent<R extends CommonDocRe
     protected cdocDataService: D;
     protected searchFormConverter: GenericSearchFormSearchFormConverter<F>;
     protected cdocRoutingService: CommonDocRoutingService;
-    protected toastr: ToastsManager;
+    protected toastr: ToastrService;
     protected pageUtils: PageUtils;
     protected cd: ChangeDetectorRef;
     protected trackingProvider: GenericTrackingService;
@@ -63,7 +63,7 @@ export declare abstract class CommonDocSearchpageComponent<R extends CommonDocRe
     m3uExportAvailable: boolean;
     maxAllowedM3UExportItems: number;
     multiActionSelectValueMap: Map<string, IMultiSelectOption[]>;
-    constructor(route: ActivatedRoute, commonRoutingService: CommonRoutingService, errorResolver: ErrorResolver, cdocDataService: D, searchFormConverter: GenericSearchFormSearchFormConverter<F>, cdocRoutingService: CommonDocRoutingService, toastr: ToastsManager, vcr: ViewContainerRef, pageUtils: PageUtils, cd: ChangeDetectorRef, trackingProvider: GenericTrackingService, appService: GenericAppService, platformService: PlatformService, layoutService: LayoutService, searchFormUtils: SearchFormUtils, cdocSearchFormUtils: CommonDocSearchFormUtils, multiActionManager: CommonDocMultiActionManager<R, F, S, D>, environment: CommonEnvironment);
+    constructor(route: ActivatedRoute, commonRoutingService: CommonRoutingService, errorResolver: ErrorResolver, cdocDataService: D, searchFormConverter: GenericSearchFormSearchFormConverter<F>, cdocRoutingService: CommonDocRoutingService, toastr: ToastrService, pageUtils: PageUtils, cd: ChangeDetectorRef, trackingProvider: GenericTrackingService, appService: GenericAppService, platformService: PlatformService, layoutService: LayoutService, searchFormUtils: SearchFormUtils, cdocSearchFormUtils: CommonDocSearchFormUtils, multiActionManager: CommonDocMultiActionManager<R, F, S, D>, environment: CommonEnvironment);
     protected configureProcessing(): void;
     onShowDoc(cdoc: R): boolean;
     onPageChange(page: number, scroll: boolean): boolean;

@@ -1,6 +1,6 @@
 import {ChangeDetectorRef, OnDestroy, OnInit, ViewContainerRef} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {ToastsManager} from 'ng2-toastr';
+import {ToastrService} from 'ngx-toastr';
 import {PageUtils} from '../../angular-commons/services/page.utils';
 import {GenericTrackingService} from '../../angular-commons/services/generic-tracking.service';
 import {AppState, GenericAppService} from '@dps/mycms-commons/dist/commons/services/generic-app.service';
@@ -19,11 +19,10 @@ export abstract class AbstractPageComponent implements OnInit, OnDestroy {
     baseSearchUrl: string;
     baseSearchUrlDefault: string;
 
-    constructor(protected route: ActivatedRoute, protected toastr: ToastsManager, vcr: ViewContainerRef,
-                protected pageUtils: PageUtils, protected cd: ChangeDetectorRef, protected trackingProvider: GenericTrackingService,
+    constructor(protected route: ActivatedRoute, protected toastr: ToastrService, protected pageUtils: PageUtils,
+                protected cd: ChangeDetectorRef, protected trackingProvider: GenericTrackingService,
                 protected appService: GenericAppService, protected platformService: PlatformService,
                 protected layoutService: LayoutService, protected environment: CommonEnvironment) {
-        this.toastr.setRootViewContainerRef(vcr);
     }
 
     ngOnInit() {

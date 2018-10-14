@@ -1,6 +1,6 @@
-import { ChangeDetectorRef, ViewContainerRef } from '@angular/core';
+import { ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
-import { ToastsManager } from 'ng2-toastr';
+import { ToastrService } from 'ngx-toastr';
 import { CommonDocRoutingService } from '../services/cdoc-routing.service';
 import { Layout, LayoutService } from '../../angular-commons/services/layout.service';
 import { PDocRecord } from '@dps/mycms-commons/dist/pdoc-commons/model/records/pdoc-record';
@@ -29,7 +29,7 @@ export interface CommonDocShowpageComponentConfig {
 export declare abstract class CommonDocShowpageComponent<R extends CommonDocRecord, F extends CommonDocSearchForm, S extends CommonDocSearchResult<R, F>, D extends CommonDocDataService<R, F, S>> extends AbstractPageComponent {
     protected route: ActivatedRoute;
     protected cdocRoutingService: CommonDocRoutingService;
-    protected toastr: ToastsManager;
+    protected toastr: ToastrService;
     protected errorResolver: ErrorResolver;
     protected pageUtils: PageUtils;
     protected commonRoutingService: CommonRoutingService;
@@ -49,7 +49,7 @@ export declare abstract class CommonDocShowpageComponent<R extends CommonDocReco
     Layout: typeof Layout;
     pdoc: PDocRecord;
     queryParamMap: ParamMap;
-    constructor(route: ActivatedRoute, cdocRoutingService: CommonDocRoutingService, toastr: ToastsManager, vcr: ViewContainerRef, contentUtils: CommonDocContentUtils, errorResolver: ErrorResolver, pageUtils: PageUtils, commonRoutingService: CommonRoutingService, angularMarkdownService: AngularMarkdownService, angularHtmlService: AngularHtmlService, cd: ChangeDetectorRef, trackingProvider: GenericTrackingService, appService: GenericAppService, platformService: PlatformService, layoutService: LayoutService, environment: CommonEnvironment);
+    constructor(route: ActivatedRoute, cdocRoutingService: CommonDocRoutingService, toastr: ToastrService, contentUtils: CommonDocContentUtils, errorResolver: ErrorResolver, pageUtils: PageUtils, commonRoutingService: CommonRoutingService, angularMarkdownService: AngularMarkdownService, angularHtmlService: AngularHtmlService, cd: ChangeDetectorRef, trackingProvider: GenericTrackingService, appService: GenericAppService, platformService: PlatformService, layoutService: LayoutService, environment: CommonEnvironment);
     protected configureProcessing(): void;
     renderDesc(): string;
     submitBackToSearch(): boolean;

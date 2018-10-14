@@ -1,7 +1,7 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewContainerRef} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {PDocRecord} from '@dps/mycms-commons/dist/pdoc-commons/model/records/pdoc-record';
-import {ToastsManager} from 'ng2-toastr';
+import {ToastrService} from 'ngx-toastr';
 import {Layout, LayoutService, LayoutSize, LayoutSizeData, SearchFormLayout} from '../../../angular-commons/services/layout.service';
 import {PDocDataService} from '@dps/mycms-commons/dist/pdoc-commons/services/pdoc-data.service';
 import {ResolvedData} from '../../../angular-commons/resolver/resolver.utils';
@@ -36,12 +36,11 @@ export class SectionPageComponent implements OnInit {
 
     constructor(protected route: ActivatedRoute, protected pdocDataService: PDocDataService,
                 protected commonRoutingService: CommonRoutingService, protected errorResolver: ErrorResolver,
-                protected toastr: ToastsManager, vcr: ViewContainerRef, protected pageUtils: PageUtils,
+                protected toastr: ToastrService, protected pageUtils: PageUtils,
                 protected angularMarkdownService: AngularMarkdownService, protected angularHtmlService: AngularHtmlService,
                 protected cd: ChangeDetectorRef, protected trackingProvider: GenericTrackingService,
                 protected platformService: PlatformService, protected layoutService: LayoutService,
                 protected appService: GenericAppService) {
-        this.toastr.setRootViewContainerRef(vcr);
     }
 
     ngOnInit() {

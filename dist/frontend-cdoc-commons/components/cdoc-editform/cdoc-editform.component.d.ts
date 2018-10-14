@@ -1,6 +1,6 @@
-import { ChangeDetectorRef, EventEmitter, ViewContainerRef } from '@angular/core';
+import { ChangeDetectorRef, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { ToastsManager } from 'ng2-toastr';
+import { ToastrService } from 'ngx-toastr';
 import { SchemaValidationError } from 'js-data';
 import { IMultiSelectSettings, IMultiSelectTexts } from 'angular-2-dropdown-multiselect';
 import { GenericAppService } from '@dps/mycms-commons/dist/commons/services/generic-app.service';
@@ -23,7 +23,7 @@ export interface CommonDocEditformComponentConfig {
 }
 export declare abstract class CommonDocEditformComponent<R extends CommonDocRecord, F extends CommonDocSearchForm, S extends CommonDocSearchResult<R, F>, D extends CommonDocDataService<R, F, S>> extends AbstractInlineComponent {
     fb: FormBuilder;
-    protected toastr: ToastsManager;
+    protected toastr: ToastrService;
     protected cd: ChangeDetectorRef;
     protected appService: GenericAppService;
     protected cdocSearchFormUtils: CommonDocSearchFormUtils;
@@ -47,7 +47,7 @@ export declare abstract class CommonDocEditformComponent<R extends CommonDocReco
     backToSearch?: boolean;
     save: EventEmitter<R>;
     saveAndSearch: EventEmitter<R>;
-    constructor(fb: FormBuilder, toastr: ToastsManager, vcr: ViewContainerRef, cd: ChangeDetectorRef, appService: GenericAppService, cdocSearchFormUtils: CommonDocSearchFormUtils, searchFormUtils: SearchFormUtils, cdocDataService: D, contentUtils: CommonDocContentUtils);
+    constructor(fb: FormBuilder, toastr: ToastrService, cd: ChangeDetectorRef, appService: GenericAppService, cdocSearchFormUtils: CommonDocSearchFormUtils, searchFormUtils: SearchFormUtils, cdocDataService: D, contentUtils: CommonDocContentUtils);
     setKeyword(keyword: string): void;
     unsetKeyword(keyword: string): void;
     setValue(field: string, value: any): void;

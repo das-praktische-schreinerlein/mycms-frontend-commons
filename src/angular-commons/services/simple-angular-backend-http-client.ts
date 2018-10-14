@@ -1,11 +1,11 @@
-import {Headers, Http, RequestOptionsArgs} from '@angular/http';
+import {HttpClient, HttpHeaders, HttpResponse} from '@angular/common/http';
 import {BackendHttpResponse, BackendRequestOptionsArgs, MinimalHttpBackendClient} from '@dps/mycms-commons/dist/commons/services/minimal-http-backend-client';
 import {Injectable} from '@angular/core';
 import {isArray} from 'util';
 
 @Injectable()
 export class SimpleAngularBackendHttpClient extends MinimalHttpBackendClient {
-    public static fixRequestOption(requestConfig: RequestOptionsArgs): void {
+    public static fixRequestOption(requestConfig: any): void {
         // prevent angular from mapping '+' in params  to ' '
         if (requestConfig.method === 'get' && requestConfig.params !== undefined) {
             const params = [];
@@ -33,33 +33,34 @@ export class SimpleAngularBackendHttpClient extends MinimalHttpBackendClient {
         }
     }
 
-    constructor(private http: Http) {
+    constructor(private http: HttpClient) {
         super();
     }
 
     makeHttpRequest(httpConfig: BackendRequestOptionsArgs): Promise<BackendHttpResponse> {
-        const requestConfig: RequestOptionsArgs = {
+        const requestConfig  = {
             method: httpConfig.method.toLowerCase(),
             url: httpConfig.url,
             body: httpConfig.data,
             params: httpConfig.params,
-            headers: new Headers(),
+            headers: new HttpHeaders(),
             withCredentials: true
         };
+        requestConfig['observe'] = 'response';
 
         SimpleAngularBackendHttpClient.fixRequestOption(requestConfig);
 
-        let result, request;
-        request = this.http.request(httpConfig.url, requestConfig);
-        result = request.map((res) => {
+        let result;
+        let request = this.http.request(requestConfig.method, requestConfig.url, requestConfig);
+        result = request.map((res: HttpResponse<any>) => {
             // console.log('response makeHttpRequest:' + httpConfig.url, res);
             const contentType = res.headers.get('content-type');
             return {
-                headers: res.headers,
+                headers: <any>res.headers,
                 method: httpConfig.method,
-                data: contentType && contentType.indexOf('application/json') !== -1 ? res.json() : undefined,
-                text: function () { return res.text(); },
-                json: function () { return res.json(); },
+                data: contentType && contentType.indexOf('application/json') !== -1 ? res.body : undefined,
+                text: function () { return res.body; },
+                json: function () { return contentType && contentType.indexOf('application/json') !== -1 ? res.body : undefined; },
                 status: res.status,
                 statusMsg: res.statusText
             } as BackendHttpResponse;

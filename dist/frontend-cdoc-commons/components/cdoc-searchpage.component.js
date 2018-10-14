@@ -21,8 +21,8 @@ var pdoc_page_component_1 = require("../../frontend-pdoc-commons/components/pdoc
 var angular_html_service_1 = require("../../angular-commons/services/angular-html.service");
 var CommonDocSearchpageComponent = /** @class */ (function (_super) {
     __extends(CommonDocSearchpageComponent, _super);
-    function CommonDocSearchpageComponent(route, commonRoutingService, errorResolver, cdocDataService, searchFormConverter, cdocRoutingService, toastr, vcr, pageUtils, cd, trackingProvider, appService, platformService, layoutService, searchFormUtils, cdocSearchFormUtils, multiActionManager, environment) {
-        var _this = _super.call(this, route, toastr, vcr, pageUtils, cd, trackingProvider, appService, platformService, layoutService, environment) || this;
+    function CommonDocSearchpageComponent(route, commonRoutingService, errorResolver, cdocDataService, searchFormConverter, cdocRoutingService, toastr, pageUtils, cd, trackingProvider, appService, platformService, layoutService, searchFormUtils, cdocSearchFormUtils, multiActionManager, environment) {
+        var _this = _super.call(this, route, toastr, pageUtils, cd, trackingProvider, appService, platformService, layoutService, environment) || this;
         _this.route = route;
         _this.commonRoutingService = commonRoutingService;
         _this.errorResolver = errorResolver;

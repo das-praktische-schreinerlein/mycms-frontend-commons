@@ -12,7 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var router_1 = require("@angular/router");
 var pdoc_record_1 = require("@dps/mycms-commons/dist/pdoc-commons/model/records/pdoc-record");
-var ng2_toastr_1 = require("ng2-toastr");
+var ngx_toastr_1 = require("ngx-toastr");
 var layout_service_1 = require("../../../angular-commons/services/layout.service");
 var pdoc_data_service_1 = require("@dps/mycms-commons/dist/pdoc-commons/services/pdoc-data.service");
 var error_resolver_1 = require("../../../frontend-cdoc-commons/resolver/error.resolver");
@@ -26,7 +26,7 @@ var common_routing_service_1 = require("../../../angular-commons/services/common
 var generic_tracking_service_1 = require("../../../angular-commons/services/generic-tracking.service");
 var platform_service_1 = require("../../../angular-commons/services/platform.service");
 var SectionPageComponent = /** @class */ (function () {
-    function SectionPageComponent(route, pdocDataService, commonRoutingService, errorResolver, toastr, vcr, pageUtils, angularMarkdownService, angularHtmlService, cd, trackingProvider, platformService, layoutService, appService) {
+    function SectionPageComponent(route, pdocDataService, commonRoutingService, errorResolver, toastr, pageUtils, angularMarkdownService, angularHtmlService, cd, trackingProvider, platformService, layoutService, appService) {
         this.route = route;
         this.pdocDataService = pdocDataService;
         this.commonRoutingService = commonRoutingService;
@@ -48,7 +48,6 @@ var SectionPageComponent = /** @class */ (function () {
         this.Layout = layout_service_1.Layout;
         this.SearchFormLayout = layout_service_1.SearchFormLayout;
         this.searchFormLayout = layout_service_1.SearchFormLayout.GRID;
-        this.toastr.setRootViewContainerRef(vcr);
     }
     SectionPageComponent.prototype.ngOnInit = function () {
         var _this = this;
@@ -184,7 +183,7 @@ var SectionPageComponent = /** @class */ (function () {
         }),
         __metadata("design:paramtypes", [router_1.ActivatedRoute, pdoc_data_service_1.PDocDataService,
             common_routing_service_1.CommonRoutingService, error_resolver_1.ErrorResolver,
-            ng2_toastr_1.ToastsManager, core_1.ViewContainerRef, page_utils_1.PageUtils,
+            ngx_toastr_1.ToastrService, page_utils_1.PageUtils,
             angular_markdown_service_1.AngularMarkdownService, angular_html_service_1.AngularHtmlService,
             core_1.ChangeDetectorRef, generic_tracking_service_1.GenericTrackingService,
             platform_service_1.PlatformService, layout_service_1.LayoutService,

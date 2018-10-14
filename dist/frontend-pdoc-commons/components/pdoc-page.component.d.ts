@@ -1,6 +1,6 @@
-import { ChangeDetectorRef, OnDestroy, OnInit, ViewContainerRef } from '@angular/core';
+import { ChangeDetectorRef, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ToastsManager } from 'ng2-toastr';
+import { ToastrService } from 'ngx-toastr';
 import { PageUtils } from '../../angular-commons/services/page.utils';
 import { GenericTrackingService } from '../../angular-commons/services/generic-tracking.service';
 import { GenericAppService } from '@dps/mycms-commons/dist/commons/services/generic-app.service';
@@ -11,7 +11,7 @@ import { PDocRecord } from '@dps/mycms-commons/dist/pdoc-commons/model/records/p
 import { CommonEnvironment } from '../common-environment';
 export declare abstract class AbstractPageComponent implements OnInit, OnDestroy {
     protected route: ActivatedRoute;
-    protected toastr: ToastsManager;
+    protected toastr: ToastrService;
     protected pageUtils: PageUtils;
     protected cd: ChangeDetectorRef;
     protected trackingProvider: GenericTrackingService;
@@ -25,7 +25,7 @@ export declare abstract class AbstractPageComponent implements OnInit, OnDestroy
     showLoadingSpinner: boolean;
     baseSearchUrl: string;
     baseSearchUrlDefault: string;
-    constructor(route: ActivatedRoute, toastr: ToastsManager, vcr: ViewContainerRef, pageUtils: PageUtils, cd: ChangeDetectorRef, trackingProvider: GenericTrackingService, appService: GenericAppService, platformService: PlatformService, layoutService: LayoutService, environment: CommonEnvironment);
+    constructor(route: ActivatedRoute, toastr: ToastrService, pageUtils: PageUtils, cd: ChangeDetectorRef, trackingProvider: GenericTrackingService, appService: GenericAppService, platformService: PlatformService, layoutService: LayoutService, environment: CommonEnvironment);
     ngOnInit(): void;
     ngOnDestroy(): void;
     onScrollToTop(): void;

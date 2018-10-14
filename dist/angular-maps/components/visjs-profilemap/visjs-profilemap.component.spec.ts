@@ -2,7 +2,7 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {NO_ERRORS_SCHEMA} from '@angular/core';
 import {ReactiveFormsModule} from '@angular/forms';
-import {HttpModule, XHRBackend} from '@angular/http';
+import {HttpClientModule} from '@angular/common/http';
 import {MockBackend} from '@angular/http/testing';
 import {VisJsProfileMapComponent} from './visjs-profilemap.component';
 import {SimpleAngularBackendHttpClient} from '../../../angular-commons/services/simple-angular-backend-http-client';
@@ -15,10 +15,9 @@ describe('VisJsProfileMapComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             declarations: [VisJsProfileMapComponent],
-            imports: [ReactiveFormsModule, HttpModule],
+            imports: [ReactiveFormsModule, HttpClientModule],
             schemas: [NO_ERRORS_SCHEMA],
             providers: [
-                    { provide: XHRBackend, useClass: MockBackend },
                     { provide: MinimalHttpBackendClient, useClass: SimpleAngularBackendHttpClient }
             ]
         })

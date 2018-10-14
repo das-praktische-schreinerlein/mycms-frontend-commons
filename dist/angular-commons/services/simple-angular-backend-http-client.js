@@ -19,7 +19,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var http_1 = require("@angular/http");
+var http_1 = require("@angular/common/http");
 var minimal_http_backend_client_1 = require("@dps/mycms-commons/dist/commons/services/minimal-http-backend-client");
 var core_1 = require("@angular/core");
 var util_1 = require("util");
@@ -65,21 +65,22 @@ var SimpleAngularBackendHttpClient = /** @class */ (function (_super) {
             url: httpConfig.url,
             body: httpConfig.data,
             params: httpConfig.params,
-            headers: new http_1.Headers(),
+            headers: new http_1.HttpHeaders(),
             withCredentials: true
         };
+        requestConfig['observe'] = 'response';
         SimpleAngularBackendHttpClient_1.fixRequestOption(requestConfig);
-        var result, request;
-        request = this.http.request(httpConfig.url, requestConfig);
+        var result;
+        var request = this.http.request(requestConfig.method, requestConfig.url, requestConfig);
         result = request.map(function (res) {
             // console.log('response makeHttpRequest:' + httpConfig.url, res);
             var contentType = res.headers.get('content-type');
             return {
                 headers: res.headers,
                 method: httpConfig.method,
-                data: contentType && contentType.indexOf('application/json') !== -1 ? res.json() : undefined,
-                text: function () { return res.text(); },
-                json: function () { return res.json(); },
+                data: contentType && contentType.indexOf('application/json') !== -1 ? res.body : undefined,
+                text: function () { return res.body; },
+                json: function () { return contentType && contentType.indexOf('application/json') !== -1 ? res.body : undefined; },
                 status: res.status,
                 statusMsg: res.statusText
             };
@@ -88,7 +89,7 @@ var SimpleAngularBackendHttpClient = /** @class */ (function (_super) {
     };
     SimpleAngularBackendHttpClient = SimpleAngularBackendHttpClient_1 = __decorate([
         core_1.Injectable(),
-        __metadata("design:paramtypes", [http_1.Http])
+        __metadata("design:paramtypes", [http_1.HttpClient])
     ], SimpleAngularBackendHttpClient);
     return SimpleAngularBackendHttpClient;
     var SimpleAngularBackendHttpClient_1;

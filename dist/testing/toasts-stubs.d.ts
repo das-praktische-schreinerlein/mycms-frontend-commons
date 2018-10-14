@@ -1,5 +1,4 @@
-export declare class ToastsManagerStub {
-    setRootViewContainerRef(any: any): any;
+export declare class ToastrServiceStub {
     info(...args: any[]): any;
     error(...args: any[]): any;
 }

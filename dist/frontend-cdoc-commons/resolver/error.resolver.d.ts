@@ -1,4 +1,4 @@
-import { ToastsManager } from 'ng2-toastr';
+import { ToastrService } from 'ngx-toastr';
 import { ResolvedData } from '../../angular-commons/resolver/resolver.utils';
 import { CommonRoutingService } from '../../angular-commons/services/common-routing.service';
 export declare class ErrorResolver {
@@ -12,5 +12,5 @@ export declare class ErrorResolver {
     static ERROR_OTHER: string;
     static isResolverError(resolvedData: ResolvedData<any>): boolean;
     constructor(commonRoutingService: CommonRoutingService);
-    redirectAfterRouterError(errorCode: string, newUrl: string, toasts: ToastsManager, toastMessage: string): void;
+    redirectAfterRouterError(errorCode: string, newUrl: string, toasts: ToastrService, toastMessage: string): void;
 }

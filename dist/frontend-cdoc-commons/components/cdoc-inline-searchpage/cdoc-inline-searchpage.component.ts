@@ -1,6 +1,6 @@
 import {ChangeDetectorRef, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewContainerRef} from '@angular/core';
 import {Facets} from '@dps/mycms-commons/dist/search-commons/model/container/facets';
-import {ToastsManager} from 'ng2-toastr';
+import {ToastrService} from 'ngx-toastr';
 import {CommonDocRoutingService} from '../../services/cdoc-routing.service';
 import {Layout} from '../../../angular-commons/services/layout.service';
 import {AppState, GenericAppService} from '@dps/mycms-commons/dist/commons/services/generic-app.service';
@@ -98,14 +98,13 @@ export class CommonDocInlineSearchpageComponent <R extends CommonDocRecord, F ex
 
     constructor(protected appService: GenericAppService, protected commonRoutingService: CommonRoutingService,
                 protected cdocDataService: D, protected searchFormConverter: GenericSearchFormSearchFormConverter<F>,
-                protected cdocRoutingService: CommonDocRoutingService, protected toastr: ToastsManager, vcr: ViewContainerRef,
+                protected cdocRoutingService: CommonDocRoutingService, protected toastr: ToastrService,
                 protected cd: ChangeDetectorRef, protected elRef: ElementRef, protected pageUtils: PageUtils,
                 protected searchFormUtils: SearchFormUtils, protected cdocSearchFormUtils: CommonDocSearchFormUtils,
                 protected multiActionManager: CommonDocMultiActionManager<R, F, S, D>) {
         super(cd);
         this.searchForm = this.cdocDataService.newSearchForm({});
         this.searchResult = this.cdocDataService.newSearchResult(this.searchForm, 0, [], new Facets());
-        this.toastr.setRootViewContainerRef(vcr);
     }
 
     ngOnInit() {

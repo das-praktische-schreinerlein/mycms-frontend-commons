@@ -1,7 +1,7 @@
 import {ChangeDetectorRef, ViewContainerRef} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {Facets} from '@dps/mycms-commons/dist/search-commons/model/container/facets';
-import {ToastsManager} from 'ng2-toastr';
+import {ToastrService} from 'ngx-toastr';
 import {CommonDocRoutingService} from '../services/cdoc-routing.service';
 import {Layout, LayoutService, LayoutSize, LayoutSizeData, SearchFormLayout} from '../../angular-commons/services/layout.service';
 import {ResolvedData} from '../../angular-commons/resolver/resolver.utils';
@@ -59,13 +59,13 @@ export abstract class CommonDocSearchpageComponent<R extends CommonDocRecord, F 
     constructor(protected route: ActivatedRoute, protected commonRoutingService: CommonRoutingService,
                 protected errorResolver: ErrorResolver, protected cdocDataService: D,
                 protected searchFormConverter: GenericSearchFormSearchFormConverter<F>,
-                protected cdocRoutingService: CommonDocRoutingService, protected toastr: ToastsManager,
-                vcr: ViewContainerRef, protected pageUtils: PageUtils, protected cd: ChangeDetectorRef,
+                protected cdocRoutingService: CommonDocRoutingService, protected toastr: ToastrService,
+                protected pageUtils: PageUtils, protected cd: ChangeDetectorRef,
                 protected trackingProvider: GenericTrackingService, protected appService: GenericAppService,
                 protected platformService: PlatformService, protected layoutService: LayoutService,
                 protected searchFormUtils: SearchFormUtils, protected cdocSearchFormUtils: CommonDocSearchFormUtils,
                 protected multiActionManager: CommonDocMultiActionManager<R, F, S, D>, protected environment: CommonEnvironment) {
-        super(route, toastr, vcr, pageUtils, cd, trackingProvider, appService, platformService, layoutService, environment);
+        super(route, toastr, pageUtils, cd, trackingProvider, appService, platformService, layoutService, environment);
         this.searchForm = cdocDataService.newSearchForm({});
         this.searchResult = cdocDataService.newSearchResult(this.searchForm, 0, [], new Facets());
     }

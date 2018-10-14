@@ -1,6 +1,6 @@
-import { ChangeDetectorRef, ViewContainerRef } from '@angular/core';
+import { ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ToastsManager } from 'ng2-toastr';
+import { ToastrService } from 'ngx-toastr';
 import { CommonDocRecord } from '@dps/mycms-commons/dist/search-commons/model/records/cdoc-entity-record';
 import { CommonDocSearchForm } from '@dps/mycms-commons/dist/search-commons/model/forms/cdoc-searchform';
 import { CommonDocSearchResult } from '@dps/mycms-commons/dist/search-commons/model/container/cdoc-searchresult';
@@ -30,7 +30,7 @@ export interface CommonDocEditpageComponentConfig {
 export declare abstract class CommonDocEditpageComponent<R extends CommonDocRecord, F extends CommonDocSearchForm, S extends CommonDocSearchResult<R, F>, D extends CommonDocDataService<R, F, S>> extends AbstractPageComponent {
     protected route: ActivatedRoute;
     protected cdocRoutingService: CommonDocRoutingService;
-    protected toastr: ToastsManager;
+    protected toastr: ToastrService;
     protected errorResolver: ErrorResolver;
     protected pageUtils: PageUtils;
     protected commonRoutingService: CommonRoutingService;
@@ -51,7 +51,7 @@ export declare abstract class CommonDocEditpageComponent<R extends CommonDocReco
     pdoc: PDocRecord;
     baseSearchUrl: string;
     editAllowed: boolean;
-    constructor(route: ActivatedRoute, cdocRoutingService: CommonDocRoutingService, toastr: ToastsManager, vcr: ViewContainerRef, contentUtils: CommonDocContentUtils, errorResolver: ErrorResolver, pageUtils: PageUtils, commonRoutingService: CommonRoutingService, angularMarkdownService: AngularMarkdownService, angularHtmlService: AngularHtmlService, cd: ChangeDetectorRef, trackingProvider: GenericTrackingService, appService: GenericAppService, platformService: PlatformService, layoutService: LayoutService, environment: CommonEnvironment, cdocDataService: D);
+    constructor(route: ActivatedRoute, cdocRoutingService: CommonDocRoutingService, toastr: ToastrService, contentUtils: CommonDocContentUtils, errorResolver: ErrorResolver, pageUtils: PageUtils, commonRoutingService: CommonRoutingService, angularMarkdownService: AngularMarkdownService, angularHtmlService: AngularHtmlService, cd: ChangeDetectorRef, trackingProvider: GenericTrackingService, appService: GenericAppService, platformService: PlatformService, layoutService: LayoutService, environment: CommonEnvironment, cdocDataService: D);
     protected configureProcessing(): void;
     abstract getFiltersForType(record: R, type: string): any;
     submitSave(values: {}, backToSearch: boolean): boolean;

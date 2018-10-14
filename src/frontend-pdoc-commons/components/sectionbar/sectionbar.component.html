@@ -3,7 +3,7 @@
         <h5><span class="fx-bg-name">{{pdoc.heading}}</span>
             <div>
                 <div style="width: 200px;" class="float-right form-inline input-group input-group-sm hidden-print">
-                    <select class="form-control input-sm" name="theme" id="theme" formControlName="theme" (change)="onThemeChange()">
+                    <select class="form-control-sm" name="theme" id="theme" formControlName="theme" (change)="onThemeChange()">
                         <ng-container *ngFor="let mainSection of sections">
                             <optgroup  label="{{mainSection.name}}">
                                 <ng-container *ngFor="let section of getSubSections(mainSection)">

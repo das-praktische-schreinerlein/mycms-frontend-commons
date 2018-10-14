@@ -4,7 +4,7 @@ import {NO_ERRORS_SCHEMA} from '@angular/core';
 import {SectionPageComponent} from './section-page.component';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ActivatedRouteStub} from '../../../testing/router-stubs';
-import {ToastModule, ToastsManager} from 'ng2-toastr';
+import {ToastrService} from 'ngx-toastr';
 import {TranslateModule, TranslateService} from '@ngx-translate/core';
 import {SearchParameterUtils} from '@dps/mycms-commons/dist/search-commons/services/searchparameter.utils';
 import {PDocDataServiceStub} from '../../../testing/pdoc-dataservice-stubs';
@@ -24,6 +24,7 @@ import {PlatformService} from '../../../angular-commons/services/platform.servic
 import {LayoutService} from '../../../angular-commons/services/layout.service';
 import {AppServiceStub} from '../../../angular-commons/testing/appservice-stubs';
 import {GenericAppService} from '@dps/mycms-commons/dist/commons/services/generic-app.service';
+import {ToastrServiceStub} from '@dps/mycms-frontend-commons/dist/testing/toasts-stubs';
 
 describe('SectionPageComponent', () => {
     let component: SectionPageComponent;
@@ -34,7 +35,6 @@ describe('SectionPageComponent', () => {
             declarations: [SectionPageComponent],
             schemas: [NO_ERRORS_SCHEMA],
             imports: [
-                ToastModule.forRoot(),
                 TranslateModule.forRoot(),
                 MarkdownModule.forRoot()],
             providers: [
@@ -46,7 +46,7 @@ describe('SectionPageComponent', () => {
                 PlatformService,
                 CommonDocRoutingService,
                 SearchParameterUtils,
-                ToastsManager,
+                { provide: ToastrService, useValue: new ToastrServiceStub() },
                 TranslateService,
                 MarkdownService,
                 AngularMarkdownService,

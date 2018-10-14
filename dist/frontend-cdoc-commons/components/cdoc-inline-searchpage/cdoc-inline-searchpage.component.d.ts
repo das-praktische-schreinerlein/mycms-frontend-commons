@@ -1,5 +1,5 @@
-import { ChangeDetectorRef, ElementRef, EventEmitter, OnDestroy, OnInit, ViewContainerRef } from '@angular/core';
-import { ToastsManager } from 'ng2-toastr';
+import { ChangeDetectorRef, ElementRef, EventEmitter, OnDestroy, OnInit } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 import { CommonDocRoutingService } from '../../services/cdoc-routing.service';
 import { Layout } from '../../../angular-commons/services/layout.service';
 import { GenericAppService } from '@dps/mycms-commons/dist/commons/services/generic-app.service';
@@ -25,7 +25,7 @@ export declare class CommonDocInlineSearchpageComponent<R extends CommonDocRecor
     protected cdocDataService: D;
     protected searchFormConverter: GenericSearchFormSearchFormConverter<F>;
     protected cdocRoutingService: CommonDocRoutingService;
-    protected toastr: ToastsManager;
+    protected toastr: ToastrService;
     protected cd: ChangeDetectorRef;
     protected elRef: ElementRef;
     protected pageUtils: PageUtils;
@@ -60,7 +60,7 @@ export declare class CommonDocInlineSearchpageComponent<R extends CommonDocRecor
     perPageOnToSearchPage?: number;
     show: EventEmitter<R>;
     searchResultFound: EventEmitter<S>;
-    constructor(appService: GenericAppService, commonRoutingService: CommonRoutingService, cdocDataService: D, searchFormConverter: GenericSearchFormSearchFormConverter<F>, cdocRoutingService: CommonDocRoutingService, toastr: ToastsManager, vcr: ViewContainerRef, cd: ChangeDetectorRef, elRef: ElementRef, pageUtils: PageUtils, searchFormUtils: SearchFormUtils, cdocSearchFormUtils: CommonDocSearchFormUtils, multiActionManager: CommonDocMultiActionManager<R, F, S, D>);
+    constructor(appService: GenericAppService, commonRoutingService: CommonRoutingService, cdocDataService: D, searchFormConverter: GenericSearchFormSearchFormConverter<F>, cdocRoutingService: CommonDocRoutingService, toastr: ToastrService, cd: ChangeDetectorRef, elRef: ElementRef, pageUtils: PageUtils, searchFormUtils: SearchFormUtils, cdocSearchFormUtils: CommonDocSearchFormUtils, multiActionManager: CommonDocMultiActionManager<R, F, S, D>);
     ngOnInit(): void;
     ngOnDestroy(): void;
     onShowDoc(cdoc: R): boolean;

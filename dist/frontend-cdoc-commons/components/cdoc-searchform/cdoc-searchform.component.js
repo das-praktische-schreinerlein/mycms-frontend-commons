@@ -16,7 +16,7 @@ var layout_service_1 = require("../../../angular-commons/services/layout.service
 var cdoc_searchform_1 = require("@dps/mycms-commons/dist/search-commons/model/forms/cdoc-searchform");
 var cdoc_searchresult_1 = require("@dps/mycms-commons/dist/search-commons/model/container/cdoc-searchresult");
 var CommonDocSearchformComponent = /** @class */ (function () {
-    function CommonDocSearchformComponent(sanitizer, fb, searchFormUtils, cdocSearchFormUtils, searchFormConverter, cdocDataCacheService, toastr, vcr, cd) {
+    function CommonDocSearchformComponent(sanitizer, fb, searchFormUtils, cdocSearchFormUtils, searchFormConverter, cdocDataCacheService, toastr, cd) {
         this.sanitizer = sanitizer;
         this.fb = fb;
         this.searchFormUtils = searchFormUtils;
@@ -80,7 +80,6 @@ var CommonDocSearchformComponent = /** @class */ (function () {
         this.changedShowForm = new core_1.EventEmitter();
         this._searchResult = new BehaviorSubject_1.BehaviorSubject(this.createDefaultSearchResult());
         this.searchFormGroup = this.createDefaultFormGroup();
-        this.toastr.setRootViewContainerRef(vcr);
     }
     Object.defineProperty(CommonDocSearchformComponent.prototype, "searchResult", {
         get: function () {

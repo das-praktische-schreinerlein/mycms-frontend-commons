@@ -7,26 +7,25 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
-var ToastsManagerStub = /** @class */ (function () {
-    function ToastsManagerStub() {
+var ToastrServiceStub = /** @class */ (function () {
+    function ToastrServiceStub() {
     }
-    ToastsManagerStub.prototype.setRootViewContainerRef = function (any) { };
-    ToastsManagerStub.prototype.info = function () {
+    ToastrServiceStub.prototype.info = function () {
         var args = [];
         for (var _i = 0; _i < arguments.length; _i++) {
             args[_i] = arguments[_i];
         }
     };
-    ToastsManagerStub.prototype.error = function () {
+    ToastrServiceStub.prototype.error = function () {
         var args = [];
         for (var _i = 0; _i < arguments.length; _i++) {
             args[_i] = arguments[_i];
         }
     };
-    ToastsManagerStub = __decorate([
+    ToastrServiceStub = __decorate([
         core_1.Injectable()
-    ], ToastsManagerStub);
-    return ToastsManagerStub;
+    ], ToastrServiceStub);
+    return ToastrServiceStub;
 }());
-exports.ToastsManagerStub = ToastsManagerStub;
+exports.ToastrServiceStub = ToastrServiceStub;
 //# sourceMappingURL=toasts-stubs.js.map

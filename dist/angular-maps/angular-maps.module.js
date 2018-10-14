@@ -7,7 +7,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
-var http_1 = require("@angular/http");
+var http_1 = require("@angular/common/http");
 var ng_bootstrap_1 = require("@ng-bootstrap/ng-bootstrap");
 var leaflet_map_component_1 = require("./components/leaflet-map/leaflet-map.component");
 var visjs_profilemap_component_1 = require("./components/visjs-profilemap/visjs-profilemap.component");
@@ -22,7 +22,7 @@ var AngularMapsModule = /** @class */ (function () {
             ],
             imports: [
                 ng_bootstrap_1.NgbModule,
-                http_1.HttpModule
+                http_1.HttpClientModule
             ],
             providers: [],
             exports: [

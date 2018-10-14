@@ -4,7 +4,7 @@ import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 import {Facets} from '@dps/mycms-commons/dist/search-commons/model/container/facets';
 import {IMultiSelectOption, IMultiSelectSettings, IMultiSelectTexts} from 'angular-2-dropdown-multiselect';
 import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
-import {ToastsManager} from 'ng2-toastr';
+import {ToastrService} from 'ngx-toastr';
 import {SearchFormUtils} from '../../../angular-commons/services/searchform-utils.service';
 import {HumanReadableFilter} from '@dps/mycms-commons/dist/search-commons/services/generic-searchform.converter';
 import {SearchFormLayout} from '../../../angular-commons/services/layout.service';
@@ -119,11 +119,10 @@ export abstract class CommonDocSearchformComponent <R extends CommonDocRecord, F
     constructor(protected sanitizer: DomSanitizer, public fb: FormBuilder, protected searchFormUtils: SearchFormUtils,
                 protected cdocSearchFormUtils: CommonDocSearchFormUtils,
                 protected searchFormConverter: GenericSearchFormSearchFormConverter<F>,
-                protected cdocDataCacheService: CommonDocDataCacheService<R, F, S, D>, protected toastr: ToastsManager,
-                vcr: ViewContainerRef, protected cd: ChangeDetectorRef) {
+                protected cdocDataCacheService: CommonDocDataCacheService<R, F, S, D>, protected toastr: ToastrService,
+                protected cd: ChangeDetectorRef) {
         this._searchResult = new BehaviorSubject<S>(this.createDefaultSearchResult());
         this.searchFormGroup = this.createDefaultFormGroup();
-        this.toastr.setRootViewContainerRef(vcr);
     }
 
     ngOnInit() {

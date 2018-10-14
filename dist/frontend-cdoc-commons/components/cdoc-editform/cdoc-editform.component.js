@@ -25,7 +25,7 @@ var date_utils_1 = require("@dps/mycms-commons/dist/commons/utils/date.utils");
 var inline_component_1 = require("../../../angular-commons/components/inline.component");
 var CommonDocEditformComponent = /** @class */ (function (_super) {
     __extends(CommonDocEditformComponent, _super);
-    function CommonDocEditformComponent(fb, toastr, vcr, cd, appService, cdocSearchFormUtils, searchFormUtils, cdocDataService, contentUtils) {
+    function CommonDocEditformComponent(fb, toastr, cd, appService, cdocSearchFormUtils, searchFormUtils, cdocDataService, contentUtils) {
         var _this = _super.call(this, cd) || this;
         _this.fb = fb;
         _this.toastr = toastr;
@@ -68,7 +68,6 @@ var CommonDocEditformComponent = /** @class */ (function (_super) {
         _this.backToSearch = false;
         _this.save = new core_1.EventEmitter();
         _this.saveAndSearch = new core_1.EventEmitter();
-        _this.toastr.setRootViewContainerRef(vcr);
         return _this;
     }
     CommonDocEditformComponent.prototype.setKeyword = function (keyword) {

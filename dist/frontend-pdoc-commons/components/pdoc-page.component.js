@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var generic_app_service_1 = require("@dps/mycms-commons/dist/commons/services/generic-app.service");
 var AbstractPageComponent = /** @class */ (function () {
-    function AbstractPageComponent(route, toastr, vcr, pageUtils, cd, trackingProvider, appService, platformService, layoutService, environment) {
+    function AbstractPageComponent(route, toastr, pageUtils, cd, trackingProvider, appService, platformService, layoutService, environment) {
         this.route = route;
         this.toastr = toastr;
         this.pageUtils = pageUtils;
@@ -14,7 +14,6 @@ var AbstractPageComponent = /** @class */ (function () {
         this.environment = environment;
         this.initialized = false;
         this.showLoadingSpinner = false;
-        this.toastr.setRootViewContainerRef(vcr);
     }
     AbstractPageComponent.prototype.ngOnInit = function () {
         // reset initialized

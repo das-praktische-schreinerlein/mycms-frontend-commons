@@ -1,6 +1,6 @@
-import { ChangeDetectorRef, ViewContainerRef } from '@angular/core';
+import { ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ToastsManager } from 'ng2-toastr';
+import { ToastrService } from 'ngx-toastr';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { UploadEvent } from 'ngx-file-drop';
 import { IdCsvValidationRule, IdValidationRule } from '@dps/mycms-commons/dist/search-commons/model/forms/generic-validator.util';
@@ -42,7 +42,7 @@ export declare abstract class CommonDocAlbumpageComponent<R extends CommonDocRec
     protected cdocDataService: D;
     protected searchFormConverter: GenericSearchFormSearchFormConverter<F>;
     protected cdocRoutingService: CommonDocRoutingService;
-    protected toastr: ToastsManager;
+    protected toastr: ToastrService;
     protected pageUtils: PageUtils;
     protected cd: ChangeDetectorRef;
     protected trackingProvider: GenericTrackingService;
@@ -74,7 +74,7 @@ export declare abstract class CommonDocAlbumpageComponent<R extends CommonDocRec
     m3uAvailable: boolean;
     multiActionSelectValueMap: Map<string, IMultiSelectOption[]>;
     editFormGroup: FormGroup;
-    constructor(route: ActivatedRoute, commonRoutingService: CommonRoutingService, errorResolver: ErrorResolver, cdocDataService: D, searchFormConverter: GenericSearchFormSearchFormConverter<F>, cdocRoutingService: CommonDocRoutingService, toastr: ToastsManager, vcr: ViewContainerRef, pageUtils: PageUtils, cd: ChangeDetectorRef, trackingProvider: GenericTrackingService, fb: FormBuilder, cdocAlbumService: CommonDocAlbumService, appService: GenericAppService, platformService: PlatformService, layoutService: LayoutService, searchFormUtils: SearchFormUtils, cdocSearchFormUtils: CommonDocSearchFormUtils, playlistService: CommonDocPlaylistService<R>, multiActionManager: CommonDocMultiActionManager<R, F, S, D>, environment: CommonEnvironment);
+    constructor(route: ActivatedRoute, commonRoutingService: CommonRoutingService, errorResolver: ErrorResolver, cdocDataService: D, searchFormConverter: GenericSearchFormSearchFormConverter<F>, cdocRoutingService: CommonDocRoutingService, toastr: ToastrService, pageUtils: PageUtils, cd: ChangeDetectorRef, trackingProvider: GenericTrackingService, fb: FormBuilder, cdocAlbumService: CommonDocAlbumService, appService: GenericAppService, platformService: PlatformService, layoutService: LayoutService, searchFormUtils: SearchFormUtils, cdocSearchFormUtils: CommonDocSearchFormUtils, playlistService: CommonDocPlaylistService<R>, multiActionManager: CommonDocMultiActionManager<R, F, S, D>, environment: CommonEnvironment);
     protected configureProcessing(): void;
     onCurRecordChange(page: number): boolean;
     onShowDoc(cdoc: R): boolean;

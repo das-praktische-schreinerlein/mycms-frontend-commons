@@ -1,6 +1,6 @@
 import {ChangeDetectorRef, EventEmitter, Input, Output, ViewContainerRef} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
-import {ToastsManager} from 'ng2-toastr';
+import {ToastrService} from 'ngx-toastr';
 import {SchemaValidationError} from 'js-data';
 import {IMultiSelectSettings, IMultiSelectTexts} from 'angular-2-dropdown-multiselect';
 import {BeanUtils} from '@dps/mycms-commons/dist/commons/utils/bean.utils';
@@ -75,12 +75,11 @@ export abstract class CommonDocEditformComponent<R extends CommonDocRecord, F ex
     @Output()
     public saveAndSearch: EventEmitter<R> = new EventEmitter();
 
-    constructor(public fb: FormBuilder, protected toastr: ToastsManager, vcr: ViewContainerRef, protected cd: ChangeDetectorRef,
+    constructor(public fb: FormBuilder, protected toastr: ToastrService, protected cd: ChangeDetectorRef,
                 protected appService: GenericAppService, protected cdocSearchFormUtils: CommonDocSearchFormUtils,
                 protected searchFormUtils: SearchFormUtils, protected cdocDataService: D,
                 protected contentUtils: CommonDocContentUtils) {
         super(cd);
-        this.toastr.setRootViewContainerRef(vcr);
     }
 
     setKeyword(keyword: string): void {

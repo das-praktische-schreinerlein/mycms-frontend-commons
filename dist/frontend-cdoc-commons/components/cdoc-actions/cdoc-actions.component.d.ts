@@ -1,7 +1,7 @@
-import { ChangeDetectorRef, EventEmitter, ViewContainerRef } from '@angular/core';
+import { ChangeDetectorRef, EventEmitter } from '@angular/core';
 import { DynamicComponentHostDirective } from '../../../angular-commons/components/directives/dynamic-component-host.directive';
 import { ActionTagEvent } from '../cdoc-actiontags/cdoc-actiontags.component';
-import { ToastsManager } from 'ng2-toastr';
+import { ToastrService } from 'ngx-toastr';
 import { AbstractInlineComponent } from '../../../angular-commons/components/inline.component';
 import { DynamicComponentService } from '../../../angular-commons/services/dynamic-components.service';
 import { CommonDocRecord } from '@dps/mycms-commons/dist/search-commons/model/records/cdoc-entity-record';
@@ -15,7 +15,7 @@ export interface CommonDocActionsComponentConfig {
 }
 export declare class CommonDocActionsComponent<R extends CommonDocRecord, F extends CommonDocSearchForm, S extends CommonDocSearchResult<R, F>, D extends CommonDocDataService<R, F, S>> extends AbstractInlineComponent {
     protected dynamicComponentService: DynamicComponentService;
-    protected toastr: ToastsManager;
+    protected toastr: ToastrService;
     protected cd: ChangeDetectorRef;
     protected appService: GenericAppService;
     protected actionTagService: CommonDocActionTagService<R, F, S, D>;
@@ -24,7 +24,7 @@ export declare class CommonDocActionsComponent<R extends CommonDocRecord, F exte
     actionTagEvent: EventEmitter<ActionTagEvent>;
     widgetHost: DynamicComponentHostDirective;
     protected childActionTagEvent: EventEmitter<ActionTagEvent>;
-    constructor(dynamicComponentService: DynamicComponentService, toastr: ToastsManager, vcr: ViewContainerRef, cd: ChangeDetectorRef, appService: GenericAppService, actionTagService: CommonDocActionTagService<R, F, S, D>);
+    constructor(dynamicComponentService: DynamicComponentService, toastr: ToastrService, cd: ChangeDetectorRef, appService: GenericAppService, actionTagService: CommonDocActionTagService<R, F, S, D>);
     protected configureActionListener(): void;
     protected updateData(): void;
 }

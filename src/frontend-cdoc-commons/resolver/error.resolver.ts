@@ -1,4 +1,4 @@
-import {ToastsManager} from 'ng2-toastr';
+import {ToastrService} from 'ngx-toastr';
 import {Injectable} from '@angular/core';
 import {ResolvedData, ResolverError} from '../../angular-commons/resolver/resolver.utils';
 import {CommonRoutingService} from '../../angular-commons/services/common-routing.service';
@@ -28,7 +28,7 @@ export class ErrorResolver {
     constructor(private commonRoutingService: CommonRoutingService) {
     }
 
-    redirectAfterRouterError(errorCode: string, newUrl: string, toasts: ToastsManager, toastMessage: string) {
+    redirectAfterRouterError(errorCode: string, newUrl: string, toasts: ToastrService, toastMessage: string) {
         if (toasts) {
             let msg = '';
             if (toastMessage) {

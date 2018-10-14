@@ -1,7 +1,7 @@
 import {ChangeDetectorRef, EventEmitter, Input, Output, ViewChild, ViewContainerRef} from '@angular/core';
 import {DynamicComponentHostDirective} from '../../../angular-commons/components/directives/dynamic-component-host.directive';
 import {ActionTagEvent} from '../cdoc-actiontags/cdoc-actiontags.component';
-import {ToastsManager} from 'ng2-toastr';
+import {ToastrService} from 'ngx-toastr';
 import {AbstractInlineComponent} from '../../../angular-commons/components/inline.component';
 import {DynamicComponentService} from '../../../angular-commons/services/dynamic-components.service';
 import {CommonDocRecord} from '@dps/mycms-commons/dist/search-commons/model/records/cdoc-entity-record';
@@ -32,11 +32,10 @@ export class CommonDocActionsComponent <R extends CommonDocRecord, F extends Com
 
     protected childActionTagEvent: EventEmitter<ActionTagEvent> = new EventEmitter();
 
-    constructor(protected dynamicComponentService: DynamicComponentService, protected toastr: ToastsManager,
-                vcr: ViewContainerRef, protected cd: ChangeDetectorRef, protected appService: GenericAppService,
+    constructor(protected dynamicComponentService: DynamicComponentService, protected toastr: ToastrService,
+                protected cd: ChangeDetectorRef, protected appService: GenericAppService,
                 protected actionTagService: CommonDocActionTagService<R, F, S, D>) {
         super(cd);
-        this.toastr.setRootViewContainerRef(vcr);
         this.configureActionListener();
     }
 
