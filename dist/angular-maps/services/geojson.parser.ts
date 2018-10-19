@@ -4,7 +4,7 @@ import {DateUtils} from '@dps/mycms-commons/dist/commons/utils/date.utils';
 
 export class GeoJsonParser extends GeoParser {
     parse(json: string, options): GeoElement[] {
-        const obj = JSON.parse(json);
+        const obj = typeof json === 'string' ? JSON.parse(json) : json;
 
         const elements = this._parseJsonObj(obj, options);
         if (!elements) {

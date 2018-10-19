@@ -19,7 +19,7 @@ var GeoJsonParser = /** @class */ (function (_super) {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     GeoJsonParser.prototype.parse = function (json, options) {
-        var obj = JSON.parse(json);
+        var obj = typeof json === 'string' ? JSON.parse(json) : json;
         var elements = this._parseJsonObj(obj, options);
         if (!elements) {
             return;

@@ -33,6 +33,38 @@ export class SimpleAngularBackendHttpClient extends MinimalHttpBackendClient {
         }
     }
 
+
+    public static createBackendHttpResponse(requestConfig: {}, res: HttpResponse<any>): BackendHttpResponse {
+        const contentType = res.headers.get('content-type');
+        let jsonObj = undefined;
+        let text = res.body;
+        if (res.body) {
+            if (typeof res.body !== 'string') {
+                if (contentType && contentType.indexOf('application/json') !== -1) {
+                    text = JSON.stringify(res.body);
+                    jsonObj = res.body;
+                } else {
+                    text = res.body.toString();
+                }
+            } else {
+                text = res.body;
+                if (contentType && contentType.indexOf('application/json') !== -1) {
+                    jsonObj = JSON.parse(res.body);
+                }
+            }
+        }
+
+        return {
+            headers: <any>res.headers,
+            method: requestConfig['method'],
+            data: jsonObj,
+            text: function () { return text; },
+            json: function () { return jsonObj; },
+            status: res.status,
+            statusMsg: res.statusText
+        } as BackendHttpResponse;
+    }
+
     constructor(private http: HttpClient) {
         super();
     }
@@ -54,16 +86,7 @@ export class SimpleAngularBackendHttpClient extends MinimalHttpBackendClient {
         let request = this.http.request(requestConfig.method, requestConfig.url, requestConfig);
         result = request.map((res: HttpResponse<any>) => {
             // console.log('response makeHttpRequest:' + httpConfig.url, res);
-            const contentType = res.headers.get('content-type');
-            return {
-                headers: <any>res.headers,
-                method: httpConfig.method,
-                data: contentType && contentType.indexOf('application/json') !== -1 ? res.body : undefined,
-                text: function () { return res.body; },
-                json: function () { return contentType && contentType.indexOf('application/json') !== -1 ? res.body : undefined; },
-                status: res.status,
-                statusMsg: res.statusText
-            } as BackendHttpResponse;
+            return SimpleAngularBackendHttpClient.createBackendHttpResponse(requestConfig, res);
         });
 
         return result.toPromise();

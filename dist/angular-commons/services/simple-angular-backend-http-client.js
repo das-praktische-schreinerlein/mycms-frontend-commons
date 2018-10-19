@@ -59,6 +59,37 @@ var SimpleAngularBackendHttpClient = /** @class */ (function (_super) {
             }
         }
     };
+    SimpleAngularBackendHttpClient.createBackendHttpResponse = function (requestConfig, res) {
+        var contentType = res.headers.get('content-type');
+        var jsonObj = undefined;
+        var text = res.body;
+        if (res.body) {
+            if (typeof res.body !== 'string') {
+                if (contentType && contentType.indexOf('application/json') !== -1) {
+                    text = JSON.stringify(res.body);
+                    jsonObj = res.body;
+                }
+                else {
+                    text = res.body.toString();
+                }
+            }
+            else {
+                text = res.body;
+                if (contentType && contentType.indexOf('application/json') !== -1) {
+                    jsonObj = JSON.parse(res.body);
+                }
+            }
+        }
+        return {
+            headers: res.headers,
+            method: requestConfig['method'],
+            data: jsonObj,
+            text: function () { return text; },
+            json: function () { return jsonObj; },
+            status: res.status,
+            statusMsg: res.statusText
+        };
+    };
     SimpleAngularBackendHttpClient.prototype.makeHttpRequest = function (httpConfig) {
         var requestConfig = {
             method: httpConfig.method.toLowerCase(),
@@ -74,16 +105,7 @@ var SimpleAngularBackendHttpClient = /** @class */ (function (_super) {
         var request = this.http.request(requestConfig.method, requestConfig.url, requestConfig);
         result = request.map(function (res) {
             // console.log('response makeHttpRequest:' + httpConfig.url, res);
-            var contentType = res.headers.get('content-type');
-            return {
-                headers: res.headers,
-                method: httpConfig.method,
-                data: contentType && contentType.indexOf('application/json') !== -1 ? res.body : undefined,
-                text: function () { return res.body; },
-                json: function () { return contentType && contentType.indexOf('application/json') !== -1 ? res.body : undefined; },
-                status: res.status,
-                statusMsg: res.statusText
-            };
+            return SimpleAngularBackendHttpClient_1.createBackendHttpResponse(requestConfig, res);
         });
         return result.toPromise();
     };
