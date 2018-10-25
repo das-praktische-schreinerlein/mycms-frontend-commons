@@ -1,0 +1,120 @@
+/*******************
+ * bootstrap4-alpha6 -> bootstrap4 overrides
+ *******************/
+@media print {
+    .visible-print-block {
+        display: block;
+    }
+}
+@media screen {
+    .visible-print-block {
+        display: none;
+    }
+}
+
+.btn-secondary {
+    color: #292b2c;
+    background-color: #fff;
+    border-color: #ccc;
+}
+.input-group {
+    align-items: center;
+}
+.form-control-sm {
+    height: auto;
+}
+
+ss-multiselect-dropdown, .ss-multiselect-dropdown, .ss-multiselect-dropdown-fullwidth {
+    flex: 1 1 auto;
+    width: 1px;
+}
+
+.row {
+}
+
+.card-block {
+    -webkit-box-flex: 1;
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+    padding: 1.25rem;
+}
+
+/*******************
+ * bootstrap overrides
+ *******************/
+dl, ol, ul {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.card-deck .card:not(:first-child) {
+    margin-left: 3px;
+}
+.card-deck .card:not(:last-child) {
+    margin-right: 3px;
+}
+.card-deck .card {
+    margin-left: 3px;
+    margin-right: 3px;
+}
+ngb-accordion div.card div.card-header {
+    padding: 2px;
+}
+
+.nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
+    background: transparent;
+}
+.nav-tabs .nav-link {
+    border-color: #ddd #ddd #fff;
+    background: #fcf1b5;
+    background: -moz-linear-gradient(top, #fcf1b5 0%, #fefcea 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #fcf1b5), color-stop(100%, #fefcea) );
+    background: -webkit-linear-gradient(top, #fcf1b5 0%, #fefcea 100%);
+    background: -o-linear-gradient(top, #fcf1b5 0%, #fefcea 100%);
+    background: -ms-linear-gradient(top, #fcf1b5 0%, #fefcea 100%);
+    background: linear-gradient(to bottom, #fcf1b5 0%, #fefcea 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fcf1b5', endColorstr='#fefcea', GradientType=0 );
+}
+
+.list-header-container ul.pagination-sm, .footer ul.pagination-sm {
+    margin-bottom: 5px;
+}
+.navigation-content-container ul.pagination-sm {
+    margin: 0;
+}
+
+/*******************
+ * bootstrap4-alpha6 -> bootstrap4 overrides
+ *******************/
+@media (min-width: 576px) {
+    .container {
+        width: 540px;
+        max-width: 100%;
+    }
+}
+
+@media (min-width: 768px) {
+    .container {
+        width: 720px;
+        max-width: 100%;
+    }
+}
+
+@media (min-width: 992px) {
+    .container {
+        width: 960px;
+        max-width: 100%;
+    }
+}
+
+@media (min-width: 1200px) {
+    .container {
+        width: 1140px;
+        max-width: 100%;
+    }
+}
+
+.container {
+    width: 95%;
+    max-width: 100%;
+}

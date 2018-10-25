@@ -1,0 +1,15 @@
+/*******************
+ * browser overrides
+ *******************/
+
+/**
+ * override IE-styles
+ **/
+@media all and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+}
+/**
+ * override Edge-styles
+ **/
+@supports (-ms-ime-align: auto) {
+}
+

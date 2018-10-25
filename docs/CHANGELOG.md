@@ -4,9 +4,10 @@
  
 ## 4.0.0
 - upgraded packages to be angular5/6-compatible
+- added common layout-styles
 
 ### new features
-- none
+- added common layout-styles
 
 ### improvements
 - none
