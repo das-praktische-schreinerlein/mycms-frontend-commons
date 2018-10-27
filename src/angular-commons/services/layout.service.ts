@@ -29,12 +29,21 @@ export class LayoutService {
 
         const me = this;
         if (this.isDesktop() && typeof window !== 'undefined' && window.matchMedia) {
-            const mediaQueryList = window.matchMedia('print');
-            mediaQueryList.addListener(function(mql) {
+            const mediaQueryListPrint = window.matchMedia('print');
+            mediaQueryListPrint.addListener(function(mql) {
                 if (mql.matches) {
                     me.flgPrintmode = true;
                 } else {
                     me.flgPrintmode = false;
+                }
+                me.layoutSizeObservable.next(me.calcLayoutSizeForWindow());
+            });
+            const mediaQueryListScreen = window.matchMedia('screen');
+            mediaQueryListScreen.addListener(function(mql) {
+                if (mql.matches) {
+                    me.flgPrintmode = false;
+                } else {
+                    me.flgPrintmode = true;
                 }
                 me.layoutSizeObservable.next(me.calcLayoutSizeForWindow());
             });

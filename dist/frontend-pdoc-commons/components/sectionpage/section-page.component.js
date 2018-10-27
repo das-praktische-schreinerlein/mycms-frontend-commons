@@ -172,6 +172,7 @@ var SectionPageComponent = /** @class */ (function () {
         else {
             this.searchFormLayout = layout_service_1.SearchFormLayout.GRID;
         }
+        this.flgDescRendered = false;
         this.cd.markForCheck();
     };
     SectionPageComponent = __decorate([

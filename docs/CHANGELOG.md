@@ -5,15 +5,17 @@
 ## 4.0.0
 - upgraded packages to be angular5/6-compatible
 - added common layout-styles
+- fixed minor bugs
 
 ### new features
 - added common layout-styles
 
 ### improvements
-- none
+- frontend: added styles to filter components
 
 ### bug fixes
-- none
+- frontend: fixed trigger for rendering on navigation/layout-changes
+- frontend: fixed nav-bar  
  
 ### breaking changes
 - upgraded packages to be angular5/6-compatible

@@ -185,6 +185,7 @@ export class SectionPageComponent implements OnInit {
         } else {
             this.searchFormLayout = SearchFormLayout.GRID;
         }
+        this.flgDescRendered = false;
 
         this.cd.markForCheck();
     }
