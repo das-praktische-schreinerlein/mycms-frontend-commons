@@ -5,6 +5,21 @@
 
     .container {
         width: 100%;
+        display: block;
+    }
+
+    .sectionpage-stacked-sidebar-container {
+        display: none;
+    }
+
+    .sectionpage-stacked-left-content-container {
+        page-break-before: avoid;
+        page-break-inside: auto;
+        display: block !important;
+    }
+
+    .toast-container {
+        display: none;
     }
 
     .btn, .btn-primary {
@@ -63,6 +78,7 @@
         min-width: 260px !important;
         max-width: 290px !important;
     }
+
 }
 @media screen {
 }

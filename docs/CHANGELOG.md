@@ -12,6 +12,7 @@
 
 ### improvements
 - frontend: added styles to filter components
+- frontend: fixed print-styles
 
 ### bug fixes
 - frontend: fixed trigger for rendering on navigation/layout-changes
