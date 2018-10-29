@@ -62,21 +62,10 @@
         page-break-inside: avoid;
     }
 
-    app-tdoc-list-item, .app-tdoc-list-item, .tdoc-list-item-flat, .tdoc-list-item-thin {
-        page-break-before: auto;
-        page-break-after: auto;
-        page-break-inside: avoid;
-    }
     img {
         page-break-before: auto;
         page-break-after: auto;
         page-break-inside: avoid;
-    }
-
-    .app-tdoc-list-item-big {
-        width: 275px !important;
-        min-width: 260px !important;
-        max-width: 290px !important;
     }
 
 }
