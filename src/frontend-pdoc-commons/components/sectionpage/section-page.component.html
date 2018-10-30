@@ -42,7 +42,6 @@
                         </li>
                         <li class="">
                             <ul *ngIf="getSubSections(menuSection).length > 0">
-
                                 <ng-container *ngFor="let section of getSubSections(menuSection)">
                                     <ng-container [ngSwitch]="section.type">
                                         <ng-container *ngSwitchCase="'SectionOverviewPage'">
