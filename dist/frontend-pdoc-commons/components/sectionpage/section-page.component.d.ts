@@ -34,7 +34,10 @@ export declare class SectionPageComponent implements OnInit {
     pdoc: PDocRecord;
     baseSearchUrl: string;
     sections: PDocRecord[];
+    menuSections: PDocRecord[];
     Layout: typeof Layout;
+    sectionPrev: PDocRecord;
+    sectionNext: PDocRecord;
     SearchFormLayout: typeof SearchFormLayout;
     searchFormLayout: SearchFormLayout;
     constructor(route: ActivatedRoute, pdocDataService: PDocDataService, commonRoutingService: CommonRoutingService, errorResolver: ErrorResolver, toastr: ToastrService, pageUtils: PageUtils, angularMarkdownService: AngularMarkdownService, angularHtmlService: AngularHtmlService, cd: ChangeDetectorRef, trackingProvider: GenericTrackingService, platformService: PlatformService, layoutService: LayoutService, appService: GenericAppService);
@@ -43,6 +46,8 @@ export declare class SectionPageComponent implements OnInit {
     onShow(record: PDocRecord): boolean;
     onScrollToTop(): void;
     getSubSections(pdoc: PDocRecord): PDocRecord[];
+    protected calcSectionsNavRunner(): void;
+    protected calcSubSectionsTreeList(allSections: PDocRecord[], parent: PDocRecord): void;
     protected configureProcessingOfResolvedData(config: {}): void;
     protected doProcessAfterResolvedData(config: {}): void;
     protected onResize(layoutSizeData: LayoutSizeData): void;

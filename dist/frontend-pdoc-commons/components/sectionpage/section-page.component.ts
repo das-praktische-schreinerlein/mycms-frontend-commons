@@ -30,7 +30,10 @@ export class SectionPageComponent implements OnInit {
     pdoc: PDocRecord = new PDocRecord();
     baseSearchUrl = '';
     sections: PDocRecord[] = [];
+    menuSections: PDocRecord[] = [];
     public Layout = Layout;
+    sectionPrev: PDocRecord;
+    sectionNext: PDocRecord;
     SearchFormLayout = SearchFormLayout;
     searchFormLayout: SearchFormLayout = SearchFormLayout.GRID;
 
@@ -65,6 +68,16 @@ export class SectionPageComponent implements OnInit {
                     me.flgDescRendered = false;
                     me.baseSearchUrl = data.baseSearchUrl.data;
                     me.sections =  me.getSubSections(me.pdoc);
+                    me.pdocDataService.getById('menu', {forceLocalStore: true}).then(function onThemesFound(pdoc: PDocRecord) {
+                        me.menuSections = me.getSubSections(pdoc);
+                        me.calcSectionsNavRunner();
+                        me.cd.markForCheck();
+                    }).catch(function onNotFound(error) {
+                        me.menuSections = [];
+                        me.calcSectionsNavRunner();
+                        me.cd.markForCheck();
+                        console.error('show getMainSection failed:', error);
+                    });
 
                     me.doProcessAfterResolvedData(config);
 
@@ -171,6 +184,38 @@ export class SectionPageComponent implements OnInit {
 
     getSubSections(pdoc: PDocRecord): PDocRecord[] {
         return this.pdocDataService.getSubDocuments(pdoc);
+    }
+
+    protected calcSectionsNavRunner(): void {
+        this.sectionPrev = undefined;
+        this.sectionNext = undefined;
+
+        if (this.pdoc && this.menuSections) {
+            const allSections = [];
+
+            for (let i = 0; i < this.menuSections.length; i++) {
+                this.calcSubSectionsTreeList(allSections, this.menuSections[i]);
+            }
+
+            let lastSection = undefined;
+            for (let i = 0; i < allSections.length; i++) {
+                if (allSections[i].id === this.pdoc.id) {
+                    this.sectionPrev = lastSection;
+                    this.sectionNext = i + 1 < allSections.length ? allSections[i + 1] : undefined;
+                    i = allSections.length++;
+                }
+                lastSection = allSections[i];
+            }
+        }
+    }
+
+    protected calcSubSectionsTreeList(allSections: PDocRecord[], parent: PDocRecord): void {
+        const subSections = this.getSubSections(parent);
+        allSections.push(parent);
+        for (let i = 0; i < subSections.length; i++) {
+            this.calcSubSectionsTreeList(allSections, subSections[i]);
+        }
+
     }
 
     protected configureProcessingOfResolvedData(config: {}): void {

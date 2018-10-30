@@ -33,6 +33,61 @@
                 <img src="assets/images/banner-big.png" width="200" class="picture-thumbnail align-top">
             </a>
         </div>
+        <div class="hidden-print">
+            <ul class="sidebar-nav">
+                <ng-container *ngIf="menuSections !== undefined && menuSections.length > 0">
+                    <ng-container *ngFor="let menuSection of menuSections">
+                        <li class="">
+                            <a class="" routerLink="/pages/{{menuSection.id}}" routerLinkActive="active">{{menuSection.name}}</a>
+                        </li>
+                        <li class="">
+                            <ul *ngIf="getSubSections(menuSection).length > 0">
+                                <ng-container *ngFor="let section of getSubSections(menuSection)">
+                                    <ng-container [ngSwitch]="section.type">
+                                        <ng-container *ngSwitchCase="'SectionOverviewPage'">
+                                            <li class=""><a class="" title="{{section.teaser}}" routerLink="/pages/{{section.id}}/" routerLinkActive="active">{{section.name}}</a>
+                                                <ul>
+                                                    <ng-container *ngFor="let subSection of getSubSections(section)">
+                                                        <li class=""><a class="" title="{{subSection.teaser}}" routerLink="/pages/{{subSection.id}}/" routerLinkActive="active">{{subSection.name}}</a></li>
+                                                    </ng-container>
+                                                </ul>
+                                            </li>
+                                        </ng-container>
+                                        <ng-container *ngSwitchDefault>
+                                            <li class=""><a class="" title="{{section.teaser}}" routerLink="/pages/{{section.id}}/" routerLinkActive="active">{{section.name}}</a></li>
+                                        </ng-container>
+                                    </ng-container>
+                                </ng-container>
+                            </ul>
+                        </li>
+                    </ng-container>
+                </ng-container>
+
+            </ul>
+        </div>
+
+    </div>
+</ng-template>
+
+<ng-template #sectionPrevNextNavigationContainer>
+    <div class="container content-container sectionpage-prevnext-nav-container hidden-print">
+        <div class="prevnext-nav row">
+            <div class="col-sm-4 prevnext-nav-prev">
+                <ng-container *ngIf="sectionPrev">
+                    <a routerLink="/pages/{{sectionPrev.id}}">{{sectionPrev.name}}</a>
+                </ng-container>
+            </div>
+            <div class="col-sm-4 prevnext-nav-current">
+                <ng-container *ngIf="pdoc">
+                    {{pdoc.name}}
+                </ng-container>
+            </div>
+            <div class="col-sm-4 prevnext-nav-next">
+                <ng-container *ngIf="sectionNext">
+                    <a routerLink="/pages/{{sectionNext.id}}">{{sectionNext.name}}</a>
+                </ng-container>
+            </div>
+        </div>
     </div>
 </ng-template>
 
@@ -46,11 +101,13 @@
             <div class="sectionpage-stacked-left-content-container" style="width: 73%; display: inline-block;">
                 <ng-container *ngTemplateOutlet="contentContainer"></ng-container>
                 <ng-container *ngTemplateOutlet="sectionsContainer"></ng-container>
+                <ng-container *ngTemplateOutlet="sectionPrevNextNavigationContainer"></ng-container>
             </div>
         </ng-container>
         <ng-container *ngSwitchDefault="">
             <ng-container *ngTemplateOutlet="contentContainer"></ng-container>
             <ng-container *ngTemplateOutlet="sectionsContainer"></ng-container>
+            <ng-container *ngTemplateOutlet="sectionPrevNextNavigationContainer"></ng-container>
         </ng-container>
     </ng-container>
 </ng-container>

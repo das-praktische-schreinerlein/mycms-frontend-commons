@@ -6,9 +6,11 @@
 - upgraded packages to be angular5/6-compatible
 - added common layout-styles
 - fixed minor bugs
+- improved section-page with navigation
 
 ### new features
 - added common layout-styles
+- frontend: added sidebar-navigation/prev-next-navigation
 
 ### improvements
 - frontend: added styles to filter components

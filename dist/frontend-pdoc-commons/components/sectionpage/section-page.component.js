@@ -45,6 +45,7 @@ var SectionPageComponent = /** @class */ (function () {
         this.pdoc = new pdoc_record_1.PDocRecord();
         this.baseSearchUrl = '';
         this.sections = [];
+        this.menuSections = [];
         this.Layout = layout_service_1.Layout;
         this.SearchFormLayout = layout_service_1.SearchFormLayout;
         this.searchFormLayout = layout_service_1.SearchFormLayout.GRID;
@@ -68,6 +69,16 @@ var SectionPageComponent = /** @class */ (function () {
                 me.flgDescRendered = false;
                 me.baseSearchUrl = data.baseSearchUrl.data;
                 me.sections = me.getSubSections(me.pdoc);
+                me.pdocDataService.getById('menu', { forceLocalStore: true }).then(function onThemesFound(pdoc) {
+                    me.menuSections = me.getSubSections(pdoc);
+                    me.calcSectionsNavRunner();
+                    me.cd.markForCheck();
+                }).catch(function onNotFound(error) {
+                    me.menuSections = [];
+                    me.calcSectionsNavRunner();
+                    me.cd.markForCheck();
+                    console.error('show getMainSection failed:', error);
+                });
                 me.doProcessAfterResolvedData(config);
                 _this.pageUtils.setTranslatedTitle('meta.title.prefix.sectionPage', { title: me.pdoc.heading }, me.pdoc.heading);
                 _this.pageUtils.setTranslatedDescription('meta.desc.prefix.sectionPage', { title: me.pdoc.heading, teaser: me.pdoc.teaser }, me.pdoc.teaser);
@@ -160,6 +171,32 @@ var SectionPageComponent = /** @class */ (function () {
     };
     SectionPageComponent.prototype.getSubSections = function (pdoc) {
         return this.pdocDataService.getSubDocuments(pdoc);
+    };
+    SectionPageComponent.prototype.calcSectionsNavRunner = function () {
+        this.sectionPrev = undefined;
+        this.sectionNext = undefined;
+        if (this.pdoc && this.menuSections) {
+            var allSections = [];
+            for (var i = 0; i < this.menuSections.length; i++) {
+                this.calcSubSectionsTreeList(allSections, this.menuSections[i]);
+            }
+            var lastSection = undefined;
+            for (var i = 0; i < allSections.length; i++) {
+                if (allSections[i].id === this.pdoc.id) {
+                    this.sectionPrev = lastSection;
+                    this.sectionNext = i + 1 < allSections.length ? allSections[i + 1] : undefined;
+                    i = allSections.length++;
+                }
+                lastSection = allSections[i];
+            }
+        }
+    };
+    SectionPageComponent.prototype.calcSubSectionsTreeList = function (allSections, parent) {
+        var subSections = this.getSubSections(parent);
+        allSections.push(parent);
+        for (var i = 0; i < subSections.length; i++) {
+            this.calcSubSectionsTreeList(allSections, subSections[i]);
+        }
     };
     SectionPageComponent.prototype.configureProcessingOfResolvedData = function (config) {
     };
