@@ -14,7 +14,7 @@ var ComponentUtils = /** @class */ (function () {
             }
             else {
                 var from = changedProp.previousValue;
-                if (from !== undefined && to !== undefined && from.id !== to.id) {
+                if (from !== undefined && from !== null && to !== undefined && to !== null && from.id !== to.id) {
                     return true;
                 }
                 if (!deepEqual(from, to)) {

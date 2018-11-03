@@ -19,6 +19,7 @@
 ### bug fixes
 - frontend: fixed trigger for rendering on navigation/layout-changes
 - frontend: fixed nav-bar  
+- frontend: fixed null-issue on ngChanges
  
 ### breaking changes
 - upgraded packages to be angular5/6-compatible
