@@ -49,15 +49,9 @@ export class CommonDocTagsStateComponent extends AbstractInlineComponent {
     }
 
     protected updateData(): void {
-        this.tagsKats = [];
-        if (this.tags === undefined || this.tags === null) {
-            this.tagsFound.emit([]);
-            return;
-        }
-
         this.tagsKats = this.contentUtils.getStructuredKeywordsState(
             this.tagsConfig,
-            this.tags.split(', '),
+            this.tags === undefined || this.tags === null ? [] : this.tags.split(', '),
             this.suggestions ? this.suggestions : [],
             this.possiblePrefixes);
         this.tagsFound.emit(this.tagsKats);

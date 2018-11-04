@@ -7,6 +7,7 @@
 - added common layout-styles
 - fixed minor bugs
 - improved section-page with navigation
+- bumped version up to be in sync with mycms
 
 ### new features
 - added common layout-styles
@@ -20,6 +21,7 @@
 - frontend: fixed trigger for rendering on navigation/layout-changes
 - frontend: fixed nav-bar  
 - frontend: fixed null-issue on ngChanges
+- frontend: fixed null-issue on CommonDocTagState
  
 ### breaking changes
 - upgraded packages to be angular5/6-compatible

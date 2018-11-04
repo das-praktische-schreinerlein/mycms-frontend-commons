@@ -45,12 +45,7 @@ var CommonDocTagsStateComponent = /** @class */ (function (_super) {
         this.unsetTag.emit(this.prefix + keyword);
     };
     CommonDocTagsStateComponent.prototype.updateData = function () {
-        this.tagsKats = [];
-        if (this.tags === undefined || this.tags === null) {
-            this.tagsFound.emit([]);
-            return;
-        }
-        this.tagsKats = this.contentUtils.getStructuredKeywordsState(this.tagsConfig, this.tags.split(', '), this.suggestions ? this.suggestions : [], this.possiblePrefixes);
+        this.tagsKats = this.contentUtils.getStructuredKeywordsState(this.tagsConfig, this.tags === undefined || this.tags === null ? [] : this.tags.split(', '), this.suggestions ? this.suggestions : [], this.possiblePrefixes);
         this.tagsFound.emit(this.tagsKats);
     };
     __decorate([
