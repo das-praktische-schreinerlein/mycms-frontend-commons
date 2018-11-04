@@ -22,6 +22,7 @@
 - frontend: fixed nav-bar  
 - frontend: fixed null-issue on ngChanges
 - frontend: fixed null-issue on CommonDocTagState
+- frontend: fixed pdoc-styles
  
 ### breaking changes
 - upgraded packages to be angular5/6-compatible
