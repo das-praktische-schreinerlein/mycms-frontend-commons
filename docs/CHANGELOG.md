@@ -8,10 +8,12 @@
 - fixed minor bugs
 - improved section-page with navigation
 - bumped version up to be in sync with mycms
+- added devtools
 
 ### new features
 - added common layout-styles
 - frontend: added sidebar-navigation/prev-next-navigation
+- devtools: added devtools (synced-preview...)
 
 ### improvements
 - frontend: added styles to filter components

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8"><meta name="audience" content="alle">
+    <title>Dev-Tools</title>
+    <style>
+        body {
+            background: #8cacd3; /* Old browsers */
+            background: -moz-linear-gradient(top, #8cacd3 0%, #2989d8 50%, #468ec9 51%, #7db9e8 100%); /* FF3.6+ */
+            background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#8cacd3), color-stop(50%,#2989d8), color-stop(51%,#468ec9), color-stop(100%,#7db9e8)); /* Chrome,Safari4+ */
+            background: -webkit-linear-gradient(top, #8cacd3 0%,#2989d8 50%,#468ec9 51%,#7db9e8 100%); /* Chrome10+,Safari5.1+ */
+            background: -o-linear-gradient(top, #8cacd3 0%,#2989d8 50%,#468ec9 51%,#7db9e8 100%); /* Opera 11.10+ */
+            background: -ms-linear-gradient(top, #8cacd3 0%,#2989d8 50%,#468ec9 51%,#7db9e8 100%); /* IE10+ */
+            background: linear-gradient(to bottom, #8cacd3 0%,#2989d8 50%,#468ec9 51%,#7db9e8 100%); /* W3C */
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#8cacd3', endColorstr='#7db9e8',GradientType=0 ); /* IE6-9 */
+            overflow-y:scroll;
+            font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif;
+            font-size: small;
+        }
+        .box {
+            border: 2px solid #8CACD3;
+            border-radius: 10px;
+            padding: 3px;
+            background-color: white;
+            margin-top: 1px;
+            text-align: left;
+        }
+
+        ul.toolnav {
+            display: inline-block;
+            list-style: none;
+        }
+        li.tool a {
+            background: lightblue;
+            border: 2px solid #3c9a5f;
+            border-radius: 2px;
+            display: inline-block;
+            padding: 3px;
+        }
+        .main {
+            width: 100%;
+        }
+        .toolframe {
+            width: 100%;
+        }
+    </style>
+    <style>
+    </style>
+</head>
+
+<body>
+<div class="main" id="devtools_main">
+    <div class="header box" id="devtools_headerWrapper">
+        <div>
+            Tools:
+            <ul class="toolnav" id="devtools_toolnav">
+            </ul>
+        </div>
+    </div>
+    <iframe class="toolframe" name="devtools_toolframe" id="devtools_toolframe"></iframe>
+</div>
+
+<script>
+    var devtoolsConfig = {
+        'tools': {
+            'syncedpreview': {
+                'label': 'Synced-Preview',
+                'baseUrl': './synced-preview.html'
+            }
+        },
+        'ui': {
+            toolsFrameId: 'devtools_toolframe',
+            headerWrapperId: 'devtools_headerWrapper',
+            toolNavId: 'devtools_toolnav'
+        }
+    };
+
+    var createDevtoolsWidget = function (config) {
+        var me = {};
+        me.config = config;
+
+        me.init = function () {
+            me._createUI();
+            me.doResize();
+            me._doStart();
+
+            window.addEventListener('resize', function () {
+                me.doResize();
+            });
+        };
+
+        me.doResize = function () {
+            document.getElementById(me.config.ui.toolsFrameId).style.height =
+                (window.innerHeight - document.getElementById(me.config.ui.headerWrapperId).clientHeight -10 ) + 'px';
+        };
+
+        me._createUI = function () {
+            document.getElementById(me.config.ui.toolNavId).innerHTML = '';
+            for (var toolId in me.config.tools) {
+                me._createUIElements('tool' + toolId, me.config.tools[toolId]);
+            }
+        };
+
+        me._createUIElements = function (name, config) {
+            document.getElementById(me.config.ui.toolNavId).innerHTML =
+                document.getElementById(me.config.ui.toolNavId).innerHTML +
+                '<li class="tool">\n' +
+                '   <a href="' + config.baseUrl + '" target="' + me.config.ui.toolsFrameId + '">' + config.label + '</a>' +
+                '</li>\n';
+        };
+
+        me._doStart = function () {
+            var toolIds = Object.getOwnPropertyNames(me.config.tools);
+            if (toolIds.length > 0) {
+                document.getElementById(me.config.ui.toolsFrameId).src = me.config.tools[toolIds[0]].baseUrl;
+            }
+        };
+
+        me.init();
+    };
+
+    createDevtoolsWidget(devtoolsConfig);
+</script>
+</body>
+
+</html>

@@ -4,7 +4,8 @@
   "license": "Apache-2.0",
   "angular-cli": {},
   "scripts": {
-    "build": "mv _node_modules node_modules & rm -fr dist && mkdir dist && tsc"
+    "build": "mv _node_modules node_modules & rm -fr dist && mkdir dist && tsc",
+    "serve-mycms-frontend-devtools": "live-server --port=4201 --no-browser --host=localhost --entry-file=index.html dist/devtools/httproot"
   },
   "main": "dist/",
   "types": "dist/",

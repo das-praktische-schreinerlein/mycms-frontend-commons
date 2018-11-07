@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8"><meta name="audience" content="alle">
+    <title>Synced-Preview</title>
+    <style>
+        body {
+            background: #8cacd3; /* Old browsers */
+            background: -moz-linear-gradient(top, #8cacd3 0%, #2989d8 50%, #468ec9 51%, #7db9e8 100%); /* FF3.6+ */
+            background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#8cacd3), color-stop(50%,#2989d8), color-stop(51%,#468ec9), color-stop(100%,#7db9e8)); /* Chrome,Safari4+ */
+            background: -webkit-linear-gradient(top, #8cacd3 0%,#2989d8 50%,#468ec9 51%,#7db9e8 100%); /* Chrome10+,Safari5.1+ */
+            background: -o-linear-gradient(top, #8cacd3 0%,#2989d8 50%,#468ec9 51%,#7db9e8 100%); /* Opera 11.10+ */
+            background: -ms-linear-gradient(top, #8cacd3 0%,#2989d8 50%,#468ec9 51%,#7db9e8 100%); /* IE10+ */
+            background: linear-gradient(to bottom, #8cacd3 0%,#2989d8 50%,#468ec9 51%,#7db9e8 100%); /* W3C */
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#8cacd3', endColorstr='#7db9e8',GradientType=0 ); /* IE6-9 */
+            overflow-y:scroll;
+            font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif;
+            font-size: small;
+        }
+        .box {
+            border: 2px solid #8CACD3;
+            border-radius: 10px;
+            padding: 3px;
+            background-color: white;
+            margin-top: 1px;
+            text-align: left;
+        }
+        .form-group {
+            display: flex;
+        }
+        label {
+        }
+        input {
+        }
+
+        .main {
+            width: 100%;
+        }
+        .candidates {
+            height: 90%;
+        }
+        .header .candidateWrapper {
+            width: 100%;
+            display: inline-block;
+        }
+        .candidates .candidateWrapper {
+            width: 100%;
+            max-width: 100%;
+            display: inline-block;
+            height: 98%;
+            padding: 0!important;
+            overflow: hidden;
+        }
+        input[type=number] {
+            width: 60px;
+        }
+        input[type=url] {
+            flex: 2;
+            max-width: 700px;
+        }
+        .candidates .candidateIframe {
+            width: 98%;
+            height: 98%;
+        }
+    </style>
+    <style>
+    </style>
+</head>
+
+<body>
+<div class="main" id="syncedpreview_main">
+    <div class="header box" id="syncedpreview_headerWrapper">
+        <div>
+            <div class="form-group">
+                <label for="syncedpreview_starturl">StartUrl</label>
+                <input type="url" id="syncedpreview_starturl">
+                <button id="syncedpreview_init">Init</button>
+            </div>
+        </div>
+        <div id="syncedpreview_candidatesForm">
+        </div>
+    </div>
+    <div class="candidates" id="syncedpreview_candidatesWrapper">
+    </div>
+</div>
+
+<script>
+    var syncedPreviewConfig = {
+        'startUrl': 'http://localhost:4200/pages/start',
+        'master': {
+            'label': 'Master',
+            'baseUrl': 'http://localhost:4200/',
+            'width': 1200
+        },
+        'slaves': {
+            '1': {
+                'label': 'Slave 1',
+                'baseUrl': 'http://localhost:4200/',
+                'width': 800
+            },
+            '2': {
+                'label': 'Slave 2',
+                'baseUrl': 'http://localhost:4200/',
+                'width': 370
+            }
+        },
+        'ui': {
+            buttonId: 'syncedpreview_init',
+            candidatesWrapperId: 'syncedpreview_candidatesWrapper',
+            candidatesFormId: 'syncedpreview_candidatesForm',
+            inputStartUrlId: 'syncedpreview_starturl',
+            headerWrapperId: 'syncedpreview_headerWrapper'
+        }
+    };
+
+    var createSyncedPreviewWidget = function (config) {
+        var me = {};
+        me.config = config;
+
+        me.init = function () {
+            me._createUI();
+            me.doResize();
+            me._doStart();
+
+            document.getElementById(me.config.ui.buttonId).addEventListener("click", function () {
+                me._doStart();
+            });
+
+            window.setInterval(function() {
+                me.doSync();
+            }, 1000);
+
+            window.addEventListener('resize', function () {
+                me.doResize();
+            })
+        };
+
+        me.doSync = function () {
+            me._resizeFrame('master');
+            for (var slaveId in me.config.slaves) {
+                me._resizeFrame('slave' + slaveId);
+                me._syncSlave(slaveId);
+            }
+
+        };
+
+        me.doResize = function () {
+            document.getElementById(me.config.ui.candidatesWrapperId).style.height =
+                (window.innerHeight - document.getElementById(me.config.ui.headerWrapperId).clientHeight -10 ) + 'px';
+        };
+
+        me._createUI = function () {
+            var candidates = 1;
+            document.getElementById(me.config.ui.candidatesFormId).innerHTML = '';
+            document.getElementById(me.config.ui.candidatesWrapperId).innerHTML = '';
+
+            document.getElementById(me.config.ui.inputStartUrlId).value = me.config.startUrl;
+            me._createUIElements('master', me.config.master);
+            for (var slaveId in me.config.slaves) {
+                me._createUIElements('slave' + slaveId, me.config.slaves[slaveId]);
+                candidates = candidates + 1;
+            }
+
+            var sheet = document.styleSheets[document.styleSheets.length - 1];
+            sheet.insertRule('.header .candidateWrapper { width: ' + (100 / candidates - 1) + '%; max-width: ' + (100 / candidates - 1) + '%;}', 0);
+            sheet.insertRule('.candidates .candidateWrapper { width: ' + (100 / candidates - 1) + '%; max-width: ' + (100 / candidates - 1) + '%;}' , 0);
+        };
+
+        me._createUIElements = function (name, config) {
+            document.getElementById(me.config.ui.candidatesFormId).innerHTML =
+                document.getElementById(me.config.ui.candidatesFormId).innerHTML +
+                '<div class="candidateWrapper">\n' +
+                ' <div class="form-group">' +
+                '   <label for="syncedpreview_baseurl' + name + '">BaseUrl ' + config.label + '</label>' +
+                '   <input type="url" id="syncedpreview_baseurl' + name + '" value="' + config.baseUrl + '">' +
+                '</div>\n' +
+                '  <div class="form-group">' +
+                '    <label for="syncedpreview_width' + name + '">Width px</label>' +
+                '    <input type="number" id="syncedpreview_width' + name + '" value="' + config.width + '">' +
+                '  </div>\n' +
+                '</div>\n';
+            document.getElementById(me.config.ui.candidatesWrapperId).innerHTML =
+                document.getElementById(me.config.ui.candidatesWrapperId).innerHTML +
+                '<div class="box candidateWrapper candidateWrapper' + name + '" id="syncedpreview_candidateWrapper' + name + '">\n' +
+                '  <iframe id="syncedpreview_iframe' + name + '" class="candidateIframe"></iframe>\n' +
+                '</div>\n';
+        };
+
+        me._doStart = function () {
+            me._startMaster();
+        };
+
+        me._startMaster = function () {
+            document.getElementById('syncedpreview_iframemaster').src =
+                document.getElementById(me.config.ui.inputStartUrlId).value;
+        };
+
+        me._syncSlave = function (nr) {
+            var masterUrl = document.getElementById('syncedpreview_iframemaster').contentDocument.location.href;
+            var slaveUrl = masterUrl.replace(document.getElementById('syncedpreview_baseurlmaster').value,
+                document.getElementById('syncedpreview_baseurlslave' + nr).value);
+            var iframe = document.getElementById('syncedpreview_iframeslave' + nr);
+            if (iframe.src !== slaveUrl) {
+                iframe.src = slaveUrl;
+            }
+        };
+
+        me._resizeFrame = function (candidateName) {
+            var candidateWidth = document.getElementById('syncedpreview_candidateWrapper' + candidateName).clientWidth;
+            var expectedWidth = document.getElementById('syncedpreview_width' + candidateName).value;
+            var iframe = document.getElementById('syncedpreview_iframe' + candidateName);
+            var zoom = candidateWidth / expectedWidth;
+            iframe.style.width = (expectedWidth - 10) + 'px';
+            iframe.style.height = (document.getElementById('syncedpreview_candidateWrapper' + candidateName).clientHeight / zoom - 10) + 'px';
+            iframe.style['transform'] = 'scale(' + zoom + ')';
+            iframe.style['transform-origin'] = '0 0';
+        };
+
+        me.init();
+    };
+
+    createSyncedPreviewWidget(syncedPreviewConfig);
+
+</script>
+</body>
+
+</html>
