@@ -2,6 +2,41 @@
  
 # Versions
  
+## Planned
+
+### new features
+- none
+
+### improvements
+- none
+
+### bug fixes
+- frontend: IE till 11 not functional (can block rendering sometimes)
+ 
+### breaking changes
+- frontend: migrate to angular6
+- frontend: export "real" angular-modules
+
+
+## 4.1.0
+- improved build-process
+
+### new features
+- none
+
+### improvements
+- improved build-process: cross-platform rm/mkdir/copy/patch
+
+### bug fixes
+- none
+ 
+### breaking changes
+- none
+
+### known issues
+- frontend: IE till 11 not functional (can block rendering sometimes)
+
+
 ## 4.0.0
 - upgraded packages to be angular5/6-compatible
 - added common layout-styles
