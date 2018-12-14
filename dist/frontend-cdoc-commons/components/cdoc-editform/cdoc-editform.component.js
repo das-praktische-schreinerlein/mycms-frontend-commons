@@ -72,7 +72,7 @@ var CommonDocEditformComponent = /** @class */ (function (_super) {
     }
     CommonDocEditformComponent.prototype.setKeyword = function (keyword) {
         var keywords = this.editFormGroup.getRawValue()['keywords'];
-        if (keywords.length > 0) {
+        if (keywords && keywords.length > 0) {
             keywords = keywords + ', ' + keyword;
         }
         else {

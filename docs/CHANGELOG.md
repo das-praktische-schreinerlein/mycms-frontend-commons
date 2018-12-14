@@ -12,6 +12,7 @@
 
 ### bug fixes
 - frontend: IE till 11 not functional (can block rendering sometimes)
+- frontend: fixed keyword-handing in cdoc-editform
  
 ### breaking changes
 - frontend: migrate to angular6

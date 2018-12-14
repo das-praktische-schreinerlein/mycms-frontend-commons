@@ -84,7 +84,7 @@ export abstract class CommonDocEditformComponent<R extends CommonDocRecord, F ex
 
     setKeyword(keyword: string): void {
         let keywords = this.editFormGroup.getRawValue()['keywords'];
-        if (keywords.length > 0) {
+        if (keywords && keywords.length > 0) {
             keywords = keywords + ', ' + keyword;
         } else {
             keywords = keyword;
