@@ -14,7 +14,8 @@
       "linux": "./node_modules/.bin/rimraf dist && ./node_modules/.bin/mkdirp dist",
       "win32": "node_modules\\.bin\\rimraf dist && node_modules\\.bin\\mkdirp dist"
     },
-    "serve-mycms-frontend-devtools": "live-server --port=4201 --no-browser --host=localhost --entry-file=index.html dist/devtools/httproot"
+    "serve-mycms-frontend-devtools": "live-server --port=4201 --no-browser --host=localhost --entry-file=index.html dist/devtools/httproot",
+    "test": "echo 'no tests'"
   },
   "main": "dist/",
   "types": "dist/",
