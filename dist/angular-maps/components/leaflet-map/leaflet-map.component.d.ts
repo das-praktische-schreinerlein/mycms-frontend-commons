@@ -23,9 +23,11 @@ export declare class LeafletMapComponent implements AfterViewChecked, OnChanges 
     private featureGroup;
     private loadedMapElements;
     private noCoorElements;
+    private bounds;
     mapId: string;
     height: string;
     mapElements: MapElement[];
+    centerOnMapElements: MapElement[];
     center: L.LatLng;
     zoom: number;
     options: LeafletMapOptions;
@@ -40,4 +42,5 @@ export declare class LeafletMapComponent implements AfterViewChecked, OnChanges 
     toggleFullScreen(): void;
     private renderMap();
     private pushLoadedMapElement(loadedMapElement);
+    private extendBounds(bounds, element);
 }

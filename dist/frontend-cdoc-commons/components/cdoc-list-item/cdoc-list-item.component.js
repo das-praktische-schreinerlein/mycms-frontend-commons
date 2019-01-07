@@ -107,6 +107,14 @@ var CommonDocListItemComponent = /** @class */ (function (_super) {
     ], CommonDocListItemComponent.prototype, "record", void 0);
     __decorate([
         core_1.Input(),
+        __metadata("design:type", void 0)
+    ], CommonDocListItemComponent.prototype, "rowNr", void 0);
+    __decorate([
+        core_1.Input(),
+        __metadata("design:type", void 0)
+    ], CommonDocListItemComponent.prototype, "idx", void 0);
+    __decorate([
+        core_1.Input(),
         __metadata("design:type", String)
     ], CommonDocListItemComponent.prototype, "backToSearchUrl", void 0);
     __decorate([

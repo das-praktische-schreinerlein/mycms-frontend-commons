@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {CommonRoutingService} from '../../angular-commons/services/common-routing.service';
 import {CommonDocRecord} from '@dps/mycms-commons/dist/search-commons/model/records/cdoc-entity-record';
+import {StringUtils} from "@dps/mycms-commons/dist/commons/utils/string.utils";
 
 @Injectable()
 export class CommonDocRoutingService {
@@ -27,9 +28,7 @@ export class CommonDocRoutingService {
     }
 
     getShowUrl(cdoc: CommonDocRecord, from: string): string {
-        const name = (cdoc.name ? cdoc.name : 'name')
-            .replace(/[^-a-zA-Z0-9.+]+/g, ' ')
-            .replace(/ +/g, ' ').replace(/ /g, '-').trim();
+        const name = StringUtils.generateTechnicalName(cdoc.name ? cdoc.name : 'name');
         return this.lastBaseUrl + 'show/' + name + '/' + cdoc.id; // + (from ? '?from=' + from : '');
     }
 

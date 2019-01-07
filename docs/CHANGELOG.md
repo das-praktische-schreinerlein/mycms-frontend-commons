@@ -21,12 +21,16 @@
 
 ## 4.1.0
 - improved build-process
+- frontend: several improvements for maps, filters, itemlists
 
 ### new features
 - none
 
 ### improvements
 - improved build-process: cross-platform rm/mkdir/copy/patch
+- frontend: added ability to center maps, change color, title, element-code
+- frontend: added index-parameter to itemlists
+- frontend: added valueprefix for generation of human readable filters
 
 ### bug fixes
 - none

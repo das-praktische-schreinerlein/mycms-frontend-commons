@@ -267,10 +267,6 @@ export class CommonDocContentUtils {
         return keywordKats;
     }
 
-    calcRate(rate: number, max: number): number {
-        return Math.round((rate / 15 * max) + 0.5);
-    }
-
     getShowUrl(record: CommonDocRecord): SafeUrl {
         return this.sanitizer.bypassSecurityTrustUrl(this.cdocRoutingService.getShowUrl(record, ''));
     }

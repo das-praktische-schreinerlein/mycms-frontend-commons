@@ -126,11 +126,11 @@ export class SearchFormUtils {
                     resolvedValues = filter.values;
                 }
                 if (textOnly) {
-                    str.push([(filter.prefix ? filter.prefix + ' ' : ''), '"', resolvedValues.join(','), '"'].join(' '));
+                    str.push([(filter.prefix ? filter.prefix + ' ' : ''), '"', resolvedValues.join(', '), '"'].join(' '));
                 } else {
                     str.push(['<div class="filter filter_' + filter.id + '">',
                         '<span class="filterPrefix filterPrefix_' + filter.id + '">', (filter.prefix ? filter.prefix + ' ' : ''), '</span>',
-                        '<span class="filterValue filterValue_' + filter.id + '">', '"', resolvedValues.join(','), '"', '</span>', '</div>'
+                        '<span class="filterValue filterValue_' + filter.id + '">', '"', resolvedValues.join(', '), '"', '</span>', '</div>'
                     ].join(''));
                 }
             }
@@ -167,8 +167,10 @@ export class SearchFormUtils {
         return obJCache;
     }
 
-    valueToHumanReadableText(valueString: any, prefix: string, defaultValue: string, translate: boolean): HumanReadableFilter {
+    valueToHumanReadableText(valueString: any, prefix: string, defaultValue: string, translate: boolean,
+                             valuePrefix?: string): HumanReadableFilter {
         let res: HumanReadableFilter;
+        const valueTranslatePrefix = valuePrefix !== undefined ? valuePrefix + '' : '';
         if (valueString && valueString.toString() !== '') {
             res = {
                 id: prefix,
@@ -182,7 +184,7 @@ export class SearchFormUtils {
             for (const value of values) {
                 const safeValue = this.searchParameterUtils.escapeHtml(value);
                 if (safeValue) {
-                    res.values.push((translate ? this.translateService.instant(safeValue) || safeValue : safeValue));
+                    res.values.push((translate ? this.translateService.instant(valueTranslatePrefix + safeValue) || safeValue : safeValue));
                 }
             }
         } else if (defaultValue) {
@@ -194,7 +196,7 @@ export class SearchFormUtils {
             if (prefix) {
                 res.prefix = (translate ? this.translateService.instant(prefix) : prefix);
             }
-            res.values.push((translate ? this.translateService.instant(defaultValue) : defaultValue));
+            res.values.push((translate ? this.translateService.instant(valueTranslatePrefix + defaultValue) : defaultValue));
         }
 
         return res;

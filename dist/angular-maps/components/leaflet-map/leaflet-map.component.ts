@@ -10,7 +10,7 @@ import {MinimalHttpBackendClient} from '@dps/mycms-commons/dist/commons/services
 
 import * as L from 'leaflet';
 import LatLng = L.LatLng;
-import Layer = L.Layer;
+import LatLngBounds = L.LatLngBounds;
 
 export interface LeafletMapOptions {
     flgGenerateNameFromGpx: boolean;
@@ -42,6 +42,7 @@ export class LeafletMapComponent implements AfterViewChecked, OnChanges {
     private featureGroup: L.MarkerClusterGroup;
     private loadedMapElements: MapElement[];
     private noCoorElements: MapElement[];
+    private bounds: LatLngBounds = undefined;
 
     @Input()
     public mapId: string;
@@ -51,6 +52,9 @@ export class LeafletMapComponent implements AfterViewChecked, OnChanges {
 
     @Input()
     public mapElements: MapElement[];
+
+    @Input()
+    public centerOnMapElements: MapElement[] = undefined;
 
     @Input()
     public center: L.LatLng;
@@ -124,6 +128,7 @@ export class LeafletMapComponent implements AfterViewChecked, OnChanges {
         }
         this.loadedMapElements = [];
         this.noCoorElements = [];
+        this.bounds = undefined;
 
         const center = this.center || new LatLng(43, 16);
         this.map.setView(center, this.zoom);
@@ -154,14 +159,24 @@ export class LeafletMapComponent implements AfterViewChecked, OnChanges {
                     });
                 }
                 geoFeature.on('loaded', function (e) {
-                    const loadedTrackFeature = <Layer>e.target;
+                    const loadedTrackFeature = <L.FeatureGroup>e.target;
                     const loadedMapElement = <MapElement>e['mapElement'];
                     me.featureGroup.addLayer(loadedTrackFeature);
                     loadedTrackFeature.on('click', function () {
                         me.mapElementClicked.emit(loadedMapElement);
                     });
 
-                    me.map.fitBounds(me.featureGroup.getBounds());
+                    if (me.centerOnMapElements && me.centerOnMapElements.length > 0) {
+                      if (me.centerOnMapElements.indexOf(loadedMapElement) >= 0) {
+                          me.bounds = me.extendBounds(me.bounds, loadedTrackFeature.getBounds());
+                      }
+                    } else {
+                        me.bounds = me.extendBounds(me.bounds, loadedTrackFeature.getBounds());
+                    }
+
+                    if (me.bounds) {
+                        me.map.fitBounds(me.bounds);
+                    }
                     me.pushLoadedMapElement(loadedMapElement);
                 });
             } else if (mapElement.point) {
@@ -175,7 +190,16 @@ export class LeafletMapComponent implements AfterViewChecked, OnChanges {
                     me.mapElementClicked.emit(mapElement);
                 });
 
-                me.map.fitBounds(me.featureGroup.getBounds());
+                if (me.centerOnMapElements && me.centerOnMapElements.length > 0) {
+                    if (me.centerOnMapElements.indexOf(mapElement) >= 0) {
+                        me.bounds = me.extendBounds(me.bounds, new LatLngBounds(pointFeature.getLatLng(), pointFeature.getLatLng()));
+                    }
+                } else {
+                    me.bounds = me.extendBounds(me.bounds, new LatLngBounds(pointFeature.getLatLng(), pointFeature.getLatLng()));
+                }
+                if (me.bounds) {
+                    me.map.fitBounds(me.bounds);
+                }
                 me.pushLoadedMapElement(mapElement);
             } else {
                 me.noCoorElements.push(mapElement);
@@ -192,5 +216,13 @@ export class LeafletMapComponent implements AfterViewChecked, OnChanges {
         if (this.mapElements.length + this.noCoorElements.length === this.loadedMapElements.length) {
             this.mapElementsLoaded.emit(this.loadedMapElements);
         }
+    }
+
+    private extendBounds(bounds: LatLngBounds, element: LatLngBounds) {
+        if (!bounds) {
+            return element;
+        }
+
+        return bounds.extend(element);
     }
 }

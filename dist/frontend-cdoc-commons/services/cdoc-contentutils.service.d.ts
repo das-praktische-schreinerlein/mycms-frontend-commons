@@ -78,7 +78,6 @@ export declare class CommonDocContentUtils {
     getSuggestedKeywords(suggestionConfigs: KeywordSuggestion[], prefix: string, values: any): string[];
     getStructuredKeywords(config: StructuredKeyword[], keywords: string[], blacklist: string[], possiblePrefixes: string[]): StructuredKeyword[];
     getStructuredKeywordsState(config: StructuredKeyword[], keywords: string[], suggested: string[], possiblePrefixes: string[]): StructuredKeywordState[];
-    calcRate(rate: number, max: number): number;
     getShowUrl(record: CommonDocRecord): SafeUrl;
     updateItemData(itemData: CommonItemData, record: CommonDocRecord, layout: string): boolean;
     protected getServiceConfig(): CommonDocContentUtilsConfig;

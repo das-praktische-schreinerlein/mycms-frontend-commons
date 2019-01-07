@@ -18,6 +18,8 @@ export declare class CommonDocListItemComponent extends AbstractInlineComponent 
     layoutSize: LayoutSize;
     contentUtils: CommonDocContentUtils;
     record: CommonDocRecord;
+    rowNr?: undefined;
+    idx?: undefined;
     backToSearchUrl: string;
     layout: Layout;
     short?: boolean;

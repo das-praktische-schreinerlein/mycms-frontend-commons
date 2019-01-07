@@ -20,6 +20,7 @@ var component_utils_1 = require("../../../angular-commons/services/component.uti
 var minimal_http_backend_client_1 = require("@dps/mycms-commons/dist/commons/services/minimal-http-backend-client");
 var L = require("leaflet");
 var LatLng = L.LatLng;
+var LatLngBounds = L.LatLngBounds;
 var LeafletMapComponent = /** @class */ (function () {
     function LeafletMapComponent(http) {
         this.http = http;
@@ -32,6 +33,8 @@ var LeafletMapComponent = /** @class */ (function () {
         });
         this.mapHeight = '390px';
         this.flgfullScreen = false;
+        this.bounds = undefined;
+        this.centerOnMapElements = undefined;
         this.centerChanged = new core_1.EventEmitter();
         this.mapElementClicked = new core_1.EventEmitter();
         this.mapElementsLoaded = new core_1.EventEmitter();
@@ -79,6 +82,7 @@ var LeafletMapComponent = /** @class */ (function () {
         }
         this.loadedMapElements = [];
         this.noCoorElements = [];
+        this.bounds = undefined;
         var center = this.center || new LatLng(43, 16);
         this.map.setView(center, this.zoom);
         var me = this;
@@ -115,7 +119,17 @@ var LeafletMapComponent = /** @class */ (function () {
                     loadedTrackFeature.on('click', function () {
                         me.mapElementClicked.emit(loadedMapElement);
                     });
-                    me.map.fitBounds(me.featureGroup.getBounds());
+                    if (me.centerOnMapElements && me.centerOnMapElements.length > 0) {
+                        if (me.centerOnMapElements.indexOf(loadedMapElement) >= 0) {
+                            me.bounds = me.extendBounds(me.bounds, loadedTrackFeature.getBounds());
+                        }
+                    }
+                    else {
+                        me.bounds = me.extendBounds(me.bounds, loadedTrackFeature.getBounds());
+                    }
+                    if (me.bounds) {
+                        me.map.fitBounds(me.bounds);
+                    }
                     me.pushLoadedMapElement(loadedMapElement);
                 });
             }
@@ -129,7 +143,17 @@ var LeafletMapComponent = /** @class */ (function () {
                 pointFeature.on('click', function () {
                     me.mapElementClicked.emit(mapElement);
                 });
-                me.map.fitBounds(me.featureGroup.getBounds());
+                if (me.centerOnMapElements && me.centerOnMapElements.length > 0) {
+                    if (me.centerOnMapElements.indexOf(mapElement) >= 0) {
+                        me.bounds = me.extendBounds(me.bounds, new LatLngBounds(pointFeature.getLatLng(), pointFeature.getLatLng()));
+                    }
+                }
+                else {
+                    me.bounds = me.extendBounds(me.bounds, new LatLngBounds(pointFeature.getLatLng(), pointFeature.getLatLng()));
+                }
+                if (me.bounds) {
+                    me.map.fitBounds(me.bounds);
+                }
                 me.pushLoadedMapElement(mapElement);
             }
             else {
@@ -150,6 +174,12 @@ var LeafletMapComponent = /** @class */ (function () {
             this.mapElementsLoaded.emit(this.loadedMapElements);
         }
     };
+    LeafletMapComponent.prototype.extendBounds = function (bounds, element) {
+        if (!bounds) {
+            return element;
+        }
+        return bounds.extend(element);
+    };
     __decorate([
         core_1.Input(),
         __metadata("design:type", String)
@@ -162,6 +192,10 @@ var LeafletMapComponent = /** @class */ (function () {
         core_1.Input(),
         __metadata("design:type", Array)
     ], LeafletMapComponent.prototype, "mapElements", void 0);
+    __decorate([
+        core_1.Input(),
+        __metadata("design:type", Array)
+    ], LeafletMapComponent.prototype, "centerOnMapElements", void 0);
     __decorate([
         core_1.Input(),
         __metadata("design:type", L.LatLng)

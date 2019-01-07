@@ -121,12 +121,12 @@ var SearchFormUtils = /** @class */ (function () {
                     resolvedValues = filter.values;
                 }
                 if (textOnly) {
-                    str.push([(filter.prefix ? filter.prefix + ' ' : ''), '"', resolvedValues.join(','), '"'].join(' '));
+                    str.push([(filter.prefix ? filter.prefix + ' ' : ''), '"', resolvedValues.join(', '), '"'].join(' '));
                 }
                 else {
                     str.push(['<div class="filter filter_' + filter.id + '">',
                         '<span class="filterPrefix filterPrefix_' + filter.id + '">', (filter.prefix ? filter.prefix + ' ' : ''), '</span>',
-                        '<span class="filterValue filterValue_' + filter.id + '">', '"', resolvedValues.join(','), '"', '</span>', '</div>'
+                        '<span class="filterValue filterValue_' + filter.id + '">', '"', resolvedValues.join(', '), '"', '</span>', '</div>'
                     ].join(''));
                 }
             }
@@ -158,8 +158,9 @@ var SearchFormUtils = /** @class */ (function () {
         }
         return obJCache;
     };
-    SearchFormUtils.prototype.valueToHumanReadableText = function (valueString, prefix, defaultValue, translate) {
+    SearchFormUtils.prototype.valueToHumanReadableText = function (valueString, prefix, defaultValue, translate, valuePrefix) {
         var res;
+        var valueTranslatePrefix = valuePrefix !== undefined ? valuePrefix + '' : '';
         if (valueString && valueString.toString() !== '') {
             res = {
                 id: prefix,
@@ -174,7 +175,7 @@ var SearchFormUtils = /** @class */ (function () {
                 var value = values_1[_i];
                 var safeValue = this.searchParameterUtils.escapeHtml(value);
                 if (safeValue) {
-                    res.values.push((translate ? this.translateService.instant(safeValue) || safeValue : safeValue));
+                    res.values.push((translate ? this.translateService.instant(valueTranslatePrefix + safeValue) || safeValue : safeValue));
                 }
             }
         }
@@ -187,7 +188,7 @@ var SearchFormUtils = /** @class */ (function () {
             if (prefix) {
                 res.prefix = (translate ? this.translateService.instant(prefix) : prefix);
             }
-            res.values.push((translate ? this.translateService.instant(defaultValue) : defaultValue));
+            res.values.push((translate ? this.translateService.instant(valueTranslatePrefix + defaultValue) : defaultValue));
         }
         return res;
     };

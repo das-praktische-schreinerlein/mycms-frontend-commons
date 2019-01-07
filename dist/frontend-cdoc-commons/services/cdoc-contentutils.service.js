@@ -212,9 +212,6 @@ var CommonDocContentUtils = /** @class */ (function () {
         }
         return keywordKats;
     };
-    CommonDocContentUtils.prototype.calcRate = function (rate, max) {
-        return Math.round((rate / 15 * max) + 0.5);
-    };
     CommonDocContentUtils.prototype.getShowUrl = function (record) {
         return this.sanitizer.bypassSecurityTrustUrl(this.cdocRoutingService.getShowUrl(record, ''));
     };

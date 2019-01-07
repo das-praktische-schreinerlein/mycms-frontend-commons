@@ -46,6 +46,12 @@ export class CommonDocListItemComponent extends AbstractInlineComponent implemen
     public record: CommonDocRecord;
 
     @Input()
+    public rowNr?: undefined;
+
+    @Input()
+    public idx?: undefined;
+
+    @Input()
     public backToSearchUrl: string;
 
     @Input()

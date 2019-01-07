@@ -17,5 +17,5 @@ export declare class SearchFormUtils {
     searchFormToHumanReadableMarkup(filters: HumanReadableFilter[], textOnly: boolean, objCache: Map<string, string>, hrdIds: {}): string;
     extractResolvableFilters(filters: HumanReadableFilter[], hrdIds: {}): HumanReadableFilter[];
     extractResolvableIds(filters: HumanReadableFilter[], hrdIds: {}): Map<string, string>;
-    valueToHumanReadableText(valueString: any, prefix: string, defaultValue: string, translate: boolean): HumanReadableFilter;
+    valueToHumanReadableText(valueString: any, prefix: string, defaultValue: string, translate: boolean, valuePrefix?: string): HumanReadableFilter;
 }
