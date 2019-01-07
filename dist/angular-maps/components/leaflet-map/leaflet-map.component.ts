@@ -180,10 +180,11 @@ export class LeafletMapComponent implements AfterViewChecked, OnChanges {
                     me.pushLoadedMapElement(loadedMapElement);
                 });
             } else if (mapElement.point) {
+                const prefix = (mapElement.code !== undefined ? mapElement.code + ' ' : '');
                 const pointFeature = new L.Marker(mapElement.point, {
                     clickable: true,
-                    title: mapElement.name,
-                    icon: new L.DivIcon({className: 'leaflet-div-icon-point', html: '&#128204;' + mapElement.name})
+                    title: mapElement.title || (prefix + mapElement.name),
+                    icon: mapElement.iconStart || new L.DivIcon({className: 'leaflet-div-icon-point', html: '&#128204;' + prefix + mapElement.name})
                 });
                 me.featureGroup.addLayer(pointFeature);
                 pointFeature.on('click', function () {
