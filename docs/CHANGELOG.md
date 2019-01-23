@@ -33,7 +33,7 @@
 - frontend: added valueprefix for generation of human readable filters
 
 ### bug fixes
-- none
+- frontend: fixed cdoc-searchform beforeDoSearchPrepareValues-hook
  
 ### breaking changes
 - none

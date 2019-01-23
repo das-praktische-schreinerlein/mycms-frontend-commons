@@ -138,7 +138,8 @@ var LeafletMapComponent = /** @class */ (function () {
                 var pointFeature = new L.Marker(mapElement.point, {
                     clickable: true,
                     title: mapElement.title || (prefix + mapElement.name),
-                    icon: mapElement.iconStart || new L.DivIcon({ className: 'leaflet-div-icon-point', html: '&#128204;' + prefix + mapElement.name })
+                    icon: mapElement.iconStart
+                        || new L.DivIcon({ className: 'leaflet-div-icon-point', html: '&#128204;' + prefix + mapElement.name })
                 });
                 me.featureGroup.addLayer(pointFeature);
                 pointFeature.on('click', function () {

@@ -268,7 +268,7 @@ export abstract class CommonDocSearchformComponent <R extends CommonDocRecord, F
 
     protected doSearch() {
         const values = this.searchFormGroup.getRawValue();
-        this.beforeDoSearchPrepareValues({values});
+        this.beforeDoSearchPrepareValues(values);
         this.search.emit(values);
         return false;
     }

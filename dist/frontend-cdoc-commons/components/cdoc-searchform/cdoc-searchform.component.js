@@ -214,7 +214,7 @@ var CommonDocSearchformComponent = /** @class */ (function () {
     };
     CommonDocSearchformComponent.prototype.doSearch = function () {
         var values = this.searchFormGroup.getRawValue();
-        this.beforeDoSearchPrepareValues({ values: values });
+        this.beforeDoSearchPrepareValues(values);
         this.search.emit(values);
         return false;
     };
