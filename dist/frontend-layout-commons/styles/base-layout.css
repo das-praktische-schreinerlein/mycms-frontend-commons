@@ -187,6 +187,10 @@ div.inline-content-container {
     width: 100%;
     height: 100%;
 }
+/** move to background: changes with new bootstrap?? **/
+.fullpage-background {
+    z-index: -1;
+}
 
 div.relative-container {
     position: relative;

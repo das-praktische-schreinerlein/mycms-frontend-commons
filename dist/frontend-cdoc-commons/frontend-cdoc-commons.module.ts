@@ -21,6 +21,8 @@ import {CommonDocAudioplayerComponent} from './components/cdoc-audioplayer/cdoc-
 import {CommonDocActionTagsComponent} from './components/cdoc-actiontags/cdoc-actiontags.component';
 import {FileDropModule} from 'ngx-file-drop';
 import {CommonDocInitialtableComponent} from './components/cdoc-initialtable/cdoc-initialtable.component';
+import {CommonDocODObjectRectanglesComponent} from './components/cdoc-odobjectrectangles/cdoc-odobjectrectangles.component';
+import {CommonDocODObjectDetailsComponent} from './components/cdoc-odobjectdetails/cdoc-odobjectdetails.component';
 
 @NgModule({
     declarations: [
@@ -38,7 +40,9 @@ import {CommonDocInitialtableComponent} from './components/cdoc-initialtable/cdo
         CommonDocVideoplayerComponent,
         CommonDocAudioplayerComponent,
         CommonDocActionTagsComponent,
-        CommonDocInitialtableComponent
+        CommonDocInitialtableComponent,
+        CommonDocODObjectRectanglesComponent,
+        CommonDocODObjectDetailsComponent
     ],
     imports: [
         NgbModule,
@@ -65,7 +69,9 @@ import {CommonDocInitialtableComponent} from './components/cdoc-initialtable/cdo
         CommonDocVideoplayerComponent,
         CommonDocAudioplayerComponent,
         CommonDocActionTagsComponent,
-        CommonDocInitialtableComponent
+        CommonDocInitialtableComponent,
+        CommonDocODObjectRectanglesComponent,
+        CommonDocODObjectDetailsComponent
     ]
 })
 export class FrontendCommonDocCommonsModule {
