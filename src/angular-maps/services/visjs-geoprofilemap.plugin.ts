@@ -80,7 +80,7 @@ export class VisJsGeoProfileMap {
             }
             promises.push(promise);
         }
-        Promise.all(promises).then(function onLoaded(arrGeoElements: GeoElement[][]) {
+        return Promise.all(promises).then(function onLoaded(arrGeoElements: GeoElement[][]) {
             let allGeoElements: GeoElement[] = [];
             for (const geoElements of arrGeoElements) {
                 allGeoElements = allGeoElements.concat(geoElements);
