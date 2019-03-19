@@ -79,7 +79,7 @@ export class CommonDocMultiActionManager <R extends CommonDocRecord, F extends C
                 });
             }
 
-            Promise_serial(funcs, {parallelize: 1}).then(arrayOfResults => {
+            return Promise_serial(funcs, {parallelize: 1}).then(arrayOfResults => {
                 return allresolve();
             }).catch(function errorSearch(reason) {
                 console.error('processActionTags failed:', reason);
@@ -104,7 +104,7 @@ export class CommonDocMultiActionManager <R extends CommonDocRecord, F extends C
                 }
             }
 
-            Promise_serial(funcs, {parallelize: 1}).then(arrayOfResults => {
+            return Promise_serial(funcs, {parallelize: 1}).then(arrayOfResults => {
                 return allresolve();
             }).catch(function errorSearch(reason) {
                 console.error('processRecordsForActionTag failed:', reason);

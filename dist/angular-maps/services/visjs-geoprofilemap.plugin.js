@@ -72,7 +72,7 @@ var VisJsGeoProfileMap = /** @class */ (function () {
             }
             promises.push(promise);
         }
-        Promise.all(promises).then(function onLoaded(arrGeoElements) {
+        return Promise.all(promises).then(function onLoaded(arrGeoElements) {
             var allGeoElements = [];
             for (var _i = 0, arrGeoElements_1 = arrGeoElements; _i < arrGeoElements_1.length; _i++) {
                 var geoElements = arrGeoElements_1[_i];

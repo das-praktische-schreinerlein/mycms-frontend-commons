@@ -28,6 +28,6 @@ export declare class VisJsGeoProfileMap {
     graph: Graph3d;
     constructor(dataSources: VisJsGeoProfileMapDataSource[], element: any, options: {});
     _initialize(): void;
-    _addData(dataSources: VisJsGeoProfileMapDataSource[], element: any, options: any): void;
+    _addData(dataSources: VisJsGeoProfileMapDataSource[], element: any, options: any): Promise<void>;
     _convertGeoElementsToDataSet(geoElements: GeoElement[], element: any, options: any): DataSet<any>;
 }

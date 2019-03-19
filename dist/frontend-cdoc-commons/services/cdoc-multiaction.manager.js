@@ -64,7 +64,7 @@ var CommonDocMultiActionManager = /** @class */ (function () {
                 var actionTag = _a[_i];
                 _loop_1(actionTag);
             }
-            Promise_serial(funcs, { parallelize: 1 }).then(function (arrayOfResults) {
+            return Promise_serial(funcs, { parallelize: 1 }).then(function (arrayOfResults) {
                 return allresolve();
             }).catch(function errorSearch(reason) {
                 console.error('processActionTags failed:', reason);
@@ -93,7 +93,7 @@ var CommonDocMultiActionManager = /** @class */ (function () {
                     _loop_2(record);
                 }
             }
-            Promise_serial(funcs, { parallelize: 1 }).then(function (arrayOfResults) {
+            return Promise_serial(funcs, { parallelize: 1 }).then(function (arrayOfResults) {
                 return allresolve();
             }).catch(function errorSearch(reason) {
                 console.error('processRecordsForActionTag failed:', reason);
