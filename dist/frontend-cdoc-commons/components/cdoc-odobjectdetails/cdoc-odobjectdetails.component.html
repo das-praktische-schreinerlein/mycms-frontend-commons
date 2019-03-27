@@ -1,11 +1,11 @@
 <div class="techvaluetable" *ngIf="objects !== undefined && objects.length > 0">
     <ng-container *ngFor="let object of objects">
-        <div class="entry">
+        <div class="entry" [ngClass]="'odimgobject-state-' + object.state">
             <div class="label" [title]="showKeyAsTooltip === true || (showKeyAsTooltip === undefined && defaultShowKeyAsTooltip) ? object.key : ''">{{object.name}}</div>
             <div *ngIf="showKeyColumn === true" class="value keyvalue">{{object.key}}</div>
             <div class="value" [title]="object.detector">{{'label.odimgobject.detector.' + object.detector | translate}}</div>
             <div class="value">{{ (object.precision * 100) | number:'2.0-0' }}%</div>
-            <div class="value" [ngClass]="'bg-odimgobject-state-' + object.state">{{'label.odimgobject.state.' + object.state | translate }}</div>
+            <div class="value">{{'label.odimgobject.state.' + object.state | translate }}</div>
         </div>
     </ng-container>
 </div>
