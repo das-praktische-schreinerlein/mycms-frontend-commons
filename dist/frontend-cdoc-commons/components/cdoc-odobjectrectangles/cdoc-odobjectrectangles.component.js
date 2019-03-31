@@ -20,24 +20,20 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
-var inline_component_1 = require("../../../angular-commons/components/inline.component");
+var generic_app_service_1 = require("@dps/mycms-commons/dist/commons/services/generic-app.service");
+var cdoc_odobjectdetails_component_1 = require("../cdoc-odobjectdetails/cdoc-odobjectdetails.component");
 var CommonDocODObjectRectanglesComponent = /** @class */ (function (_super) {
     __extends(CommonDocODObjectRectanglesComponent, _super);
-    function CommonDocODObjectRectanglesComponent(cd) {
-        var _this = _super.call(this, cd) || this;
+    function CommonDocODObjectRectanglesComponent(appService, cd) {
+        var _this = _super.call(this, appService, cd) || this;
+        _this.appService = appService;
         _this.cd = cd;
         return _this;
     }
-    CommonDocODObjectRectanglesComponent.prototype.updateData = function () {
-    };
     __decorate([
         core_1.Input(),
         __metadata("design:type", Number)
     ], CommonDocODObjectRectanglesComponent.prototype, "width", void 0);
-    __decorate([
-        core_1.Input(),
-        __metadata("design:type", Array)
-    ], CommonDocODObjectRectanglesComponent.prototype, "objects", void 0);
     CommonDocODObjectRectanglesComponent = __decorate([
         core_1.Component({
             selector: 'app-cdoc-odobjectrectangles',
@@ -45,9 +41,9 @@ var CommonDocODObjectRectanglesComponent = /** @class */ (function (_super) {
             styleUrls: ['./cdoc-odobjectrectangles.component.css'],
             changeDetection: core_1.ChangeDetectionStrategy.OnPush
         }),
-        __metadata("design:paramtypes", [core_1.ChangeDetectorRef])
+        __metadata("design:paramtypes", [generic_app_service_1.GenericAppService, core_1.ChangeDetectorRef])
     ], CommonDocODObjectRectanglesComponent);
     return CommonDocODObjectRectanglesComponent;
-}(inline_component_1.AbstractInlineComponent));
+}(cdoc_odobjectdetails_component_1.CommonDocODObjectDetailsComponent));
 exports.CommonDocODObjectRectanglesComponent = CommonDocODObjectRectanglesComponent;
 //# sourceMappingURL=cdoc-odobjectrectangles.component.js.map

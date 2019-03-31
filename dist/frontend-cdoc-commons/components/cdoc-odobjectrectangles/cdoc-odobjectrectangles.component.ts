@@ -1,6 +1,6 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input} from '@angular/core';
-import {AbstractInlineComponent} from '../../../angular-commons/components/inline.component';
-import {BaseObjectDetectionImageObjectRecordType} from '@dps/mycms-commons/dist/search-commons/model/records/baseobjectdetectionimageobject-record';
+import {GenericAppService} from '@dps/mycms-commons/dist/commons/services/generic-app.service';
+import {CommonDocODObjectDetailsComponent} from '../cdoc-odobjectdetails/cdoc-odobjectdetails.component';
 
 @Component({
     selector: 'app-cdoc-odobjectrectangles',
@@ -8,18 +8,12 @@ import {BaseObjectDetectionImageObjectRecordType} from '@dps/mycms-commons/dist/
     styleUrls: ['./cdoc-odobjectrectangles.component.css'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class CommonDocODObjectRectanglesComponent extends AbstractInlineComponent {
+export class CommonDocODObjectRectanglesComponent extends CommonDocODObjectDetailsComponent {
 
     @Input()
     public width: number;
 
-    @Input()
-    public objects: BaseObjectDetectionImageObjectRecordType[];
-
-    constructor(protected cd: ChangeDetectorRef) {
-        super(cd);
-    }
-
-    protected updateData(): void {
+    constructor(protected appService: GenericAppService, protected cd: ChangeDetectorRef) {
+        super(appService, cd);
     }
 }

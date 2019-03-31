@@ -4,6 +4,6 @@
          [ngStyle]="{'top': (width / object.imgWidth * (object.objY || 0)) + 'px',
                                                 'left': (width / object.imgWidth * (object.objX || 0)) + 'px',
                                                 'width': (width / object.imgWidth * object.objWidth) + 'px',
-                                                'height': (width / object.imgWidth * object.objHeight) + 'px'}">{{object.name}}
+                                                'height': (width / object.imgWidth * object.objHeight) + 'px'}">{{ showKeyColumn === true ? object.name + ' ' + object.key : object.name}}
     </div>
 </ng-container>
