@@ -23,6 +23,7 @@ export declare class TrackStatisticService {
     emptyStatistic(): TrackStatistic;
     trackStatisticsForGeoElement(geoElement: GeoElement): TrackStatistic;
     trackStatistics(ll: LatLng[]): TrackStatistic;
+    mergeStatistics(param1: TrackStatistic, param2: TrackStatistic): TrackStatistic;
     formatMToKm(l: number): number;
     formatM(l: number): number;
     formatMillisToHH24(l: number): number;

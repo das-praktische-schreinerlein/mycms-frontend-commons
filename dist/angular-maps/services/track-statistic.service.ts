@@ -133,6 +133,71 @@ export class TrackStatisticService  {
         return t;
     }
 
+    public mergeStatistics(param1: TrackStatistic, param2: TrackStatistic): TrackStatistic {
+        if (param1 === undefined) {
+            return param2;
+        }
+        if (param2 === undefined) {
+            return param1;
+        }
+
+        let stat1 = param1;
+        let stat2 = param2;
+        if (stat1.dateStart !== undefined && stat2.dateStart !== undefined && stat1.dateStart.getTime() > stat2.dateStart.getTime()) {
+            stat1 = param2;
+            stat2 = param1;
+        }
+
+        let coords: LatLng[] = [];
+        if (stat1.bounds !== undefined) {
+            coords = coords.concat([stat1.bounds.getNorthEast(), stat1.bounds.getNorthWest(),
+                stat1.bounds.getSouthEast(), stat1.bounds.getSouthWest()]);
+        }
+        if (stat2.bounds !== undefined) {
+            coords = coords.concat([stat2.bounds.getNorthEast(), stat2.bounds.getNorthWest(),
+                stat2.bounds.getSouthEast(), stat2.bounds.getSouthWest()]);
+        }
+        const t: TrackStatistic = {
+            altAsc: MathUtils.sum(stat1.altAsc, stat2.altAsc),
+            altDesc: MathUtils.sum(stat1.altDesc, stat2.altDesc),
+            dist: MathUtils.sum(stat1.dist, stat2.dist),
+            velocity: stat1.velocity,
+            altAscVelocity: stat1.altAscVelocity,
+            altDescVelocity: stat1.altDescVelocity,
+            altMin: MathUtils.min(stat1.altMin, stat2.altMin),
+            altMax: MathUtils.max(stat1.altMax, stat2.altMax),
+            altAvg: stat1.altAvg,
+            altStart: stat1.altStart !== undefined ? stat1.altStart : stat2.altStart,
+            altEnd: stat2.altEnd !== undefined ? stat2.altEnd : stat1.altEnd,
+            bounds: latLngBounds(coords),
+            posStart: stat1.posStart !== undefined ? stat1.posStart : stat2.posStart,
+            posEnd: stat2.posEnd !== undefined ? stat2.posEnd : stat1.posEnd,
+            dateStart: stat1.dateStart !== undefined ? stat1.dateStart : stat2.dateStart,
+            dateEnd: stat2.dateEnd !== undefined ? stat2.dateEnd : stat1.dateEnd,
+            duration: MathUtils.sum(stat1.duration, stat2.duration)
+        };
+
+        let fullDuration = 0;
+        t.altAvg = this.formatM(MathUtils.sum(t.altMin, t.altMax) / 2);
+        if (stat1.dateEnd !== undefined && stat1.dateStart !== undefined) {
+            fullDuration = stat1.dateEnd.getTime() - stat1.dateStart.getTime();
+        }
+        if (stat2.dateEnd !== undefined && stat2.dateStart !== undefined) {
+            fullDuration = stat2.dateEnd.getTime() - stat2.dateStart.getTime();
+        }
+        if (t.dist !== undefined && fullDuration > 0) {
+            t.velocity = t.dist / fullDuration * 1000 * 60 * 60;
+        }
+        if (t.altAsc !== undefined && fullDuration > 0) {
+            t.altAscVelocity = this.formatM(t.altAsc / fullDuration * 1000 * 60 * 60);
+        }
+        if (t.altDesc !== undefined && fullDuration > 0) {
+            t.altDescVelocity = this.formatM(t.altDesc / fullDuration * 1000 * 60 * 60);
+        }
+
+        return t;
+    }
+
     public formatMToKm(l: number): number {
         if (l !== undefined) {
             return parseFloat((l / 1000).toFixed(1));
