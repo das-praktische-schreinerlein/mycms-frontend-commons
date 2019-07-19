@@ -4,6 +4,9 @@ export interface TrackStatistic {
     altAsc?: number;
     altDesc?: number;
     dist: number;
+    velocity?: number;
+    altAscVelocity?: number;
+    altDescVelocity?: number;
     altMin?: number;
     altMax?: number;
     altAvg?: number;

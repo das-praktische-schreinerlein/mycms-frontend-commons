@@ -21,12 +21,13 @@
 
 ## 4.2.0
 - added new components for managing object-detection image-objects
+- improved trackmanagement
 
 ### new features
 - frontend: added new components for managing object-detection image-objects
 
 ### improvements
-- none
+- frontend: improved trackmanagement
 
 ### bug fixes
 - none

@@ -1,6 +1,7 @@
 import * as L from 'leaflet';
 import {GeoElement, GeoElementType, GeoParser, LatLngTime} from './geo.parser';
 import {DateUtils} from '@dps/mycms-commons/dist/commons/utils/date.utils';
+import {StringUtils} from '@dps/mycms-commons/dist/commons/utils/string.utils';
 
 export class GeoGpxParser extends GeoParser {
     public static fixXml(xml: string): string {
@@ -28,10 +29,20 @@ export class GeoGpxParser extends GeoParser {
         xml = xml.replace(/[ \r\n]+$/, '');
         xml = xml.replace(/'/g, '"');
 
-        if (!(xml.indexOf('<gpx') > 0)) {
+        if (!(xml.indexOf('<gpx ') >= 0) && !(xml.indexOf('<gpx>') >= 0)) {
             xml = '<gpx xmlns="http://www.topografix.com/GPX/1/1" version="1.1"' +
+                ' xmlns:gpxx="http://www.garmin.com/xmlschemas/GpxExtensions/v3"' +
+                ' xmlns:wptx1="http://www.garmin.com/xmlschemas/WaypointExtension/v1"' +
+                ' xmlns:gpxtpx="http://www.garmin.com/xmlschemas/TrackPointExtension/v1"' +
                 ' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"' +
-                ' xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd">' + xml;
+                ' xsi:schemaLocation="http://www.topografix.com/GPX/1/1' +
+                '     http://www.topografix.com/GPX/1/1/gpx.xsd' +
+                '     http://www.garmin.com/xmlschemas/GpxExtensions/v3' +
+                '     http://www8.garmin.com/xmlschemas/GpxExtensionsv3.xsd' +
+                '     http://www.garmin.com/xmlschemas/WaypointExtension/v1' +
+                '     http://www8.garmin.com/xmlschemas/WaypointExtensionv1.xsd' +
+                '     http://www.garmin.com/xmlschemas/TrackPointExtension/v1' +
+                '     http://www.garmin.com/xmlschemas/TrackPointExtensionv1.xsd">' + xml;
         }
         if (!(xml.startsWith('<?xml'))) {
             xml = '<?xml version="1.0" encoding="UTF-8" standalone="no" ?>' + xml;
@@ -73,6 +84,79 @@ export class GeoGpxParser extends GeoParser {
         ;
 
         return xml;
+    }
+
+    public static deleteGpxTrackSegment(track: string, delSegIdx: number): string {
+        if (track === undefined || track === null || track.length <= 0 || delSegIdx < 0) {
+            return track;
+        }
+
+        let newTrack = track;
+        const lastPos = StringUtils.findNeedle(track, '<trkseg>', delSegIdx);
+        if (lastPos >= 0) {
+            newTrack = track.substring(0, lastPos - 1);
+            const endPos = track.indexOf('</trkseg>', lastPos);
+            if (endPos >= 0) {
+                newTrack += track.substring(endPos + '</trkseg>'.length, track.length);
+            }
+        }
+
+        return newTrack;
+    }
+
+    public static mergeGpxTrackSegment(track: string, mergeSegIdx: number): string {
+        if (track === undefined || track === null || track.length <= 0 || mergeSegIdx <= 0) {
+            return track;
+        }
+
+        let newTrack = track;
+        const lastPos = StringUtils.findNeedle(track, '</trkseg>', mergeSegIdx - 1);
+        if (lastPos >= 0) {
+            newTrack = track.substring(0, lastPos - 1);
+            const endPos = track.indexOf('<trkseg>', lastPos);
+            if (endPos >= 0) {
+                newTrack += track.substring(endPos + '<trkseg>'.length, track.length);
+            }
+        }
+
+        return newTrack;
+    }
+
+    public static mergeGpx(track1: string, track2: string): string {
+        if (track1 === undefined || track1 === null) {
+            return track2;
+        }
+        if (track2 === undefined || track2 === null) {
+            return track1;
+        }
+
+        track1 = GeoGpxParser.fixXml(track1);
+        track1 = GeoGpxParser.fixXmlExtended(track1);
+        track2 = GeoGpxParser.fixXml(track2);
+        track2 = GeoGpxParser.fixXmlExtended(track2);
+
+        let newTrack = '   ';
+        for (const track of [track1, track2]) {
+            for (const element of [['<trk>', '</trk>'], ['<rte>', '</rte>'], ['<wpt', '>']]) {
+                let lastPos = -1;
+                let idx = -1;
+                do {
+                    idx++;
+                    lastPos = StringUtils.findNeedle(track, element[0], idx);
+                    if (lastPos >= 0) {
+                        const endPos = track.indexOf(element[1], lastPos);
+                        if (endPos >= 0) {
+                            newTrack += track.substring(lastPos, endPos + element[1].length);
+                        }
+                    }
+                } while (lastPos >= 0);
+            }
+        }
+
+        newTrack = GeoGpxParser.fixXml(newTrack);
+        newTrack = GeoGpxParser.fixXmlExtended(newTrack);
+
+        return newTrack;
     }
 
     parse(xml: string, options): GeoElement[] {

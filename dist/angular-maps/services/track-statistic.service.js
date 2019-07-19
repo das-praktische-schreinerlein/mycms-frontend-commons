@@ -10,6 +10,9 @@ var TrackStatisticService = /** @class */ (function () {
             altAsc: undefined,
             altDesc: undefined,
             dist: undefined,
+            velocity: undefined,
+            altAscVelocity: undefined,
+            altDescVelocity: undefined,
             altMin: undefined,
             altMax: undefined,
             altAvg: undefined,
@@ -34,6 +37,9 @@ var TrackStatisticService = /** @class */ (function () {
             altAsc: undefined,
             altDesc: undefined,
             dist: (ll.length > 0 ? 0 : undefined),
+            velocity: undefined,
+            altAscVelocity: undefined,
+            altDescVelocity: undefined,
             altMin: undefined,
             altMax: undefined,
             altAvg: undefined,
@@ -46,7 +52,7 @@ var TrackStatisticService = /** @class */ (function () {
             dateEnd: (ll.length > 0 ? ll[ll.length - 1]['time'] : undefined),
             duration: undefined
         };
-        var l = null, altSum, altCount = 0;
+        var l = null, altSum = 0, altCount = 0, fullDuration = 0;
         for (var i = 0; i < ll.length; i++) {
             var p = ll[i];
             if (p && l) {
@@ -77,7 +83,8 @@ var TrackStatisticService = /** @class */ (function () {
             t.altAvg = altSum / altCount;
         }
         if (t.dateEnd !== undefined && t.dateStart !== undefined) {
-            t.duration = this.formatMillisToHH24(t.dateEnd.getTime() - t.dateStart.getTime());
+            fullDuration = t.dateEnd.getTime() - t.dateStart.getTime();
+            t.duration = this.formatMillisToHH24(fullDuration);
         }
         t.altAsc = this.formatM(t.altAsc);
         t.altDesc = this.formatM(t.altDesc);
@@ -87,6 +94,15 @@ var TrackStatisticService = /** @class */ (function () {
         t.altStart = this.formatM(t.altStart);
         t.altEnd = this.formatM(t.altEnd);
         t.dist = this.formatMToKm(t.dist);
+        if (t.dist !== undefined && fullDuration > 0) {
+            t.velocity = t.dist / fullDuration * 1000 * 60 * 60;
+        }
+        if (t.altAsc !== undefined && fullDuration > 0) {
+            t.altAscVelocity = this.formatM(t.altAsc / fullDuration * 1000 * 60 * 60);
+        }
+        if (t.altDesc !== undefined && fullDuration > 0) {
+            t.altDescVelocity = this.formatM(t.altDesc / fullDuration * 1000 * 60 * 60);
+        }
         return t;
     };
     TrackStatisticService.prototype.formatMToKm = function (l) {
