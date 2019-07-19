@@ -79,6 +79,7 @@ export class GeoGpxParser extends GeoParser {
             .replace(/<rte>/g, '\n  <rte>')
             .replace(/<\/rte>/g, '\n  </rte>')
 
+            .replace(/<wpt /g, '\n      <wpt ')
             .replace(/<trkpt /g, '\n      <trkpt ')
             .replace(/<rtept /g, '\n    <rtept ')
         ;
@@ -137,7 +138,7 @@ export class GeoGpxParser extends GeoParser {
 
         let newTrack = '   ';
         for (const track of [track1, track2]) {
-            for (const element of [['<trk>', '</trk>'], ['<rte>', '</rte>'], ['<wpt', '>']]) {
+            for (const element of [['<trk>', '</trk>'], ['<rte>', '</rte>'], ['<wpt ', '</wpt>']]) {
                 let lastPos = -1;
                 let idx = -1;
                 do {

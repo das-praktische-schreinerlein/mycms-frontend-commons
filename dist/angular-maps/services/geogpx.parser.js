@@ -77,6 +77,7 @@ var GeoGpxParser = /** @class */ (function (_super) {
             .replace(/<rte /g, '\n  <rte ')
             .replace(/<rte>/g, '\n  <rte>')
             .replace(/<\/rte>/g, '\n  </rte>')
+            .replace(/<wpt /g, '\n      <wpt ')
             .replace(/<trkpt /g, '\n      <trkpt ')
             .replace(/<rtept /g, '\n    <rtept ');
         return xml;
@@ -125,7 +126,7 @@ var GeoGpxParser = /** @class */ (function (_super) {
         var newTrack = '   ';
         for (var _i = 0, _a = [track1, track2]; _i < _a.length; _i++) {
             var track = _a[_i];
-            for (var _b = 0, _c = [['<trk>', '</trk>'], ['<rte>', '</rte>'], ['<wpt', '>']]; _b < _c.length; _b++) {
+            for (var _b = 0, _c = [['<trk>', '</trk>'], ['<rte>', '</rte>'], ['<wpt ', '</wpt>']]; _b < _c.length; _b++) {
                 var element = _c[_b];
                 var lastPos = -1;
                 var idx = -1;
