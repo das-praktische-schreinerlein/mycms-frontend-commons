@@ -19,6 +19,24 @@
 - frontend: export "real" angular-modules
 
 
+## 4.3.0
+
+### new features
+- none
+
+### improvements
+- none
+
+### bug fixes
+- none
+ 
+### breaking changes
+- none
+
+### known issues
+- frontend: IE till 11 not functional (can block rendering sometimes)
+
+
 ## 4.2.0
 - added new components for managing object-detection image-objects
 - improved trackmanagement
