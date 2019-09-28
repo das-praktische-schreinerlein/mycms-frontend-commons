@@ -28,7 +28,7 @@
 - none
 
 ### bug fixes
-- none
+- frontend: fixed SimpleAngularBackendHttpClient
  
 ### breaking changes
 - none

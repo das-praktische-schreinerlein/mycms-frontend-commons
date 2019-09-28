@@ -84,30 +84,49 @@ var SimpleAngularBackendHttpClient = /** @class */ (function (_super) {
             headers: res.headers,
             method: requestConfig['method'],
             data: jsonObj,
-            text: function () { return text; },
-            json: function () { return jsonObj; },
+            text: function () {
+                return text;
+            },
+            json: function () {
+                return jsonObj;
+            },
             status: res.status,
             statusMsg: res.statusText
         };
     };
-    SimpleAngularBackendHttpClient.prototype.makeHttpRequest = function (httpConfig) {
+    SimpleAngularBackendHttpClient.doClientRequest = function (http, httpConfig, headers) {
+        var httpHeaders = new http_1.HttpHeaders();
+        if (headers) {
+            for (var key in headers) {
+                if (headers[key]) {
+                    httpHeaders = httpHeaders.append(key, headers[key]);
+                }
+            }
+        }
         var requestConfig = {
             method: httpConfig.method.toLowerCase(),
             url: httpConfig.url,
             body: httpConfig.data,
             params: httpConfig.params,
-            headers: new http_1.HttpHeaders(),
+            headers: httpHeaders,
             withCredentials: true
         };
         requestConfig['observe'] = 'response';
+        if (httpConfig['responseType']) {
+            requestConfig['responseType'] = httpConfig['responseType'];
+        }
         SimpleAngularBackendHttpClient_1.fixRequestOption(requestConfig);
+        // console.log('makeHttpRequest:', requestConfig);
         var result;
-        var request = this.http.request(requestConfig.method, requestConfig.url, requestConfig);
+        var request = http.request(requestConfig.method, requestConfig.url, requestConfig);
         result = request.map(function (res) {
             // console.log('response makeHttpRequest:' + httpConfig.url, res);
             return SimpleAngularBackendHttpClient_1.createBackendHttpResponse(requestConfig, res);
         });
         return result.toPromise();
+    };
+    SimpleAngularBackendHttpClient.prototype.makeHttpRequest = function (httpConfig) {
+        return SimpleAngularBackendHttpClient_1.doClientRequest(this.http, httpConfig, undefined);
     };
     SimpleAngularBackendHttpClient = SimpleAngularBackendHttpClient_1 = __decorate([
         core_1.Injectable(),

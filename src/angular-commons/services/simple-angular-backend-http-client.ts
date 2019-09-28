@@ -1,5 +1,9 @@
 import {HttpClient, HttpHeaders, HttpResponse} from '@angular/common/http';
-import {BackendHttpResponse, BackendRequestOptionsArgs, MinimalHttpBackendClient} from '@dps/mycms-commons/dist/commons/services/minimal-http-backend-client';
+import {
+    BackendHttpResponse,
+    BackendRequestOptionsArgs,
+    MinimalHttpBackendClient
+} from '@dps/mycms-commons/dist/commons/services/minimal-http-backend-client';
 import {Injectable} from '@angular/core';
 import {isArray} from 'util';
 
@@ -12,7 +16,7 @@ export class SimpleAngularBackendHttpClient extends MinimalHttpBackendClient {
             for (const paramName in <{}>requestConfig.params) {
                 const value = requestConfig.params[paramName];
                 if (isArray(value)) {
-                    for (const singleValue of value)  {
+                    for (const singleValue of value) {
                         params.push(encodeURIComponent(paramName) + '=' + encodeURIComponent(singleValue));
                     }
                 } else {
@@ -32,7 +36,6 @@ export class SimpleAngularBackendHttpClient extends MinimalHttpBackendClient {
             }
         }
     }
-
 
     public static createBackendHttpResponse(requestConfig: {}, res: HttpResponse<any>): BackendHttpResponse {
         const contentType = res.headers.get('content-type');
@@ -58,32 +61,46 @@ export class SimpleAngularBackendHttpClient extends MinimalHttpBackendClient {
             headers: <any>res.headers,
             method: requestConfig['method'],
             data: jsonObj,
-            text: function () { return text; },
-            json: function () { return jsonObj; },
+            text: function () {
+                return text;
+            },
+            json: function () {
+                return jsonObj;
+            },
             status: res.status,
             statusMsg: res.statusText
         } as BackendHttpResponse;
     }
 
-    constructor(private http: HttpClient) {
-        super();
-    }
+    public static doClientRequest(http: HttpClient, httpConfig: BackendRequestOptionsArgs, headers?: {}):
+        Promise<BackendHttpResponse> {
+        let httpHeaders: HttpHeaders = new HttpHeaders();
+        if (headers) {
+            for (const key in headers) {
+                if (headers[key]) {
+                    httpHeaders = httpHeaders.append(key, headers[key]);
+                }
+            }
+        }
 
-    makeHttpRequest(httpConfig: BackendRequestOptionsArgs): Promise<BackendHttpResponse> {
-        const requestConfig  = {
+        const requestConfig = {
             method: httpConfig.method.toLowerCase(),
             url: httpConfig.url,
             body: httpConfig.data,
             params: httpConfig.params,
-            headers: new HttpHeaders(),
+            headers: httpHeaders,
             withCredentials: true
         };
         requestConfig['observe'] = 'response';
+        if (httpConfig['responseType']) {
+            requestConfig['responseType'] = httpConfig['responseType'];
+        }
 
         SimpleAngularBackendHttpClient.fixRequestOption(requestConfig);
 
+        // console.log('makeHttpRequest:', requestConfig);
         let result;
-        let request = this.http.request(requestConfig.method, requestConfig.url, requestConfig);
+        const request = http.request(requestConfig.method, requestConfig.url, requestConfig);
         result = request.map((res: HttpResponse<any>) => {
             // console.log('response makeHttpRequest:' + httpConfig.url, res);
             return SimpleAngularBackendHttpClient.createBackendHttpResponse(requestConfig, res);
@@ -91,4 +108,13 @@ export class SimpleAngularBackendHttpClient extends MinimalHttpBackendClient {
 
         return result.toPromise();
     }
+
+    constructor(protected http: HttpClient) {
+        super();
+    }
+
+    makeHttpRequest(httpConfig: BackendRequestOptionsArgs): Promise<BackendHttpResponse> {
+        return SimpleAngularBackendHttpClient.doClientRequest(this.http, httpConfig, undefined);
+    }
+
 }
