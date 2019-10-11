@@ -85,8 +85,8 @@ export class GeoParsedFeature extends L.FeatureGroup {
                     break;
                 default:
                     if (geoElements.length > 1
-                        && ((gpxElement.type === 'TRACK' && geoElement.type === GeoElementType.ROUTE)
-                            || (gpxElement.type === 'ROUTE' && geoElement.type === GeoElementType.TRACK))) {
+                        && ((gpxElement.type === 'TRACK' && geoElement.type !== GeoElementType.TRACK)
+                            || (gpxElement.type === 'ROUTE' && geoElement.type !== GeoElementType.ROUTE))) {
                         break;
                     }
 
@@ -94,25 +94,45 @@ export class GeoParsedFeature extends L.FeatureGroup {
                     if (gpxElement.color) {
                         lineOptions['color'] = gpxElement.color;
                     }
-                    const line = new L.Polyline(geoElement.points, lineOptions);
+
+                    let element;
+                    if (geoElement.type === GeoElementType.AREA) {
+                        element = new L.Polygon(geoElement.points, lineOptions)
+                        lineOptions['fillOpacity'] = 0.1;
+                    } else {
+                        element = new L.Polyline(geoElement.points, lineOptions);
+                    }
                     if (gpxElement.popupContent) {
-                        line.bindPopup(gpxElement.popupContent);
+                        element.bindPopup(gpxElement.popupContent);
                     }
-                    layers.push(line);
-                    if (options['showStartMarker']) {
-                        layers.push(new L.Marker(geoElement.points[0], {
-                            clickable: true,
-                            title: gpxElement.title || (prefix + 'Start: ' + gpxElement.name),
-                            icon: gpxElement.iconStart || new L.DivIcon({className: 'leaflet-div-icon-start', html: '&#128204;' + prefix + 'S:' + gpxElement.name})
-                        }));
+                    layers.push(element);
+
+
+                    if (geoElement.type === GeoElementType.AREA) {
+                        if (options['showAreaMarker']) {
+                            layers.push(new L.Marker(geoElement.points[0], {
+                                clickable: true,
+                                title: gpxElement.title || (prefix + 'Area: ' + gpxElement.name),
+                                icon: gpxElement.iconStart || new L.DivIcon({className: 'leaflet-div-icon-area', html: '&#128506;' + prefix + gpxElement.name})
+                            }));
+                        }
+                    } else {
+                        if (options['showStartMarker']) {
+                            layers.push(new L.Marker(geoElement.points[0], {
+                                clickable: true,
+                                title: gpxElement.title || (prefix + 'Start: ' + gpxElement.name),
+                                icon: gpxElement.iconStart || new L.DivIcon({className: 'leaflet-div-icon-start', html: '&#128204;' + prefix + 'S:' + gpxElement.name})
+                            }));
+                        }
+                        if (options['showEndMarker']) {
+                            layers.push(new L.Marker(geoElement.points[geoElement.points.length - 1], {
+                                clickable: true,
+                                title: gpxElement.title || (prefix + 'End: ' + gpxElement.name),
+                                icon: gpxElement.iconEnd || new L.DivIcon({className: 'leaflet-div-icon-end', html: '&#128205;' + prefix + 'E:' + gpxElement.name})
+                            }));
+                        }
                     }
-                    if (options['showEndMarker']) {
-                        layers.push(new L.Marker(geoElement.points[geoElement.points.length - 1], {
-                            clickable: true,
-                            title: gpxElement.title || (prefix + 'End: ' + gpxElement.name),
-                            icon: gpxElement.iconEnd || new L.DivIcon({className: 'leaflet-div-icon-end', html: '&#128205;' + prefix + 'E:' + gpxElement.name})
-                        }));
-                    }
+
                     break;
             }
         }

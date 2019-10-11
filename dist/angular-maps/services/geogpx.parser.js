@@ -259,7 +259,12 @@ var GeoGpxParser = /** @class */ (function (_super) {
             }
             coords.push(ll);
         }
-        return new geo_parser_1.GeoElement(tag === 'trkpt' ? geo_parser_1.GeoElementType.TRACK : geo_parser_1.GeoElementType.ROUTE, coords, name);
+        var typeEl = gpxDom.getElementsByTagName('type');
+        var type = tag === 'trkpt' ? geo_parser_1.GeoElementType.TRACK : geo_parser_1.GeoElementType.ROUTE;
+        if (typeEl.length && typeEl[0].childNodes[0].nodeValue === 'AREA') {
+            type = geo_parser_1.GeoElementType.AREA;
+        }
+        return new geo_parser_1.GeoElement(type, coords, name);
     };
     GeoGpxParser.prototype.parse_wpt = function (e, gpxDom) {
         var m = new geo_parser_1.GeoElement(geo_parser_1.GeoElementType.WAYPOINT, [new L.LatLng(e.getAttribute('lat'), e.getAttribute('lon'))], undefined);

@@ -6,6 +6,7 @@ import { MinimalHttpBackendClient } from '@dps/mycms-commons/dist/commons/servic
 import * as L from 'leaflet';
 export interface LeafletMapOptions {
     flgGenerateNameFromGpx: boolean;
+    showAreaMarker: boolean;
     showStartMarker: boolean;
     showEndMarker: boolean;
 }

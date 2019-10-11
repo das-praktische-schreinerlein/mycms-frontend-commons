@@ -14,6 +14,7 @@ import LatLngBounds = L.LatLngBounds;
 
 export interface LeafletMapOptions {
     flgGenerateNameFromGpx: boolean;
+    showAreaMarker: boolean;
     showStartMarker: boolean;
     showEndMarker: boolean;
 }
@@ -146,6 +147,7 @@ export class LeafletMapComponent implements AfterViewChecked, OnChanges {
                         async: true,
                         display_wpt: false,
                         generateName: this.options.flgGenerateNameFromGpx,
+                        showAreaMarker: this.options.showAreaMarker,
                         showStartMarker: this.options.showStartMarker,
                         showEndMarker: this.options.showEndMarker
                     });
@@ -154,6 +156,7 @@ export class LeafletMapComponent implements AfterViewChecked, OnChanges {
                         async: true,
                         display_wpt: false,
                         generateName: this.options.flgGenerateNameFromGpx,
+                        showAreaMarker: this.options.showAreaMarker,
                         showStartMarker: this.options.showStartMarker,
                         showEndMarker: this.options.showEndMarker
                     });

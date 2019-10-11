@@ -285,7 +285,14 @@ export class GeoGpxParser extends GeoParser {
             }
             coords.push(ll);
         }
-        return new GeoElement(tag === 'trkpt' ? GeoElementType.TRACK : GeoElementType.ROUTE, coords, name);
+
+        const typeEl = gpxDom.getElementsByTagName('type');
+        let type = tag === 'trkpt' ? GeoElementType.TRACK : GeoElementType.ROUTE;
+        if (typeEl.length && typeEl[0].childNodes[0].nodeValue === 'AREA') {
+            type = GeoElementType.AREA;
+        }
+
+        return new GeoElement(type, coords, name);
     }
 
     parse_wpt(e, gpxDom): GeoElement {

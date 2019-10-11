@@ -4,6 +4,7 @@ export declare enum GeoElementType {
     TRACK = 0,
     ROUTE = 1,
     WAYPOINT = 2,
+    AREA = 3,
 }
 export declare class LatLngTime extends LatLng {
     time: Date;

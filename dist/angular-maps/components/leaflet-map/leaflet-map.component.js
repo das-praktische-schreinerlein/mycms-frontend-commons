@@ -99,6 +99,7 @@ var LeafletMapComponent = /** @class */ (function () {
                         async: true,
                         display_wpt: false,
                         generateName: this_1.options.flgGenerateNameFromGpx,
+                        showAreaMarker: this_1.options.showAreaMarker,
                         showStartMarker: this_1.options.showStartMarker,
                         showEndMarker: this_1.options.showEndMarker
                     });
@@ -108,6 +109,7 @@ var LeafletMapComponent = /** @class */ (function () {
                         async: true,
                         display_wpt: false,
                         generateName: this_1.options.flgGenerateNameFromGpx,
+                        showAreaMarker: this_1.options.showAreaMarker,
                         showStartMarker: this_1.options.showStartMarker,
                         showEndMarker: this_1.options.showEndMarker
                     });

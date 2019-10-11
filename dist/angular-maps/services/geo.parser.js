@@ -17,6 +17,7 @@ var GeoElementType;
     GeoElementType[GeoElementType["TRACK"] = 0] = "TRACK";
     GeoElementType[GeoElementType["ROUTE"] = 1] = "ROUTE";
     GeoElementType[GeoElementType["WAYPOINT"] = 2] = "WAYPOINT";
+    GeoElementType[GeoElementType["AREA"] = 3] = "AREA";
 })(GeoElementType = exports.GeoElementType || (exports.GeoElementType = {}));
 var LatLngTime = /** @class */ (function (_super) {
     __extends(LatLngTime, _super);

@@ -4,7 +4,8 @@ import LatLng = L.LatLng;
 export enum GeoElementType {
     TRACK,
     ROUTE,
-    WAYPOINT
+    WAYPOINT,
+    AREA
 }
 
 export class LatLngTime extends LatLng {
