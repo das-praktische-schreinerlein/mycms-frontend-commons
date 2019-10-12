@@ -71,6 +71,19 @@ export class GeoParsedFeature extends L.FeatureGroup {
         }
 
         const layers = [];
+        const availableTypes: {
+            hasTrack: boolean
+            hasRoute: boolean;
+        } = {
+            hasTrack: false,
+            hasRoute: false
+        };
+        for (let i = 0; i < geoElements.length; i++) {
+            const geoElement = geoElements[i];
+            availableTypes.hasRoute = availableTypes.hasRoute || geoElement.type === GeoElementType.ROUTE;
+            availableTypes.hasTrack = availableTypes.hasTrack || geoElement.type === GeoElementType.TRACK;
+        }
+
         for (let i = 0; i < geoElements.length; i++) {
             const geoElement = geoElements[i];
             const prefix = (gpxElement.code !== undefined ? gpxElement.code + ' ' : '');
@@ -85,8 +98,9 @@ export class GeoParsedFeature extends L.FeatureGroup {
                     break;
                 default:
                     if (geoElements.length > 1
-                        && ((gpxElement.type === 'TRACK' && geoElement.type !== GeoElementType.TRACK)
-                            || (gpxElement.type === 'ROUTE' && geoElement.type !== GeoElementType.ROUTE))) {
+                        && ((gpxElement.type === 'TRACK'  && availableTypes.hasTrack && geoElement.type !== GeoElementType.TRACK)
+                            || (gpxElement.type === 'ROUTE' && availableTypes.hasRoute && geoElement.type !== GeoElementType.ROUTE))) {
+                        // ignore tracks or routes if master-type is available
                         break;
                     }
 

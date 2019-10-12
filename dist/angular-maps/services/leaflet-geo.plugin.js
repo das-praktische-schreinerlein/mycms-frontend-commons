@@ -54,6 +54,15 @@ var GeoParsedFeature = /** @class */ (function (_super) {
             return;
         }
         var layers = [];
+        var availableTypes = {
+            hasTrack: false,
+            hasRoute: false
+        };
+        for (var i = 0; i < geoElements.length; i++) {
+            var geoElement = geoElements[i];
+            availableTypes.hasRoute = availableTypes.hasRoute || geoElement.type === geo_parser_1.GeoElementType.ROUTE;
+            availableTypes.hasTrack = availableTypes.hasTrack || geoElement.type === geo_parser_1.GeoElementType.TRACK;
+        }
         for (var i = 0; i < geoElements.length; i++) {
             var geoElement = geoElements[i];
             var prefix = (gpxElement.code !== undefined ? gpxElement.code + ' ' : '');
@@ -68,8 +77,9 @@ var GeoParsedFeature = /** @class */ (function (_super) {
                     break;
                 default:
                     if (geoElements.length > 1
-                        && ((gpxElement.type === 'TRACK' && geoElement.type !== geo_parser_1.GeoElementType.TRACK)
-                            || (gpxElement.type === 'ROUTE' && geoElement.type !== geo_parser_1.GeoElementType.ROUTE))) {
+                        && ((gpxElement.type === 'TRACK' && availableTypes.hasTrack && geoElement.type !== geo_parser_1.GeoElementType.TRACK)
+                            || (gpxElement.type === 'ROUTE' && availableTypes.hasRoute && geoElement.type !== geo_parser_1.GeoElementType.ROUTE))) {
+                        // ignore tracks or routes if master-type is available
                         break;
                     }
                     var lineOptions = {};
