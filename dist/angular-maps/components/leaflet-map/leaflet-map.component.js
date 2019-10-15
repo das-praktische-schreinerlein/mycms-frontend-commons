@@ -19,8 +19,8 @@ var geogpx_parser_1 = require("../../services/geogpx.parser");
 var component_utils_1 = require("../../../angular-commons/services/component.utils");
 var minimal_http_backend_client_1 = require("@dps/mycms-commons/dist/commons/services/minimal-http-backend-client");
 var L = require("leaflet");
+var geo_parser_1 = require("../../services/geo.parser");
 var LatLng = L.LatLng;
-var LatLngBounds = L.LatLngBounds;
 var LeafletMapComponent = /** @class */ (function () {
     function LeafletMapComponent(http) {
         this.http = http;
@@ -36,6 +36,7 @@ var LeafletMapComponent = /** @class */ (function () {
         this.bounds = undefined;
         this.centerOnMapElements = undefined;
         this.centerChanged = new core_1.EventEmitter();
+        this.mapCreated = new core_1.EventEmitter();
         this.mapElementClicked = new core_1.EventEmitter();
         this.mapElementsLoaded = new core_1.EventEmitter();
         this.gpxLoader = new geo_loader_1.GeoLoader(http, new geogpx_parser_1.GeoGpxParser());
@@ -72,6 +73,7 @@ var LeafletMapComponent = /** @class */ (function () {
             // set up the map
             this.map = new L.Map(this.mapId);
             this.map.addLayer(this.osm);
+            this.mapCreated.emit(this.map);
         }
         if (!this.map) {
             return;
@@ -98,6 +100,7 @@ var LeafletMapComponent = /** @class */ (function () {
                     geoFeature = new leaflet_geo_plugin_1.GeoParsedFeature(this_1.gpxLoader, mapElement, {
                         async: true,
                         display_wpt: false,
+                        editable: this_1.options.editable,
                         generateName: this_1.options.flgGenerateNameFromGpx,
                         showAreaMarker: this_1.options.showAreaMarker,
                         showStartMarker: this_1.options.showStartMarker,
@@ -108,6 +111,7 @@ var LeafletMapComponent = /** @class */ (function () {
                     geoFeature = new leaflet_geo_plugin_1.GeoParsedFeature(this_1.jsonLoader, mapElement, {
                         async: true,
                         display_wpt: false,
+                        editable: this_1.options.editable,
                         generateName: this_1.options.flgGenerateNameFromGpx,
                         showAreaMarker: this_1.options.showAreaMarker,
                         showStartMarker: this_1.options.showStartMarker,
@@ -137,23 +141,28 @@ var LeafletMapComponent = /** @class */ (function () {
             }
             else if (mapElement.point) {
                 var prefix = (mapElement.code !== undefined ? mapElement.code + ' ' : '');
-                var pointFeature = new L.Marker(mapElement.point, {
-                    clickable: true,
-                    title: mapElement.title || (prefix + mapElement.name),
-                    icon: mapElement.iconStart
-                        || new L.DivIcon({ className: 'leaflet-div-icon-point', html: '&#128204;' + prefix + mapElement.name })
+                var geoElement = new geo_parser_1.GeoElement(geo_parser_1.GeoElementType.WAYPOINT, [mapElement.point], mapElement.title || (prefix + mapElement.name));
+                var pointFeature = leaflet_geo_plugin_1.GeoParsedFeature.convertGeoElementsToLayers(mapElement, [geoElement], {
+                    async: true,
+                    display_wpt: true,
+                    editable: this_1.options.editable,
+                    generateName: this_1.options.flgGenerateNameFromGpx,
+                    showAreaMarker: this_1.options.showAreaMarker,
+                    showStartMarker: this_1.options.showStartMarker,
+                    showEndMarker: this_1.options.showEndMarker
                 });
+                mapElement.featureLayer = pointFeature;
                 me.featureGroup.addLayer(pointFeature);
                 pointFeature.on('click', function () {
                     me.mapElementClicked.emit(mapElement);
                 });
                 if (me.centerOnMapElements && me.centerOnMapElements.length > 0) {
                     if (me.centerOnMapElements.indexOf(mapElement) >= 0) {
-                        me.bounds = me.extendBounds(me.bounds, new LatLngBounds(pointFeature.getLatLng(), pointFeature.getLatLng()));
+                        me.bounds = me.extendBounds(me.bounds, pointFeature.getBounds());
                     }
                 }
                 else {
-                    me.bounds = me.extendBounds(me.bounds, new LatLngBounds(pointFeature.getLatLng(), pointFeature.getLatLng()));
+                    me.bounds = me.extendBounds(me.bounds, pointFeature.getBounds());
                 }
                 if (me.bounds) {
                     me.map.fitBounds(me.bounds);
@@ -216,6 +225,10 @@ var LeafletMapComponent = /** @class */ (function () {
         core_1.Output(),
         __metadata("design:type", core_1.EventEmitter)
     ], LeafletMapComponent.prototype, "centerChanged", void 0);
+    __decorate([
+        core_1.Output(),
+        __metadata("design:type", core_1.EventEmitter)
+    ], LeafletMapComponent.prototype, "mapCreated", void 0);
     __decorate([
         core_1.Output(),
         __metadata("design:type", core_1.EventEmitter)

@@ -13,6 +13,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var geo_parser_1 = require("./geo.parser");
 var L = require("leaflet");
 require("leaflet.markercluster");
+require("leaflet-editable-polyline");
 var GeoParsedFeature = /** @class */ (function (_super) {
     __extends(GeoParsedFeature, _super);
     function GeoParsedFeature(geoLoader, geoElement, options) {
@@ -21,65 +22,35 @@ var GeoParsedFeature = /** @class */ (function (_super) {
         _this.initialize(geoLoader, geoElement, options);
         return _this;
     }
-    GeoParsedFeature.prototype.initialize = function (geoLoader, geoElement, options) {
-        this.geoLoader = geoLoader;
-        L.Util.setOptions(this, options);
-        this._layers = {};
-        if (geoElement) {
-            this.addGeoData(geoElement, options);
-        }
-    };
-    GeoParsedFeature.prototype.addGeoData = function (geoElement, options) {
-        var me = this;
-        var promise;
-        if (geoElement.trackSrc !== undefined && geoElement.trackSrc.length > 20) {
-            promise = this.geoLoader.loadData(geoElement.trackSrc, options);
-        }
-        else {
-            promise = this.geoLoader.loadDataFromUrl(geoElement.trackUrl, options);
-        }
-        promise.then(function onLoaded(geoElements) {
-            var layers = me.convertGeoElementsToLayers(geoElement, geoElements, options);
-            if (layers !== undefined) {
-                me.addLayer(layers);
-                me.fire('loaded', { mapElement: geoElement, layers: layers });
-            }
-        }).catch(function onError(error) {
-            console.error('failed to load gpx for leafletmap', error);
-        });
-    };
-    GeoParsedFeature.prototype.convertGeoElementsToLayers = function (gpxElement, geoElements, options) {
-        if (!geoElements) {
-            this.fire('error');
-            return;
-        }
+    GeoParsedFeature.convertGeoElementsToLayers = function (gpxElement, geoElements, options) {
         var layers = [];
-        var availableTypes = {
+        var flags = {
             hasTrack: false,
             hasRoute: false
         };
         for (var i = 0; i < geoElements.length; i++) {
             var geoElement = geoElements[i];
-            availableTypes.hasRoute = availableTypes.hasRoute || geoElement.type === geo_parser_1.GeoElementType.ROUTE;
-            availableTypes.hasTrack = availableTypes.hasTrack || geoElement.type === geo_parser_1.GeoElementType.TRACK;
+            flags.hasRoute = flags.hasRoute || geoElement.type === geo_parser_1.GeoElementType.ROUTE;
+            flags.hasTrack = flags.hasTrack || geoElement.type === geo_parser_1.GeoElementType.TRACK;
         }
         for (var i = 0; i < geoElements.length; i++) {
             var geoElement = geoElements[i];
             var prefix = (gpxElement.code !== undefined ? gpxElement.code + ' ' : '');
             switch (geoElement.type) {
                 case geo_parser_1.GeoElementType.WAYPOINT:
-                    var point = new L.Marker(geoElement.points[0], {
+                    var point = void 0;
+                    point = new L.Marker(geoElement.points[0], {
                         clickable: true,
                         title: gpxElement.title || (prefix + gpxElement.type + ': ' + gpxElement.name),
-                        icon: gpxElement.iconStart || new L.DivIcon({ className: 'leaflet-div-icon-point', html: '&#128204;' + prefix + gpxElement.name })
+                        icon: gpxElement.iconStart
+                            || new L.DivIcon({ className: 'leaflet-div-icon-point', html: '&#128204;' + prefix + gpxElement.name })
                     });
                     layers.push(point);
                     break;
                 default:
                     if (geoElements.length > 1
-                        && ((gpxElement.type === 'TRACK' && availableTypes.hasTrack && geoElement.type !== geo_parser_1.GeoElementType.TRACK)
-                            || (gpxElement.type === 'ROUTE' && availableTypes.hasRoute && geoElement.type !== geo_parser_1.GeoElementType.ROUTE))) {
-                        // ignore tracks or routes if master-type is available
+                        && ((gpxElement.type === 'TRACK' && geoElement.type !== geo_parser_1.GeoElementType.TRACK && flags.hasTrack)
+                            || (gpxElement.type === 'ROUTE' && geoElement.type !== geo_parser_1.GeoElementType.ROUTE && flags.hasRoute))) {
                         break;
                     }
                     var lineOptions = {};
@@ -87,12 +58,23 @@ var GeoParsedFeature = /** @class */ (function (_super) {
                         lineOptions['color'] = gpxElement.color;
                     }
                     var element = void 0;
-                    if (geoElement.type === geo_parser_1.GeoElementType.AREA) {
-                        element = new L.Polygon(geoElement.points, lineOptions);
-                        lineOptions['fillOpacity'] = 0.1;
+                    if (options.editable) {
+                        lineOptions['pointIcon'] = gpxElement.iconPolylineEditor
+                            || new L.DivIcon({ className: 'leaflet-div-icon-editorpoint', html: '&#128204;' });
+                        lineOptions['newPointIcon'] = gpxElement.iconPolylineEditor
+                            || new L.DivIcon({ className: 'leaflet-div-icon-neweditorpoint', html: '+' });
+                        lineOptions['newPolylines'] = true;
+                        // @ts-ignore
+                        element = L.Polyline.PolylineEditor(geoElement.points, lineOptions);
                     }
                     else {
-                        element = new L.Polyline(geoElement.points, lineOptions);
+                        if (geoElement.type === geo_parser_1.GeoElementType.AREA) {
+                            element = new L.Polygon(geoElement.points, lineOptions);
+                            lineOptions['fillOpacity'] = 0.1;
+                        }
+                        else {
+                            element = new L.Polyline(geoElement.points, lineOptions);
+                        }
                     }
                     if (gpxElement.popupContent) {
                         element.bindPopup(gpxElement.popupContent);
@@ -103,7 +85,8 @@ var GeoParsedFeature = /** @class */ (function (_super) {
                             layers.push(new L.Marker(geoElement.points[0], {
                                 clickable: true,
                                 title: gpxElement.title || (prefix + 'Area: ' + gpxElement.name),
-                                icon: gpxElement.iconStart || new L.DivIcon({ className: 'leaflet-div-icon-area', html: '&#128506;' + prefix + gpxElement.name })
+                                icon: gpxElement.iconStart ||
+                                    new L.DivIcon({ className: 'leaflet-div-icon-area', html: '&#128506;' + prefix + gpxElement.name })
                             }));
                         }
                     }
@@ -112,14 +95,16 @@ var GeoParsedFeature = /** @class */ (function (_super) {
                             layers.push(new L.Marker(geoElement.points[0], {
                                 clickable: true,
                                 title: gpxElement.title || (prefix + 'Start: ' + gpxElement.name),
-                                icon: gpxElement.iconStart || new L.DivIcon({ className: 'leaflet-div-icon-start', html: '&#128204;' + prefix + 'S:' + gpxElement.name })
+                                icon: gpxElement.iconStart ||
+                                    new L.DivIcon({ className: 'leaflet-div-icon-start', html: '&#128204;' + prefix + 'S:' + gpxElement.name })
                             }));
                         }
                         if (options['showEndMarker']) {
                             layers.push(new L.Marker(geoElement.points[geoElement.points.length - 1], {
                                 clickable: true,
                                 title: gpxElement.title || (prefix + 'End: ' + gpxElement.name),
-                                icon: gpxElement.iconEnd || new L.DivIcon({ className: 'leaflet-div-icon-end', html: '&#128205;' + prefix + 'E:' + gpxElement.name })
+                                icon: gpxElement.iconEnd ||
+                                    new L.DivIcon({ className: 'leaflet-div-icon-end', html: '&#128205;' + prefix + 'E:' + gpxElement.name })
                             }));
                         }
                     }
@@ -130,6 +115,38 @@ var GeoParsedFeature = /** @class */ (function (_super) {
             return;
         }
         return new L.FeatureGroup(layers);
+    };
+    GeoParsedFeature.prototype.initialize = function (geoLoader, geoElement, options) {
+        this.geoLoader = geoLoader;
+        L.Util.setOptions(this, options);
+        this._layers = {};
+        if (geoElement) {
+            this.addGeoData(geoElement, options);
+        }
+    };
+    GeoParsedFeature.prototype.addGeoData = function (mapElement, options) {
+        var me = this;
+        var promise;
+        if (mapElement.trackSrc !== undefined && mapElement.trackSrc.length > 20) {
+            promise = this.geoLoader.loadData(mapElement.trackSrc, options);
+        }
+        else {
+            promise = this.geoLoader.loadDataFromUrl(mapElement.trackUrl, options);
+        }
+        promise.then(function onLoaded(geoElements) {
+            if (!geoElements) {
+                this.fire('error');
+                return;
+            }
+            var layers = GeoParsedFeature.convertGeoElementsToLayers(mapElement, geoElements, options);
+            if (layers !== undefined) {
+                me.addLayer(layers);
+                mapElement.featureLayer = layers;
+                me.fire('loaded', { mapElement: mapElement, layers: layers });
+            }
+        }).catch(function onError(error) {
+            console.error('failed to load gpx for leafletmap', error);
+        });
     };
     return GeoParsedFeature;
 }(L.FeatureGroup));

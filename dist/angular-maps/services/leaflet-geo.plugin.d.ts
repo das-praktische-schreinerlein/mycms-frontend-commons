@@ -5,6 +5,7 @@ import { GeoLoader } from './geo.loader';
 import { GeoElement } from './geo.parser';
 import * as L from 'leaflet';
 import 'leaflet.markercluster';
+import 'leaflet-editable-polyline';
 export interface MapElement {
     id: string;
     code?: string;
@@ -17,15 +18,16 @@ export interface MapElement {
     type?: string;
     title?: string;
     iconStart?: L.DivIcon;
+    iconPolylineEditor?: L.Icon;
     iconEnd?: L.DivIcon;
+    featureLayer?: L.Layer;
 }
 export declare class GeoParsedFeature extends L.FeatureGroup {
     options: any;
     _layers: {};
-    layers: {};
     geoLoader: GeoLoader;
+    static convertGeoElementsToLayers(gpxElement: MapElement, geoElements: GeoElement[], options: any): L.FeatureGroup;
     constructor(geoLoader: GeoLoader, geoElement: MapElement, options: {});
     initialize(geoLoader: GeoLoader, geoElement: MapElement, options: {}): void;
-    addGeoData(geoElement: MapElement, options: any): void;
-    convertGeoElementsToLayers(gpxElement: MapElement, geoElements: GeoElement[], options: any): L.FeatureGroup;
+    addGeoData(mapElement: MapElement, options: any): void;
 }

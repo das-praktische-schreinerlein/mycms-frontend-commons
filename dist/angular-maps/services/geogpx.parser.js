@@ -82,6 +82,18 @@ var GeoGpxParser = /** @class */ (function (_super) {
             .replace(/<rtept /g, '\n    <rtept ');
         return xml;
     };
+    GeoGpxParser.createNewRouteGpx = function (name, type, points) {
+        var newGpx = '<rte> <type>' + type + '</type><name>' + name + '</name> ';
+        // @ts-ignore
+        if (points) {
+            for (var i = 0; i < points.length; i++) {
+                var point = points[i];
+                newGpx = newGpx + '<rtept lat="' + point.lat + '" lon="' + point.lng + '"></rtept>';
+            }
+        }
+        newGpx = newGpx + '</rte>';
+        return newGpx;
+    };
     GeoGpxParser.deleteGpxTrackSegment = function (track, delSegIdx) {
         if (track === undefined || track === null || track.length <= 0 || delSegIdx < 0) {
             return track;

@@ -9,6 +9,7 @@ import {ComponentUtils} from '../../../angular-commons/services/component.utils'
 import {MinimalHttpBackendClient} from '@dps/mycms-commons/dist/commons/services/minimal-http-backend-client';
 
 import * as L from 'leaflet';
+import {GeoElement, GeoElementType} from '../../services/geo.parser';
 import LatLng = L.LatLng;
 import LatLngBounds = L.LatLngBounds;
 
@@ -17,6 +18,7 @@ export interface LeafletMapOptions {
     showAreaMarker: boolean;
     showStartMarker: boolean;
     showEndMarker: boolean;
+    editable?: boolean;
 }
 
 @Component({
@@ -70,6 +72,9 @@ export class LeafletMapComponent implements AfterViewChecked, OnChanges {
     public centerChanged: EventEmitter<L.LatLng> = new EventEmitter();
 
     @Output()
+    public mapCreated: EventEmitter<L.Map> = new EventEmitter();
+
+    @Output()
     public mapElementClicked: EventEmitter<MapElement> = new EventEmitter();
 
     @Output()
@@ -117,6 +122,7 @@ export class LeafletMapComponent implements AfterViewChecked, OnChanges {
             // set up the map
             this.map = new L.Map(this.mapId);
             this.map.addLayer(this.osm);
+            this.mapCreated.emit(this.map);
         }
 
         if (!this.map) {
@@ -136,6 +142,7 @@ export class LeafletMapComponent implements AfterViewChecked, OnChanges {
         const me = this;
         this.featureGroup = L.markerClusterGroup();
         this.featureGroup.addTo(this.map);
+
         for (let i = 0; i < this.mapElements.length; i++) {
             const mapElement = this.mapElements[i];
             if (mapElement.trackUrl || mapElement.trackSrc) {
@@ -146,6 +153,7 @@ export class LeafletMapComponent implements AfterViewChecked, OnChanges {
                     geoFeature = new GeoParsedFeature(this.gpxLoader, mapElement, {
                         async: true,
                         display_wpt: false,
+                        editable: this.options.editable,
                         generateName: this.options.flgGenerateNameFromGpx,
                         showAreaMarker: this.options.showAreaMarker,
                         showStartMarker: this.options.showStartMarker,
@@ -155,6 +163,7 @@ export class LeafletMapComponent implements AfterViewChecked, OnChanges {
                     geoFeature = new GeoParsedFeature(this.jsonLoader, mapElement, {
                         async: true,
                         display_wpt: false,
+                        editable: this.options.editable,
                         generateName: this.options.flgGenerateNameFromGpx,
                         showAreaMarker: this.options.showAreaMarker,
                         showStartMarker: this.options.showStartMarker,
@@ -184,12 +193,18 @@ export class LeafletMapComponent implements AfterViewChecked, OnChanges {
                 });
             } else if (mapElement.point) {
                 const prefix = (mapElement.code !== undefined ? mapElement.code + ' ' : '');
-                const pointFeature = new L.Marker(mapElement.point, {
-                    clickable: true,
-                    title: mapElement.title || (prefix + mapElement.name),
-                    icon: mapElement.iconStart
-                        || new L.DivIcon({className: 'leaflet-div-icon-point', html: '&#128204;' + prefix + mapElement.name})
+                const geoElement = new GeoElement(GeoElementType.WAYPOINT, [mapElement.point],
+                    mapElement.title || (prefix + mapElement.name));
+                const pointFeature: L.FeatureGroup = GeoParsedFeature.convertGeoElementsToLayers(mapElement, [geoElement], {
+                    async: true,
+                    display_wpt: true,
+                    editable: this.options.editable,
+                    generateName: this.options.flgGenerateNameFromGpx,
+                    showAreaMarker: this.options.showAreaMarker,
+                    showStartMarker: this.options.showStartMarker,
+                    showEndMarker: this.options.showEndMarker
                 });
+                mapElement.featureLayer = pointFeature;
                 me.featureGroup.addLayer(pointFeature);
                 pointFeature.on('click', function () {
                     me.mapElementClicked.emit(mapElement);
@@ -197,10 +212,10 @@ export class LeafletMapComponent implements AfterViewChecked, OnChanges {
 
                 if (me.centerOnMapElements && me.centerOnMapElements.length > 0) {
                     if (me.centerOnMapElements.indexOf(mapElement) >= 0) {
-                        me.bounds = me.extendBounds(me.bounds, new LatLngBounds(pointFeature.getLatLng(), pointFeature.getLatLng()));
+                        me.bounds = me.extendBounds(me.bounds, pointFeature.getBounds());
                     }
                 } else {
-                    me.bounds = me.extendBounds(me.bounds, new LatLngBounds(pointFeature.getLatLng(), pointFeature.getLatLng()));
+                    me.bounds = me.extendBounds(me.bounds, pointFeature.getBounds());
                 }
                 if (me.bounds) {
                     me.map.fitBounds(me.bounds);

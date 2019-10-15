@@ -24,6 +24,7 @@ MyCMS uses a bunch of libraries and tools. Many thanx to the people behind these
     - [angulartics2](https://www.npmjs.com/package/angulartics2)
 - maps
     - [leaflet](https://www.npmjs.com/package/leaflet)
+    - [leaflet-editable-polyline](https://www.npmjs.com/package/leaflet-editable-polyline)
     - [leaflet.markercluster](https://www.npmjs.com/package/leaflet.markercluster)
     - [vis](https://www.npmjs.com/package/vis)
 - data-framework

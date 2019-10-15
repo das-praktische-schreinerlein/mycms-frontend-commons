@@ -9,6 +9,7 @@ export interface LeafletMapOptions {
     showAreaMarker: boolean;
     showStartMarker: boolean;
     showEndMarker: boolean;
+    editable?: boolean;
 }
 export declare class LeafletMapComponent implements AfterViewChecked, OnChanges {
     private http;
@@ -33,6 +34,7 @@ export declare class LeafletMapComponent implements AfterViewChecked, OnChanges 
     zoom: number;
     options: LeafletMapOptions;
     centerChanged: EventEmitter<L.LatLng>;
+    mapCreated: EventEmitter<L.Map>;
     mapElementClicked: EventEmitter<MapElement>;
     mapElementsLoaded: EventEmitter<MapElement[]>;
     constructor(http: MinimalHttpBackendClient);

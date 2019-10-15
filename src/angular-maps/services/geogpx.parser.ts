@@ -87,6 +87,20 @@ export class GeoGpxParser extends GeoParser {
         return xml;
     }
 
+    public static createNewRouteGpx(name: string, type: string, points: L.LatLng[]): string {
+        let newGpx = '<rte> <type>' + type + '</type><name>' + name + '</name> ';
+        // @ts-ignore
+        if (points) {
+            for (let i = 0; i < points.length; i++) {
+                const point = points[i];
+                newGpx = newGpx + '<rtept lat="' + point.lat + '" lon="' + point.lng + '"></rtept>';
+            }
+        }
+        newGpx = newGpx + '</rte>';
+
+        return newGpx;
+    }
+
     public static deleteGpxTrackSegment(track: string, delSegIdx: number): string {
         if (track === undefined || track === null || track.length <= 0 || delSegIdx < 0) {
             return track;

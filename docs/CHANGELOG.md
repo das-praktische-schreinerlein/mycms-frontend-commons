@@ -22,10 +22,10 @@
 ## 4.3.0
 
 ### new features
-- none
+- frontend: added simple route-editor to maps
 
 ### improvements
-- none
+- frontend: added area as geo-element for location-areas in maps
 
 ### bug fixes
 - frontend: fixed SimpleAngularBackendHttpClient
