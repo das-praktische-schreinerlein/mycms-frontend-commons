@@ -20,6 +20,7 @@
 
 
 ## 4.3.0
+- added simple route-editor to maps
 
 ### new features
 - frontend: added simple route-editor to maps
