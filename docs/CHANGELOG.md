@@ -27,6 +27,7 @@
 
 ### improvements
 - frontend: added area as geo-element for location-areas in maps
+- frontend: geoutils to get localdate for trackpoint
 
 ### bug fixes
 - frontend: fixed SimpleAngularBackendHttpClient

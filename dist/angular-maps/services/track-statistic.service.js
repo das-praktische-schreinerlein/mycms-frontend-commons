@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var leaflet_1 = require("leaflet");
 var math_utils_1 = require("@dps/mycms-commons/dist/commons/utils/math.utils");
+var geo_utils_1 = require("./geo.utils");
 var TrackStatisticService = /** @class */ (function () {
     function TrackStatisticService() {
     }
@@ -33,6 +34,10 @@ var TrackStatisticService = /** @class */ (function () {
         return this.trackStatistics(geoElement.points);
     };
     TrackStatisticService.prototype.trackStatistics = function (ll) {
+        var posStart = (ll.length > 0 ? ll[0] : undefined);
+        var posEnd = (ll.length > 0 ? ll[ll.length - 1] : undefined);
+        var dateStart = geo_utils_1.GeoUtils.getLocalDateTimeForLatLng(posStart);
+        var dateEnd = geo_utils_1.GeoUtils.getLocalDateTimeForLatLng(posEnd);
         var t = {
             altAsc: undefined,
             altDesc: undefined,
@@ -46,10 +51,10 @@ var TrackStatisticService = /** @class */ (function () {
             altStart: undefined,
             altEnd: undefined,
             bounds: leaflet_1.latLngBounds(ll),
-            posStart: (ll.length > 0 ? ll[0] : undefined),
-            posEnd: (ll.length > 0 ? ll[ll.length - 1] : undefined),
-            dateStart: (ll.length > 0 ? ll[0]['time'] : undefined),
-            dateEnd: (ll.length > 0 ? ll[ll.length - 1]['time'] : undefined),
+            posStart: posStart,
+            posEnd: posEnd,
+            dateStart: dateStart,
+            dateEnd: dateEnd,
             duration: undefined
         };
         var l = null, altSum = 0, altCount = 0, fullDuration = 0;
