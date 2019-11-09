@@ -50,11 +50,11 @@ export abstract class CommonDocRecordCreateResolver<R extends CommonDocRecord, F
 
                                 const fields = ['name', 'keywords', 'descTxt', 'descMd'];
                                 me.configureDefaultFieldToSet(type, fields);
-                                me.copyDefaultFields(type, cdoc, values);
-
                                 for (const field of fields) {
                                     values[field] = BeanUtils.getValue(cdoc, field);
                                 }
+
+                                me.copyDefaultFields(type, cdoc, values);
 
                                 result.data = me.dataService.newRecord(values);
 

@@ -39,11 +39,11 @@ var CommonDocRecordCreateResolver = /** @class */ (function () {
                             }
                             var fields = ['name', 'keywords', 'descTxt', 'descMd'];
                             me.configureDefaultFieldToSet(type_1, fields);
-                            me.copyDefaultFields(type_1, cdoc, values_1);
                             for (var _i = 0, fields_1 = fields; _i < fields_1.length; _i++) {
                                 var field = fields_1[_i];
                                 values_1[field] = bean_utils_1.BeanUtils.getValue(cdoc, field);
                             }
+                            me.copyDefaultFields(type_1, cdoc, values_1);
                             result.data = me.dataService.newRecord(values_1);
                             return resolve(result);
                         }).catch(function errorGetById(reason) {
