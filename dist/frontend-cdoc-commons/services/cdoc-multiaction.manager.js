@@ -3,7 +3,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var Promise_serial = require("promise-serial");
 var core_1 = require("@angular/core");
 var BehaviorSubject_1 = require("rxjs/BehaviorSubject");
-var js_data_1 = require("js-data");
 var CommonDocMultiActionManager = /** @class */ (function () {
     function CommonDocMultiActionManager(appService, actionTagService) {
         this.appService = appService;
@@ -102,6 +101,7 @@ var CommonDocMultiActionManager = /** @class */ (function () {
         });
     };
     CommonDocMultiActionManager.prototype.processActionTagForRecord = function (actionTagConfig, record) {
+        var _this = this;
         var actionTagEvent = {
             config: actionTagConfig,
             record: record,
@@ -111,11 +111,26 @@ var CommonDocMultiActionManager = /** @class */ (function () {
             set: true
         };
         var actionTagEventEmitter = new core_1.EventEmitter();
-        return this.actionTagService.processActionTagEvent(actionTagEvent, actionTagEventEmitter).catch(function (reason) {
-            return js_data_1.utils.reject(reason);
+        return new Promise(function (resolve, reject) {
+            actionTagEventEmitter.subscribe(function (value) {
+                if (value.error !== undefined) {
+                    reject(value.error);
+                }
+                resolve(value);
+            }, function (error) {
+                reject(error);
+            });
+            _this.actionTagService.processActionTagEvent(actionTagEvent, actionTagEventEmitter)
+                .then(function (value) {
+                resolve(value);
+            })
+                .catch(function (reason) {
+                reject(reason);
+            });
         });
     };
     CommonDocMultiActionManager.prototype.processMultiActionTagForRecords = function (actionTagConfig, records) {
+        var _this = this;
         var actionTagEvent = {
             config: actionTagConfig,
             records: records,
@@ -125,8 +140,22 @@ var CommonDocMultiActionManager = /** @class */ (function () {
             set: true
         };
         var actionTagEventEmitter = new core_1.EventEmitter();
-        return this.actionTagService.processMultiRecordActionTagEvent(actionTagEvent, actionTagEventEmitter).catch(function (reason) {
-            return js_data_1.utils.reject(reason);
+        return new Promise(function (resolve, reject) {
+            actionTagEventEmitter.subscribe(function (value) {
+                if (value.error !== undefined) {
+                    reject(value.error);
+                }
+                resolve(value);
+            }, function (error) {
+                reject(error);
+            });
+            _this.actionTagService.processMultiRecordActionTagEvent(actionTagEvent, actionTagEventEmitter)
+                .then(function (value) {
+                return resolve(value);
+            })
+                .catch(function (reason) {
+                return reject(reason);
+            });
         });
     };
     return CommonDocMultiActionManager;

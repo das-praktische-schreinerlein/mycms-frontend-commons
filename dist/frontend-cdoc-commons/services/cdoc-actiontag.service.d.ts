@@ -18,16 +18,19 @@ export declare abstract class CommonDocActionTagService<R extends CommonDocRecor
     protected cdocAlbumService: CommonDocAlbumService;
     protected appService: GenericAppService;
     protected baseEditPath: string;
+    static actionTagEventToMultiActionTagEvent(actionTagEvent: ActionTagEvent): MultiRecordActionTagEvent;
+    static multiActionTagEventToActionTagEvent(actionTagEvent: MultiRecordActionTagEvent): ActionTagEvent;
+    static actionTagEventEmitterToMultiActionTagEventEmitter(actionTagEventEmitter: EventEmitter<ActionTagEvent>): EventEmitter<MultiRecordActionTagEvent>;
     constructor(router: Router, cdocDataService: D, cdocPlaylistService: CommonDocPlaylistService<R>, cdocAlbumService: CommonDocAlbumService, appService: GenericAppService);
     protected getComponentConfig(config: {}): CommonDocActionTagServiceConfig;
     protected configureComponent(config: {}): void;
-    processActionTagEvent(actionTagEvent: ActionTagEvent, actionTagEventEmitter: EventEmitter<ActionTagEvent>): Promise<any>;
-    protected processActionTagEventEdit(actionTagEvent: ActionTagEvent, actionTagEventEmitter: EventEmitter<ActionTagEvent>): Promise<any>;
-    protected processActionTagEventCreate(actionTagEvent: ActionTagEvent, actionTagEventEmitter: EventEmitter<ActionTagEvent>): Promise<any>;
-    protected processActionTagEventAlbumTag(actionTagEvent: ActionTagEvent, actionTagEventEmitter: EventEmitter<ActionTagEvent>): Promise<any>;
-    protected processActionTagEventTag(actionTagEvent: ActionTagEvent, actionTagEventEmitter: EventEmitter<ActionTagEvent>): Promise<any>;
-    protected processActionTagEventUnknown(actionTagEvent: ActionTagEvent, actionTagEventEmitter: EventEmitter<ActionTagEvent>): Promise<any>;
-    processMultiRecordActionTagEvent(actionTagEvent: MultiRecordActionTagEvent, actionTagEventEmitter: EventEmitter<MultiRecordActionTagEvent>): Promise<any>;
-    protected processMultiRecordActionTagEventPlaylistExport(actionTagEvent: MultiRecordActionTagEvent, actionTagEventEmitter: EventEmitter<MultiRecordActionTagEvent>): Promise<any>;
-    protected processActionMultiRecordTagEventUnknown(actionTagEvent: MultiRecordActionTagEvent, actionTagEventEmitter: EventEmitter<MultiRecordActionTagEvent>): Promise<any>;
+    processActionTagEvent(actionTagEvent: ActionTagEvent, actionTagEventEmitter: EventEmitter<ActionTagEvent>): Promise<R>;
+    protected processActionTagEventEdit(actionTagEvent: ActionTagEvent, actionTagEventEmitter: EventEmitter<ActionTagEvent>): Promise<R>;
+    protected processActionTagEventCreate(actionTagEvent: ActionTagEvent, actionTagEventEmitter: EventEmitter<ActionTagEvent>): Promise<R>;
+    protected processActionTagEventAlbumTag(actionTagEvent: ActionTagEvent, actionTagEventEmitter: EventEmitter<ActionTagEvent>): Promise<R>;
+    protected processActionTagEventTag(actionTagEvent: ActionTagEvent, actionTagEventEmitter: EventEmitter<ActionTagEvent>): Promise<R>;
+    protected processActionTagEventUnknown(actionTagEvent: ActionTagEvent, actionTagEventEmitter: EventEmitter<ActionTagEvent>): Promise<R>;
+    processMultiRecordActionTagEvent(actionTagEvent: MultiRecordActionTagEvent, actionTagEventEmitter: EventEmitter<MultiRecordActionTagEvent>): Promise<R[]>;
+    protected processMultiRecordActionTagEventPlaylistExport(actionTagEvent: MultiRecordActionTagEvent, actionTagEventEmitter: EventEmitter<MultiRecordActionTagEvent>): Promise<R[]>;
+    protected processActionMultiRecordTagEventUnknown(actionTagEvent: MultiRecordActionTagEvent, actionTagEventEmitter: EventEmitter<MultiRecordActionTagEvent>): Promise<R[]>;
 }

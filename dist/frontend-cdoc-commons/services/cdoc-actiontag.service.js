@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = require("@angular/core");
 var js_data_1 = require("js-data");
 var angular_html_service_1 = require("../../angular-commons/services/angular-html.service");
 var CommonDocActionTagService = /** @class */ (function () {
@@ -11,6 +12,35 @@ var CommonDocActionTagService = /** @class */ (function () {
         this.appService = appService;
         this.configureComponent({});
     }
+    CommonDocActionTagService.actionTagEventToMultiActionTagEvent = function (actionTagEvent) {
+        return {
+            records: actionTagEvent.record ? [actionTagEvent.record] : undefined,
+            config: actionTagEvent.config,
+            error: actionTagEvent.error,
+            processed: actionTagEvent.processed,
+            results: actionTagEvent.result ? [actionTagEvent.result] : undefined,
+            set: actionTagEvent.set
+        };
+    };
+    CommonDocActionTagService.multiActionTagEventToActionTagEvent = function (actionTagEvent) {
+        return {
+            record: actionTagEvent.records && actionTagEvent.records.length === 0 ? actionTagEvent.records[0] : undefined,
+            config: actionTagEvent.config,
+            error: actionTagEvent.error,
+            processed: actionTagEvent.processed,
+            result: actionTagEvent.results && actionTagEvent.results.length === 0 ? actionTagEvent.results[0] : undefined,
+            set: actionTagEvent.set
+        };
+    };
+    CommonDocActionTagService.actionTagEventEmitterToMultiActionTagEventEmitter = function (actionTagEventEmitter) {
+        var multiRecordActionTagEventEmitter = new core_1.EventEmitter();
+        multiRecordActionTagEventEmitter.subscribe(function (data) {
+            actionTagEventEmitter.emit(CommonDocActionTagService.multiActionTagEventToActionTagEvent(data));
+        }, function (error) {
+            actionTagEventEmitter.error(error);
+        });
+        return multiRecordActionTagEventEmitter;
+    };
     CommonDocActionTagService.prototype.getComponentConfig = function (config) {
         return {
             baseEditPath: 'cdocadmin'
@@ -38,17 +68,31 @@ var CommonDocActionTagService = /** @class */ (function () {
         }
     };
     CommonDocActionTagService.prototype.processActionTagEventEdit = function (actionTagEvent, actionTagEventEmitter) {
+        var _this = this;
         actionTagEvent.processed = true;
         actionTagEvent.error = undefined;
         actionTagEventEmitter.emit(actionTagEvent);
-        return this.router.navigate([this.baseEditPath, 'edit', 'anonym', actionTagEvent.record.id]);
+        return new Promise(function (resolve, reject) {
+            _this.router.navigate([_this.baseEditPath, 'edit', 'anonym', actionTagEvent.record.id]).then(function (value) {
+                resolve(actionTagEvent.result);
+            }).catch(function (reason) {
+                reject(reason);
+            });
+        });
     };
     CommonDocActionTagService.prototype.processActionTagEventCreate = function (actionTagEvent, actionTagEventEmitter) {
+        var _this = this;
         var payload = JSON.parse(JSON.stringify(actionTagEvent.config.payload));
         actionTagEvent.processed = true;
         actionTagEvent.error = undefined;
         actionTagEventEmitter.emit(actionTagEvent);
-        return this.router.navigate([this.baseEditPath, 'create', payload.type, actionTagEvent.record.id]);
+        return new Promise(function (resolve, reject) {
+            _this.router.navigate([_this.baseEditPath, 'create', payload.type, actionTagEvent.record.id]).then(function (value) {
+                resolve(actionTagEvent.result);
+            }).catch(function (reason) {
+                reject(reason);
+            });
+        });
     };
     CommonDocActionTagService.prototype.processActionTagEventAlbumTag = function (actionTagEvent, actionTagEventEmitter) {
         var payload = JSON.parse(JSON.stringify(actionTagEvent.config.payload));
@@ -63,7 +107,7 @@ var CommonDocActionTagService = /** @class */ (function () {
         actionTagEvent.error = undefined;
         actionTagEvent.result = actionTagEvent.record;
         actionTagEventEmitter.emit(actionTagEvent);
-        return Promise.resolve(true);
+        return Promise.resolve(actionTagEvent.result);
     };
     CommonDocActionTagService.prototype.processActionTagEventTag = function (actionTagEvent, actionTagEventEmitter) {
         var payload = JSON.parse(JSON.stringify(actionTagEvent.config.payload));
@@ -90,8 +134,11 @@ var CommonDocActionTagService = /** @class */ (function () {
         });
     };
     CommonDocActionTagService.prototype.processActionTagEventUnknown = function (actionTagEvent, actionTagEventEmitter) {
-        actionTagEventEmitter.emit(actionTagEvent);
-        return Promise.resolve(true);
+        actionTagEvent.processed = true;
+        actionTagEvent.error = 'action not defined: ' + actionTagEvent.config;
+        actionTagEvent.result = undefined;
+        actionTagEventEmitter.error(actionTagEvent.error);
+        return Promise.reject(actionTagEvent.error);
     };
     CommonDocActionTagService.prototype.processMultiRecordActionTagEvent = function (actionTagEvent, actionTagEventEmitter) {
         if (actionTagEvent.config.key === 'm3uplaylistexport') {
@@ -107,11 +154,14 @@ var CommonDocActionTagService = /** @class */ (function () {
         actionTagEvent.error = undefined;
         actionTagEvent.results = actionTagEvent.records;
         actionTagEventEmitter.emit(actionTagEvent);
-        return Promise.resolve(true);
+        return Promise.resolve(actionTagEvent.results);
     };
     CommonDocActionTagService.prototype.processActionMultiRecordTagEventUnknown = function (actionTagEvent, actionTagEventEmitter) {
-        actionTagEventEmitter.emit(actionTagEvent);
-        return Promise.resolve(true);
+        actionTagEvent.processed = true;
+        actionTagEvent.error = 'action not defined: ' + actionTagEvent.config;
+        actionTagEvent.results = undefined;
+        actionTagEventEmitter.error(actionTagEvent.error);
+        return Promise.reject(actionTagEvent.error);
     };
     return CommonDocActionTagService;
 }());

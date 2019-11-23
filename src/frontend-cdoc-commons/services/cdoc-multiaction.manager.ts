@@ -124,9 +124,25 @@ export class CommonDocMultiActionManager <R extends CommonDocRecord, F extends C
         };
         const actionTagEventEmitter: EventEmitter<ActionTagEvent> = new EventEmitter<ActionTagEvent>();
 
-        return this.actionTagService.processActionTagEvent(actionTagEvent, actionTagEventEmitter).catch(reason => {
-            return utils.reject(reason);
-        });
+        return new Promise<any>((resolve, reject) => {
+            actionTagEventEmitter.subscribe((value: ActionTagEvent) => {
+                if (value.error !== undefined) {
+                    reject(value.error);
+                }
+                resolve(value);
+            }, (error: any) => {
+                reject(error);
+            });
+
+            this.actionTagService.processActionTagEvent(actionTagEvent, actionTagEventEmitter)
+                .then(value => {
+                    resolve(value);
+                })
+                .catch(reason => {
+                    reject(reason);
+                });
+        })
+
     }
 
     private processMultiActionTagForRecords(actionTagConfig: MultiActionTagConfig, records: R[]): Promise<any> {
@@ -140,8 +156,23 @@ export class CommonDocMultiActionManager <R extends CommonDocRecord, F extends C
         };
         const actionTagEventEmitter: EventEmitter<MultiRecordActionTagEvent> = new EventEmitter<MultiRecordActionTagEvent>();
 
-        return this.actionTagService.processMultiRecordActionTagEvent(actionTagEvent, actionTagEventEmitter).catch(reason => {
-            return utils.reject(reason);
+        return new Promise<any>((resolve, reject) => {
+            actionTagEventEmitter.subscribe((value: MultiRecordActionTagEvent) => {
+                if (value.error !== undefined) {
+                    reject(value.error);
+                }
+                resolve(value);
+            }, (error: any) => {
+                reject(error);
+            });
+
+            this.actionTagService.processMultiRecordActionTagEvent(actionTagEvent, actionTagEventEmitter)
+                .then(value => {
+                    return resolve(value);
+                })
+                .catch(reason => {
+                    return reject(reason);
+                });
         });
     }
 }

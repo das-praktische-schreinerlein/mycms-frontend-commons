@@ -8,6 +8,10 @@ import {CommonDocContentUtils, CommonItemData} from '../../services/cdoc-content
 import {AbstractInlineComponent} from '../../../angular-commons/components/inline.component';
 import {CommonDocRecord} from '@dps/mycms-commons/dist/search-commons/model/records/cdoc-entity-record';
 
+export interface ActionTagFormResultType {
+    action: string;
+}
+
 export interface ActionTagEvent {
     record: BaseEntityRecord;
     result: BaseEntityRecord;

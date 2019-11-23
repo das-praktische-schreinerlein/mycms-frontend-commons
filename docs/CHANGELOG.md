@@ -31,9 +31,10 @@
 
 ### bug fixes
 - frontend: fixed SimpleAngularBackendHttpClient
+- frontend: fixed multiaction-manager
  
 ### breaking changes
-- none
+- frontend: fixed resulttypes of actiontag-service
 
 ### known issues
 - frontend: IE till 11 not functional (can block rendering sometimes)
