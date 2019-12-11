@@ -110,8 +110,26 @@ export abstract class CommonDocShowpageComponent<R extends CommonDocRecord, F ex
         return false;
     }
 
+    submitToLastSearchPredecessor() {
+        this.cdocRoutingService.navigateToSearchPredecessor();
+        return false;
+    }
+
+    submitToLastSearchSuccessor() {
+        this.cdocRoutingService.navigateToSearchSuccessor();
+        return false;
+    }
+
     getBackToSearchUrl(): string {
         return this.cdocRoutingService.getLastSearchUrl() + '#' + this.record.id;
+    }
+
+    getLastSearchSuccessorUrl(): string {
+        return this.cdocRoutingService.getLastSearchUrlSuccessor();
+    }
+
+    getLastSearchPredecessorUrl(): string {
+        return this.cdocRoutingService.getLastSearchUrlPredecessor();
     }
 
     public onActionTagEvent(event: ActionTagEvent) {

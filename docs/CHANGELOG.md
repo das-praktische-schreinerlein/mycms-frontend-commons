@@ -24,6 +24,7 @@
 
 ### new features
 - frontend: added simple route-editor to maps
+- frontend: added lastSearchUrlPredecessor and lastSearchUrlSuccessor to show/search-page
 
 ### improvements
 - frontend: added area as geo-element for location-areas in maps

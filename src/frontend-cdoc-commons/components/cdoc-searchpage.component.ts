@@ -113,7 +113,38 @@ export abstract class CommonDocSearchpageComponent<R extends CommonDocRecord, F 
     }
 
     onShowDoc(cdoc: R) {
-        this.cdocRoutingService.navigateToShow(cdoc, this.cdocRoutingService.getLastSearchUrl());
+        let predecessor = undefined;
+        let successor = undefined;
+        const lastSeachUrl = this.cdocRoutingService.getLastSearchUrl();
+        if (this.searchResult && this.searchResult.recordCount > 0) {
+            const records = this.searchResult.currentRecords;
+            const index = records.findIndex(value => value.id === cdoc.id);
+            if (index > -1) {
+                if (index > 0) {
+                    predecessor = lastSeachUrl + '#redirect' + records[index - 1].id;
+                } else {
+                    if (this.searchForm.pageNum > 1) {
+                        const predecessorSearchForm = this.cdocDataService.createSanitizedSearchForm(this.searchForm);
+                        predecessorSearchForm.pageNum = this.searchForm.pageNum - 1;
+                        predecessor = this.searchFormConverter.searchFormToUrl(this.baseSearchUrl, predecessorSearchForm) + '#redirectLast';
+                    }
+                }
+                if (index >= 0 && index < records.length - 1) {
+                    successor = lastSeachUrl + '#redirect' + records[index + 1].id;
+                } else {
+                    if (this.searchForm.pageNum < this.searchResult.recordCount / this.searchForm.perPage) {
+                        const successorSearchForm = this.cdocDataService.createSanitizedSearchForm(this.searchForm);
+                        successorSearchForm.pageNum = this.searchForm.pageNum + 1;
+                        successor = this.searchFormConverter.searchFormToUrl(this.baseSearchUrl, successorSearchForm) + '#redirectFirst';
+                    }
+                }
+            }
+        }
+
+        this.cdocRoutingService.setLastSearchUrlPredecessor(predecessor);
+        this.cdocRoutingService.setLastSearchUrlSuccessor(successor);
+        this.cdocRoutingService.navigateToShow(cdoc, lastSeachUrl);
+
         return false;
     }
 
@@ -458,6 +489,9 @@ export abstract class CommonDocSearchpageComponent<R extends CommonDocRecord, F 
                 me.searchForm = cdocSearchResult.searchForm;
             }
 
+            if (me.doCheckRedirectToShowAfterSearch(me.anchor, cdocSearchResult)) {
+                return false;
+            }
             me.doCheckSearchResultAfterSearch(cdocSearchResult);
 
             me.showLoadingSpinner = false;
@@ -472,5 +506,27 @@ export abstract class CommonDocSearchpageComponent<R extends CommonDocRecord, F 
             me.showLoadingSpinner = false;
             me.cd.markForCheck();
         });
+    }
+
+    protected doCheckRedirectToShowAfterSearch(anchor: string, cdocSearchResult: S): boolean {
+        if (anchor != undefined && anchor.startsWith('redirect')) {
+            if (cdocSearchResult.currentRecords && cdocSearchResult.currentRecords.length > 0) {
+                if (anchor === 'redirectFirst') {
+                    this.onShowDoc(cdocSearchResult.currentRecords[0]);
+                    return true;
+                }
+                if (anchor === 'redirectLast') {
+                    this.onShowDoc(cdocSearchResult.currentRecords[cdocSearchResult.currentRecords.length-1]);
+                    return true;
+                }
+                const index = cdocSearchResult.currentRecords.findIndex(value => 'redirect' + value.id === anchor);
+                if (index > 0) {
+                    this.onShowDoc(cdocSearchResult.currentRecords[index]);
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 }

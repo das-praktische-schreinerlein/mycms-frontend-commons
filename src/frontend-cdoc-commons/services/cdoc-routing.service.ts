@@ -6,6 +6,8 @@ import {StringUtils} from "@dps/mycms-commons/dist/commons/utils/string.utils";
 @Injectable()
 export class CommonDocRoutingService {
     protected lastSearchUrl = '/cdoc/search/';
+    protected lastSearchUrlPredecessor: string = undefined;
+    protected lastSearchUrlSuccessor: string = undefined;
     protected lastBaseUrl = '/cdoc/';
 
     constructor(protected commonRoutingService: CommonRoutingService) {
@@ -17,6 +19,22 @@ export class CommonDocRoutingService {
 
     getLastSearchUrl(): string {
         return this.lastSearchUrl;
+    }
+
+    getLastSearchUrlPredecessor(): string {
+        return this.lastSearchUrlPredecessor;
+    }
+
+    setLastSearchUrlPredecessor(value: string) {
+        this.lastSearchUrlPredecessor = value;
+    }
+
+    getLastSearchUrlSuccessor(): string {
+        return this.lastSearchUrlSuccessor;
+    }
+
+    setLastSearchUrlSuccessor(value: string) {
+        this.lastSearchUrlSuccessor = value;
     }
 
     setLastBaseUrl(lastBaseUrl: string): void {
@@ -34,6 +52,14 @@ export class CommonDocRoutingService {
 
     navigateBackToSearch(suffix?: string): Promise<boolean> {
         return this.commonRoutingService.navigateByUrl(this.getLastSearchUrl() + (suffix ? suffix : ''));
+    }
+
+    navigateToSearchPredecessor(suffix?: string): Promise<boolean> {
+        return this.commonRoutingService.navigateByUrl(this.getLastSearchUrlPredecessor() + (suffix ? suffix : ''));
+    }
+
+    navigateToSearchSuccessor(suffix?: string): Promise<boolean> {
+        return this.commonRoutingService.navigateByUrl(this.getLastSearchUrlSuccessor() + (suffix ? suffix : ''));
     }
 
     navigateToShow(cdoc: CommonDocRecord, from: string): Promise<boolean> {

@@ -90,7 +90,38 @@ var CommonDocSearchpageComponent = /** @class */ (function (_super) {
         });
     };
     CommonDocSearchpageComponent.prototype.onShowDoc = function (cdoc) {
-        this.cdocRoutingService.navigateToShow(cdoc, this.cdocRoutingService.getLastSearchUrl());
+        var predecessor = undefined;
+        var successor = undefined;
+        var lastSeachUrl = this.cdocRoutingService.getLastSearchUrl();
+        if (this.searchResult && this.searchResult.recordCount > 0) {
+            var records = this.searchResult.currentRecords;
+            var index = records.findIndex(function (value) { return value.id === cdoc.id; });
+            if (index > -1) {
+                if (index > 0) {
+                    predecessor = lastSeachUrl + '#redirect' + records[index - 1].id;
+                }
+                else {
+                    if (this.searchForm.pageNum > 1) {
+                        var predecessorSearchForm = this.cdocDataService.createSanitizedSearchForm(this.searchForm);
+                        predecessorSearchForm.pageNum = this.searchForm.pageNum - 1;
+                        predecessor = this.searchFormConverter.searchFormToUrl(this.baseSearchUrl, predecessorSearchForm) + '#redirectLast';
+                    }
+                }
+                if (index >= 0 && index < records.length - 1) {
+                    successor = lastSeachUrl + '#redirect' + records[index + 1].id;
+                }
+                else {
+                    if (this.searchForm.pageNum < this.searchResult.recordCount / this.searchForm.perPage) {
+                        var successorSearchForm = this.cdocDataService.createSanitizedSearchForm(this.searchForm);
+                        successorSearchForm.pageNum = this.searchForm.pageNum + 1;
+                        successor = this.searchFormConverter.searchFormToUrl(this.baseSearchUrl, successorSearchForm) + '#redirectFirst';
+                    }
+                }
+            }
+        }
+        this.cdocRoutingService.setLastSearchUrlPredecessor(predecessor);
+        this.cdocRoutingService.setLastSearchUrlSuccessor(successor);
+        this.cdocRoutingService.navigateToShow(cdoc, lastSeachUrl);
         return false;
     };
     CommonDocSearchpageComponent.prototype.onPageChange = function (page, scroll) {
@@ -387,6 +418,9 @@ var CommonDocSearchpageComponent = /** @class */ (function (_super) {
                 me.searchResult = cdocSearchResult;
                 me.searchForm = cdocSearchResult.searchForm;
             }
+            if (me.doCheckRedirectToShowAfterSearch(me.anchor, cdocSearchResult)) {
+                return false;
+            }
             me.doCheckSearchResultAfterSearch(cdocSearchResult);
             me.showLoadingSpinner = false;
             me.pageUtils.goToLinkAnchor(me.anchor);
@@ -399,6 +433,26 @@ var CommonDocSearchpageComponent = /** @class */ (function (_super) {
             me.showLoadingSpinner = false;
             me.cd.markForCheck();
         });
+    };
+    CommonDocSearchpageComponent.prototype.doCheckRedirectToShowAfterSearch = function (anchor, cdocSearchResult) {
+        if (anchor != undefined && anchor.startsWith('redirect')) {
+            if (cdocSearchResult.currentRecords && cdocSearchResult.currentRecords.length > 0) {
+                if (anchor === 'redirectFirst') {
+                    this.onShowDoc(cdocSearchResult.currentRecords[0]);
+                    return true;
+                }
+                if (anchor === 'redirectLast') {
+                    this.onShowDoc(cdocSearchResult.currentRecords[cdocSearchResult.currentRecords.length - 1]);
+                    return true;
+                }
+                var index = cdocSearchResult.currentRecords.findIndex(function (value) { return 'redirect' + value.id === anchor; });
+                if (index > 0) {
+                    this.onShowDoc(cdocSearchResult.currentRecords[index]);
+                    return true;
+                }
+            }
+        }
+        return false;
     };
     return CommonDocSearchpageComponent;
 }(pdoc_page_component_1.AbstractPageComponent));

@@ -98,4 +98,5 @@ export declare abstract class CommonDocSearchpageComponent<R extends CommonDocRe
     protected generateMultiActionSelectValueMapFromSearchResult(searchResult: S, valueMap: Map<string, IMultiSelectOption[]>): void;
     protected doCheckSearchResultAfterSearch(searchResult: S): void;
     protected doSearch(): void;
+    protected doCheckRedirectToShowAfterSearch(anchor: string, cdocSearchResult: S): boolean;
 }

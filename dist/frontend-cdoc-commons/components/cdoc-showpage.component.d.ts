@@ -53,7 +53,11 @@ export declare abstract class CommonDocShowpageComponent<R extends CommonDocReco
     protected configureProcessing(): void;
     renderDesc(): string;
     submitBackToSearch(): boolean;
+    submitToLastSearchPredecessor(): boolean;
+    submitToLastSearchSuccessor(): boolean;
     getBackToSearchUrl(): string;
+    getLastSearchSuccessorUrl(): string;
+    getLastSearchPredecessorUrl(): string;
     onActionTagEvent(event: ActionTagEvent): boolean;
     protected abstract getComponentConfig(config: {}): CommonDocShowpageComponentConfig;
     protected configureComponent(config: {}): void;

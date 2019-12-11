@@ -16,6 +16,8 @@ var CommonDocRoutingService = /** @class */ (function () {
     function CommonDocRoutingService(commonRoutingService) {
         this.commonRoutingService = commonRoutingService;
         this.lastSearchUrl = '/cdoc/search/';
+        this.lastSearchUrlPredecessor = undefined;
+        this.lastSearchUrlSuccessor = undefined;
         this.lastBaseUrl = '/cdoc/';
     }
     CommonDocRoutingService.prototype.setLastSearchUrl = function (lastSearchUrl) {
@@ -23,6 +25,18 @@ var CommonDocRoutingService = /** @class */ (function () {
     };
     CommonDocRoutingService.prototype.getLastSearchUrl = function () {
         return this.lastSearchUrl;
+    };
+    CommonDocRoutingService.prototype.getLastSearchUrlPredecessor = function () {
+        return this.lastSearchUrlPredecessor;
+    };
+    CommonDocRoutingService.prototype.setLastSearchUrlPredecessor = function (value) {
+        this.lastSearchUrlPredecessor = value;
+    };
+    CommonDocRoutingService.prototype.getLastSearchUrlSuccessor = function () {
+        return this.lastSearchUrlSuccessor;
+    };
+    CommonDocRoutingService.prototype.setLastSearchUrlSuccessor = function (value) {
+        this.lastSearchUrlSuccessor = value;
     };
     CommonDocRoutingService.prototype.setLastBaseUrl = function (lastBaseUrl) {
         this.lastBaseUrl = lastBaseUrl;
@@ -36,6 +50,12 @@ var CommonDocRoutingService = /** @class */ (function () {
     };
     CommonDocRoutingService.prototype.navigateBackToSearch = function (suffix) {
         return this.commonRoutingService.navigateByUrl(this.getLastSearchUrl() + (suffix ? suffix : ''));
+    };
+    CommonDocRoutingService.prototype.navigateToSearchPredecessor = function (suffix) {
+        return this.commonRoutingService.navigateByUrl(this.getLastSearchUrlPredecessor() + (suffix ? suffix : ''));
+    };
+    CommonDocRoutingService.prototype.navigateToSearchSuccessor = function (suffix) {
+        return this.commonRoutingService.navigateByUrl(this.getLastSearchUrlSuccessor() + (suffix ? suffix : ''));
     };
     CommonDocRoutingService.prototype.navigateToShow = function (cdoc, from) {
         return this.commonRoutingService.navigateByUrl(this.getShowUrl(cdoc, from));

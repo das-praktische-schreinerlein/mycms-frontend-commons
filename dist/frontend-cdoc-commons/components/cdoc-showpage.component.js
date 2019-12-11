@@ -88,8 +88,22 @@ var CommonDocShowpageComponent = /** @class */ (function (_super) {
         this.cdocRoutingService.navigateBackToSearch('#' + this.record.id);
         return false;
     };
+    CommonDocShowpageComponent.prototype.submitToLastSearchPredecessor = function () {
+        this.cdocRoutingService.navigateToSearchPredecessor();
+        return false;
+    };
+    CommonDocShowpageComponent.prototype.submitToLastSearchSuccessor = function () {
+        this.cdocRoutingService.navigateToSearchSuccessor();
+        return false;
+    };
     CommonDocShowpageComponent.prototype.getBackToSearchUrl = function () {
         return this.cdocRoutingService.getLastSearchUrl() + '#' + this.record.id;
+    };
+    CommonDocShowpageComponent.prototype.getLastSearchSuccessorUrl = function () {
+        return this.cdocRoutingService.getLastSearchUrlSuccessor();
+    };
+    CommonDocShowpageComponent.prototype.getLastSearchPredecessorUrl = function () {
+        return this.cdocRoutingService.getLastSearchUrlPredecessor();
     };
     CommonDocShowpageComponent.prototype.onActionTagEvent = function (event) {
         if (event.result !== undefined) {
