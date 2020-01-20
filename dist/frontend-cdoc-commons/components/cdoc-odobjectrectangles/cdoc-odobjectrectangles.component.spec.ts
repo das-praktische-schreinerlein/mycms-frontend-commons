@@ -4,6 +4,8 @@ import {NO_ERRORS_SCHEMA} from '@angular/core';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {TranslateModule} from '@ngx-translate/core';
 import {CommonDocODObjectRectanglesComponent} from './cdoc-odobjectrectangles.component';
+import {GenericAppService} from '@dps/mycms-commons/dist/commons/services/generic-app.service';
+import {AppServiceStub} from '../../../angular-commons/testing/appservice-stubs';
 
 describe('CommonDocODObjectRectanglesComponent', () => {
     let component: CommonDocODObjectRectanglesComponent;
@@ -16,6 +18,7 @@ describe('CommonDocODObjectRectanglesComponent', () => {
             imports: [NgbModule.forRoot(),
                 TranslateModule.forRoot()],
             providers: [
+                { provide: GenericAppService, useValue: new AppServiceStub() }
             ]
         })
             .compileComponents();

@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {CommonRoutingService} from '../../angular-commons/services/common-routing.service';
 import {CommonDocRecord} from '@dps/mycms-commons/dist/search-commons/model/records/cdoc-entity-record';
-import {StringUtils} from "@dps/mycms-commons/dist/commons/utils/string.utils";
+import {StringUtils} from '@dps/mycms-commons/dist/commons/utils/string.utils';
 
 @Injectable()
 export class CommonDocRoutingService {

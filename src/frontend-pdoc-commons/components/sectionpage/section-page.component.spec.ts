@@ -24,7 +24,7 @@ import {PlatformService} from '../../../angular-commons/services/platform.servic
 import {LayoutService} from '../../../angular-commons/services/layout.service';
 import {AppServiceStub} from '../../../angular-commons/testing/appservice-stubs';
 import {GenericAppService} from '@dps/mycms-commons/dist/commons/services/generic-app.service';
-import {ToastrServiceStub} from '@dps/mycms-frontend-commons/dist/testing/toasts-stubs';
+import {ToastrServiceStub} from '../../../testing/toasts-stubs';
 
 describe('SectionPageComponent', () => {
     let component: SectionPageComponent;

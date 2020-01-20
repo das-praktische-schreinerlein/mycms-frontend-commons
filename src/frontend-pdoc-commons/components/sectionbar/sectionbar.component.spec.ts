@@ -14,7 +14,7 @@ import {ErrorResolver} from '../../../frontend-cdoc-commons/resolver/error.resol
 import {PageUtils} from '../../../angular-commons/services/page.utils';
 import {CommonRoutingService} from '../../../angular-commons/services/common-routing.service';
 import {RouterStub} from '../../../angular-commons/testing/router-stubs';
-import {ToastrServiceStub} from '@dps/mycms-frontend-commons/dist/testing/toasts-stubs';
+import {ToastrServiceStub} from '../../../testing/toasts-stubs';
 
 describe('SectionBarComponent', () => {
     let component: SectionBarComponent;

@@ -21,6 +21,7 @@
 
 ## 4.3.0
 - added simple route-editor to maps
+- improved build-process
 
 ### new features
 - frontend: added simple route-editor to maps
@@ -29,6 +30,7 @@
 ### improvements
 - frontend: added area as geo-element for location-areas in maps
 - frontend: geoutils to get localdate for trackpoint
+- development: improved build-process - activated tests+coverage
 
 ### bug fixes
 - frontend: fixed SimpleAngularBackendHttpClient
