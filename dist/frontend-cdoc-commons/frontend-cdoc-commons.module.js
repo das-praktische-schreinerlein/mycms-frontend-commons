@@ -31,6 +31,7 @@ var ngx_file_drop_1 = require("ngx-file-drop");
 var cdoc_initialtable_component_1 = require("./components/cdoc-initialtable/cdoc-initialtable.component");
 var cdoc_odobjectrectangles_component_1 = require("./components/cdoc-odobjectrectangles/cdoc-odobjectrectangles.component");
 var cdoc_odobjectdetails_component_1 = require("./components/cdoc-odobjectdetails/cdoc-odobjectdetails.component");
+var cdoc_object_navigation_component_1 = require("./components/cdoc-object-navigation/cdoc-object-navigation.component");
 var FrontendCommonDocCommonsModule = /** @class */ (function () {
     function FrontendCommonDocCommonsModule() {
     }
@@ -53,7 +54,8 @@ var FrontendCommonDocCommonsModule = /** @class */ (function () {
                 cdoc_actiontags_component_1.CommonDocActionTagsComponent,
                 cdoc_initialtable_component_1.CommonDocInitialtableComponent,
                 cdoc_odobjectrectangles_component_1.CommonDocODObjectRectanglesComponent,
-                cdoc_odobjectdetails_component_1.CommonDocODObjectDetailsComponent
+                cdoc_odobjectdetails_component_1.CommonDocODObjectDetailsComponent,
+                cdoc_object_navigation_component_1.CommonDocObjectNavigationComponent
             ],
             imports: [
                 ng_bootstrap_1.NgbModule,
@@ -82,7 +84,8 @@ var FrontendCommonDocCommonsModule = /** @class */ (function () {
                 cdoc_actiontags_component_1.CommonDocActionTagsComponent,
                 cdoc_initialtable_component_1.CommonDocInitialtableComponent,
                 cdoc_odobjectrectangles_component_1.CommonDocODObjectRectanglesComponent,
-                cdoc_odobjectdetails_component_1.CommonDocODObjectDetailsComponent
+                cdoc_odobjectdetails_component_1.CommonDocODObjectDetailsComponent,
+                cdoc_object_navigation_component_1.CommonDocObjectNavigationComponent
             ]
         })
     ], FrontendCommonDocCommonsModule);

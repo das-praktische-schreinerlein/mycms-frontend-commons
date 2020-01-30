@@ -23,6 +23,7 @@ import {FileDropModule} from 'ngx-file-drop';
 import {CommonDocInitialtableComponent} from './components/cdoc-initialtable/cdoc-initialtable.component';
 import {CommonDocODObjectRectanglesComponent} from './components/cdoc-odobjectrectangles/cdoc-odobjectrectangles.component';
 import {CommonDocODObjectDetailsComponent} from './components/cdoc-odobjectdetails/cdoc-odobjectdetails.component';
+import {CommonDocObjectNavigationComponent} from './components/cdoc-object-navigation/cdoc-object-navigation.component';
 
 @NgModule({
     declarations: [
@@ -42,7 +43,8 @@ import {CommonDocODObjectDetailsComponent} from './components/cdoc-odobjectdetai
         CommonDocActionTagsComponent,
         CommonDocInitialtableComponent,
         CommonDocODObjectRectanglesComponent,
-        CommonDocODObjectDetailsComponent
+        CommonDocODObjectDetailsComponent,
+        CommonDocObjectNavigationComponent
     ],
     imports: [
         NgbModule,
@@ -71,7 +73,8 @@ import {CommonDocODObjectDetailsComponent} from './components/cdoc-odobjectdetai
         CommonDocActionTagsComponent,
         CommonDocInitialtableComponent,
         CommonDocODObjectRectanglesComponent,
-        CommonDocODObjectDetailsComponent
+        CommonDocODObjectDetailsComponent,
+        CommonDocObjectNavigationComponent
     ]
 })
 export class FrontendCommonDocCommonsModule {

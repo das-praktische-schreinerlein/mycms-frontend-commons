@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, EventEmitter, Input, Output, ViewChild, ViewContainerRef} from '@angular/core';
+import {ChangeDetectorRef, EventEmitter, Input, Output, ViewChild} from '@angular/core';
 import {DynamicComponentHostDirective} from '../../../angular-commons/components/directives/dynamic-component-host.directive';
 import {ActionTagEvent} from '../cdoc-actiontags/cdoc-actiontags.component';
 import {ToastrService} from 'ngx-toastr';
@@ -10,10 +10,6 @@ import {CommonDocSearchResult} from '@dps/mycms-commons/dist/search-commons/mode
 import {CommonDocDataService} from '@dps/mycms-commons/dist/search-commons/services/cdoc-data.service';
 import {GenericAppService} from '@dps/mycms-commons/dist/commons/services/generic-app.service';
 import {CommonDocActionTagService} from '../../services/cdoc-actiontag.service';
-
-export interface CommonDocActionsComponentConfig {
-    baseEditPath: string;
-}
 
 export class CommonDocActionsComponent <R extends CommonDocRecord, F extends CommonDocSearchForm,
     S extends CommonDocSearchResult<R, F>, D extends CommonDocDataService<R, F, S>> extends AbstractInlineComponent {

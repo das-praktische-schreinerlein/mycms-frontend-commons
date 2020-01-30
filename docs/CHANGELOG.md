@@ -22,10 +22,12 @@
 ## 4.3.0
 - added simple route-editor to maps
 - improved build-process
+- moved common action-tag-components and navigation-components from mytourbook to frontend-commons
 
 ### new features
 - frontend: added simple route-editor to maps
 - frontend: added lastSearchUrlPredecessor and lastSearchUrlSuccessor to show/search-page
+- frontend: moved common action-tag-components and navigation-components from mytourbook to frontend-commons
 
 ### improvements
 - frontend: added area as geo-element for location-areas in maps

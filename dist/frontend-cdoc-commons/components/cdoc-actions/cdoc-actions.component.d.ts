@@ -10,9 +10,6 @@ import { CommonDocSearchResult } from '@dps/mycms-commons/dist/search-commons/mo
 import { CommonDocDataService } from '@dps/mycms-commons/dist/search-commons/services/cdoc-data.service';
 import { GenericAppService } from '@dps/mycms-commons/dist/commons/services/generic-app.service';
 import { CommonDocActionTagService } from '../../services/cdoc-actiontag.service';
-export interface CommonDocActionsComponentConfig {
-    baseEditPath: string;
-}
 export declare class CommonDocActionsComponent<R extends CommonDocRecord, F extends CommonDocSearchForm, S extends CommonDocSearchResult<R, F>, D extends CommonDocDataService<R, F, S>> extends AbstractInlineComponent {
     protected dynamicComponentService: DynamicComponentService;
     protected toastr: ToastrService;
