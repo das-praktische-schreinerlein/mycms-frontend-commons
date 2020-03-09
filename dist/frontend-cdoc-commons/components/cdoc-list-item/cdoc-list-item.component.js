@@ -69,6 +69,7 @@ var CommonDocListItemComponent = /** @class */ (function (_super) {
     CommonDocListItemComponent.prototype.onActionTagEvent = function (event) {
         if (event.result !== undefined) {
             this.record = event.result;
+            this.multiActionManager.removeRecordFromMultiActionTag(this.record);
             this.updateData();
         }
         return false;

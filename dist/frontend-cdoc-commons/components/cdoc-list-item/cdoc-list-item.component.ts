@@ -99,6 +99,7 @@ export class CommonDocListItemComponent extends AbstractInlineComponent implemen
     public onActionTagEvent(event: ActionTagEvent) {
         if (event.result !== undefined) {
             this.record = <CommonDocRecord>event.result;
+            this.multiActionManager.removeRecordFromMultiActionTag(this.record);
             this.updateData();
         }
 
