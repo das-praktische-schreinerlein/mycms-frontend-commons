@@ -108,6 +108,10 @@ export class VisJsGeoProfileMap {
         let style = 0;
         for (let i = 0; i < geoElements.length; i++) {
             const geoElement = geoElements[i];
+            if (geoElement === undefined || geoElement.points === undefined) {
+                continue;
+            }
+
             for (let p = 0; p < geoElement.points.length; p++) {
                 const point = geoElement.points[p];
                 if (point.lat && point.lng && point.alt !== undefined) {
