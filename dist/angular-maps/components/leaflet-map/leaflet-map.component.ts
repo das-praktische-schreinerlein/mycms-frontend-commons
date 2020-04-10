@@ -170,6 +170,11 @@ export class LeafletMapComponent implements AfterViewChecked, OnChanges {
                         showEndMarker: this.options.showEndMarker
                     });
                 }
+                geoFeature.on('error', function (e) {
+                    const loadedMapElement = <MapElement>e['mapElement'];
+                    console.error('cant load mapElement:', loadedMapElement.id);
+                    me.pushNoCoorMapElement(loadedMapElement);
+                });
                 geoFeature.on('loaded', function (e) {
                     const loadedTrackFeature = <L.FeatureGroup>e.target;
                     const loadedMapElement = <MapElement>e['mapElement'];
@@ -179,9 +184,9 @@ export class LeafletMapComponent implements AfterViewChecked, OnChanges {
                     });
 
                     if (me.centerOnMapElements && me.centerOnMapElements.length > 0) {
-                      if (me.centerOnMapElements.indexOf(loadedMapElement) >= 0) {
-                          me.bounds = me.extendBounds(me.bounds, loadedTrackFeature.getBounds());
-                      }
+                        if (me.centerOnMapElements.indexOf(loadedMapElement) >= 0) {
+                            me.bounds = me.extendBounds(me.bounds, loadedTrackFeature.getBounds());
+                        }
                     } else {
                         me.bounds = me.extendBounds(me.bounds, loadedTrackFeature.getBounds());
                     }
@@ -222,18 +227,26 @@ export class LeafletMapComponent implements AfterViewChecked, OnChanges {
                 }
                 me.pushLoadedMapElement(mapElement);
             } else {
-                me.noCoorElements.push(mapElement);
+                me.pushNoCoorMapElement(mapElement);
             }
         }
 
-        if (this.mapElements.length === 0) {
-            this.mapElementsLoaded.emit(this.loadedMapElements);
-        }
+        this.checkAndEmitLoadedEventIfAllProcessed()
     }
 
     private pushLoadedMapElement(loadedMapElement: MapElement) {
         this.loadedMapElements.push(loadedMapElement);
-        if (this.mapElements.length + this.noCoorElements.length === this.loadedMapElements.length) {
+        this.checkAndEmitLoadedEventIfAllProcessed();
+    }
+
+    private pushNoCoorMapElement(noCoorElement: MapElement) {
+        this.noCoorElements.push(noCoorElement);
+        this.checkAndEmitLoadedEventIfAllProcessed();
+    }
+
+    private checkAndEmitLoadedEventIfAllProcessed() {
+        if (this.mapElements.length === 0 ||
+            this.loadedMapElements.length + this.noCoorElements.length === this.mapElements.length) {
             this.mapElementsLoaded.emit(this.loadedMapElements);
         }
     }

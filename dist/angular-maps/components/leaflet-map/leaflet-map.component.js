@@ -118,6 +118,11 @@ var LeafletMapComponent = /** @class */ (function () {
                         showEndMarker: this_1.options.showEndMarker
                     });
                 }
+                geoFeature.on('error', function (e) {
+                    var loadedMapElement = e['mapElement'];
+                    console.error('cant load mapElement:', loadedMapElement.id);
+                    me.pushNoCoorMapElement(loadedMapElement);
+                });
                 geoFeature.on('loaded', function (e) {
                     var loadedTrackFeature = e.target;
                     var loadedMapElement = e['mapElement'];
@@ -170,20 +175,26 @@ var LeafletMapComponent = /** @class */ (function () {
                 me.pushLoadedMapElement(mapElement);
             }
             else {
-                me.noCoorElements.push(mapElement);
+                me.pushNoCoorMapElement(mapElement);
             }
         };
         var this_1 = this;
         for (var i = 0; i < this.mapElements.length; i++) {
             _loop_1(i);
         }
-        if (this.mapElements.length === 0) {
-            this.mapElementsLoaded.emit(this.loadedMapElements);
-        }
+        this.checkAndEmitLoadedEventIfAllProcessed();
     };
     LeafletMapComponent.prototype.pushLoadedMapElement = function (loadedMapElement) {
         this.loadedMapElements.push(loadedMapElement);
-        if (this.mapElements.length + this.noCoorElements.length === this.loadedMapElements.length) {
+        this.checkAndEmitLoadedEventIfAllProcessed();
+    };
+    LeafletMapComponent.prototype.pushNoCoorMapElement = function (noCoorElement) {
+        this.noCoorElements.push(noCoorElement);
+        this.checkAndEmitLoadedEventIfAllProcessed();
+    };
+    LeafletMapComponent.prototype.checkAndEmitLoadedEventIfAllProcessed = function () {
+        if (this.mapElements.length === 0 ||
+            this.loadedMapElements.length + this.noCoorElements.length === this.mapElements.length) {
             this.mapElementsLoaded.emit(this.loadedMapElements);
         }
     };

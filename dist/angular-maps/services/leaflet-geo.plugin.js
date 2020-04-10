@@ -135,7 +135,7 @@ var GeoParsedFeature = /** @class */ (function (_super) {
         }
         promise.then(function onLoaded(geoElements) {
             if (!geoElements) {
-                this.fire('error');
+                me.fire('error', { mapElement: mapElement });
                 return;
             }
             var layers = GeoParsedFeature.convertGeoElementsToLayers(mapElement, geoElements, options);

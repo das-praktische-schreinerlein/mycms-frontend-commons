@@ -64,7 +64,8 @@ var VisJsProfileMapComponent = /** @class */ (function () {
                 loader = this.jsonLoader;
             }
             else if ((trackUrl !== undefined && trackUrl.endsWith('.gpx'))
-                || (trackSrc !== undefined && trackSrc !== null && (trackSrc.indexOf('<trkpt') || trackSrc.indexOf('<rpt')))) {
+                || (trackSrc !== undefined && trackSrc !== null
+                    && (trackSrc.indexOf('<trkpt') >= 0 || trackSrc.indexOf('<rpt') >= 0))) {
                 loader = this.gpxLoader;
             }
             else {

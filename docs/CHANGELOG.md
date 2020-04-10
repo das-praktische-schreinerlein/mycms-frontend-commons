@@ -19,6 +19,25 @@
 - frontend: export "real" angular-modules
 
 
+## 4.3.1
+
+### new features
+- none
+
+### improvements
+- none
+
+### bug fixes
+- frontend: fixed minor errors in map-component which result in no return of promise
+- frontend: fixed error in type-component that type was activated when type-csv containing string not equals 
+ 
+### breaking changes
+- none
+
+### known issues
+- frontend: IE till 11 not functional (can block rendering sometimes)
+
+
 ## 4.3.0
 - added simple route-editor to maps
 - improved build-process
