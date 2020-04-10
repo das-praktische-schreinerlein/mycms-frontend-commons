@@ -44,13 +44,13 @@ var SectionsPDocsResolver = /** @class */ (function () {
             });
         });
     };
+    var SectionsPDocsResolver_1;
     SectionsPDocsResolver.ERROR_READING_SECTIONS = 'ERROR_READING_SECTIONS';
     SectionsPDocsResolver = SectionsPDocsResolver_1 = __decorate([
         core_1.Injectable(),
         __metadata("design:paramtypes", [generic_app_service_1.GenericAppService, pdoc_data_service_1.PDocDataService])
     ], SectionsPDocsResolver);
     return SectionsPDocsResolver;
-    var SectionsPDocsResolver_1;
 }());
 exports.SectionsPDocsResolver = SectionsPDocsResolver;
 //# sourceMappingURL=sections-pdocs.resolver.js.map

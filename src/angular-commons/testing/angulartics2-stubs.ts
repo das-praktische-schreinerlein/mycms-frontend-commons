@@ -3,6 +3,6 @@ import {ReplaySubject} from 'rxjs/ReplaySubject';
 
 @Injectable()
 export class Angulartics2Stub {
-    pageTrack = new ReplaySubject();
+    pageTrack = new ReplaySubject<any>();
     virtualPageviews(bla: boolean) {};
 }

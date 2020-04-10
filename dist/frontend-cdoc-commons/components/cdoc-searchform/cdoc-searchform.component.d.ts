@@ -49,7 +49,8 @@ export declare abstract class CommonDocSearchformComponent<R extends CommonDocRe
     showDetails?: boolean;
     showMeta?: boolean;
     showSpecialFilter?: boolean;
-    searchResult: S;
+    set searchResult(value: S);
+    get searchResult(): S;
     search: EventEmitter<F>;
     changedShowForm: EventEmitter<boolean>;
     searchFormGroup: any;

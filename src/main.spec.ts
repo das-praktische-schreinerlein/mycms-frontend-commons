@@ -14,3 +14,9 @@ for (const a in [
 ]) {
     console.log('import unused modules for codecoverage', a);
 }
+
+describe('Dummy-Test', () => {
+    it('should be true', () => {
+        expect(true).toBeTruthy();
+    });
+});

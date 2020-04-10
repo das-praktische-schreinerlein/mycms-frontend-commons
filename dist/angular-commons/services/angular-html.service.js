@@ -62,12 +62,12 @@ var AngularHtmlService = /** @class */ (function () {
         }
         return true;
     };
+    var AngularHtmlService_1;
     AngularHtmlService = AngularHtmlService_1 = __decorate([
         core_1.Injectable(),
         __metadata("design:paramtypes", [common_routing_service_1.CommonRoutingService])
     ], AngularHtmlService);
     return AngularHtmlService;
-    var AngularHtmlService_1;
 }());
 exports.AngularHtmlService = AngularHtmlService;
 //# sourceMappingURL=angular-html.service.js.map

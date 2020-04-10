@@ -9,7 +9,7 @@ import { BaseAudioRecord } from '@dps/mycms-commons/dist/search-commons/model/re
 export declare enum KeywordsState {
     SET = 0,
     NOTSET = 1,
-    SUGGESTED = 2,
+    SUGGESTED = 2
 }
 export interface StructuredKeyword {
     name: string;

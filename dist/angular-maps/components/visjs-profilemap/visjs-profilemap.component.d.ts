@@ -18,5 +18,5 @@ export declare class VisJsProfileMapComponent implements AfterViewChecked, OnCha
         [propKey: string]: SimpleChange;
     }): void;
     toggleFullScreen(): void;
-    private renderMap();
+    private renderMap;
 }

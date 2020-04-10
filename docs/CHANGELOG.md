@@ -19,6 +19,25 @@
 - frontend: export "real" angular-modules
 
 
+## 5.0.0
+- upgraded all dev-dependencies to latest
+
+### new features
+- none
+
+### improvements
+- none
+
+### bug fixes
+- none 
+ 
+### breaking changes
+- build: upgraded all dev-dependencies to latest
+
+### known issues
+- frontend: IE till 11 not functional (can block rendering sometimes)
+
+
 ## 4.3.1
 
 ### new features

@@ -13,7 +13,7 @@ export declare class CommonDocAlbumService {
     removeIdFromAlbum(albumKey: string, docId: string): void;
     removeFromAlbum(albumKey: string, doc: CommonDocRecord): void;
     addToAlbum(albumKey: string, doc: CommonDocRecord): void;
-    private initStorage();
-    private initCache();
-    private saveCache();
+    private initStorage;
+    private initCache;
+    private saveCache;
 }

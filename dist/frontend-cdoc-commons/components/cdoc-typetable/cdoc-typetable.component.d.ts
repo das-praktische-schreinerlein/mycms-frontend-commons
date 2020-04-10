@@ -18,5 +18,5 @@ export declare class CommonDocTypetableComponent implements OnChanges {
         [propKey: string]: SimpleChange;
     }): void;
     onColumnClicked(key: any): boolean;
-    private renderTypetable();
+    private renderTypetable;
 }

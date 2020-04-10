@@ -34,13 +34,13 @@ var SectionsBaseUrlResolver = /** @class */ (function () {
             return resolve(result);
         });
     };
+    var SectionsBaseUrlResolver_1;
     SectionsBaseUrlResolver.ERROR_INVALID_SECTION_ID = 'ERROR_INVALID_SECTION_ID';
     SectionsBaseUrlResolver = SectionsBaseUrlResolver_1 = __decorate([
         core_1.Injectable(),
         __metadata("design:paramtypes", [])
     ], SectionsBaseUrlResolver);
     return SectionsBaseUrlResolver;
-    var SectionsBaseUrlResolver_1;
 }());
 exports.SectionsBaseUrlResolver = SectionsBaseUrlResolver;
 //# sourceMappingURL=sections-baseurl.resolver.js.map

@@ -1,8 +1,11 @@
 "use strict";
 var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -40,7 +43,6 @@ var GeoParsedFeature = /** @class */ (function (_super) {
                 case geo_parser_1.GeoElementType.WAYPOINT:
                     var point = void 0;
                     point = new L.Marker(geoElement.points[0], {
-                        clickable: true,
                         title: gpxElement.title || (prefix + gpxElement.type + ': ' + gpxElement.name),
                         icon: gpxElement.iconStart
                             || new L.DivIcon({ className: 'leaflet-div-icon-point', html: '&#128204;' + prefix + gpxElement.name })
@@ -83,7 +85,6 @@ var GeoParsedFeature = /** @class */ (function (_super) {
                     if (geoElement.type === geo_parser_1.GeoElementType.AREA) {
                         if (options['showAreaMarker']) {
                             layers.push(new L.Marker(geoElement.points[0], {
-                                clickable: true,
                                 title: gpxElement.title || (prefix + 'Area: ' + gpxElement.name),
                                 icon: gpxElement.iconStart ||
                                     new L.DivIcon({ className: 'leaflet-div-icon-area', html: '&#128506;' + prefix + gpxElement.name })
@@ -93,7 +94,6 @@ var GeoParsedFeature = /** @class */ (function (_super) {
                     else {
                         if (options['showStartMarker']) {
                             layers.push(new L.Marker(geoElement.points[0], {
-                                clickable: true,
                                 title: gpxElement.title || (prefix + 'Start: ' + gpxElement.name),
                                 icon: gpxElement.iconStart ||
                                     new L.DivIcon({ className: 'leaflet-div-icon-start', html: '&#128204;' + prefix + 'S:' + gpxElement.name })
@@ -101,7 +101,6 @@ var GeoParsedFeature = /** @class */ (function (_super) {
                         }
                         if (options['showEndMarker']) {
                             layers.push(new L.Marker(geoElement.points[geoElement.points.length - 1], {
-                                clickable: true,
                                 title: gpxElement.title || (prefix + 'End: ' + gpxElement.name),
                                 icon: gpxElement.iconEnd ||
                                     new L.DivIcon({ className: 'leaflet-div-icon-end', html: '&#128205;' + prefix + 'E:' + gpxElement.name })

@@ -2,7 +2,7 @@ import { NavigationExtras, Router, UrlTree } from '@angular/router';
 import { Subject } from 'rxjs/Subject';
 export declare enum RoutingState {
     DONE = 1,
-    RUNNING = 2,
+    RUNNING = 2
 }
 export declare class CommonRoutingService {
     private router;

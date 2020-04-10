@@ -65,6 +65,7 @@ var SectionsPDocRecordResolver = /** @class */ (function () {
             });
         });
     };
+    var SectionsPDocRecordResolver_1;
     SectionsPDocRecordResolver.ERROR_UNKNOWN_SECTION_ID = 'ERROR_UNKNOWN_SECTION_ID';
     SectionsPDocRecordResolver.ERROR_INVALID_SECTION_ID = 'ERROR_INVALID_SECTION_ID';
     SectionsPDocRecordResolver.ERROR_READING_SECTION_ID = 'ERROR_READING_SECTION_ID';
@@ -74,7 +75,6 @@ var SectionsPDocRecordResolver = /** @class */ (function () {
             cdoc_routing_service_1.CommonDocRoutingService])
     ], SectionsPDocRecordResolver);
     return SectionsPDocRecordResolver;
-    var SectionsPDocRecordResolver_1;
 }());
 exports.SectionsPDocRecordResolver = SectionsPDocRecordResolver;
 //# sourceMappingURL=sections-pdoc-details.resolver.js.map

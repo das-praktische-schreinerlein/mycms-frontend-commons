@@ -64,6 +64,7 @@ var ErrorResolver = /** @class */ (function () {
             this.commonRoutingService.navigateByUrl(newUrl);
         }
     };
+    var ErrorResolver_1;
     ErrorResolver.ERROR_INVALID_ID = 'ERROR_INVALID_ID';
     ErrorResolver.ERROR_UNKNOWN_ID = 'ERROR_UNKNOWN_ID';
     ErrorResolver.ERROR_INVALID_DATA = 'ERROR_INVALID_DATA';
@@ -76,7 +77,6 @@ var ErrorResolver = /** @class */ (function () {
         __metadata("design:paramtypes", [common_routing_service_1.CommonRoutingService])
     ], ErrorResolver);
     return ErrorResolver;
-    var ErrorResolver_1;
 }());
 exports.ErrorResolver = ErrorResolver;
 //# sourceMappingURL=error.resolver.js.map

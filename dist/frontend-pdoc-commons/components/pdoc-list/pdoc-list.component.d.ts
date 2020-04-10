@@ -3,7 +3,7 @@ import { PDocRecord } from '@dps/mycms-commons/dist/pdoc-commons/model/records/p
 export declare enum Layout {
     FLAT = 0,
     SMALL = 1,
-    BIG = 2,
+    BIG = 2
 }
 export declare class PDocListComponent {
     records: PDocRecord[];

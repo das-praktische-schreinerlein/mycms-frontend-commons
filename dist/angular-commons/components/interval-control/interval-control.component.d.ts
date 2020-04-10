@@ -14,5 +14,5 @@ export declare class IntervalControlComponent implements OnDestroy {
     ngOnDestroy(): void;
     onIntervalTimeoutChange(event: Event): boolean;
     doRunInterval(run: boolean): boolean;
-    private clearIntervall();
+    private clearIntervall;
 }
