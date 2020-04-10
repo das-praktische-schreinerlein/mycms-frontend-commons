@@ -1,9 +1,15 @@
-import {ChangeDetectorRef, ViewContainerRef} from '@angular/core';
+import {ChangeDetectorRef} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {Facets} from '@dps/mycms-commons/dist/search-commons/model/container/facets';
 import {ToastrService} from 'ngx-toastr';
 import {CommonDocRoutingService} from '../services/cdoc-routing.service';
-import {Layout, LayoutService, LayoutSize, LayoutSizeData, SearchFormLayout} from '../../angular-commons/services/layout.service';
+import {
+    Layout,
+    LayoutService,
+    LayoutSize,
+    LayoutSizeData,
+    SearchFormLayout
+} from '../../angular-commons/services/layout.service';
 import {ResolvedData} from '../../angular-commons/resolver/resolver.utils';
 import {ErrorResolver} from '../resolver/error.resolver';
 import {IdValidationRule} from '@dps/mycms-commons/dist/search-commons/model/forms/generic-validator.util';
@@ -25,7 +31,6 @@ import {CommonDocMultiActionManager} from '../services/cdoc-multiaction.manager'
 import {IMultiSelectOption} from 'angular-2-dropdown-multiselect';
 import {SearchFormUtils} from '../../angular-commons/services/searchform-utils.service';
 import {AngularHtmlService} from '../../angular-commons/services/angular-html.service';
-import {BeanUtils} from '@dps/mycms-commons/dist/commons/utils/bean.utils';
 import {CommonDocSearchFormUtils} from '../services/cdoc-searchform-utils.service';
 
 export interface CommonDocSearchpageComponentConfig {

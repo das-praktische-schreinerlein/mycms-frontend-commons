@@ -1,11 +1,6 @@
 import {ChangeDetectorRef, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {AppState, GenericAppService} from '@dps/mycms-commons/dist/commons/services/generic-app.service';
-import {
-    ActionTag,
-    ActionTagConfig,
-    ActionTagUtils,
-    MultiActionTagConfig
-} from '@dps/mycms-commons/dist/commons/utils/actiontag.utils';
+import {ActionTag, ActionTagUtils, MultiActionTagConfig} from '@dps/mycms-commons/dist/commons/utils/actiontag.utils';
 import {BeanUtils} from '@dps/mycms-commons/dist/commons/utils/bean.utils';
 import {CommonDocContentUtils} from '../../services/cdoc-contentutils.service';
 import {AbstractInlineComponent} from '../../../angular-commons/components/inline.component';

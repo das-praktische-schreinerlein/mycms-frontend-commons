@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, EventEmitter, Input, OnInit, Output, ViewContainerRef} from '@angular/core';
+import {ChangeDetectorRef, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FormBuilder} from '@angular/forms';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 import {Facets} from '@dps/mycms-commons/dist/search-commons/model/container/facets';
@@ -6,14 +6,16 @@ import {IMultiSelectOption, IMultiSelectSettings, IMultiSelectTexts} from 'angul
 import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
 import {ToastrService} from 'ngx-toastr';
 import {SearchFormUtils} from '../../../angular-commons/services/searchform-utils.service';
-import {HumanReadableFilter} from '@dps/mycms-commons/dist/search-commons/services/generic-searchform.converter';
+import {
+    GenericSearchFormSearchFormConverter,
+    HumanReadableFilter
+} from '@dps/mycms-commons/dist/search-commons/services/generic-searchform.converter';
 import {SearchFormLayout} from '../../../angular-commons/services/layout.service';
 import {CommonDocSearchForm} from '@dps/mycms-commons/dist/search-commons/model/forms/cdoc-searchform';
 import {CommonDocDataService} from '@dps/mycms-commons/dist/search-commons/services/cdoc-data.service';
 import {CommonDocRecord} from '@dps/mycms-commons/dist/search-commons/model/records/cdoc-entity-record';
 import {CommonDocSearchResult} from '@dps/mycms-commons/dist/search-commons/model/container/cdoc-searchresult';
 import {CommonDocSearchFormUtils} from '../../services/cdoc-searchform-utils.service';
-import {GenericSearchFormSearchFormConverter} from '@dps/mycms-commons/dist/search-commons/services/generic-searchform.converter';
 import {CommonDocDataCacheService} from '../../services/cdoc-datacache.service';
 
 export abstract class CommonDocSearchformComponent <R extends CommonDocRecord, F extends CommonDocSearchForm,

@@ -10,7 +10,6 @@ import {EventEmitter} from '@angular/core';
 import {Subject} from 'rxjs/Subject';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 import {MultiActionTagConfig} from '@dps/mycms-commons/dist/commons/utils/actiontag.utils';
-import {utils} from 'js-data';
 
 export class CommonDocMultiActionManager <R extends CommonDocRecord, F extends CommonDocSearchForm,
     S extends CommonDocSearchResult<R, F>, D extends CommonDocDataService<R, F, S>> {

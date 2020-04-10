@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, OnDestroy, OnInit, ViewContainerRef} from '@angular/core';
+import {ChangeDetectorRef, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {ToastrService} from 'ngx-toastr';
 import {PageUtils} from '../../angular-commons/services/page.utils';

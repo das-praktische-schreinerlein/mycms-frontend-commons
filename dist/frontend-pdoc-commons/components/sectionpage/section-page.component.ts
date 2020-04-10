@@ -1,8 +1,14 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewContainerRef} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {PDocRecord} from '@dps/mycms-commons/dist/pdoc-commons/model/records/pdoc-record';
 import {ToastrService} from 'ngx-toastr';
-import {Layout, LayoutService, LayoutSize, LayoutSizeData, SearchFormLayout} from '../../../angular-commons/services/layout.service';
+import {
+    Layout,
+    LayoutService,
+    LayoutSize,
+    LayoutSizeData,
+    SearchFormLayout
+} from '../../../angular-commons/services/layout.service';
 import {PDocDataService} from '@dps/mycms-commons/dist/pdoc-commons/services/pdoc-data.service';
 import {ResolvedData} from '../../../angular-commons/resolver/resolver.utils';
 import {ErrorResolver} from '../../../frontend-cdoc-commons/resolver/error.resolver';

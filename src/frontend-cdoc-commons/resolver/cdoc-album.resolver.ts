@@ -5,7 +5,10 @@ import {CommonDocSearchResult} from '@dps/mycms-commons/dist/search-commons/mode
 import {CommonDocDataService} from '@dps/mycms-commons/dist/search-commons/services/cdoc-data.service';
 import {CommonDocAlbumService} from '../services/cdoc-album.service';
 import {ResolvedData, ResolverError} from '../../angular-commons/resolver/resolver.utils';
-import {IdCsvValidationRule, IdValidationRule} from '@dps/mycms-commons/dist/search-commons/model/forms/generic-validator.util';
+import {
+    IdCsvValidationRule,
+    IdValidationRule
+} from '@dps/mycms-commons/dist/search-commons/model/forms/generic-validator.util';
 import {AppState, GenericAppService} from '@dps/mycms-commons/dist/commons/services/generic-app.service';
 import {LogUtils} from '@dps/mycms-commons/dist/commons/utils/log.utils';
 

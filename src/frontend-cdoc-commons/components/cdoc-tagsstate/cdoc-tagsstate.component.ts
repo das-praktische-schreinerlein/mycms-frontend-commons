@@ -1,5 +1,10 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, Output} from '@angular/core';
-import {CommonDocContentUtils, KeywordsState, StructuredKeyword, StructuredKeywordState} from '../../services/cdoc-contentutils.service';
+import {
+    CommonDocContentUtils,
+    KeywordsState,
+    StructuredKeyword,
+    StructuredKeywordState
+} from '../../services/cdoc-contentutils.service';
 import {AbstractInlineComponent} from '../../../angular-commons/components/inline.component';
 
 @Component({

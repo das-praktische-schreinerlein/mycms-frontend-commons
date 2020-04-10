@@ -1,6 +1,6 @@
 import * as L from 'leaflet';
-import LatLng = L.LatLng;
 import * as tzlookup from 'tz-lookup/tz';
+import LatLng = L.LatLng;
 
 export class GeoUtils  {
     public static getLocalDateTimeForLatLng(pos: LatLng): Date {

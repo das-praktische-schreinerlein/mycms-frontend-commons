@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewContainerRef} from '@angular/core';
+import {ChangeDetectorRef, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import {Facets} from '@dps/mycms-commons/dist/search-commons/model/container/facets';
 import {ToastrService} from 'ngx-toastr';
 import {CommonDocRoutingService} from '../../services/cdoc-routing.service';

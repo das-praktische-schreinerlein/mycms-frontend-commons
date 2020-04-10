@@ -5,13 +5,13 @@ import { IMultiSelectOption, IMultiSelectSettings, IMultiSelectTexts } from 'ang
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { ToastrService } from 'ngx-toastr';
 import { SearchFormUtils } from '../../../angular-commons/services/searchform-utils.service';
+import { GenericSearchFormSearchFormConverter } from '@dps/mycms-commons/dist/search-commons/services/generic-searchform.converter';
 import { SearchFormLayout } from '../../../angular-commons/services/layout.service';
 import { CommonDocSearchForm } from '@dps/mycms-commons/dist/search-commons/model/forms/cdoc-searchform';
 import { CommonDocDataService } from '@dps/mycms-commons/dist/search-commons/services/cdoc-data.service';
 import { CommonDocRecord } from '@dps/mycms-commons/dist/search-commons/model/records/cdoc-entity-record';
 import { CommonDocSearchResult } from '@dps/mycms-commons/dist/search-commons/model/container/cdoc-searchresult';
 import { CommonDocSearchFormUtils } from '../../services/cdoc-searchform-utils.service';
-import { GenericSearchFormSearchFormConverter } from '@dps/mycms-commons/dist/search-commons/services/generic-searchform.converter';
 import { CommonDocDataCacheService } from '../../services/cdoc-datacache.service';
 export declare abstract class CommonDocSearchformComponent<R extends CommonDocRecord, F extends CommonDocSearchForm, S extends CommonDocSearchResult<R, F>, D extends CommonDocDataService<R, F, S>> implements OnInit {
     protected sanitizer: DomSanitizer;

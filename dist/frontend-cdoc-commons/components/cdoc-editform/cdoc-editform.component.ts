@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, EventEmitter, Input, Output, ViewContainerRef} from '@angular/core';
+import {ChangeDetectorRef, EventEmitter, Input, Output} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {ToastrService} from 'ngx-toastr';
 import {SchemaValidationError} from 'js-data';

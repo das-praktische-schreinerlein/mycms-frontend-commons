@@ -1,7 +1,7 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit} from '@angular/core';
 import {AbstractInlineComponent} from '../../../angular-commons/components/inline.component';
 import {BaseObjectDetectionImageObjectRecordType} from '@dps/mycms-commons/dist/search-commons/model/records/baseobjectdetectionimageobject-record';
-import {GenericAppService, AppState} from '@dps/mycms-commons/dist/commons/services/generic-app.service';
+import {AppState, GenericAppService} from '@dps/mycms-commons/dist/commons/services/generic-app.service';
 import {BeanUtils} from '@dps/mycms-commons/dist/commons/utils/bean.utils';
 
 export interface CommonDocODObjectDetailsComponentConfig {

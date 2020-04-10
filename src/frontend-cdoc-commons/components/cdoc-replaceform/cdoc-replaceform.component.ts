@@ -9,7 +9,10 @@ import {CommonDocRecord} from '@dps/mycms-commons/dist/search-commons/model/reco
 import {CommonDocSearchForm} from '@dps/mycms-commons/dist/search-commons/model/forms/cdoc-searchform';
 import {CommonDocSearchResult} from '@dps/mycms-commons/dist/search-commons/model/container/cdoc-searchresult';
 import {CommonDocDataService} from '@dps/mycms-commons/dist/search-commons/services/cdoc-data.service';
-import {CommonDocAssignFormComponent, CommonDocAssignFormComponentResultType} from '../cdoc-assignform/cdoc-assignform.component';
+import {
+    CommonDocAssignFormComponent,
+    CommonDocAssignFormComponentResultType
+} from '../cdoc-assignform/cdoc-assignform.component';
 
 export interface CommonDocReplaceFormComponentResultType extends CommonDocAssignFormComponentResultType {
     action: 'replace';

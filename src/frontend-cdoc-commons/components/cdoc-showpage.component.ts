@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, ViewContainerRef} from '@angular/core';
+import {ChangeDetectorRef} from '@angular/core';
 import {ActivatedRoute, ParamMap} from '@angular/router';
 import {ToastrService} from 'ngx-toastr';
 import {CommonDocRoutingService} from '../services/cdoc-routing.service';
@@ -7,7 +7,10 @@ import {PDocRecord} from '@dps/mycms-commons/dist/pdoc-commons/model/records/pdo
 import {ResolvedData} from '../../angular-commons/resolver/resolver.utils';
 import {ErrorResolver} from '../resolver/error.resolver';
 import {SectionsPDocRecordResolver} from '../resolver/sections-pdoc-details.resolver';
-import {IdValidationRule, KeywordValidationRule} from '@dps/mycms-commons/dist/search-commons/model/forms/generic-validator.util';
+import {
+    IdValidationRule,
+    KeywordValidationRule
+} from '@dps/mycms-commons/dist/search-commons/model/forms/generic-validator.util';
 import {GenericAppService} from '@dps/mycms-commons/dist/commons/services/generic-app.service';
 import {PageUtils} from '../../angular-commons/services/page.utils';
 import {AngularMarkdownService} from '../../angular-commons/services/angular-markdown.service';

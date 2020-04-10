@@ -1,4 +1,13 @@
-import {AfterViewChecked, ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, Output, SimpleChange} from '@angular/core';
+import {
+    AfterViewChecked,
+    ChangeDetectionStrategy,
+    Component,
+    EventEmitter,
+    Input,
+    OnChanges,
+    Output,
+    SimpleChange
+} from '@angular/core';
 import 'leaflet';
 import 'leaflet.markercluster';
 import {GeoParsedFeature, MapElement} from '../../services/leaflet-geo.plugin';

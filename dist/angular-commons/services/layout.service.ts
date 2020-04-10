@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {FromEventObservable} from 'rxjs/observable/FromEventObservable';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
-import {detect, detectOS} from 'detect-browser';
+import {detect} from 'detect-browser';
 
 export enum LayoutSize {
     VERYSMALL,
