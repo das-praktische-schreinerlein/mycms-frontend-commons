@@ -10,7 +10,7 @@ export declare class ResolverError {
     private _data;
     private _errorData;
     constructor(code: string, data: any, errorData: any);
-    get code(): string;
-    get data(): any;
-    get errorData(): any;
+    readonly code: string;
+    readonly data: any;
+    readonly errorData: any;
 }

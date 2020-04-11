@@ -78,9 +78,8 @@ var LayoutService = /** @class */ (function () {
     };
     LayoutService.prototype.isSpider = function () {
         var browser = this.getBrowser();
-        switch (browser && browser.type) {
+        switch (browser && browser.name) {
             case 'bot':
-            case 'bot-device':
                 return true;
             default:
                 return false;
@@ -88,7 +87,7 @@ var LayoutService = /** @class */ (function () {
     };
     LayoutService.prototype.isServer = function () {
         var browser = this.getBrowser();
-        switch (browser && browser.type) {
+        switch (browser && browser.name) {
             case 'node':
                 return true;
             default:

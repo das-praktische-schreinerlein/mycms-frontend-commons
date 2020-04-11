@@ -1,11 +1,8 @@
 "use strict";
 var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -333,9 +330,10 @@ var CommonDocEditformComponent = /** @class */ (function (_super) {
                 this.searchFormUtils.getIMultiSelectOptionsFromExtractedFacetValuesList(options, false, [], true);
         }
     };
+    var _a;
     __decorate([
         core_1.Input(),
-        __metadata("design:type", Object)
+        __metadata("design:type", typeof (_a = typeof R !== "undefined" && R) === "function" && _a || Object)
     ], CommonDocEditformComponent.prototype, "record", void 0);
     __decorate([
         core_1.Input(),

@@ -218,6 +218,7 @@ var CommonDocSearchformComponent = /** @class */ (function () {
         this.search.emit(values);
         return false;
     };
+    var _a, _b;
     __decorate([
         core_1.Input(),
         __metadata("design:type", Number)
@@ -252,8 +253,8 @@ var CommonDocSearchformComponent = /** @class */ (function () {
     ], CommonDocSearchformComponent.prototype, "showSpecialFilter", void 0);
     __decorate([
         core_1.Input(),
-        __metadata("design:type", Object),
-        __metadata("design:paramtypes", [Object])
+        __metadata("design:type", typeof (_a = typeof S !== "undefined" && S) === "function" && _a || Object),
+        __metadata("design:paramtypes", [typeof (_b = typeof S !== "undefined" && S) === "function" && _b || Object])
     ], CommonDocSearchformComponent.prototype, "searchResult", null);
     __decorate([
         core_1.Output(),

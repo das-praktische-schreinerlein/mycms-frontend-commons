@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {FromEventObservable} from 'rxjs/observable/FromEventObservable';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
-import {detect, BrowserInfo, SearchBotDeviceInfo, BotInfo, NodeInfo} from 'detect-browser';
+import {BotInfo, BrowserInfo, detect, NodeInfo} from 'detect-browser';
 
 export enum LayoutSize {
     VERYSMALL,
@@ -58,7 +58,7 @@ export class LayoutService {
         return this.flgPrintmode;
     }
 
-    public getBrowser(): BrowserInfo | SearchBotDeviceInfo | BotInfo | NodeInfo {
+    public getBrowser(): BrowserInfo | BotInfo | NodeInfo  {
         return detect();
     }
 
@@ -80,9 +80,8 @@ export class LayoutService {
 
     public isSpider(): boolean {
         const browser = this.getBrowser();
-        switch (browser && browser.type) {
+        switch (browser && browser.name) {
             case 'bot':
-            case 'bot-device':
                 return true;
             default:
                 return false;
@@ -91,7 +90,7 @@ export class LayoutService {
 
     public isServer(): boolean {
         const browser = this.getBrowser();
-        switch (browser && browser.type) {
+        switch (browser && browser.name) {
             case 'node':
                 return true;
             default:
