@@ -64,12 +64,13 @@ var LayoutService = /** @class */ (function () {
     };
     LayoutService.prototype.isMobile = function () {
         var browser = this.getBrowser();
-        switch (browser && browser['os']) {
-            case 'iOS':
+        switch (browser && browser.os) {
+            case 'Amazon OS':
             case 'Android OS':
             case 'BlackBerry OS':
+            case 'Chrome OS':
+            case 'iOS':
             case 'Windows Mobile':
-            case 'Amazon OS':
                 return true;
             default:
         }
@@ -77,21 +78,22 @@ var LayoutService = /** @class */ (function () {
     };
     LayoutService.prototype.isSpider = function () {
         var browser = this.getBrowser();
-        switch (browser && browser['os']) {
-            case 'Search Bot':
+        switch (browser && browser.type) {
+            case 'bot':
+            case 'bot-device':
                 return true;
             default:
+                return false;
         }
-        return false;
     };
     LayoutService.prototype.isServer = function () {
         var browser = this.getBrowser();
-        switch (browser && browser['name']) {
+        switch (browser && browser.type) {
             case 'node':
                 return true;
             default:
+                return false;
         }
-        return false;
     };
     LayoutService.prototype.isDesktop = function () {
         return !this.isMobile() && !this.isSpider() && !this.isServer();

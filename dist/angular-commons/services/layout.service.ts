@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {FromEventObservable} from 'rxjs/observable/FromEventObservable';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
-import {detect} from 'detect-browser';
+import {detect, BrowserInfo, SearchBotDeviceInfo, BotInfo, NodeInfo} from 'detect-browser';
 
 export enum LayoutSize {
     VERYSMALL,
@@ -58,18 +58,19 @@ export class LayoutService {
         return this.flgPrintmode;
     }
 
-    public getBrowser(): string {
+    public getBrowser(): BrowserInfo | SearchBotDeviceInfo | BotInfo | NodeInfo {
         return detect();
     }
 
     public isMobile(): boolean {
         const browser = this.getBrowser();
-        switch (browser && browser['os']) {
-            case 'iOS':
+        switch (browser && browser.os) {
+            case 'Amazon OS':
             case 'Android OS':
             case 'BlackBerry OS':
+            case 'Chrome OS':
+            case 'iOS':
             case 'Windows Mobile':
-            case 'Amazon OS':
                 return true;
             default:
         }
@@ -79,24 +80,23 @@ export class LayoutService {
 
     public isSpider(): boolean {
         const browser = this.getBrowser();
-        switch (browser && browser['os']) {
-            case 'Search Bot':
+        switch (browser && browser.type) {
+            case 'bot':
+            case 'bot-device':
                 return true;
             default:
+                return false;
         }
-
-        return false;
     }
 
     public isServer(): boolean {
         const browser = this.getBrowser();
-        switch (browser && browser['name']) {
+        switch (browser && browser.type) {
             case 'node':
                 return true;
             default:
+                return false;
         }
-
-        return false;
     }
 
     public isDesktop(): boolean {

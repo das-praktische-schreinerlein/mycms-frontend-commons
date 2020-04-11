@@ -1,4 +1,5 @@
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { BrowserInfo, SearchBotDeviceInfo, BotInfo, NodeInfo } from 'detect-browser';
 export declare enum LayoutSize {
     VERYSMALL = 0,
     SMALL = 1,
@@ -16,7 +17,7 @@ export declare class LayoutService {
     constructor();
     getLayoutSizeData(): BehaviorSubject<LayoutSizeData>;
     isPrintMode(): boolean;
-    getBrowser(): string;
+    getBrowser(): BrowserInfo | SearchBotDeviceInfo | BotInfo | NodeInfo;
     isMobile(): boolean;
     isSpider(): boolean;
     isServer(): boolean;
