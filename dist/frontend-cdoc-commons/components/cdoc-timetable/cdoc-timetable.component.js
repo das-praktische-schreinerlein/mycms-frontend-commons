@@ -1,4 +1,3 @@
-"use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
@@ -18,13 +17,12 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = require("@angular/core");
-var searchparameter_utils_1 = require("@dps/mycms-commons/dist/search-commons/services/searchparameter.utils");
-var searchform_utils_service_1 = require("../../../angular-commons/services/searchform-utils.service");
-var facets_1 = require("@dps/mycms-commons/dist/search-commons/model/container/facets");
-var cdoc_searchresult_1 = require("@dps/mycms-commons/dist/search-commons/model/container/cdoc-searchresult");
-var inline_component_1 = require("../../../angular-commons/components/inline.component");
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, Output } from '@angular/core';
+import { SearchParameterUtils } from '@dps/mycms-commons/dist/search-commons/services/searchparameter.utils';
+import { SearchFormUtils } from '../../../angular-commons/services/searchform-utils.service';
+import { Facet, Facets } from '@dps/mycms-commons/dist/search-commons/model/container/facets';
+import { CommonDocSearchResult } from '@dps/mycms-commons/dist/search-commons/model/container/cdoc-searchresult';
+import { AbstractInlineComponent } from '../../../angular-commons/components/inline.component';
 var CommonDocTimetableComponent = /** @class */ (function (_super) {
     __extends(CommonDocTimetableComponent, _super);
     function CommonDocTimetableComponent(searchParameterUtils, searchFormUtils, cd) {
@@ -33,7 +31,7 @@ var CommonDocTimetableComponent = /** @class */ (function (_super) {
         _this.searchFormUtils = searchFormUtils;
         _this.cd = cd;
         _this.columns = [];
-        _this.columnClicked = new core_1.EventEmitter();
+        _this.columnClicked = new EventEmitter();
         return _this;
     }
     CommonDocTimetableComponent.prototype.onColumnClicked = function (key) {
@@ -84,8 +82,8 @@ var CommonDocTimetableComponent = /** @class */ (function (_super) {
             return 0;
         });
         // create new timefacet
-        var timeFacets = new facets_1.Facets();
-        var timeFacet = new facets_1.Facet();
+        var timeFacets = new Facets();
+        var timeFacet = new Facet();
         timeFacet.facet = timeValues;
         timeFacets.facets.set(facetName, timeFacet);
         var values = this.searchFormUtils.getIMultiSelectOptionsFromExtractedFacetValuesList(this.searchParameterUtils.extractFacetValues(timeFacets, facetName, 'month', 'Monat'), false, [], true);
@@ -102,24 +100,24 @@ var CommonDocTimetableComponent = /** @class */ (function (_super) {
         this.columns = result;
     };
     __decorate([
-        core_1.Input(),
-        __metadata("design:type", cdoc_searchresult_1.CommonDocSearchResult)
+        Input(),
+        __metadata("design:type", CommonDocSearchResult)
     ], CommonDocTimetableComponent.prototype, "searchResult", void 0);
     __decorate([
-        core_1.Output(),
-        __metadata("design:type", core_1.EventEmitter)
+        Output(),
+        __metadata("design:type", EventEmitter)
     ], CommonDocTimetableComponent.prototype, "columnClicked", void 0);
     CommonDocTimetableComponent = __decorate([
-        core_1.Component({
+        Component({
             selector: 'app-cdoc-timetable',
             templateUrl: './cdoc-timetable.component.html',
             styleUrls: ['./cdoc-timetable.component.css'],
-            changeDetection: core_1.ChangeDetectionStrategy.OnPush
+            changeDetection: ChangeDetectionStrategy.OnPush
         }),
-        __metadata("design:paramtypes", [searchparameter_utils_1.SearchParameterUtils, searchform_utils_service_1.SearchFormUtils,
-            core_1.ChangeDetectorRef])
+        __metadata("design:paramtypes", [SearchParameterUtils, SearchFormUtils,
+            ChangeDetectorRef])
     ], CommonDocTimetableComponent);
     return CommonDocTimetableComponent;
-}(inline_component_1.AbstractInlineComponent));
-exports.CommonDocTimetableComponent = CommonDocTimetableComponent;
+}(AbstractInlineComponent));
+export { CommonDocTimetableComponent };
 //# sourceMappingURL=cdoc-timetable.component.js.map

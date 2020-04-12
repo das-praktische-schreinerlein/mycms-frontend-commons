@@ -1,6 +1,4 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-var generic_app_service_1 = require("@dps/mycms-commons/dist/commons/services/generic-app.service");
+import { AppState } from '@dps/mycms-commons/dist/commons/services/generic-app.service';
 var AbstractPageComponent = /** @class */ (function () {
     function AbstractPageComponent(route, toastr, pageUtils, cd, trackingProvider, appService, platformService, layoutService, environment) {
         this.route = route;
@@ -24,7 +22,7 @@ var AbstractPageComponent = /** @class */ (function () {
             me.onResize(layoutSizeData);
         });
         this.appService.getAppState().subscribe(function (appState) {
-            if (appState === generic_app_service_1.AppState.Ready) {
+            if (appState === AppState.Ready) {
                 me.config = me.appService.getAppConfig();
                 me.configureComponent(me.config);
                 me.configureProcessing(me.config);
@@ -40,5 +38,5 @@ var AbstractPageComponent = /** @class */ (function () {
     };
     return AbstractPageComponent;
 }());
-exports.AbstractPageComponent = AbstractPageComponent;
+export { AbstractPageComponent };
 //# sourceMappingURL=pdoc-page.component.js.map

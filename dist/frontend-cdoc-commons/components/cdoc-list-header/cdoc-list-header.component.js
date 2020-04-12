@@ -1,4 +1,3 @@
-"use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
@@ -18,14 +17,13 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = require("@angular/core");
-var layout_service_1 = require("../../../angular-commons/services/layout.service");
-var forms_1 = require("@angular/forms");
-var generic_app_service_1 = require("@dps/mycms-commons/dist/commons/services/generic-app.service");
-var bean_utils_1 = require("@dps/mycms-commons/dist/commons/utils/bean.utils");
-var cdoc_searchresult_1 = require("@dps/mycms-commons/dist/search-commons/model/container/cdoc-searchresult");
-var inline_component_1 = require("../../../angular-commons/components/inline.component");
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, Output } from '@angular/core';
+import { Layout } from '../../../angular-commons/services/layout.service';
+import { FormBuilder } from '@angular/forms';
+import { AppState, GenericAppService } from '@dps/mycms-commons/dist/commons/services/generic-app.service';
+import { BeanUtils } from '@dps/mycms-commons/dist/commons/utils/bean.utils';
+import { CommonDocSearchResult } from '@dps/mycms-commons/dist/search-commons/model/container/cdoc-searchresult';
+import { AbstractInlineComponent } from '../../../angular-commons/components/inline.component';
 var CommonDocListHeaderComponent = /** @class */ (function (_super) {
     __extends(CommonDocListHeaderComponent, _super);
     function CommonDocListHeaderComponent(fb, appService, cd) {
@@ -34,29 +32,29 @@ var CommonDocListHeaderComponent = /** @class */ (function (_super) {
         _this.appService = appService;
         _this.cd = cd;
         _this.autoPlayAllowed = false;
-        _this.Layout = layout_service_1.Layout;
-        _this.availableLayouts = [layout_service_1.Layout.THIN, layout_service_1.Layout.FLAT, layout_service_1.Layout.SMALL, layout_service_1.Layout.BIG, layout_service_1.Layout.PAGE];
+        _this.Layout = Layout;
+        _this.availableLayouts = [Layout.THIN, Layout.FLAT, Layout.SMALL, Layout.BIG, Layout.PAGE];
         _this.availableSorts = ['relevance', 'location', 'date', 'dateAsc', 'ratePers', 'distance',
             'dataTechDurDesc', 'dataTechAltDesc', 'dataTechMaxDesc', 'dataTechDistDesc',
             'dataTechDurAsc', 'dataTechAltAsc', 'dataTechMaxAsc', 'dataTechDistAsc'];
         _this.availablePerPage = [1, 10, 20, 50];
         _this.showAutoplay = false;
         _this.pauseAutoplay = false;
-        _this.pageChange = new core_1.EventEmitter();
-        _this.perPageChange = new core_1.EventEmitter();
-        _this.sortChange = new core_1.EventEmitter();
-        _this.layoutChange = new core_1.EventEmitter();
+        _this.pageChange = new EventEmitter();
+        _this.perPageChange = new EventEmitter();
+        _this.sortChange = new EventEmitter();
+        _this.layoutChange = new EventEmitter();
         _this.headerFormGroup = _this.fb.group({
             sort: 'relevance',
             perPage: 10,
-            layout: layout_service_1.Layout.FLAT
+            layout: Layout.FLAT
         });
         return _this;
     }
     CommonDocListHeaderComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.appService.getAppState().subscribe(function (appState) {
-            if (appState === generic_app_service_1.AppState.Ready) {
+            if (appState === AppState.Ready) {
                 var config = _this.appService.getAppConfig();
                 _this.configureComponent(config);
             }
@@ -94,8 +92,8 @@ var CommonDocListHeaderComponent = /** @class */ (function (_super) {
         this.layoutChange.emit(this.headerFormGroup.getRawValue()['layout']);
     };
     CommonDocListHeaderComponent.prototype.configureComponent = function (config) {
-        if (bean_utils_1.BeanUtils.getValue(config, 'permissions.allowAutoPlay') &&
-            bean_utils_1.BeanUtils.getValue(config, 'components.cdoc-listheader.allowAutoplay') + '' === 'true') {
+        if (BeanUtils.getValue(config, 'permissions.allowAutoPlay') &&
+            BeanUtils.getValue(config, 'components.cdoc-listheader.allowAutoplay') + '' === 'true') {
             this.autoPlayAllowed = this.showAutoplay;
         }
     };
@@ -109,67 +107,67 @@ var CommonDocListHeaderComponent = /** @class */ (function (_super) {
         }
     };
     __decorate([
-        core_1.Input(),
+        Input(),
         __metadata("design:type", Array)
     ], CommonDocListHeaderComponent.prototype, "availableLayouts", void 0);
     __decorate([
-        core_1.Input(),
+        Input(),
         __metadata("design:type", Array)
     ], CommonDocListHeaderComponent.prototype, "availableSorts", void 0);
     __decorate([
-        core_1.Input(),
+        Input(),
         __metadata("design:type", Array)
     ], CommonDocListHeaderComponent.prototype, "availablePerPage", void 0);
     __decorate([
-        core_1.Input(),
-        __metadata("design:type", cdoc_searchresult_1.CommonDocSearchResult)
+        Input(),
+        __metadata("design:type", CommonDocSearchResult)
     ], CommonDocListHeaderComponent.prototype, "searchResult", void 0);
     __decorate([
-        core_1.Input(),
+        Input(),
         __metadata("design:type", Number)
     ], CommonDocListHeaderComponent.prototype, "perPage", void 0);
     __decorate([
-        core_1.Input(),
+        Input(),
         __metadata("design:type", String)
     ], CommonDocListHeaderComponent.prototype, "sort", void 0);
     __decorate([
-        core_1.Input(),
+        Input(),
         __metadata("design:type", Number)
     ], CommonDocListHeaderComponent.prototype, "layout", void 0);
     __decorate([
-        core_1.Input(),
+        Input(),
         __metadata("design:type", Object)
     ], CommonDocListHeaderComponent.prototype, "showAutoplay", void 0);
     __decorate([
-        core_1.Input(),
+        Input(),
         __metadata("design:type", Object)
     ], CommonDocListHeaderComponent.prototype, "pauseAutoplay", void 0);
     __decorate([
-        core_1.Output(),
-        __metadata("design:type", core_1.EventEmitter)
+        Output(),
+        __metadata("design:type", EventEmitter)
     ], CommonDocListHeaderComponent.prototype, "pageChange", void 0);
     __decorate([
-        core_1.Output(),
-        __metadata("design:type", core_1.EventEmitter)
+        Output(),
+        __metadata("design:type", EventEmitter)
     ], CommonDocListHeaderComponent.prototype, "perPageChange", void 0);
     __decorate([
-        core_1.Output(),
-        __metadata("design:type", core_1.EventEmitter)
+        Output(),
+        __metadata("design:type", EventEmitter)
     ], CommonDocListHeaderComponent.prototype, "sortChange", void 0);
     __decorate([
-        core_1.Output(),
-        __metadata("design:type", core_1.EventEmitter)
+        Output(),
+        __metadata("design:type", EventEmitter)
     ], CommonDocListHeaderComponent.prototype, "layoutChange", void 0);
     CommonDocListHeaderComponent = __decorate([
-        core_1.Component({
+        Component({
             selector: 'app-cdoc-list-header',
             templateUrl: './cdoc-list-header.component.html',
             styleUrls: ['./cdoc-list-header.component.css'],
-            changeDetection: core_1.ChangeDetectionStrategy.OnPush
+            changeDetection: ChangeDetectionStrategy.OnPush
         }),
-        __metadata("design:paramtypes", [forms_1.FormBuilder, generic_app_service_1.GenericAppService, core_1.ChangeDetectorRef])
+        __metadata("design:paramtypes", [FormBuilder, GenericAppService, ChangeDetectorRef])
     ], CommonDocListHeaderComponent);
     return CommonDocListHeaderComponent;
-}(inline_component_1.AbstractInlineComponent));
-exports.CommonDocListHeaderComponent = CommonDocListHeaderComponent;
+}(AbstractInlineComponent));
+export { CommonDocListHeaderComponent };
 //# sourceMappingURL=cdoc-list-header.component.js.map

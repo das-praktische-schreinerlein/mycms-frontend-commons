@@ -1,4 +1,3 @@
-"use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
@@ -18,10 +17,9 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = require("@angular/core");
-var dynamic_component_host_directive_1 = require("../../../angular-commons/components/directives/dynamic-component-host.directive");
-var inline_component_1 = require("../../../angular-commons/components/inline.component");
+import { EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { DynamicComponentHostDirective } from '../../../angular-commons/components/directives/dynamic-component-host.directive';
+import { AbstractInlineComponent } from '../../../angular-commons/components/inline.component';
 var CommonDocActionsComponent = /** @class */ (function (_super) {
     __extends(CommonDocActionsComponent, _super);
     function CommonDocActionsComponent(dynamicComponentService, toastr, cd, appService, actionTagService) {
@@ -31,8 +29,8 @@ var CommonDocActionsComponent = /** @class */ (function (_super) {
         _this.cd = cd;
         _this.appService = appService;
         _this.actionTagService = actionTagService;
-        _this.actionTagEvent = new core_1.EventEmitter();
-        _this.childActionTagEvent = new core_1.EventEmitter();
+        _this.actionTagEvent = new EventEmitter();
+        _this.childActionTagEvent = new EventEmitter();
         _this.configureActionListener();
         return _this;
     }
@@ -57,22 +55,22 @@ var CommonDocActionsComponent = /** @class */ (function (_super) {
     };
     var _a;
     __decorate([
-        core_1.Input(),
+        Input(),
         __metadata("design:type", typeof (_a = typeof R !== "undefined" && R) === "function" && _a || Object)
     ], CommonDocActionsComponent.prototype, "record", void 0);
     __decorate([
-        core_1.Input(),
+        Input(),
         __metadata("design:type", String)
     ], CommonDocActionsComponent.prototype, "type", void 0);
     __decorate([
-        core_1.Output(),
-        __metadata("design:type", core_1.EventEmitter)
+        Output(),
+        __metadata("design:type", EventEmitter)
     ], CommonDocActionsComponent.prototype, "actionTagEvent", void 0);
     __decorate([
-        core_1.ViewChild(dynamic_component_host_directive_1.DynamicComponentHostDirective),
-        __metadata("design:type", dynamic_component_host_directive_1.DynamicComponentHostDirective)
+        ViewChild(DynamicComponentHostDirective),
+        __metadata("design:type", DynamicComponentHostDirective)
     ], CommonDocActionsComponent.prototype, "widgetHost", void 0);
     return CommonDocActionsComponent;
-}(inline_component_1.AbstractInlineComponent));
-exports.CommonDocActionsComponent = CommonDocActionsComponent;
+}(AbstractInlineComponent));
+export { CommonDocActionsComponent };
 //# sourceMappingURL=cdoc-actions.component.js.map

@@ -1,5 +1,5 @@
 import { NavigationExtras, Router, UrlTree } from '@angular/router';
-import { Subject } from 'rxjs/Subject';
+import { Subject } from 'rxjs';
 export declare enum RoutingState {
     DONE = 1,
     RUNNING = 2

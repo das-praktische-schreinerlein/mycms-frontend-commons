@@ -1,4 +1,3 @@
-"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,18 +7,17 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = require("@angular/core");
-require("leaflet");
-require("leaflet.markercluster");
-var leaflet_geo_plugin_1 = require("../../services/leaflet-geo.plugin");
-var geo_loader_1 = require("../../services/geo.loader");
-var geojson_parser_1 = require("../../services/geojson.parser");
-var geogpx_parser_1 = require("../../services/geogpx.parser");
-var component_utils_1 = require("../../../angular-commons/services/component.utils");
-var minimal_http_backend_client_1 = require("@dps/mycms-commons/dist/commons/services/minimal-http-backend-client");
-var L = require("leaflet");
-var geo_parser_1 = require("../../services/geo.parser");
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import 'leaflet';
+import 'leaflet.markercluster';
+import { GeoParsedFeature } from '../../services/leaflet-geo.plugin';
+import { GeoLoader } from '../../services/geo.loader';
+import { GeoJsonParser } from '../../services/geojson.parser';
+import { GeoGpxParser } from '../../services/geogpx.parser';
+import { ComponentUtils } from '../../../angular-commons/services/component.utils';
+import { MinimalHttpBackendClient } from '@dps/mycms-commons/dist/commons/services/minimal-http-backend-client';
+import * as L from 'leaflet';
+import { GeoElement, GeoElementType } from '../../services/geo.parser';
 var LatLng = L.LatLng;
 var LeafletMapComponent = /** @class */ (function () {
     function LeafletMapComponent(http) {
@@ -35,12 +33,12 @@ var LeafletMapComponent = /** @class */ (function () {
         this.flgfullScreen = false;
         this.bounds = undefined;
         this.centerOnMapElements = undefined;
-        this.centerChanged = new core_1.EventEmitter();
-        this.mapCreated = new core_1.EventEmitter();
-        this.mapElementClicked = new core_1.EventEmitter();
-        this.mapElementsLoaded = new core_1.EventEmitter();
-        this.gpxLoader = new geo_loader_1.GeoLoader(http, new geogpx_parser_1.GeoGpxParser());
-        this.jsonLoader = new geo_loader_1.GeoLoader(http, new geojson_parser_1.GeoJsonParser());
+        this.centerChanged = new EventEmitter();
+        this.mapCreated = new EventEmitter();
+        this.mapElementClicked = new EventEmitter();
+        this.mapElementsLoaded = new EventEmitter();
+        this.gpxLoader = new GeoLoader(http, new GeoGpxParser());
+        this.jsonLoader = new GeoLoader(http, new GeoJsonParser());
     }
     LeafletMapComponent.prototype.ngAfterViewChecked = function () {
         if (this.initialized) {
@@ -50,7 +48,7 @@ var LeafletMapComponent = /** @class */ (function () {
         this.renderMap();
     };
     LeafletMapComponent.prototype.ngOnChanges = function (changes) {
-        if (this.initialized && component_utils_1.ComponentUtils.hasNgChanged(changes)) {
+        if (this.initialized && ComponentUtils.hasNgChanged(changes)) {
             this.renderMap();
         }
     };
@@ -97,7 +95,7 @@ var LeafletMapComponent = /** @class */ (function () {
                 if ((mapElement.trackUrl !== undefined && mapElement.trackUrl.endsWith('.gpx'))
                     || (mapElement.trackSrc !== undefined && mapElement.trackSrc !== null &&
                         (mapElement.trackSrc.indexOf('<trkpt') || mapElement.trackSrc.indexOf('<rpt')))) {
-                    geoFeature = new leaflet_geo_plugin_1.GeoParsedFeature(this_1.gpxLoader, mapElement, {
+                    geoFeature = new GeoParsedFeature(this_1.gpxLoader, mapElement, {
                         async: true,
                         display_wpt: false,
                         editable: this_1.options.editable,
@@ -108,7 +106,7 @@ var LeafletMapComponent = /** @class */ (function () {
                     });
                 }
                 else {
-                    geoFeature = new leaflet_geo_plugin_1.GeoParsedFeature(this_1.jsonLoader, mapElement, {
+                    geoFeature = new GeoParsedFeature(this_1.jsonLoader, mapElement, {
                         async: true,
                         display_wpt: false,
                         editable: this_1.options.editable,
@@ -146,8 +144,8 @@ var LeafletMapComponent = /** @class */ (function () {
             }
             else if (mapElement.point) {
                 var prefix = (mapElement.code !== undefined ? mapElement.code + ' ' : '');
-                var geoElement = new geo_parser_1.GeoElement(geo_parser_1.GeoElementType.WAYPOINT, [mapElement.point], mapElement.title || (prefix + mapElement.name));
-                var pointFeature = leaflet_geo_plugin_1.GeoParsedFeature.convertGeoElementsToLayers(mapElement, [geoElement], {
+                var geoElement = new GeoElement(GeoElementType.WAYPOINT, [mapElement.point], mapElement.title || (prefix + mapElement.name));
+                var pointFeature = GeoParsedFeature.convertGeoElementsToLayers(mapElement, [geoElement], {
                     async: true,
                     display_wpt: true,
                     editable: this_1.options.editable,
@@ -205,59 +203,59 @@ var LeafletMapComponent = /** @class */ (function () {
         return bounds.extend(element);
     };
     __decorate([
-        core_1.Input(),
+        Input(),
         __metadata("design:type", String)
     ], LeafletMapComponent.prototype, "mapId", void 0);
     __decorate([
-        core_1.Input(),
+        Input(),
         __metadata("design:type", String)
     ], LeafletMapComponent.prototype, "height", void 0);
     __decorate([
-        core_1.Input(),
+        Input(),
         __metadata("design:type", Array)
     ], LeafletMapComponent.prototype, "mapElements", void 0);
     __decorate([
-        core_1.Input(),
+        Input(),
         __metadata("design:type", Array)
     ], LeafletMapComponent.prototype, "centerOnMapElements", void 0);
     __decorate([
-        core_1.Input(),
+        Input(),
         __metadata("design:type", L.LatLng)
     ], LeafletMapComponent.prototype, "center", void 0);
     __decorate([
-        core_1.Input(),
+        Input(),
         __metadata("design:type", Number)
     ], LeafletMapComponent.prototype, "zoom", void 0);
     __decorate([
-        core_1.Input(),
+        Input(),
         __metadata("design:type", Object)
     ], LeafletMapComponent.prototype, "options", void 0);
     __decorate([
-        core_1.Output(),
-        __metadata("design:type", core_1.EventEmitter)
+        Output(),
+        __metadata("design:type", EventEmitter)
     ], LeafletMapComponent.prototype, "centerChanged", void 0);
     __decorate([
-        core_1.Output(),
-        __metadata("design:type", core_1.EventEmitter)
+        Output(),
+        __metadata("design:type", EventEmitter)
     ], LeafletMapComponent.prototype, "mapCreated", void 0);
     __decorate([
-        core_1.Output(),
-        __metadata("design:type", core_1.EventEmitter)
+        Output(),
+        __metadata("design:type", EventEmitter)
     ], LeafletMapComponent.prototype, "mapElementClicked", void 0);
     __decorate([
-        core_1.Output(),
-        __metadata("design:type", core_1.EventEmitter)
+        Output(),
+        __metadata("design:type", EventEmitter)
     ], LeafletMapComponent.prototype, "mapElementsLoaded", void 0);
     LeafletMapComponent = __decorate([
-        core_1.Component({
+        Component({
             selector: 'app-leaflet-map',
             templateUrl: './leaflet-map.component.html',
             styleUrls: ['./leaflet-map.component.css'],
-            changeDetection: core_1.ChangeDetectionStrategy.OnPush
+            changeDetection: ChangeDetectionStrategy.OnPush
         }),
-        __metadata("design:paramtypes", [minimal_http_backend_client_1.MinimalHttpBackendClient])
+        __metadata("design:paramtypes", [MinimalHttpBackendClient])
     ], LeafletMapComponent);
     return LeafletMapComponent;
 }());
-exports.LeafletMapComponent = LeafletMapComponent;
+export { LeafletMapComponent };
 //# sourceMappingURL=leaflet-map.component.js.map

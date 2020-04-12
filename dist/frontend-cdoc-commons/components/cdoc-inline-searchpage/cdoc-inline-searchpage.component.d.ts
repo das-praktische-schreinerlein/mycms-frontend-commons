@@ -11,7 +11,7 @@ import { CommonDocRecord } from '@dps/mycms-commons/dist/search-commons/model/re
 import { CommonDocSearchResult } from '@dps/mycms-commons/dist/search-commons/model/container/cdoc-searchresult';
 import { GenericSearchFormSearchFormConverter } from '@dps/mycms-commons/dist/search-commons/services/generic-searchform.converter';
 import { AbstractInlineComponent } from '../../../angular-commons/components/inline.component';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 import { IMultiSelectOption } from 'angular-2-dropdown-multiselect';
 import { SearchFormUtils } from '../../../angular-commons/services/searchform-utils.service';
 import { CommonDocSearchFormUtils } from '../../services/cdoc-searchform-utils.service';

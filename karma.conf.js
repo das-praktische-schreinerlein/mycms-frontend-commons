@@ -10,22 +10,22 @@ module.exports = function (config) {
       require('karma-phantomjs-launcher' ),
       require('karma-jasmine-html-reporter'),
       require('karma-coverage-istanbul-reporter'),
-      require('@angular/cli/plugins/karma' )
+      require('@angular-devkit/build-angular/plugins/karma' )
     ],
-    frameworks: ['jasmine', '@angular/cli'],
+    frameworks: ['jasmine', '@angular-devkit/build-angular'],
     client:{
       clearContext: false // leave Jasmine Spec Runner output visible in browser
     },
     files: [
     ],
     preprocessors: {
-      './src/test.ts': ['@angular/cli']
+      
     },
     mime: {
       'text/x-typescript': ['ts','tsx']
     },
     coverageIstanbulReporter: {
-      reports: [ 'html', 'lcovonly', 'text-summary' ],
+      dir: require('path').join(__dirname, 'coverage'), reports: [ 'html', 'lcovonly', 'text-summary' ],
       fixWebpackSourcePaths: true,
       dir: './coverage/frontend-commons/'
     },
@@ -34,15 +34,13 @@ module.exports = function (config) {
           istanbul: { noCompact: true }
         }
     },
-    angularCli: {
-      environment: 'dev'
-    },
+    
     reporters: config.angularCli && config.angularCli.codeCoverage
         ? ['progress', 'coverage-istanbul']
         : ['progress', 'kjhtml'],
     port: 9876,
     colors: true,
-    logLevel: config.LOG_INFO,
+    logLevel: config.LOG_DEBUG,
     autoWatch: true,
     browsers: ['PhantomJS'], // 'Chrome'
     singleRun: true,

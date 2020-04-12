@@ -1,5 +1,3 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 var ResolverError = /** @class */ (function () {
     function ResolverError(code, data, errorData) {
         this._code = code;
@@ -29,5 +27,5 @@ var ResolverError = /** @class */ (function () {
     });
     return ResolverError;
 }());
-exports.ResolverError = ResolverError;
+export { ResolverError };
 //# sourceMappingURL=resolver.utils.js.map

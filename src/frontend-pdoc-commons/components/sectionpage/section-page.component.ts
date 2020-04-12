@@ -21,7 +21,7 @@ import {AngularHtmlService} from '../../../angular-commons/services/angular-html
 import {CommonRoutingService, RoutingState} from '../../../angular-commons/services/common-routing.service';
 import {GenericTrackingService} from '../../../angular-commons/services/generic-tracking.service';
 import {PlatformService} from '../../../angular-commons/services/platform.service';
-import {BehaviorSubject} from 'rxjs/BehaviorSubject';
+import {BehaviorSubject} from 'rxjs';
 
 @Component({
     selector: 'app-sectionpage',

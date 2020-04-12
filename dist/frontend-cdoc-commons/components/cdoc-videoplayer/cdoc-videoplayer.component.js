@@ -1,4 +1,3 @@
-"use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
@@ -18,11 +17,10 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = require("@angular/core");
-var cdoc_contentutils_service_1 = require("../../services/cdoc-contentutils.service");
-var cdoc_entity_record_1 = require("@dps/mycms-commons/dist/search-commons/model/records/cdoc-entity-record");
-var inline_component_1 = require("../../../angular-commons/components/inline.component");
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { CommonDocContentUtils } from '../../services/cdoc-contentutils.service';
+import { CommonDocRecord } from '@dps/mycms-commons/dist/search-commons/model/records/cdoc-entity-record';
+import { AbstractInlineComponent } from '../../../angular-commons/components/inline.component';
 var CommonDocVideoplayerComponent = /** @class */ (function (_super) {
     __extends(CommonDocVideoplayerComponent, _super);
     function CommonDocVideoplayerComponent(contentUtils, cd) {
@@ -45,7 +43,7 @@ var CommonDocVideoplayerComponent = /** @class */ (function (_super) {
         _this.forceWidth = '';
         _this.showFullScreenVideo = false;
         _this.showPreview = true;
-        _this.show = new core_1.EventEmitter();
+        _this.show = new EventEmitter();
         _this.contentUtils = contentUtils;
         return _this;
     }
@@ -64,47 +62,47 @@ var CommonDocVideoplayerComponent = /** @class */ (function (_super) {
         this.cd.markForCheck();
     };
     __decorate([
-        core_1.ViewChild('videoPlayer'),
+        ViewChild('videoPlayer'),
         __metadata("design:type", Object)
     ], CommonDocVideoplayerComponent.prototype, "videoplayer", void 0);
     __decorate([
-        core_1.Input(),
-        __metadata("design:type", cdoc_entity_record_1.CommonDocRecord)
+        Input(),
+        __metadata("design:type", CommonDocRecord)
     ], CommonDocVideoplayerComponent.prototype, "record", void 0);
     __decorate([
-        core_1.Input(),
+        Input(),
         __metadata("design:type", Number)
     ], CommonDocVideoplayerComponent.prototype, "width", void 0);
     __decorate([
-        core_1.Input(),
+        Input(),
         __metadata("design:type", Object)
     ], CommonDocVideoplayerComponent.prototype, "forceWidth", void 0);
     __decorate([
-        core_1.Input(),
+        Input(),
         __metadata("design:type", String)
     ], CommonDocVideoplayerComponent.prototype, "styleClass", void 0);
     __decorate([
-        core_1.Input(),
+        Input(),
         __metadata("design:type", Object)
     ], CommonDocVideoplayerComponent.prototype, "showFullScreenVideo", void 0);
     __decorate([
-        core_1.Input(),
+        Input(),
         __metadata("design:type", Object)
     ], CommonDocVideoplayerComponent.prototype, "showPreview", void 0);
     __decorate([
-        core_1.Output(),
-        __metadata("design:type", core_1.EventEmitter)
+        Output(),
+        __metadata("design:type", EventEmitter)
     ], CommonDocVideoplayerComponent.prototype, "show", void 0);
     CommonDocVideoplayerComponent = __decorate([
-        core_1.Component({
+        Component({
             selector: 'app-cdoc-videoplayer',
             templateUrl: './cdoc-videoplayer.component.html',
             styleUrls: ['./cdoc-videoplayer.component.css'],
-            changeDetection: core_1.ChangeDetectionStrategy.OnPush
+            changeDetection: ChangeDetectionStrategy.OnPush
         }),
-        __metadata("design:paramtypes", [cdoc_contentutils_service_1.CommonDocContentUtils, core_1.ChangeDetectorRef])
+        __metadata("design:paramtypes", [CommonDocContentUtils, ChangeDetectorRef])
     ], CommonDocVideoplayerComponent);
     return CommonDocVideoplayerComponent;
-}(inline_component_1.AbstractInlineComponent));
-exports.CommonDocVideoplayerComponent = CommonDocVideoplayerComponent;
+}(AbstractInlineComponent));
+export { CommonDocVideoplayerComponent };
 //# sourceMappingURL=cdoc-videoplayer.component.js.map

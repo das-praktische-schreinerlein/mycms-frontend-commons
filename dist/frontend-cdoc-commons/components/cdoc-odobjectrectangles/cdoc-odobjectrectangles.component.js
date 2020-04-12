@@ -1,4 +1,3 @@
-"use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
@@ -18,10 +17,9 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = require("@angular/core");
-var generic_app_service_1 = require("@dps/mycms-commons/dist/commons/services/generic-app.service");
-var cdoc_odobjectdetails_component_1 = require("../cdoc-odobjectdetails/cdoc-odobjectdetails.component");
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input } from '@angular/core';
+import { GenericAppService } from '@dps/mycms-commons/dist/commons/services/generic-app.service';
+import { CommonDocODObjectDetailsComponent } from '../cdoc-odobjectdetails/cdoc-odobjectdetails.component';
 var CommonDocODObjectRectanglesComponent = /** @class */ (function (_super) {
     __extends(CommonDocODObjectRectanglesComponent, _super);
     function CommonDocODObjectRectanglesComponent(appService, cd) {
@@ -31,19 +29,19 @@ var CommonDocODObjectRectanglesComponent = /** @class */ (function (_super) {
         return _this;
     }
     __decorate([
-        core_1.Input(),
+        Input(),
         __metadata("design:type", Number)
     ], CommonDocODObjectRectanglesComponent.prototype, "width", void 0);
     CommonDocODObjectRectanglesComponent = __decorate([
-        core_1.Component({
+        Component({
             selector: 'app-cdoc-odobjectrectangles',
             templateUrl: './cdoc-odobjectrectangles.component.html',
             styleUrls: ['./cdoc-odobjectrectangles.component.css'],
-            changeDetection: core_1.ChangeDetectionStrategy.OnPush
+            changeDetection: ChangeDetectionStrategy.OnPush
         }),
-        __metadata("design:paramtypes", [generic_app_service_1.GenericAppService, core_1.ChangeDetectorRef])
+        __metadata("design:paramtypes", [GenericAppService, ChangeDetectorRef])
     ], CommonDocODObjectRectanglesComponent);
     return CommonDocODObjectRectanglesComponent;
-}(cdoc_odobjectdetails_component_1.CommonDocODObjectDetailsComponent));
-exports.CommonDocODObjectRectanglesComponent = CommonDocODObjectRectanglesComponent;
+}(CommonDocODObjectDetailsComponent));
+export { CommonDocODObjectRectanglesComponent };
 //# sourceMappingURL=cdoc-odobjectrectangles.component.js.map

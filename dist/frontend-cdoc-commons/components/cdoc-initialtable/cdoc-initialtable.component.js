@@ -1,4 +1,3 @@
-"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,21 +7,20 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = require("@angular/core");
-var component_utils_1 = require("../../../angular-commons/services/component.utils");
-var searchform_utils_service_1 = require("../../../angular-commons/services/searchform-utils.service");
-var cdoc_searchform_utils_service_1 = require("../..//services/cdoc-searchform-utils.service");
-var cdoc_searchresult_1 = require("@dps/mycms-commons/dist/search-commons/model/container/cdoc-searchresult");
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import { ComponentUtils } from '../../../angular-commons/services/component.utils';
+import { SearchFormUtils } from '../../../angular-commons/services/searchform-utils.service';
+import { CommonDocSearchFormUtils } from '../..//services/cdoc-searchform-utils.service';
+import { CommonDocSearchResult } from '@dps/mycms-commons/dist/search-commons/model/container/cdoc-searchresult';
 var CommonDocInitialtableComponent = /** @class */ (function () {
     function CommonDocInitialtableComponent(searchFormUtils, cdocSearchFormUtils) {
         this.searchFormUtils = searchFormUtils;
         this.cdocSearchFormUtils = cdocSearchFormUtils;
         this.columns = [];
-        this.columnClicked = new core_1.EventEmitter();
+        this.columnClicked = new EventEmitter();
     }
     CommonDocInitialtableComponent.prototype.ngOnChanges = function (changes) {
-        if (component_utils_1.ComponentUtils.hasNgChanged(changes)) {
+        if (ComponentUtils.hasNgChanged(changes)) {
             this.renderInitialtable();
         }
     };
@@ -54,23 +52,23 @@ var CommonDocInitialtableComponent = /** @class */ (function () {
         this.columns = result;
     };
     __decorate([
-        core_1.Input(),
-        __metadata("design:type", cdoc_searchresult_1.CommonDocSearchResult)
+        Input(),
+        __metadata("design:type", CommonDocSearchResult)
     ], CommonDocInitialtableComponent.prototype, "searchResult", void 0);
     __decorate([
-        core_1.Output(),
-        __metadata("design:type", core_1.EventEmitter)
+        Output(),
+        __metadata("design:type", EventEmitter)
     ], CommonDocInitialtableComponent.prototype, "columnClicked", void 0);
     CommonDocInitialtableComponent = __decorate([
-        core_1.Component({
+        Component({
             selector: 'app-cdoc-initialtable',
             templateUrl: './cdoc-initialtable.component.html',
             styleUrls: ['./cdoc-initialtable.component.css'],
-            changeDetection: core_1.ChangeDetectionStrategy.OnPush
+            changeDetection: ChangeDetectionStrategy.OnPush
         }),
-        __metadata("design:paramtypes", [searchform_utils_service_1.SearchFormUtils, cdoc_searchform_utils_service_1.CommonDocSearchFormUtils])
+        __metadata("design:paramtypes", [SearchFormUtils, CommonDocSearchFormUtils])
     ], CommonDocInitialtableComponent);
     return CommonDocInitialtableComponent;
 }());
-exports.CommonDocInitialtableComponent = CommonDocInitialtableComponent;
+export { CommonDocInitialtableComponent };
 //# sourceMappingURL=cdoc-initialtable.component.js.map

@@ -1,6 +1,5 @@
 import {Injectable} from '@angular/core';
-import {FromEventObservable} from 'rxjs/observable/FromEventObservable';
-import {BehaviorSubject} from 'rxjs/BehaviorSubject';
+import {BehaviorSubject, fromEvent} from 'rxjs';
 import {BotInfo, BrowserInfo, detect, NodeInfo} from 'detect-browser';
 
 export enum LayoutSize {
@@ -22,7 +21,7 @@ export class LayoutService {
     private flgPrintmode = false;
 
     constructor() {
-        const $resizeEvent = FromEventObservable.create(window, 'resize');
+        const $resizeEvent = fromEvent(window, 'resize');
         $resizeEvent.subscribe(data => {
             this.layoutSizeObservable.next(this.calcLayoutSizeForWindow());
         });

@@ -1,6 +1,4 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-var vis_1 = require("vis");
+import { DataSet, Graph3d } from 'vis';
 var VisJsGeoProfileMapPoint = /** @class */ (function () {
     function VisJsGeoProfileMapPoint(values) {
         this.x = values.x;
@@ -11,7 +9,7 @@ var VisJsGeoProfileMapPoint = /** @class */ (function () {
     }
     return VisJsGeoProfileMapPoint;
 }());
-exports.VisJsGeoProfileMapPoint = VisJsGeoProfileMapPoint;
+export { VisJsGeoProfileMapPoint };
 var VisJsGeoProfileMapStyles = /** @class */ (function () {
     function VisJsGeoProfileMapStyles() {
     }
@@ -29,8 +27,8 @@ var VisJsGeoProfileMapStyles = /** @class */ (function () {
     ];
     return VisJsGeoProfileMapStyles;
 }());
-exports.VisJsGeoProfileMapStyles = VisJsGeoProfileMapStyles;
-Object.defineProperty(vis_1.Graph3d.prototype, '_redrawBarSizeGraphPoint', { value: function (ctx, point) {
+export { VisJsGeoProfileMapStyles };
+Object.defineProperty(Graph3d.prototype, '_redrawBarSizeGraphPoint', { value: function (ctx, point) {
         // calculate size for the bar
         var fraction = (point.point.value - this.valueRange.min) / this.valueRange.range();
         var xWidth = this.xBarWidth / 2 * (fraction * 0.8 + 0.2);
@@ -83,14 +81,14 @@ var VisJsGeoProfileMap = /** @class */ (function () {
             }
             var layers = me._convertGeoElementsToDataSet(allGeoElements, element, options);
             if (layers !== undefined) {
-                me.graph = new vis_1.Graph3d(element, layers, options);
+                me.graph = new Graph3d(element, layers, options);
             }
         }).catch(function onError(error) {
             console.error('failed to load gpx for VisJsGeoProfileMap:', error);
         });
     };
     VisJsGeoProfileMap.prototype._convertGeoElementsToDataSet = function (geoElements, element, options) {
-        var data = new vis_1.DataSet();
+        var data = new DataSet();
         if (!geoElements) {
             return data;
         }
@@ -119,5 +117,5 @@ var VisJsGeoProfileMap = /** @class */ (function () {
     };
     return VisJsGeoProfileMap;
 }());
-exports.VisJsGeoProfileMap = VisJsGeoProfileMap;
+export { VisJsGeoProfileMap };
 //# sourceMappingURL=visjs-geoprofilemap.plugin.js.map

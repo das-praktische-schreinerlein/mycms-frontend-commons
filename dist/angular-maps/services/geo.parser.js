@@ -1,4 +1,3 @@
-"use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
@@ -9,16 +8,15 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-Object.defineProperty(exports, "__esModule", { value: true });
-var L = require("leaflet");
+import * as L from 'leaflet';
 var LatLng = L.LatLng;
-var GeoElementType;
+export var GeoElementType;
 (function (GeoElementType) {
     GeoElementType[GeoElementType["TRACK"] = 0] = "TRACK";
     GeoElementType[GeoElementType["ROUTE"] = 1] = "ROUTE";
     GeoElementType[GeoElementType["WAYPOINT"] = 2] = "WAYPOINT";
     GeoElementType[GeoElementType["AREA"] = 3] = "AREA";
-})(GeoElementType = exports.GeoElementType || (exports.GeoElementType = {}));
+})(GeoElementType || (GeoElementType = {}));
 var LatLngTime = /** @class */ (function (_super) {
     __extends(LatLngTime, _super);
     function LatLngTime(latitude, longitude, altitude, time) {
@@ -28,7 +26,7 @@ var LatLngTime = /** @class */ (function (_super) {
     }
     return LatLngTime;
 }(LatLng));
-exports.LatLngTime = LatLngTime;
+export { LatLngTime };
 var GeoElement = /** @class */ (function () {
     function GeoElement(type, points, name) {
         this.points = [];
@@ -38,7 +36,7 @@ var GeoElement = /** @class */ (function () {
     }
     return GeoElement;
 }());
-exports.GeoElement = GeoElement;
+export { GeoElement };
 var GeoParser = /** @class */ (function () {
     function GeoParser() {
     }
@@ -62,5 +60,5 @@ var GeoParser = /** @class */ (function () {
     };
     return GeoParser;
 }());
-exports.GeoParser = GeoParser;
+export { GeoParser };
 //# sourceMappingURL=geo.parser.js.map

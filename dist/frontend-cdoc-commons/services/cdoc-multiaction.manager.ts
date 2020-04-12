@@ -7,8 +7,7 @@ import {CommonDocDataService} from '@dps/mycms-commons/dist/search-commons/servi
 import * as Promise_serial from 'promise-serial';
 import {ActionTagEvent, MultiRecordActionTagEvent} from '../components/cdoc-actiontags/cdoc-actiontags.component';
 import {EventEmitter} from '@angular/core';
-import {Subject} from 'rxjs/Subject';
-import {BehaviorSubject} from 'rxjs/BehaviorSubject';
+import {BehaviorSubject, Subject} from 'rxjs';
 import {MultiActionTagConfig} from '@dps/mycms-commons/dist/commons/utils/actiontag.utils';
 
 export class CommonDocMultiActionManager <R extends CommonDocRecord, F extends CommonDocSearchForm,

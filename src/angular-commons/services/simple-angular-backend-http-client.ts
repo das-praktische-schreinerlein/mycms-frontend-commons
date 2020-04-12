@@ -5,6 +5,7 @@ import {
     MinimalHttpBackendClient
 } from '@dps/mycms-commons/dist/commons/services/minimal-http-backend-client';
 import {Injectable} from '@angular/core';
+import {map} from 'rxjs/operators';
 import {isArray} from 'util';
 
 @Injectable()
@@ -101,10 +102,10 @@ export class SimpleAngularBackendHttpClient extends MinimalHttpBackendClient {
         // console.log('makeHttpRequest:', requestConfig);
         let result;
         const request = http.request(requestConfig.method, requestConfig.url, requestConfig);
-        result = request.map((res: HttpResponse<any>) => {
+        result = request.pipe(map((res: HttpResponse<any>) => {
             // console.log('response makeHttpRequest:' + httpConfig.url, res);
             return SimpleAngularBackendHttpClient.createBackendHttpResponse(requestConfig, res);
-        });
+        }));
 
         return result.toPromise();
     }

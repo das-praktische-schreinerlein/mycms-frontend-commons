@@ -1,6 +1,4 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-var tzlookup = require("tz-lookup/tz");
+import * as tzlookup from 'tz-lookup/tz';
 var GeoUtils = /** @class */ (function () {
     function GeoUtils() {
     }
@@ -17,5 +15,5 @@ var GeoUtils = /** @class */ (function () {
     };
     return GeoUtils;
 }());
-exports.GeoUtils = GeoUtils;
+export { GeoUtils };
 //# sourceMappingURL=geo.utils.js.map

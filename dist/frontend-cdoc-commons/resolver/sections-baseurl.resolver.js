@@ -1,4 +1,3 @@
-"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,13 +7,12 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = require("@angular/core");
-var generic_validator_util_1 = require("@dps/mycms-commons/dist/search-commons/model/forms/generic-validator.util");
-var resolver_utils_1 = require("../../angular-commons/resolver/resolver.utils");
+import { Injectable } from '@angular/core';
+import { IdValidationRule } from '@dps/mycms-commons/dist/search-commons/model/forms/generic-validator.util';
+import { ResolverError } from '../../angular-commons/resolver/resolver.utils';
 var SectionsBaseUrlResolver = /** @class */ (function () {
     function SectionsBaseUrlResolver() {
-        this.idValidationRule = new generic_validator_util_1.IdValidationRule(true);
+        this.idValidationRule = new IdValidationRule(true);
     }
     SectionsBaseUrlResolver_1 = SectionsBaseUrlResolver;
     SectionsBaseUrlResolver.prototype.resolve = function (route, state) {
@@ -26,7 +24,7 @@ var SectionsBaseUrlResolver = /** @class */ (function () {
         return new Promise(function (resolve) {
             var id = route.params['section'] || route.parent.params['section'];
             if (!_this.idValidationRule.isValid(id)) {
-                result.error = new resolver_utils_1.ResolverError(SectionsBaseUrlResolver_1.ERROR_INVALID_SECTION_ID, id, undefined);
+                result.error = new ResolverError(SectionsBaseUrlResolver_1.ERROR_INVALID_SECTION_ID, id, undefined);
                 return resolve(result);
             }
             id = _this.idValidationRule.sanitize(id);
@@ -37,10 +35,10 @@ var SectionsBaseUrlResolver = /** @class */ (function () {
     var SectionsBaseUrlResolver_1;
     SectionsBaseUrlResolver.ERROR_INVALID_SECTION_ID = 'ERROR_INVALID_SECTION_ID';
     SectionsBaseUrlResolver = SectionsBaseUrlResolver_1 = __decorate([
-        core_1.Injectable(),
+        Injectable(),
         __metadata("design:paramtypes", [])
     ], SectionsBaseUrlResolver);
     return SectionsBaseUrlResolver;
 }());
-exports.SectionsBaseUrlResolver = SectionsBaseUrlResolver;
+export { SectionsBaseUrlResolver };
 //# sourceMappingURL=sections-baseurl.resolver.js.map

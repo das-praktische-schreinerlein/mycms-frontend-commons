@@ -13,7 +13,7 @@ import { AngularHtmlService } from '../../../angular-commons/services/angular-ht
 import { CommonRoutingService } from '../../../angular-commons/services/common-routing.service';
 import { GenericTrackingService } from '../../../angular-commons/services/generic-tracking.service';
 import { PlatformService } from '../../../angular-commons/services/platform.service';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { BehaviorSubject } from 'rxjs';
 export declare class SectionPageComponent implements OnInit {
     protected route: ActivatedRoute;
     protected pdocDataService: PDocDataService;

@@ -1,4 +1,4 @@
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { BehaviorSubject } from 'rxjs';
 import { BotInfo, BrowserInfo, NodeInfo } from 'detect-browser';
 export declare enum LayoutSize {
     VERYSMALL = 0,

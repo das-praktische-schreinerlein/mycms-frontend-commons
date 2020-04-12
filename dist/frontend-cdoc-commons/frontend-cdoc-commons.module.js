@@ -1,95 +1,93 @@
-"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = require("@angular/core");
-var forms_1 = require("@angular/forms");
-var cdoc_list_header_component_1 = require("./components/cdoc-list-header/cdoc-list-header.component");
-var cdoc_list_footer_component_1 = require("./components/cdoc-list-footer/cdoc-list-footer.component");
-var cdoc_keywordsstate_component_1 = require("./components/cdoc-keywordsstate/cdoc-keywordsstate.component");
-var cdoc_keywords_component_1 = require("./components/cdoc-keywords/cdoc-keywords.component");
-var cdoc_timetable_component_1 = require("./components/cdoc-timetable/cdoc-timetable.component");
-var cdoc_tagcloud_component_1 = require("./components/cdoc-tagcloud/cdoc-tagcloud.component");
-var cdoc_typetable_component_1 = require("./components/cdoc-typetable/cdoc-typetable.component");
-var cdoc_tagsstate_component_1 = require("./components/cdoc-tagsstate/cdoc-tagsstate.component");
-var cdoc_tags_component_1 = require("./components/cdoc-tags/cdoc-tags.component");
-var cdoc_videoplayer_component_1 = require("./components/cdoc-videoplayer/cdoc-videoplayer.component");
-var cdoc_list_item_component_1 = require("./components/cdoc-list-item/cdoc-list-item.component");
-var angular_commons_module_1 = require("../angular-commons/angular-commons.module");
-var core_2 = require("@ngx-translate/core");
-var angular_2_dropdown_multiselect_1 = require("angular-2-dropdown-multiselect");
-var ng_bootstrap_1 = require("@ng-bootstrap/ng-bootstrap");
-var animations_1 = require("@angular/platform-browser/animations");
-var cdoc_list_component_1 = require("./components/cdoc-list/cdoc-list.component");
-var cdoc_audioplayer_component_1 = require("./components/cdoc-audioplayer/cdoc-audioplayer.component");
-var cdoc_actiontags_component_1 = require("./components/cdoc-actiontags/cdoc-actiontags.component");
-var ngx_file_drop_1 = require("ngx-file-drop");
-var cdoc_initialtable_component_1 = require("./components/cdoc-initialtable/cdoc-initialtable.component");
-var cdoc_odobjectrectangles_component_1 = require("./components/cdoc-odobjectrectangles/cdoc-odobjectrectangles.component");
-var cdoc_odobjectdetails_component_1 = require("./components/cdoc-odobjectdetails/cdoc-odobjectdetails.component");
-var cdoc_object_navigation_component_1 = require("./components/cdoc-object-navigation/cdoc-object-navigation.component");
+import { NgModule } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CommonDocListHeaderComponent } from './components/cdoc-list-header/cdoc-list-header.component';
+import { CommonDocListFooterComponent } from './components/cdoc-list-footer/cdoc-list-footer.component';
+import { CommonDocKeywordsStateComponent } from './components/cdoc-keywordsstate/cdoc-keywordsstate.component';
+import { CommonDocKeywordsComponent } from './components/cdoc-keywords/cdoc-keywords.component';
+import { CommonDocTimetableComponent } from './components/cdoc-timetable/cdoc-timetable.component';
+import { CommonDocTagcloudComponent } from './components/cdoc-tagcloud/cdoc-tagcloud.component';
+import { CommonDocTypetableComponent } from './components/cdoc-typetable/cdoc-typetable.component';
+import { CommonDocTagsStateComponent } from './components/cdoc-tagsstate/cdoc-tagsstate.component';
+import { CommonDocTagsComponent } from './components/cdoc-tags/cdoc-tags.component';
+import { CommonDocVideoplayerComponent } from './components/cdoc-videoplayer/cdoc-videoplayer.component';
+import { CommonDocListItemComponent } from './components/cdoc-list-item/cdoc-list-item.component';
+import { AngularCommonsModule } from '../angular-commons/angular-commons.module';
+import { TranslateModule } from '@ngx-translate/core';
+import { MultiselectDropdownModule } from 'angular-2-dropdown-multiselect';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CommonDocListComponent } from './components/cdoc-list/cdoc-list.component';
+import { CommonDocAudioplayerComponent } from './components/cdoc-audioplayer/cdoc-audioplayer.component';
+import { CommonDocActionTagsComponent } from './components/cdoc-actiontags/cdoc-actiontags.component';
+import { FileDropModule } from 'ngx-file-drop';
+import { CommonDocInitialtableComponent } from './components/cdoc-initialtable/cdoc-initialtable.component';
+import { CommonDocODObjectRectanglesComponent } from './components/cdoc-odobjectrectangles/cdoc-odobjectrectangles.component';
+import { CommonDocODObjectDetailsComponent } from './components/cdoc-odobjectdetails/cdoc-odobjectdetails.component';
+import { CommonDocObjectNavigationComponent } from './components/cdoc-object-navigation/cdoc-object-navigation.component';
 var FrontendCommonDocCommonsModule = /** @class */ (function () {
     function FrontendCommonDocCommonsModule() {
     }
     FrontendCommonDocCommonsModule = __decorate([
-        core_1.NgModule({
+        NgModule({
             declarations: [
-                cdoc_list_component_1.CommonDocListComponent,
-                cdoc_list_header_component_1.CommonDocListHeaderComponent,
-                cdoc_list_footer_component_1.CommonDocListFooterComponent,
-                cdoc_list_item_component_1.CommonDocListItemComponent,
-                cdoc_keywords_component_1.CommonDocKeywordsComponent,
-                cdoc_keywordsstate_component_1.CommonDocKeywordsStateComponent,
-                cdoc_timetable_component_1.CommonDocTimetableComponent,
-                cdoc_typetable_component_1.CommonDocTypetableComponent,
-                cdoc_tagcloud_component_1.CommonDocTagcloudComponent,
-                cdoc_tags_component_1.CommonDocTagsComponent,
-                cdoc_tagsstate_component_1.CommonDocTagsStateComponent,
-                cdoc_videoplayer_component_1.CommonDocVideoplayerComponent,
-                cdoc_audioplayer_component_1.CommonDocAudioplayerComponent,
-                cdoc_actiontags_component_1.CommonDocActionTagsComponent,
-                cdoc_initialtable_component_1.CommonDocInitialtableComponent,
-                cdoc_odobjectrectangles_component_1.CommonDocODObjectRectanglesComponent,
-                cdoc_odobjectdetails_component_1.CommonDocODObjectDetailsComponent,
-                cdoc_object_navigation_component_1.CommonDocObjectNavigationComponent
+                CommonDocListComponent,
+                CommonDocListHeaderComponent,
+                CommonDocListFooterComponent,
+                CommonDocListItemComponent,
+                CommonDocKeywordsComponent,
+                CommonDocKeywordsStateComponent,
+                CommonDocTimetableComponent,
+                CommonDocTypetableComponent,
+                CommonDocTagcloudComponent,
+                CommonDocTagsComponent,
+                CommonDocTagsStateComponent,
+                CommonDocVideoplayerComponent,
+                CommonDocAudioplayerComponent,
+                CommonDocActionTagsComponent,
+                CommonDocInitialtableComponent,
+                CommonDocODObjectRectanglesComponent,
+                CommonDocODObjectDetailsComponent,
+                CommonDocObjectNavigationComponent
             ],
             imports: [
-                ng_bootstrap_1.NgbModule,
-                angular_2_dropdown_multiselect_1.MultiselectDropdownModule,
-                core_2.TranslateModule,
-                animations_1.BrowserAnimationsModule,
-                forms_1.FormsModule,
-                forms_1.ReactiveFormsModule,
-                ngx_file_drop_1.FileDropModule,
-                angular_commons_module_1.AngularCommonsModule
+                NgbModule,
+                MultiselectDropdownModule,
+                TranslateModule,
+                BrowserAnimationsModule,
+                FormsModule,
+                ReactiveFormsModule,
+                FileDropModule,
+                AngularCommonsModule
             ],
             exports: [
-                cdoc_list_component_1.CommonDocListComponent,
-                cdoc_list_header_component_1.CommonDocListHeaderComponent,
-                cdoc_list_footer_component_1.CommonDocListFooterComponent,
-                cdoc_list_item_component_1.CommonDocListItemComponent,
-                cdoc_keywords_component_1.CommonDocKeywordsComponent,
-                cdoc_keywordsstate_component_1.CommonDocKeywordsStateComponent,
-                cdoc_timetable_component_1.CommonDocTimetableComponent,
-                cdoc_typetable_component_1.CommonDocTypetableComponent,
-                cdoc_tagcloud_component_1.CommonDocTagcloudComponent,
-                cdoc_tags_component_1.CommonDocTagsComponent,
-                cdoc_tagsstate_component_1.CommonDocTagsStateComponent,
-                cdoc_videoplayer_component_1.CommonDocVideoplayerComponent,
-                cdoc_audioplayer_component_1.CommonDocAudioplayerComponent,
-                cdoc_actiontags_component_1.CommonDocActionTagsComponent,
-                cdoc_initialtable_component_1.CommonDocInitialtableComponent,
-                cdoc_odobjectrectangles_component_1.CommonDocODObjectRectanglesComponent,
-                cdoc_odobjectdetails_component_1.CommonDocODObjectDetailsComponent,
-                cdoc_object_navigation_component_1.CommonDocObjectNavigationComponent
+                CommonDocListComponent,
+                CommonDocListHeaderComponent,
+                CommonDocListFooterComponent,
+                CommonDocListItemComponent,
+                CommonDocKeywordsComponent,
+                CommonDocKeywordsStateComponent,
+                CommonDocTimetableComponent,
+                CommonDocTypetableComponent,
+                CommonDocTagcloudComponent,
+                CommonDocTagsComponent,
+                CommonDocTagsStateComponent,
+                CommonDocVideoplayerComponent,
+                CommonDocAudioplayerComponent,
+                CommonDocActionTagsComponent,
+                CommonDocInitialtableComponent,
+                CommonDocODObjectRectanglesComponent,
+                CommonDocODObjectDetailsComponent,
+                CommonDocObjectNavigationComponent
             ]
         })
     ], FrontendCommonDocCommonsModule);
     return FrontendCommonDocCommonsModule;
 }());
-exports.FrontendCommonDocCommonsModule = FrontendCommonDocCommonsModule;
+export { FrontendCommonDocCommonsModule };
 //# sourceMappingURL=frontend-cdoc-commons.module.js.map

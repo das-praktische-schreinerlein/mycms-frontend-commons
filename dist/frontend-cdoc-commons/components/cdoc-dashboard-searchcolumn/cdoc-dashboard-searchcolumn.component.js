@@ -1,4 +1,3 @@
-"use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
@@ -18,23 +17,22 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = require("@angular/core");
-var cdoc_inline_searchpage_component_1 = require("../../../frontend-cdoc-commons/components/cdoc-inline-searchpage/cdoc-inline-searchpage.component");
-var cdoc_multiaction_manager_1 = require("../../../frontend-cdoc-commons/services/cdoc-multiaction.manager");
+import { Input } from '@angular/core';
+import { CommonDocInlineSearchpageComponent } from '../../../frontend-cdoc-commons/components/cdoc-inline-searchpage/cdoc-inline-searchpage.component';
+import { CommonDocMultiActionManager } from '../../../frontend-cdoc-commons/services/cdoc-multiaction.manager';
 var CommonDocDashboardSearchColumnComponent = /** @class */ (function (_super) {
     __extends(CommonDocDashboardSearchColumnComponent, _super);
     function CommonDocDashboardSearchColumnComponent(appService, commonRoutingService, cdocDataService, searchFormConverter, cdocRoutingService, toastr, cd, elRef, pageUtils, searchFormUtils, cdocSearchFormUtils, actionService) {
-        var _this = _super.call(this, appService, commonRoutingService, cdocDataService, searchFormConverter, cdocRoutingService, toastr, cd, elRef, pageUtils, searchFormUtils, cdocSearchFormUtils, new cdoc_multiaction_manager_1.CommonDocMultiActionManager(appService, actionService)) || this;
+        var _this = _super.call(this, appService, commonRoutingService, cdocDataService, searchFormConverter, cdocRoutingService, toastr, cd, elRef, pageUtils, searchFormUtils, cdocSearchFormUtils, new CommonDocMultiActionManager(appService, actionService)) || this;
         _this.actionService = actionService;
         _this.baseSearchUrl = 'cdoc/';
         return _this;
     }
     __decorate([
-        core_1.Input(),
+        Input(),
         __metadata("design:type", Object)
     ], CommonDocDashboardSearchColumnComponent.prototype, "baseSearchUrl", void 0);
     return CommonDocDashboardSearchColumnComponent;
-}(cdoc_inline_searchpage_component_1.CommonDocInlineSearchpageComponent));
-exports.CommonDocDashboardSearchColumnComponent = CommonDocDashboardSearchColumnComponent;
+}(CommonDocInlineSearchpageComponent));
+export { CommonDocDashboardSearchColumnComponent };
 //# sourceMappingURL=cdoc-dashboard-searchcolumn.component.js.map

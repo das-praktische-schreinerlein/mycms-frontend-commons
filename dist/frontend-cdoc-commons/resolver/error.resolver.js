@@ -1,4 +1,3 @@
-"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,10 +7,9 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = require("@angular/core");
-var resolver_utils_1 = require("../../angular-commons/resolver/resolver.utils");
-var common_routing_service_1 = require("../../angular-commons/services/common-routing.service");
+import { Injectable } from '@angular/core';
+import { ResolverError } from '../../angular-commons/resolver/resolver.utils';
+import { CommonRoutingService } from '../../angular-commons/services/common-routing.service';
 var ErrorResolver = /** @class */ (function () {
     function ErrorResolver(commonRoutingService) {
         this.commonRoutingService = commonRoutingService;
@@ -21,7 +19,7 @@ var ErrorResolver = /** @class */ (function () {
         if (!resolvedData || !resolvedData.error) {
             return false;
         }
-        if (resolvedData.error instanceof resolver_utils_1.ResolverError && resolvedData.error !== undefined) {
+        if (resolvedData.error instanceof ResolverError && resolvedData.error !== undefined) {
             return true;
         }
         return false;
@@ -73,10 +71,10 @@ var ErrorResolver = /** @class */ (function () {
     ErrorResolver.ERROR_READONLY = 'ERROR_READONLY';
     ErrorResolver.ERROR_OTHER = 'ERROR_OTHER';
     ErrorResolver = ErrorResolver_1 = __decorate([
-        core_1.Injectable(),
-        __metadata("design:paramtypes", [common_routing_service_1.CommonRoutingService])
+        Injectable(),
+        __metadata("design:paramtypes", [CommonRoutingService])
     ], ErrorResolver);
     return ErrorResolver;
 }());
-exports.ErrorResolver = ErrorResolver;
+export { ErrorResolver };
 //# sourceMappingURL=error.resolver.js.map

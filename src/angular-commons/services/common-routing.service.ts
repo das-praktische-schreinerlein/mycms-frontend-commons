@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
 import {NavigationExtras, NavigationStart, Router, UrlTree} from '@angular/router';
-import {BehaviorSubject} from 'rxjs/BehaviorSubject';
-import {Subject} from 'rxjs/Subject';
+import {BehaviorSubject, Subject} from 'rxjs';
 
 export enum RoutingState {
     DONE = 1,

@@ -1,4 +1,3 @@
-"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,9 +7,8 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = require("@angular/core");
-var common_routing_service_1 = require("./common-routing.service");
+import { Injectable } from '@angular/core';
+import { CommonRoutingService } from './common-routing.service';
 var AngularHtmlService = /** @class */ (function () {
     function AngularHtmlService(commonRoutingService) {
         this.commonRoutingService = commonRoutingService;
@@ -64,10 +62,10 @@ var AngularHtmlService = /** @class */ (function () {
     };
     var AngularHtmlService_1;
     AngularHtmlService = AngularHtmlService_1 = __decorate([
-        core_1.Injectable(),
-        __metadata("design:paramtypes", [common_routing_service_1.CommonRoutingService])
+        Injectable(),
+        __metadata("design:paramtypes", [CommonRoutingService])
     ], AngularHtmlService);
     return AngularHtmlService;
 }());
-exports.AngularHtmlService = AngularHtmlService;
+export { AngularHtmlService };
 //# sourceMappingURL=angular-html.service.js.map

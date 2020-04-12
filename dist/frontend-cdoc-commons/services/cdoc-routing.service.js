@@ -1,4 +1,3 @@
-"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,10 +7,9 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = require("@angular/core");
-var common_routing_service_1 = require("../../angular-commons/services/common-routing.service");
-var string_utils_1 = require("@dps/mycms-commons/dist/commons/utils/string.utils");
+import { Injectable } from '@angular/core';
+import { CommonRoutingService } from '../../angular-commons/services/common-routing.service';
+import { StringUtils } from '@dps/mycms-commons/dist/commons/utils/string.utils';
 var CommonDocRoutingService = /** @class */ (function () {
     function CommonDocRoutingService(commonRoutingService) {
         this.commonRoutingService = commonRoutingService;
@@ -45,7 +43,7 @@ var CommonDocRoutingService = /** @class */ (function () {
         return this.lastBaseUrl;
     };
     CommonDocRoutingService.prototype.getShowUrl = function (cdoc, from) {
-        var name = string_utils_1.StringUtils.generateTechnicalName(cdoc.name ? cdoc.name : 'name');
+        var name = StringUtils.generateTechnicalName(cdoc.name ? cdoc.name : 'name');
         return this.lastBaseUrl + 'show/' + name + '/' + cdoc.id; // + (from ? '?from=' + from : '');
     };
     CommonDocRoutingService.prototype.navigateBackToSearch = function (suffix) {
@@ -61,10 +59,10 @@ var CommonDocRoutingService = /** @class */ (function () {
         return this.commonRoutingService.navigateByUrl(this.getShowUrl(cdoc, from));
     };
     CommonDocRoutingService = __decorate([
-        core_1.Injectable(),
-        __metadata("design:paramtypes", [common_routing_service_1.CommonRoutingService])
+        Injectable(),
+        __metadata("design:paramtypes", [CommonRoutingService])
     ], CommonDocRoutingService);
     return CommonDocRoutingService;
 }());
-exports.CommonDocRoutingService = CommonDocRoutingService;
+export { CommonDocRoutingService };
 //# sourceMappingURL=cdoc-routing.service.js.map

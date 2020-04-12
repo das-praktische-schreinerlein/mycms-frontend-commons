@@ -1,4 +1,3 @@
-"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,16 +7,15 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = require("@angular/core");
-var router_1 = require("@angular/router");
-var ngx_toastr_1 = require("ngx-toastr");
-var pdoc_data_service_1 = require("@dps/mycms-commons/dist/pdoc-commons/services/pdoc-data.service");
-var forms_1 = require("@angular/forms");
-var error_resolver_1 = require("../../../frontend-cdoc-commons/resolver/error.resolver");
-var generic_validator_util_1 = require("@dps/mycms-commons/dist/search-commons/model/forms/generic-validator.util");
-var page_utils_1 = require("../../../angular-commons/services/page.utils");
-var common_routing_service_1 = require("../../../angular-commons/services/common-routing.service");
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
+import { PDocDataService } from '@dps/mycms-commons/dist/pdoc-commons/services/pdoc-data.service';
+import { FormBuilder } from '@angular/forms';
+import { ErrorResolver } from '../../../frontend-cdoc-commons/resolver/error.resolver';
+import { IdValidationRule } from '@dps/mycms-commons/dist/search-commons/model/forms/generic-validator.util';
+import { PageUtils } from '../../../angular-commons/services/page.utils';
+import { CommonRoutingService } from '../../../angular-commons/services/common-routing.service';
 var SectionBarComponent = /** @class */ (function () {
     function SectionBarComponent(fb, route, pdocDataService, commonRoutingService, errorResolver, toastr, router, pageUtils, cd) {
         this.fb = fb;
@@ -29,7 +27,7 @@ var SectionBarComponent = /** @class */ (function () {
         this.router = router;
         this.pageUtils = pageUtils;
         this.cd = cd;
-        this.idValidationRule = new generic_validator_util_1.IdValidationRule(true);
+        this.idValidationRule = new IdValidationRule(true);
         this.sections = [];
         this.themeFormGroup = this.fb.group({
             theme: undefined
@@ -40,7 +38,7 @@ var SectionBarComponent = /** @class */ (function () {
         // Subscribe to route params
         var me = this;
         this.route.data.subscribe(function (data) {
-            if (error_resolver_1.ErrorResolver.isResolverError(data.pdoc)) {
+            if (ErrorResolver.isResolverError(data.pdoc)) {
                 // an error occured
                 me.pdoc = undefined;
                 me.themeFormGroup.patchValue({ 'theme': undefined });
@@ -74,18 +72,18 @@ var SectionBarComponent = /** @class */ (function () {
         return this.pdocDataService.getSubDocuments(pdoc);
     };
     SectionBarComponent = __decorate([
-        core_1.Component({
+        Component({
             selector: 'app-sectionbar',
             templateUrl: './sectionbar.component.html',
             styleUrls: ['./sectionbar.component.css'],
-            changeDetection: core_1.ChangeDetectionStrategy.OnPush
+            changeDetection: ChangeDetectionStrategy.OnPush
         }),
-        __metadata("design:paramtypes", [forms_1.FormBuilder, router_1.ActivatedRoute, pdoc_data_service_1.PDocDataService,
-            common_routing_service_1.CommonRoutingService, error_resolver_1.ErrorResolver,
-            ngx_toastr_1.ToastrService, router_1.Router, page_utils_1.PageUtils,
-            core_1.ChangeDetectorRef])
+        __metadata("design:paramtypes", [FormBuilder, ActivatedRoute, PDocDataService,
+            CommonRoutingService, ErrorResolver,
+            ToastrService, Router, PageUtils,
+            ChangeDetectorRef])
     ], SectionBarComponent);
     return SectionBarComponent;
 }());
-exports.SectionBarComponent = SectionBarComponent;
+export { SectionBarComponent };
 //# sourceMappingURL=sectionbar.component.js.map

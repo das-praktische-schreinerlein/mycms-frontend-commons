@@ -1,4 +1,3 @@
-"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,23 +7,22 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = require("@angular/core");
-var router_1 = require("@angular/router");
-var pdoc_record_1 = require("@dps/mycms-commons/dist/pdoc-commons/model/records/pdoc-record");
-var ngx_toastr_1 = require("ngx-toastr");
-var layout_service_1 = require("../../../angular-commons/services/layout.service");
-var pdoc_data_service_1 = require("@dps/mycms-commons/dist/pdoc-commons/services/pdoc-data.service");
-var error_resolver_1 = require("../../../frontend-cdoc-commons/resolver/error.resolver");
-var sections_pdoc_details_resolver_1 = require("../../../frontend-cdoc-commons/resolver/sections-pdoc-details.resolver");
-var generic_validator_util_1 = require("@dps/mycms-commons/dist/search-commons/model/forms/generic-validator.util");
-var generic_app_service_1 = require("@dps/mycms-commons/dist/commons/services/generic-app.service");
-var page_utils_1 = require("../../../angular-commons/services/page.utils");
-var angular_markdown_service_1 = require("../../../angular-commons/services/angular-markdown.service");
-var angular_html_service_1 = require("../../../angular-commons/services/angular-html.service");
-var common_routing_service_1 = require("../../../angular-commons/services/common-routing.service");
-var generic_tracking_service_1 = require("../../../angular-commons/services/generic-tracking.service");
-var platform_service_1 = require("../../../angular-commons/services/platform.service");
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { PDocRecord } from '@dps/mycms-commons/dist/pdoc-commons/model/records/pdoc-record';
+import { ToastrService } from 'ngx-toastr';
+import { Layout, LayoutService, LayoutSize, SearchFormLayout } from '../../../angular-commons/services/layout.service';
+import { PDocDataService } from '@dps/mycms-commons/dist/pdoc-commons/services/pdoc-data.service';
+import { ErrorResolver } from '../../../frontend-cdoc-commons/resolver/error.resolver';
+import { SectionsPDocRecordResolver } from '../../../frontend-cdoc-commons/resolver/sections-pdoc-details.resolver';
+import { IdValidationRule } from '@dps/mycms-commons/dist/search-commons/model/forms/generic-validator.util';
+import { GenericAppService } from '@dps/mycms-commons/dist/commons/services/generic-app.service';
+import { PageUtils } from '../../../angular-commons/services/page.utils';
+import { AngularMarkdownService } from '../../../angular-commons/services/angular-markdown.service';
+import { AngularHtmlService } from '../../../angular-commons/services/angular-html.service';
+import { CommonRoutingService, RoutingState } from '../../../angular-commons/services/common-routing.service';
+import { GenericTrackingService } from '../../../angular-commons/services/generic-tracking.service';
+import { PlatformService } from '../../../angular-commons/services/platform.service';
 var SectionPageComponent = /** @class */ (function () {
     function SectionPageComponent(route, pdocDataService, commonRoutingService, errorResolver, toastr, pageUtils, angularMarkdownService, angularHtmlService, cd, trackingProvider, platformService, layoutService, appService) {
         this.route = route;
@@ -41,14 +39,14 @@ var SectionPageComponent = /** @class */ (function () {
         this.layoutService = layoutService;
         this.appService = appService;
         this.flgDescRendered = false;
-        this.idValidationRule = new generic_validator_util_1.IdValidationRule(true);
-        this.pdoc = new pdoc_record_1.PDocRecord();
+        this.idValidationRule = new IdValidationRule(true);
+        this.pdoc = new PDocRecord();
         this.baseSearchUrl = '';
         this.sections = [];
         this.menuSections = [];
-        this.Layout = layout_service_1.Layout;
-        this.SearchFormLayout = layout_service_1.SearchFormLayout;
-        this.searchFormLayout = layout_service_1.SearchFormLayout.GRID;
+        this.Layout = Layout;
+        this.SearchFormLayout = SearchFormLayout;
+        this.searchFormLayout = SearchFormLayout.GRID;
     }
     SectionPageComponent.prototype.ngOnInit = function () {
         var _this = this;
@@ -59,11 +57,11 @@ var SectionPageComponent = /** @class */ (function () {
             me.onResize(layoutSizeData);
         });
         this.route.data.subscribe(function (data) {
-            me.commonRoutingService.setRoutingState(common_routing_service_1.RoutingState.DONE);
+            me.commonRoutingService.setRoutingState(RoutingState.DONE);
             var config = me.appService.getAppConfig();
             me.configureProcessingOfResolvedData(config);
-            var flgPDocError = error_resolver_1.ErrorResolver.isResolverError(data.pdoc);
-            var flgBaseSearchUrlError = error_resolver_1.ErrorResolver.isResolverError(data.baseSearchUrl);
+            var flgPDocError = ErrorResolver.isResolverError(data.pdoc);
+            var flgBaseSearchUrlError = ErrorResolver.isResolverError(data.baseSearchUrl);
             if (!flgPDocError && !flgBaseSearchUrlError) {
                 me.pdoc = data.pdoc.data;
                 me.flgDescRendered = false;
@@ -94,14 +92,14 @@ var SectionPageComponent = /** @class */ (function () {
             var errorCode = (flgPDocError ? data.pdoc.error.code : data.baseSearchUrl.error.code);
             var sectionId = (flgPDocError ? data.pdoc.error.data : data.baseSearchUrl.error.data);
             switch (errorCode) {
-                case sections_pdoc_details_resolver_1.SectionsPDocRecordResolver.ERROR_INVALID_SECTION_ID:
-                    code = error_resolver_1.ErrorResolver.ERROR_INVALID_ID;
+                case SectionsPDocRecordResolver.ERROR_INVALID_SECTION_ID:
+                    code = ErrorResolver.ERROR_INVALID_ID;
                     me.baseSearchUrl = ['sections', _this.idValidationRule.sanitize(sectionId)].join('/');
                     newUrl = [me.baseSearchUrl].join('/');
                     msg = undefined;
                     break;
-                case sections_pdoc_details_resolver_1.SectionsPDocRecordResolver.ERROR_UNKNOWN_SECTION_ID:
-                    code = error_resolver_1.ErrorResolver.ERROR_UNKNOWN_ID;
+                case SectionsPDocRecordResolver.ERROR_UNKNOWN_SECTION_ID:
+                    code = ErrorResolver.ERROR_UNKNOWN_ID;
                     me.baseSearchUrl = ['sections', 'start'].join('/');
                     if (data.pdoc.state.url === me.baseSearchUrl) {
                         newUrl = 'errorpage';
@@ -113,8 +111,8 @@ var SectionPageComponent = /** @class */ (function () {
                         msg = undefined;
                     }
                     break;
-                case sections_pdoc_details_resolver_1.SectionsPDocRecordResolver.ERROR_READING_SECTION_ID:
-                    code = error_resolver_1.ErrorResolver.ERROR_WHILE_READING;
+                case SectionsPDocRecordResolver.ERROR_READING_SECTION_ID:
+                    code = ErrorResolver.ERROR_WHILE_READING;
                     me.baseSearchUrl = ['sections', 'start'].join('/');
                     if (data.pdoc.state.url === me.baseSearchUrl) {
                         newUrl = 'errorpage';
@@ -126,13 +124,13 @@ var SectionPageComponent = /** @class */ (function () {
                         msg = undefined;
                     }
                     break;
-                case generic_app_service_1.GenericAppService.ERROR_APP_NOT_INITIALIZED:
-                    code = error_resolver_1.ErrorResolver.ERROR_APP_NOT_INITIALIZED;
+                case GenericAppService.ERROR_APP_NOT_INITIALIZED:
+                    code = ErrorResolver.ERROR_APP_NOT_INITIALIZED;
                     newUrl = undefined;
                     msg = undefined;
                     break;
                 default:
-                    code = error_resolver_1.ErrorResolver.ERROR_OTHER;
+                    code = ErrorResolver.ERROR_OTHER;
                     me.baseSearchUrl = ['sections', 'start'].join('/');
                     newUrl = undefined;
                     msg = undefined;
@@ -203,31 +201,31 @@ var SectionPageComponent = /** @class */ (function () {
     SectionPageComponent.prototype.doProcessAfterResolvedData = function (config) {
     };
     SectionPageComponent.prototype.onResize = function (layoutSizeData) {
-        if (this.platformService.isClient() && layoutSizeData.layoutSize >= layout_service_1.LayoutSize.VERYBIG && !this.layoutService.isPrintMode()) {
-            this.searchFormLayout = layout_service_1.SearchFormLayout.STACKED;
+        if (this.platformService.isClient() && layoutSizeData.layoutSize >= LayoutSize.VERYBIG && !this.layoutService.isPrintMode()) {
+            this.searchFormLayout = SearchFormLayout.STACKED;
         }
         else {
-            this.searchFormLayout = layout_service_1.SearchFormLayout.GRID;
+            this.searchFormLayout = SearchFormLayout.GRID;
         }
         this.flgDescRendered = false;
         this.cd.markForCheck();
     };
     SectionPageComponent = __decorate([
-        core_1.Component({
+        Component({
             selector: 'app-sectionpage',
             templateUrl: './section-page.component.html',
             styleUrls: ['./section-page.component.css'],
-            changeDetection: core_1.ChangeDetectionStrategy.OnPush
+            changeDetection: ChangeDetectionStrategy.OnPush
         }),
-        __metadata("design:paramtypes", [router_1.ActivatedRoute, pdoc_data_service_1.PDocDataService,
-            common_routing_service_1.CommonRoutingService, error_resolver_1.ErrorResolver,
-            ngx_toastr_1.ToastrService, page_utils_1.PageUtils,
-            angular_markdown_service_1.AngularMarkdownService, angular_html_service_1.AngularHtmlService,
-            core_1.ChangeDetectorRef, generic_tracking_service_1.GenericTrackingService,
-            platform_service_1.PlatformService, layout_service_1.LayoutService,
-            generic_app_service_1.GenericAppService])
+        __metadata("design:paramtypes", [ActivatedRoute, PDocDataService,
+            CommonRoutingService, ErrorResolver,
+            ToastrService, PageUtils,
+            AngularMarkdownService, AngularHtmlService,
+            ChangeDetectorRef, GenericTrackingService,
+            PlatformService, LayoutService,
+            GenericAppService])
     ], SectionPageComponent);
     return SectionPageComponent;
 }());
-exports.SectionPageComponent = SectionPageComponent;
+export { SectionPageComponent };
 //# sourceMappingURL=section-page.component.js.map

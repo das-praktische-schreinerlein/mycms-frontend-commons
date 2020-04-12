@@ -1,4 +1,3 @@
-"use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
@@ -18,11 +17,10 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = require("@angular/core");
-var bean_utils_1 = require("@dps/mycms-commons/dist/commons/utils/bean.utils");
-var date_utils_1 = require("@dps/mycms-commons/dist/commons/utils/date.utils");
-var inline_component_1 = require("../../../angular-commons/components/inline.component");
+import { EventEmitter, Input, Output } from '@angular/core';
+import { BeanUtils } from '@dps/mycms-commons/dist/commons/utils/bean.utils';
+import { DateUtils } from '@dps/mycms-commons/dist/commons/utils/date.utils';
+import { AbstractInlineComponent } from '../../../angular-commons/components/inline.component';
 var CommonDocEditformComponent = /** @class */ (function (_super) {
     __extends(CommonDocEditformComponent, _super);
     function CommonDocEditformComponent(fb, toastr, cd, appService, cdocSearchFormUtils, searchFormUtils, cdocDataService, contentUtils) {
@@ -66,8 +64,8 @@ var CommonDocEditformComponent = /** @class */ (function (_super) {
         });
         _this.keywordSuggestions = [];
         _this.backToSearch = false;
-        _this.save = new core_1.EventEmitter();
-        _this.saveAndSearch = new core_1.EventEmitter();
+        _this.save = new EventEmitter();
+        _this.saveAndSearch = new EventEmitter();
         return _this;
     }
     CommonDocEditformComponent.prototype.setKeyword = function (keyword) {
@@ -96,7 +94,7 @@ var CommonDocEditformComponent = /** @class */ (function (_super) {
         this.editFormGroup.patchValue(config);
     };
     CommonDocEditformComponent.prototype.formatInputDate = function (value) {
-        return date_utils_1.DateUtils.dateToLocalISOString(value);
+        return DateUtils.dateToLocalISOString(value);
     };
     CommonDocEditformComponent.prototype.recommendName = function () {
         var name = '';
@@ -119,9 +117,9 @@ var CommonDocEditformComponent = /** @class */ (function (_super) {
     CommonDocEditformComponent.prototype.getComponentConfig = function (config) {
         var prefix = '';
         var suggestionConfig = [];
-        if (bean_utils_1.BeanUtils.getValue(config, 'components.cdoc-keywords.keywordSuggestions')) {
-            suggestionConfig = bean_utils_1.BeanUtils.getValue(config, 'components.cdoc-keywords.keywordSuggestions');
-            prefix = bean_utils_1.BeanUtils.getValue(config, 'components.cdoc-keywords.editPrefix');
+        if (BeanUtils.getValue(config, 'components.cdoc-keywords.keywordSuggestions')) {
+            suggestionConfig = BeanUtils.getValue(config, 'components.cdoc-keywords.keywordSuggestions');
+            prefix = BeanUtils.getValue(config, 'components.cdoc-keywords.editPrefix');
         }
         return {
             suggestionConfigs: suggestionConfig,
@@ -239,7 +237,7 @@ var CommonDocEditformComponent = /** @class */ (function (_super) {
     };
     CommonDocEditformComponent.prototype.createDefaultFormValueConfig = function (record) {
         return {
-            dateshow: [date_utils_1.DateUtils.dateToLocalISOString(record.dateshow)],
+            dateshow: [DateUtils.dateToLocalISOString(record.dateshow)],
         };
     };
     CommonDocEditformComponent.prototype.postProcessFormValueConfig = function (record, formValueConfig) {
@@ -311,7 +309,7 @@ var CommonDocEditformComponent = /** @class */ (function (_super) {
     CommonDocEditformComponent.prototype.createSelectOptions = function (definitions, values, optionsSelect) {
         for (var key in definitions) {
             var definition = definitions[key];
-            var value = bean_utils_1.BeanUtils.getValue(this.record, key);
+            var value = BeanUtils.getValue(this.record, key);
             if (value === null || value === 'null' || value === undefined || value === 'undefined') {
                 value = undefined;
             }
@@ -332,22 +330,22 @@ var CommonDocEditformComponent = /** @class */ (function (_super) {
     };
     var _a;
     __decorate([
-        core_1.Input(),
+        Input(),
         __metadata("design:type", typeof (_a = typeof R !== "undefined" && R) === "function" && _a || Object)
     ], CommonDocEditformComponent.prototype, "record", void 0);
     __decorate([
-        core_1.Input(),
+        Input(),
         __metadata("design:type", Object)
     ], CommonDocEditformComponent.prototype, "backToSearch", void 0);
     __decorate([
-        core_1.Output(),
-        __metadata("design:type", core_1.EventEmitter)
+        Output(),
+        __metadata("design:type", EventEmitter)
     ], CommonDocEditformComponent.prototype, "save", void 0);
     __decorate([
-        core_1.Output(),
-        __metadata("design:type", core_1.EventEmitter)
+        Output(),
+        __metadata("design:type", EventEmitter)
     ], CommonDocEditformComponent.prototype, "saveAndSearch", void 0);
     return CommonDocEditformComponent;
-}(inline_component_1.AbstractInlineComponent));
-exports.CommonDocEditformComponent = CommonDocEditformComponent;
+}(AbstractInlineComponent));
+export { CommonDocEditformComponent };
 //# sourceMappingURL=cdoc-editform.component.js.map

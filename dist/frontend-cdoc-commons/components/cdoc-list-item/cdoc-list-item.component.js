@@ -1,4 +1,3 @@
-"use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
@@ -18,13 +17,12 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = require("@angular/core");
-var layout_service_1 = require("../../../angular-commons/services/layout.service");
-var cdoc_contentutils_service_1 = require("../../services/cdoc-contentutils.service");
-var cdoc_entity_record_1 = require("@dps/mycms-commons/dist/search-commons/model/records/cdoc-entity-record");
-var inline_component_1 = require("../../../angular-commons/components/inline.component");
-var cdoc_multiaction_manager_1 = require("../../services/cdoc-multiaction.manager");
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, Output } from '@angular/core';
+import { Layout, LayoutService, LayoutSize } from '../../../angular-commons/services/layout.service';
+import { CommonDocContentUtils } from '../../services/cdoc-contentutils.service';
+import { CommonDocRecord } from '@dps/mycms-commons/dist/search-commons/model/records/cdoc-entity-record';
+import { AbstractInlineComponent } from '../../../angular-commons/components/inline.component';
+import { CommonDocMultiActionManager } from '../../services/cdoc-multiaction.manager';
 var CommonDocListItemComponent = /** @class */ (function (_super) {
     __extends(CommonDocListItemComponent, _super);
     function CommonDocListItemComponent(contentUtils, cd, layoutService) {
@@ -42,11 +40,11 @@ var CommonDocListItemComponent = /** @class */ (function (_super) {
             video: undefined,
             urlShow: undefined
         };
-        _this.LayoutSize = layout_service_1.LayoutSize;
-        _this.layoutSize = layout_service_1.LayoutSize.BIG;
+        _this.LayoutSize = LayoutSize;
+        _this.layoutSize = LayoutSize.BIG;
         _this.short = false;
-        _this.show = new core_1.EventEmitter();
-        _this.showImage = new core_1.EventEmitter();
+        _this.show = new EventEmitter();
+        _this.showImage = new EventEmitter();
         _this.contentUtils = contentUtils;
         _this.layoutSizeObservable = _this.layoutService.getLayoutSizeData();
         _this.layoutSizeObservable.subscribe(function (layoutSizeData) {
@@ -103,52 +101,52 @@ var CommonDocListItemComponent = /** @class */ (function (_super) {
         this.cd.markForCheck();
     };
     __decorate([
-        core_1.Input(),
-        __metadata("design:type", cdoc_entity_record_1.CommonDocRecord)
+        Input(),
+        __metadata("design:type", CommonDocRecord)
     ], CommonDocListItemComponent.prototype, "record", void 0);
     __decorate([
-        core_1.Input(),
+        Input(),
         __metadata("design:type", void 0)
     ], CommonDocListItemComponent.prototype, "rowNr", void 0);
     __decorate([
-        core_1.Input(),
+        Input(),
         __metadata("design:type", void 0)
     ], CommonDocListItemComponent.prototype, "idx", void 0);
     __decorate([
-        core_1.Input(),
+        Input(),
         __metadata("design:type", String)
     ], CommonDocListItemComponent.prototype, "backToSearchUrl", void 0);
     __decorate([
-        core_1.Input(),
+        Input(),
         __metadata("design:type", Number)
     ], CommonDocListItemComponent.prototype, "layout", void 0);
     __decorate([
-        core_1.Input(),
+        Input(),
         __metadata("design:type", Object)
     ], CommonDocListItemComponent.prototype, "short", void 0);
     __decorate([
-        core_1.Input(),
-        __metadata("design:type", cdoc_multiaction_manager_1.CommonDocMultiActionManager)
+        Input(),
+        __metadata("design:type", CommonDocMultiActionManager)
     ], CommonDocListItemComponent.prototype, "multiActionManager", void 0);
     __decorate([
-        core_1.Output(),
-        __metadata("design:type", core_1.EventEmitter)
+        Output(),
+        __metadata("design:type", EventEmitter)
     ], CommonDocListItemComponent.prototype, "show", void 0);
     __decorate([
-        core_1.Output(),
-        __metadata("design:type", core_1.EventEmitter)
+        Output(),
+        __metadata("design:type", EventEmitter)
     ], CommonDocListItemComponent.prototype, "showImage", void 0);
     CommonDocListItemComponent = __decorate([
-        core_1.Component({
+        Component({
             selector: 'app-cdoc-list-item',
             templateUrl: './cdoc-list-item.component.html',
             styleUrls: ['./cdoc-list-item.component.css'],
-            changeDetection: core_1.ChangeDetectionStrategy.OnPush
+            changeDetection: ChangeDetectionStrategy.OnPush
         }),
-        __metadata("design:paramtypes", [cdoc_contentutils_service_1.CommonDocContentUtils, core_1.ChangeDetectorRef,
-            layout_service_1.LayoutService])
+        __metadata("design:paramtypes", [CommonDocContentUtils, ChangeDetectorRef,
+            LayoutService])
     ], CommonDocListItemComponent);
     return CommonDocListItemComponent;
-}(inline_component_1.AbstractInlineComponent));
-exports.CommonDocListItemComponent = CommonDocListItemComponent;
+}(AbstractInlineComponent));
+export { CommonDocListItemComponent };
 //# sourceMappingURL=cdoc-list-item.component.js.map

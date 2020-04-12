@@ -1,4 +1,3 @@
-"use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
@@ -18,9 +17,8 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = require("@angular/core");
-var inline_component_1 = require("../../../angular-commons/components/inline.component");
+import { Input } from '@angular/core';
+import { AbstractInlineComponent } from '../../../angular-commons/components/inline.component';
 var CommonDocSimpleSearchNavigationComponent = /** @class */ (function (_super) {
     __extends(CommonDocSimpleSearchNavigationComponent, _super);
     function CommonDocSimpleSearchNavigationComponent(cdocRoutingService, cd) {
@@ -52,10 +50,10 @@ var CommonDocSimpleSearchNavigationComponent = /** @class */ (function (_super) 
         return this.cdocRoutingService.getLastSearchUrlPredecessor();
     };
     __decorate([
-        core_1.Input(),
+        Input(),
         __metadata("design:type", Object)
     ], CommonDocSimpleSearchNavigationComponent.prototype, "record", void 0);
     return CommonDocSimpleSearchNavigationComponent;
-}(inline_component_1.AbstractInlineComponent));
-exports.CommonDocSimpleSearchNavigationComponent = CommonDocSimpleSearchNavigationComponent;
+}(AbstractInlineComponent));
+export { CommonDocSimpleSearchNavigationComponent };
 //# sourceMappingURL=cdoc-simple-search-navigation.component.js.map

@@ -16,7 +16,7 @@ MyCMS uses a bunch of libraries and tools. Many thanx to the people behind these
     - [@ngx-translate/http-loader](https://www.npmjs.com/package/@ngx-translate/http-loader)
     - [angular-2-dropdown-multiselect](https://www.npmjs.com/package/angular2-dropdown-multiselect)
     - [angular2-cookie-law](https://www.npmjs.com/package/angular2-cookie-law)
-    - [angular2-markdown](https://www.npmjs.com/package/angular2-markdown)
+    - [ngx-md](https://www.npmjs.com/package/ngx-md)
     - [ngx-lightbox](https://www.npmjs.com/package/ngx-lightbox)
     - [ngx-toastr](https://www.npmjs.com/package/ngx-toastr)
     - [ngx-file-drop](https://www.npmjs.com/package/ngx-file-drop)

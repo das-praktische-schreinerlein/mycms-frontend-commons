@@ -5,7 +5,7 @@ import { PageUtils } from '../../angular-commons/services/page.utils';
 import { GenericTrackingService } from '../../angular-commons/services/generic-tracking.service';
 import { GenericAppService } from '@dps/mycms-commons/dist/commons/services/generic-app.service';
 import { LayoutService, LayoutSizeData } from '../../angular-commons/services/layout.service';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { BehaviorSubject } from 'rxjs';
 import { PlatformService } from '../../angular-commons/services/platform.service';
 import { PDocRecord } from '@dps/mycms-commons/dist/pdoc-commons/model/records/pdoc-record';
 import { CommonEnvironment } from '../common-environment';

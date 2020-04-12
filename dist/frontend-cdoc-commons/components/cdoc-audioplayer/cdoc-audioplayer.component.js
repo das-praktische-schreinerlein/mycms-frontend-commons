@@ -1,4 +1,3 @@
-"use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
@@ -18,11 +17,10 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = require("@angular/core");
-var cdoc_contentutils_service_1 = require("../../services/cdoc-contentutils.service");
-var cdoc_entity_record_1 = require("@dps/mycms-commons/dist/search-commons/model/records/cdoc-entity-record");
-var inline_component_1 = require("../../../angular-commons/components/inline.component");
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { CommonDocContentUtils } from '../../services/cdoc-contentutils.service';
+import { CommonDocRecord } from '@dps/mycms-commons/dist/search-commons/model/records/cdoc-entity-record';
+import { AbstractInlineComponent } from '../../../angular-commons/components/inline.component';
 var CommonDocAudioplayerComponent = /** @class */ (function (_super) {
     __extends(CommonDocAudioplayerComponent, _super);
     function CommonDocAudioplayerComponent(contentUtils, cd) {
@@ -39,7 +37,7 @@ var CommonDocAudioplayerComponent = /** @class */ (function (_super) {
             video: undefined,
             urlShow: undefined
         };
-        _this.show = new core_1.EventEmitter();
+        _this.show = new EventEmitter();
         _this.contentUtils = contentUtils;
         return _this;
     }
@@ -61,35 +59,35 @@ var CommonDocAudioplayerComponent = /** @class */ (function (_super) {
         this.cd.markForCheck();
     };
     __decorate([
-        core_1.ViewChild('audioPlayer'),
+        ViewChild('audioPlayer'),
         __metadata("design:type", Object)
     ], CommonDocAudioplayerComponent.prototype, "audioplayer", void 0);
     __decorate([
-        core_1.Input(),
-        __metadata("design:type", cdoc_entity_record_1.CommonDocRecord)
+        Input(),
+        __metadata("design:type", CommonDocRecord)
     ], CommonDocAudioplayerComponent.prototype, "record", void 0);
     __decorate([
-        core_1.Input(),
+        Input(),
         __metadata("design:type", Number)
     ], CommonDocAudioplayerComponent.prototype, "width", void 0);
     __decorate([
-        core_1.Input(),
+        Input(),
         __metadata("design:type", String)
     ], CommonDocAudioplayerComponent.prototype, "styleClass", void 0);
     __decorate([
-        core_1.Output(),
-        __metadata("design:type", core_1.EventEmitter)
+        Output(),
+        __metadata("design:type", EventEmitter)
     ], CommonDocAudioplayerComponent.prototype, "show", void 0);
     CommonDocAudioplayerComponent = __decorate([
-        core_1.Component({
+        Component({
             selector: 'app-cdoc-audioplayer',
             templateUrl: './cdoc-audioplayer.component.html',
             styleUrls: ['./cdoc-audioplayer.component.css'],
-            changeDetection: core_1.ChangeDetectionStrategy.OnPush
+            changeDetection: ChangeDetectionStrategy.OnPush
         }),
-        __metadata("design:paramtypes", [cdoc_contentutils_service_1.CommonDocContentUtils, core_1.ChangeDetectorRef])
+        __metadata("design:paramtypes", [CommonDocContentUtils, ChangeDetectorRef])
     ], CommonDocAudioplayerComponent);
     return CommonDocAudioplayerComponent;
-}(inline_component_1.AbstractInlineComponent));
-exports.CommonDocAudioplayerComponent = CommonDocAudioplayerComponent;
+}(AbstractInlineComponent));
+export { CommonDocAudioplayerComponent };
 //# sourceMappingURL=cdoc-audioplayer.component.js.map

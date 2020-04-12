@@ -1,4 +1,3 @@
-"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,10 +7,9 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = require("@angular/core");
-var generic_app_service_1 = require("@dps/mycms-commons/dist/commons/services/generic-app.service");
-var forms_1 = require("@angular/forms");
+import { Component, Injectable } from '@angular/core';
+import { AppOnlineState, GenericAppService } from '@dps/mycms-commons/dist/commons/services/generic-app.service';
+import { FormBuilder } from '@angular/forms';
 var SwitchOnOfflineComponent = /** @class */ (function () {
     function SwitchOnOfflineComponent(formBuilder, appService) {
         this.formBuilder = formBuilder;
@@ -23,10 +21,10 @@ var SwitchOnOfflineComponent = /** @class */ (function () {
             'onlineState': 'online'
         });
         this.appService.getAppOnlineState().subscribe(function (appOnlineState) {
-            if (appOnlineState === generic_app_service_1.AppOnlineState.Offline) {
+            if (appOnlineState === AppOnlineState.Offline) {
                 _this.onlineStateForm.patchValue({ onlineState: 'offline' });
             }
-            else if (appOnlineState === generic_app_service_1.AppOnlineState.Online) {
+            else if (appOnlineState === AppOnlineState.Online) {
                 _this.onlineStateForm.patchValue({ onlineState: 'online' });
             }
         });
@@ -38,15 +36,15 @@ var SwitchOnOfflineComponent = /** @class */ (function () {
         this.appService.doSwitchToOnlineVersion();
     };
     SwitchOnOfflineComponent = __decorate([
-        core_1.Component({
+        Component({
             selector: 'app-switch-onoffline',
             templateUrl: './switch-onoffline.component.html',
             styleUrls: ['./switch-onoffline.component.css']
         }),
-        core_1.Injectable(),
-        __metadata("design:paramtypes", [forms_1.FormBuilder, generic_app_service_1.GenericAppService])
+        Injectable(),
+        __metadata("design:paramtypes", [FormBuilder, GenericAppService])
     ], SwitchOnOfflineComponent);
     return SwitchOnOfflineComponent;
 }());
-exports.SwitchOnOfflineComponent = SwitchOnOfflineComponent;
+export { SwitchOnOfflineComponent };
 //# sourceMappingURL=switch-onoffline.component.js.map

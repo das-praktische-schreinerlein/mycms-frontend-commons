@@ -10,7 +10,7 @@ import {
 import {Layout, LayoutService, LayoutSize, LayoutSizeData} from '../../../angular-commons/services/layout.service';
 import {CommonDocContentUtils, CommonItemData} from '../../services/cdoc-contentutils.service';
 import {CommonDocRecord} from '@dps/mycms-commons/dist/search-commons/model/records/cdoc-entity-record';
-import {BehaviorSubject} from 'rxjs/BehaviorSubject';
+import {BehaviorSubject} from 'rxjs';
 import {AbstractInlineComponent} from '../../../angular-commons/components/inline.component';
 import {ActionTagEvent} from '../cdoc-actiontags/cdoc-actiontags.component';
 import {CommonDocMultiActionManager} from '../../services/cdoc-multiaction.manager';

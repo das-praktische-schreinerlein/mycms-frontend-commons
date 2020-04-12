@@ -1,4 +1,3 @@
-"use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
@@ -18,10 +17,9 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = require("@angular/core");
-var Subject_1 = require("rxjs/Subject");
-var cdoc_assignform_component_1 = require("../cdoc-assignform/cdoc-assignform.component");
+import { Input } from '@angular/core';
+import { Subject } from 'rxjs';
+import { CommonDocAssignFormComponent } from '../cdoc-assignform/cdoc-assignform.component';
 var CommonDocReplaceFormComponent = /** @class */ (function (_super) {
     __extends(CommonDocReplaceFormComponent, _super);
     function CommonDocReplaceFormComponent(fb, activeModal, cd, searchFormUtils, cdocDataService, toastr) {
@@ -88,14 +86,14 @@ var CommonDocReplaceFormComponent = /** @class */ (function (_super) {
         return Array.isArray(rawValue) ? rawValue[0] : undefined;
     };
     __decorate([
-        core_1.Input(),
+        Input(),
         __metadata("design:type", Array)
     ], CommonDocReplaceFormComponent.prototype, "records", void 0);
     __decorate([
-        core_1.Input(),
-        __metadata("design:type", Subject_1.Subject)
+        Input(),
+        __metadata("design:type", Subject)
     ], CommonDocReplaceFormComponent.prototype, "resultObservable", void 0);
     return CommonDocReplaceFormComponent;
-}(cdoc_assignform_component_1.CommonDocAssignFormComponent));
-exports.CommonDocReplaceFormComponent = CommonDocReplaceFormComponent;
+}(CommonDocAssignFormComponent));
+export { CommonDocReplaceFormComponent };
 //# sourceMappingURL=cdoc-replaceform.component.js.map

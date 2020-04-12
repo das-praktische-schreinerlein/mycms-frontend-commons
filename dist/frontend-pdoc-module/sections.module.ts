@@ -8,7 +8,7 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {SectionsPDocsResolver} from '../frontend-cdoc-commons/resolver/sections-pdocs.resolver';
 import {ErrorResolver} from '../frontend-cdoc-commons/resolver/error.resolver';
 import {PageUtils} from '../angular-commons/services/page.utils';
-import {MarkdownModule} from 'angular2-markdown';
+import {NgxMdModule} from 'ngx-md';
 import {AngularMarkdownService} from '../angular-commons/services/angular-markdown.service';
 import {AngularHtmlService} from '../angular-commons/services/angular-html.service';
 import {CommonRoutingService} from '../angular-commons/services/common-routing.service';
@@ -22,7 +22,7 @@ import {FrontendCommonDocCommonsModule} from '../frontend-cdoc-commons/frontend-
     imports: [
         TranslateModule,
         NgbModule.forRoot(),
-        MarkdownModule.forRoot(),
+        NgxMdModule.forRoot(),
         BrowserModule,
         FormsModule,
         ReactiveFormsModule,

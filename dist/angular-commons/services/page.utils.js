@@ -1,4 +1,3 @@
-"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -11,11 +10,10 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-var platform_browser_1 = require("@angular/platform-browser");
-var core_1 = require("@angular/core");
-var core_2 = require("@ngx-translate/core");
-var common_1 = require("@angular/common");
+import { Meta, Title } from '@angular/platform-browser';
+import { Inject, Injectable, LOCALE_ID } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
+import { DOCUMENT } from '@angular/common';
 var PageUtils = /** @class */ (function () {
     function PageUtils(titleService, metaService, locale, translateService, document) {
         this.titleService = titleService;
@@ -106,12 +104,12 @@ var PageUtils = /** @class */ (function () {
         }
     };
     PageUtils = __decorate([
-        core_1.Injectable(),
-        __param(2, core_1.Inject(core_1.LOCALE_ID)),
-        __param(4, core_1.Inject(common_1.DOCUMENT)),
-        __metadata("design:paramtypes", [platform_browser_1.Title, platform_browser_1.Meta, String, core_2.TranslateService, Object])
+        Injectable(),
+        __param(2, Inject(LOCALE_ID)),
+        __param(4, Inject(DOCUMENT)),
+        __metadata("design:paramtypes", [Title, Meta, String, TranslateService, Object])
     ], PageUtils);
     return PageUtils;
 }());
-exports.PageUtils = PageUtils;
+export { PageUtils };
 //# sourceMappingURL=page.utils.js.map

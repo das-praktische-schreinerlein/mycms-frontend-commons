@@ -11,7 +11,6 @@ import {CommonDocDataService} from '@dps/mycms-commons/dist/search-commons/servi
 import {CommonDocMultiActionManager} from '../../services/cdoc-multiaction.manager';
 import {StringUtils} from '@dps/mycms-commons/dist/commons/utils/string.utils';
 import {IMultiSelectOption, IMultiSelectSettings, IMultiSelectTexts} from 'angular-2-dropdown-multiselect';
-import {isArray} from 'rxjs/util/isArray';
 
 export interface CommonDocMultiActionHeaderComponentConfig {
     tagConfigs: MultiActionTagConfig[];
@@ -142,12 +141,12 @@ export class CommonDocMultiActionHeaderComponent <R extends CommonDocRecord, F e
                     this.flgShowSelectParam = true;
                     this.selectParamOptions = [];
                     this.selectParamValues = [];
-                    if (isArray(multiConfig.selectParameterConstants)) {
+                    if (Array.isArray(multiConfig.selectParameterConstants)) {
                         multiConfig.selectParameterConstants.map(value => {
                             this.selectParamOptions.push({ id: value[0], name: value[1]});
                         });
                     } else if (multiConfig.selectParameterValueListKey && this.selectValueMap &&
-                        isArray(this.selectValueMap.get(multiConfig.selectParameterValueListKey))) {
+                        Array.isArray(this.selectValueMap.get(multiConfig.selectParameterValueListKey))) {
                         this.selectValueMap.get(multiConfig.selectParameterValueListKey).map(value => {
                             this.selectParamOptions.push(value);
                         });

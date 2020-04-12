@@ -1,4 +1,3 @@
-"use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
@@ -18,12 +17,11 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = require("@angular/core");
-var generic_app_service_1 = require("@dps/mycms-commons/dist/commons/services/generic-app.service");
-var bean_utils_1 = require("@dps/mycms-commons/dist/commons/utils/bean.utils");
-var cdoc_entity_record_1 = require("@dps/mycms-commons/dist/search-commons/model/records/cdoc-entity-record");
-var inline_component_1 = require("../../../angular-commons/components/inline.component");
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input } from '@angular/core';
+import { AppState, GenericAppService } from '@dps/mycms-commons/dist/commons/services/generic-app.service';
+import { BeanUtils } from '@dps/mycms-commons/dist/commons/utils/bean.utils';
+import { CommonDocRecord } from '@dps/mycms-commons/dist/search-commons/model/records/cdoc-entity-record';
+import { AbstractInlineComponent } from '../../../angular-commons/components/inline.component';
 var CommonDocKeywordsComponent = /** @class */ (function (_super) {
     __extends(CommonDocKeywordsComponent, _super);
     function CommonDocKeywordsComponent(appService, cd) {
@@ -38,7 +36,7 @@ var CommonDocKeywordsComponent = /** @class */ (function (_super) {
     CommonDocKeywordsComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.appService.getAppState().subscribe(function (appState) {
-            if (appState === generic_app_service_1.AppState.Ready) {
+            if (appState === AppState.Ready) {
                 var config = _this.appService.getAppConfig();
                 _this.configureComponent(config);
                 _this.updateData();
@@ -46,10 +44,10 @@ var CommonDocKeywordsComponent = /** @class */ (function (_super) {
         });
     };
     CommonDocKeywordsComponent.prototype.getComponentConfig = function (config) {
-        if (bean_utils_1.BeanUtils.getValue(config, 'components.cdoc-keywords.structuredKeywords')) {
+        if (BeanUtils.getValue(config, 'components.cdoc-keywords.structuredKeywords')) {
             return {
-                keywordsConfig: bean_utils_1.BeanUtils.getValue(config, 'components.cdoc-keywords.structuredKeywords'),
-                possiblePrefixes: bean_utils_1.BeanUtils.getValue(config, 'components.cdoc-keywords.possiblePrefixes'),
+                keywordsConfig: BeanUtils.getValue(config, 'components.cdoc-keywords.structuredKeywords'),
+                possiblePrefixes: BeanUtils.getValue(config, 'components.cdoc-keywords.possiblePrefixes'),
                 blacklist: []
             };
         }
@@ -72,19 +70,19 @@ var CommonDocKeywordsComponent = /** @class */ (function (_super) {
         this.cd.markForCheck();
     };
     __decorate([
-        core_1.Input(),
-        __metadata("design:type", cdoc_entity_record_1.CommonDocRecord)
+        Input(),
+        __metadata("design:type", CommonDocRecord)
     ], CommonDocKeywordsComponent.prototype, "record", void 0);
     CommonDocKeywordsComponent = __decorate([
-        core_1.Component({
+        Component({
             selector: 'app-cdoc-keywords',
             templateUrl: './cdoc-keywords.component.html',
             styleUrls: ['./cdoc-keywords.component.css'],
-            changeDetection: core_1.ChangeDetectionStrategy.OnPush
+            changeDetection: ChangeDetectionStrategy.OnPush
         }),
-        __metadata("design:paramtypes", [generic_app_service_1.GenericAppService, core_1.ChangeDetectorRef])
+        __metadata("design:paramtypes", [GenericAppService, ChangeDetectorRef])
     ], CommonDocKeywordsComponent);
     return CommonDocKeywordsComponent;
-}(inline_component_1.AbstractInlineComponent));
-exports.CommonDocKeywordsComponent = CommonDocKeywordsComponent;
+}(AbstractInlineComponent));
+export { CommonDocKeywordsComponent };
 //# sourceMappingURL=cdoc-keywords.component.js.map

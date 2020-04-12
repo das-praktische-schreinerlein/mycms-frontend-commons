@@ -1,4 +1,3 @@
-"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,9 +7,8 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = require("@angular/core");
-var forms_1 = require("@angular/forms");
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Output } from '@angular/core';
+import { FormBuilder } from '@angular/forms';
 var IntervalControlComponent = /** @class */ (function () {
     function IntervalControlComponent(cd, fb) {
         this.cd = cd;
@@ -18,9 +16,9 @@ var IntervalControlComponent = /** @class */ (function () {
         this.intervalRunning = false;
         this.interval = undefined;
         this.intervalTimeout = 5;
-        this.intervalStarted = new core_1.EventEmitter();
-        this.intervalNext = new core_1.EventEmitter();
-        this.intervalStopped = new core_1.EventEmitter();
+        this.intervalStarted = new EventEmitter();
+        this.intervalNext = new EventEmitter();
+        this.intervalStopped = new EventEmitter();
         this.intervalFormGroup = this.fb.group({
             intervalTimeout: [5]
         });
@@ -65,27 +63,27 @@ var IntervalControlComponent = /** @class */ (function () {
         }
     };
     __decorate([
-        core_1.Output(),
-        __metadata("design:type", core_1.EventEmitter)
+        Output(),
+        __metadata("design:type", EventEmitter)
     ], IntervalControlComponent.prototype, "intervalStarted", void 0);
     __decorate([
-        core_1.Output(),
-        __metadata("design:type", core_1.EventEmitter)
+        Output(),
+        __metadata("design:type", EventEmitter)
     ], IntervalControlComponent.prototype, "intervalNext", void 0);
     __decorate([
-        core_1.Output(),
-        __metadata("design:type", core_1.EventEmitter)
+        Output(),
+        __metadata("design:type", EventEmitter)
     ], IntervalControlComponent.prototype, "intervalStopped", void 0);
     IntervalControlComponent = __decorate([
-        core_1.Component({
+        Component({
             selector: 'app-interval-control',
             templateUrl: './interval-control.component.html',
             styleUrls: ['./interval-control.component.css'],
-            changeDetection: core_1.ChangeDetectionStrategy.OnPush
+            changeDetection: ChangeDetectionStrategy.OnPush
         }),
-        __metadata("design:paramtypes", [core_1.ChangeDetectorRef, forms_1.FormBuilder])
+        __metadata("design:paramtypes", [ChangeDetectorRef, FormBuilder])
     ], IntervalControlComponent);
     return IntervalControlComponent;
 }());
-exports.IntervalControlComponent = IntervalControlComponent;
+export { IntervalControlComponent };
 //# sourceMappingURL=interval-control.component.js.map

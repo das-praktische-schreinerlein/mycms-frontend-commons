@@ -4,7 +4,7 @@ import { IMultiSelectOption, IMultiSelectSettings, IMultiSelectTexts } from 'ang
 import { SearchFormUtils } from '../../../angular-commons/services/searchform-utils.service';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { Subject } from 'rxjs/Subject';
+import { Subject } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import { CommonDocRecord } from '@dps/mycms-commons/dist/search-commons/model/records/cdoc-entity-record';
 import { ActionTagFormResultType } from '../../../frontend-cdoc-commons/components/cdoc-actiontags/cdoc-actiontags.component';

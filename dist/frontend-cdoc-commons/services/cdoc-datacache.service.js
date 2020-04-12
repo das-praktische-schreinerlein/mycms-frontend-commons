@@ -1,5 +1,3 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 var CommonDocDataCacheService = /** @class */ (function () {
     function CommonDocDataCacheService(cdocDataService) {
         this.cdocDataService = cdocDataService;
@@ -41,5 +39,5 @@ var CommonDocDataCacheService = /** @class */ (function () {
     };
     return CommonDocDataCacheService;
 }());
-exports.CommonDocDataCacheService = CommonDocDataCacheService;
+export { CommonDocDataCacheService };
 //# sourceMappingURL=cdoc-datacache.service.js.map

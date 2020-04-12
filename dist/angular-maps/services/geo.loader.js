@@ -1,6 +1,4 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-var log_utils_1 = require("@dps/mycms-commons/dist/commons/utils/log.utils");
+import { LogUtils } from '@dps/mycms-commons/dist/commons/utils/log.utils';
 var GeoLoader = /** @class */ (function () {
     function GeoLoader(http, parser) {
         this.http = http;
@@ -13,7 +11,7 @@ var GeoLoader = /** @class */ (function () {
                 .then(function onLoaded(res) {
                 return resolve(me.parser.parse(res.text(), options));
             }).catch(function onError(error) {
-                console.error('loading geofeature failed:' + log_utils_1.LogUtils.sanitizeLogMsg(url), error);
+                console.error('loading geofeature failed:' + LogUtils.sanitizeLogMsg(url), error);
                 return reject(error);
             });
         });
@@ -26,5 +24,5 @@ var GeoLoader = /** @class */ (function () {
     };
     return GeoLoader;
 }());
-exports.GeoLoader = GeoLoader;
+export { GeoLoader };
 //# sourceMappingURL=geo.loader.js.map

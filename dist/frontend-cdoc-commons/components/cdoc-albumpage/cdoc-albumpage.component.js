@@ -1,4 +1,3 @@
-"use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
@@ -9,16 +8,15 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-Object.defineProperty(exports, "__esModule", { value: true });
-var generic_validator_util_1 = require("@dps/mycms-commons/dist/search-commons/model/forms/generic-validator.util");
-var layout_service_1 = require("../../../angular-commons/services/layout.service");
-var common_routing_service_1 = require("../../../angular-commons/services/common-routing.service");
-var error_resolver_1 = require("../../resolver/error.resolver");
-var generic_app_service_1 = require("@dps/mycms-commons/dist/commons/services/generic-app.service");
-var facets_1 = require("@dps/mycms-commons/dist/search-commons/model/container/facets");
-var cdoc_album_resolver_1 = require("../../resolver/cdoc-album.resolver");
-var pdoc_page_component_1 = require("../../../frontend-pdoc-commons/components/pdoc-page.component");
-var angular_html_service_1 = require("../../../angular-commons/services/angular-html.service");
+import { IdCsvValidationRule, IdValidationRule } from '@dps/mycms-commons/dist/search-commons/model/forms/generic-validator.util';
+import { Layout } from '../../../angular-commons/services/layout.service';
+import { RoutingState } from '../../../angular-commons/services/common-routing.service';
+import { ErrorResolver } from '../../resolver/error.resolver';
+import { GenericAppService } from '@dps/mycms-commons/dist/commons/services/generic-app.service';
+import { Facets } from '@dps/mycms-commons/dist/search-commons/model/container/facets';
+import { CommonDocAlbumResolver } from '../../resolver/cdoc-album.resolver';
+import { AbstractPageComponent } from '../../../frontend-pdoc-commons/components/pdoc-page.component';
+import { AngularHtmlService } from '../../../angular-commons/services/angular-html.service';
 var CommonDocAlbumpageComponent = /** @class */ (function (_super) {
     __extends(CommonDocAlbumpageComponent, _super);
     function CommonDocAlbumpageComponent(route, commonRoutingService, errorResolver, cdocDataService, searchFormConverter, cdocRoutingService, toastr, pageUtils, cd, trackingProvider, fb, cdocAlbumService, appService, platformService, layoutService, searchFormUtils, cdocSearchFormUtils, playlistService, multiActionManager, environment) {
@@ -43,10 +41,10 @@ var CommonDocAlbumpageComponent = /** @class */ (function (_super) {
         _this.playlistService = playlistService;
         _this.multiActionManager = multiActionManager;
         _this.environment = environment;
-        _this.idCsvValidationRule = new generic_validator_util_1.IdCsvValidationRule(true);
-        _this.idValidationRule = new generic_validator_util_1.IdValidationRule(true);
+        _this.idCsvValidationRule = new IdCsvValidationRule(true);
+        _this.idValidationRule = new IdValidationRule(true);
         _this.mode = 'show';
-        _this.layout = layout_service_1.Layout.FLAT;
+        _this.layout = Layout.FLAT;
         _this.curRecordNr = 0;
         _this.albumKey = 'Current';
         _this.autoPlayAllowed = false;
@@ -59,8 +57,8 @@ var CommonDocAlbumpageComponent = /** @class */ (function (_super) {
         });
         _this.searchForm = cdocDataService.newSearchForm({});
         _this.listSearchForm = cdocDataService.newSearchForm({});
-        _this.searchResult = cdocDataService.newSearchResult(_this.searchForm, 0, [], new facets_1.Facets());
-        _this.listSearchResult = cdocDataService.newSearchResult(_this.listSearchForm, 0, [], new facets_1.Facets());
+        _this.searchResult = cdocDataService.newSearchResult(_this.searchForm, 0, [], new Facets());
+        _this.listSearchResult = cdocDataService.newSearchResult(_this.listSearchForm, 0, [], new Facets());
         return _this;
     }
     CommonDocAlbumpageComponent.prototype.configureProcessing = function () {
@@ -70,12 +68,12 @@ var CommonDocAlbumpageComponent = /** @class */ (function (_super) {
             this.record = undefined;
             this.searchForm = undefined;
             this.listSearchForm = undefined;
-            this.errorResolver.redirectAfterRouterError(error_resolver_1.ErrorResolver.ERROR_READONLY, undefined, this.toastr, undefined);
+            this.errorResolver.redirectAfterRouterError(ErrorResolver.ERROR_READONLY, undefined, this.toastr, undefined);
             this.cd.markForCheck();
             return;
         }
         this.route.data.subscribe(function (data) {
-            _this.commonRoutingService.setRoutingState(common_routing_service_1.RoutingState.DONE);
+            _this.commonRoutingService.setRoutingState(RoutingState.DONE);
             _this.configureProcessingOfResolvedData(_this.config);
             if (_this.processError(data)) {
                 return;
@@ -162,7 +160,7 @@ var CommonDocAlbumpageComponent = /** @class */ (function (_super) {
             return;
         }
         this.layout = layout;
-        if (layout.toString() === layout_service_1.Layout.PAGE.toString()) {
+        if (layout.toString() === Layout.PAGE.toString()) {
             this.doShow();
         }
         else if (this.listSearchForm.perPage === 1) {
@@ -216,7 +214,7 @@ var CommonDocAlbumpageComponent = /** @class */ (function (_super) {
     CommonDocAlbumpageComponent.prototype.doSaveAsFile = function () {
         var albumEntry = { key: this.albumKey, ids: this.editFormGroup.getRawValue()['albumIds'] };
         var filename = this.albumKey + '.mytbalbum.json';
-        angular_html_service_1.AngularHtmlService.browserSaveTextAsFile(JSON.stringify(albumEntry, null, 2), filename, 'application/json');
+        AngularHtmlService.browserSaveTextAsFile(JSON.stringify(albumEntry, null, 2), filename, 'application/json');
         return true;
     };
     CommonDocAlbumpageComponent.prototype.doSaveAsM3U = function () {
@@ -233,7 +231,7 @@ var CommonDocAlbumpageComponent = /** @class */ (function (_super) {
         this.cdocDataService.doMultiSearch(m3uSearchForm, ids).then(function doneSearch(cdocSearchResult) {
             me.showLoadingSpinner = false;
             me.cd.markForCheck();
-            angular_html_service_1.AngularHtmlService.browserSaveTextAsFile(me.playlistService.generateM3uForRecords('', cdocSearchResult.currentRecords), filename, 'application/m3u');
+            AngularHtmlService.browserSaveTextAsFile(me.playlistService.generateM3uForRecords('', cdocSearchResult.currentRecords), filename, 'application/m3u');
         }).catch(function errorSearch(reason) {
             me.toastr.error('Es gibt leider Probleme bei der Suche - am besten noch einmal probieren :-(', 'Oje!');
             console.error('doSearch failed:', reason);
@@ -314,8 +312,8 @@ var CommonDocAlbumpageComponent = /** @class */ (function (_super) {
     CommonDocAlbumpageComponent.prototype.configureProcessingOfResolvedData = function (config) {
     };
     CommonDocAlbumpageComponent.prototype.processError = function (data) {
-        var flgSearchFormError = error_resolver_1.ErrorResolver.isResolverError(data.searchForm);
-        var flgBaseSearchUrlError = error_resolver_1.ErrorResolver.isResolverError(data.baseSearchUrl);
+        var flgSearchFormError = ErrorResolver.isResolverError(data.searchForm);
+        var flgBaseSearchUrlError = ErrorResolver.isResolverError(data.baseSearchUrl);
         if (!flgSearchFormError && !flgBaseSearchUrlError) {
             return false;
         }
@@ -334,19 +332,19 @@ var CommonDocAlbumpageComponent = /** @class */ (function (_super) {
             searchForm = data.searchForm.data;
         }
         switch (errorCode) {
-            case cdoc_album_resolver_1.CommonDocAlbumResolver.ERROR_INVALID_DOC_ID:
-                code = error_resolver_1.ErrorResolver.ERROR_INVALID_DATA;
+            case CommonDocAlbumResolver.ERROR_INVALID_DOC_ID:
+                code = ErrorResolver.ERROR_INVALID_DATA;
                 this.baseSearchUrl = this.baseSearchUrlDefault;
                 newUrl = this.searchFormConverter.searchFormToUrl(this.baseSearchUrl + '/', this.cdocDataService.cloneSanitizedSearchForm(searchForm));
                 msg = undefined;
                 break;
-            case generic_app_service_1.GenericAppService.ERROR_APP_NOT_INITIALIZED:
-                code = error_resolver_1.ErrorResolver.ERROR_APP_NOT_INITIALIZED;
+            case GenericAppService.ERROR_APP_NOT_INITIALIZED:
+                code = ErrorResolver.ERROR_APP_NOT_INITIALIZED;
                 newUrl = undefined;
                 msg = undefined;
                 break;
             default:
-                code = error_resolver_1.ErrorResolver.ERROR_OTHER;
+                code = ErrorResolver.ERROR_OTHER;
                 this.baseSearchUrl = this.baseSearchUrlDefault + '/';
                 newUrl = undefined;
                 msg = undefined;
@@ -477,6 +475,6 @@ var CommonDocAlbumpageComponent = /** @class */ (function (_super) {
         this.curRecordNr = this.listSearchForm.pageNum;
     };
     return CommonDocAlbumpageComponent;
-}(pdoc_page_component_1.AbstractPageComponent));
-exports.CommonDocAlbumpageComponent = CommonDocAlbumpageComponent;
+}(AbstractPageComponent));
+export { CommonDocAlbumpageComponent };
 //# sourceMappingURL=cdoc-albumpage.component.js.map

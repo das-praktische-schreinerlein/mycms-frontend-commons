@@ -1,4 +1,3 @@
-"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,24 +7,22 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = require("@angular/core");
-var FromEventObservable_1 = require("rxjs/observable/FromEventObservable");
-var BehaviorSubject_1 = require("rxjs/BehaviorSubject");
-var detect_browser_1 = require("detect-browser");
-var LayoutSize;
+import { Injectable } from '@angular/core';
+import { BehaviorSubject, fromEvent } from 'rxjs';
+import { detect } from 'detect-browser';
+export var LayoutSize;
 (function (LayoutSize) {
     LayoutSize[LayoutSize["VERYSMALL"] = 0] = "VERYSMALL";
     LayoutSize[LayoutSize["SMALL"] = 1] = "SMALL";
     LayoutSize[LayoutSize["BIG"] = 2] = "BIG";
     LayoutSize[LayoutSize["VERYBIG"] = 3] = "VERYBIG";
-})(LayoutSize = exports.LayoutSize || (exports.LayoutSize = {}));
+})(LayoutSize || (LayoutSize = {}));
 var LayoutService = /** @class */ (function () {
     function LayoutService() {
         var _this = this;
-        this.layoutSizeObservable = new BehaviorSubject_1.BehaviorSubject(this.calcLayoutSizeForWindow());
+        this.layoutSizeObservable = new BehaviorSubject(this.calcLayoutSizeForWindow());
         this.flgPrintmode = false;
-        var $resizeEvent = FromEventObservable_1.FromEventObservable.create(window, 'resize');
+        var $resizeEvent = fromEvent(window, 'resize');
         $resizeEvent.subscribe(function (data) {
             _this.layoutSizeObservable.next(_this.calcLayoutSizeForWindow());
         });
@@ -60,7 +57,7 @@ var LayoutService = /** @class */ (function () {
         return this.flgPrintmode;
     };
     LayoutService.prototype.getBrowser = function () {
-        return detect_browser_1.detect();
+        return detect();
     };
     LayoutService.prototype.isMobile = function () {
         var browser = this.getBrowser();
@@ -130,25 +127,25 @@ var LayoutService = /** @class */ (function () {
         return LayoutSize.VERYBIG;
     };
     LayoutService = __decorate([
-        core_1.Injectable(),
+        Injectable(),
         __metadata("design:paramtypes", [])
     ], LayoutService);
     return LayoutService;
 }());
-exports.LayoutService = LayoutService;
-var Layout;
+export { LayoutService };
+export var Layout;
 (function (Layout) {
     Layout[Layout["THIN"] = 0] = "THIN";
     Layout[Layout["FLAT"] = 1] = "FLAT";
     Layout[Layout["SMALL"] = 2] = "SMALL";
     Layout[Layout["BIG"] = 3] = "BIG";
     Layout[Layout["PAGE"] = 4] = "PAGE";
-})(Layout = exports.Layout || (exports.Layout = {}));
-var SearchFormLayout;
+})(Layout || (Layout = {}));
+export var SearchFormLayout;
 (function (SearchFormLayout) {
     SearchFormLayout[SearchFormLayout["STACKED"] = 0] = "STACKED";
     SearchFormLayout[SearchFormLayout["GRID"] = 1] = "GRID";
-})(SearchFormLayout = exports.SearchFormLayout || (exports.SearchFormLayout = {}));
+})(SearchFormLayout || (SearchFormLayout = {}));
 /**
     // Browser
     [ 'aol', /AOLShield\/([0-9\._]+)/ ],

@@ -1,4 +1,3 @@
-"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,18 +7,17 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = require("@angular/core");
-var platform_browser_1 = require("@angular/platform-browser");
-var generic_app_service_1 = require("@dps/mycms-commons/dist/commons/services/generic-app.service");
-var cdoc_routing_service_1 = require("./cdoc-routing.service");
-var filter_utils_1 = require("@dps/mycms-commons/dist/commons/utils/filter.utils");
-var KeywordsState;
+import { Injectable } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
+import { GenericAppService } from '@dps/mycms-commons/dist/commons/services/generic-app.service';
+import { CommonDocRoutingService } from './cdoc-routing.service';
+import { FilterUtils } from '@dps/mycms-commons/dist/commons/utils/filter.utils';
+export var KeywordsState;
 (function (KeywordsState) {
     KeywordsState[KeywordsState["SET"] = 0] = "SET";
     KeywordsState[KeywordsState["NOTSET"] = 1] = "NOTSET";
     KeywordsState[KeywordsState["SUGGESTED"] = 2] = "SUGGESTED";
-})(KeywordsState = exports.KeywordsState || (exports.KeywordsState = {}));
+})(KeywordsState || (KeywordsState = {}));
 var CommonDocContentUtils = /** @class */ (function () {
     function CommonDocContentUtils(sanitizer, cdocRoutingService, appService) {
         this.sanitizer = sanitizer;
@@ -137,7 +135,7 @@ var CommonDocContentUtils = /** @class */ (function () {
         var suggestions = [];
         for (var _i = 0, suggestionConfigs_1 = suggestionConfigs; _i < suggestionConfigs_1.length; _i++) {
             var suggestionConfig = suggestionConfigs_1[_i];
-            if (filter_utils_1.FilterUtils.checkFilters(suggestionConfig.filters, values)) {
+            if (FilterUtils.checkFilters(suggestionConfig.filters, values)) {
                 suggestions = suggestions.concat(suggestionConfig.keywords);
             }
         }
@@ -265,11 +263,11 @@ var CommonDocContentUtils = /** @class */ (function () {
         this.cdocVideosKey = serviceConfig.cdocVideosKey;
     };
     CommonDocContentUtils = __decorate([
-        core_1.Injectable(),
-        __metadata("design:paramtypes", [platform_browser_1.DomSanitizer, cdoc_routing_service_1.CommonDocRoutingService,
-            generic_app_service_1.GenericAppService])
+        Injectable(),
+        __metadata("design:paramtypes", [DomSanitizer, CommonDocRoutingService,
+            GenericAppService])
     ], CommonDocContentUtils);
     return CommonDocContentUtils;
 }());
-exports.CommonDocContentUtils = CommonDocContentUtils;
+export { CommonDocContentUtils };
 //# sourceMappingURL=cdoc-contentutils.service.js.map

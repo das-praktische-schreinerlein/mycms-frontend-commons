@@ -1,4 +1,3 @@
-"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,34 +7,33 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = require("@angular/core");
-var cdoc_searchresult_1 = require("@dps/mycms-commons/dist/search-commons/model/container/cdoc-searchresult");
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import { CommonDocSearchResult } from '@dps/mycms-commons/dist/search-commons/model/container/cdoc-searchresult';
 var CommonDocListFooterComponent = /** @class */ (function () {
     function CommonDocListFooterComponent() {
-        this.pageChange = new core_1.EventEmitter();
+        this.pageChange = new EventEmitter();
     }
     CommonDocListFooterComponent.prototype.onPageChange = function (page) {
         this.pageChange.emit(page);
     };
     __decorate([
-        core_1.Input(),
-        __metadata("design:type", cdoc_searchresult_1.CommonDocSearchResult)
+        Input(),
+        __metadata("design:type", CommonDocSearchResult)
     ], CommonDocListFooterComponent.prototype, "searchResult", void 0);
     __decorate([
-        core_1.Output(),
-        __metadata("design:type", core_1.EventEmitter)
+        Output(),
+        __metadata("design:type", EventEmitter)
     ], CommonDocListFooterComponent.prototype, "pageChange", void 0);
     CommonDocListFooterComponent = __decorate([
-        core_1.Component({
+        Component({
             selector: 'app-cdoc-list-footer',
             templateUrl: './cdoc-list-footer.component.html',
             styleUrls: ['./cdoc-list-footer.component.css'],
-            changeDetection: core_1.ChangeDetectionStrategy.OnPush
+            changeDetection: ChangeDetectionStrategy.OnPush
         }),
         __metadata("design:paramtypes", [])
     ], CommonDocListFooterComponent);
     return CommonDocListFooterComponent;
 }());
-exports.CommonDocListFooterComponent = CommonDocListFooterComponent;
+export { CommonDocListFooterComponent };
 //# sourceMappingURL=cdoc-list-footer.component.js.map

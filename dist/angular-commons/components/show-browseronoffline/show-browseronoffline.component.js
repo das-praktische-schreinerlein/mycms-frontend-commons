@@ -1,4 +1,3 @@
-"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,9 +7,8 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = require("@angular/core");
-var generic_app_service_1 = require("@dps/mycms-commons/dist/commons/services/generic-app.service");
+import { Component, Injectable } from '@angular/core';
+import { BrowserOnlineState, GenericAppService } from '@dps/mycms-commons/dist/commons/services/generic-app.service';
 var ShowBrowserOnOfflineComponent = /** @class */ (function () {
     function ShowBrowserOnOfflineComponent(appService) {
         this.appService = appService;
@@ -19,24 +17,24 @@ var ShowBrowserOnOfflineComponent = /** @class */ (function () {
     ShowBrowserOnOfflineComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.appService.getBrowserOnlineState().subscribe(function (appOnlineState) {
-            if (appOnlineState === generic_app_service_1.BrowserOnlineState.Offline) {
+            if (appOnlineState === BrowserOnlineState.Offline) {
                 _this.onlineState = 'offline';
             }
-            else if (appOnlineState === generic_app_service_1.BrowserOnlineState.Online) {
+            else if (appOnlineState === BrowserOnlineState.Online) {
                 _this.onlineState = 'online';
             }
         });
     };
     ShowBrowserOnOfflineComponent = __decorate([
-        core_1.Component({
+        Component({
             selector: 'app-browser-onoffline',
             templateUrl: './show-browseronoffline.component.html',
             styleUrls: ['./show-browseronoffline.component.css']
         }),
-        core_1.Injectable(),
-        __metadata("design:paramtypes", [generic_app_service_1.GenericAppService])
+        Injectable(),
+        __metadata("design:paramtypes", [GenericAppService])
     ], ShowBrowserOnOfflineComponent);
     return ShowBrowserOnOfflineComponent;
 }());
-exports.ShowBrowserOnOfflineComponent = ShowBrowserOnOfflineComponent;
+export { ShowBrowserOnOfflineComponent };
 //# sourceMappingURL=show-browseronoffline.component.js.map

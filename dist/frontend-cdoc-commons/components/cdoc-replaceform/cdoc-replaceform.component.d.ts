@@ -3,7 +3,7 @@ import { IMultiSelectOption } from 'angular-2-dropdown-multiselect';
 import { SearchFormUtils } from '../../../angular-commons/services/searchform-utils.service';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormBuilder } from '@angular/forms';
-import { Subject } from 'rxjs/Subject';
+import { Subject } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import { CommonDocRecord } from '@dps/mycms-commons/dist/search-commons/model/records/cdoc-entity-record';
 import { CommonDocSearchForm } from '@dps/mycms-commons/dist/search-commons/model/forms/cdoc-searchform';

@@ -1,4 +1,3 @@
-"use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
@@ -18,12 +17,11 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = require("@angular/core");
-var searchparameter_utils_1 = require("@dps/mycms-commons/dist/search-commons/services/searchparameter.utils");
-var searchform_utils_service_1 = require("../../../angular-commons/services/searchform-utils.service");
-var cdoc_searchresult_1 = require("@dps/mycms-commons/dist/search-commons/model/container/cdoc-searchresult");
-var inline_component_1 = require("../../../angular-commons/components/inline.component");
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, Output } from '@angular/core';
+import { SearchParameterUtils } from '@dps/mycms-commons/dist/search-commons/services/searchparameter.utils';
+import { SearchFormUtils } from '../../../angular-commons/services/searchform-utils.service';
+import { CommonDocSearchResult } from '@dps/mycms-commons/dist/search-commons/model/container/cdoc-searchresult';
+import { AbstractInlineComponent } from '../../../angular-commons/components/inline.component';
 var CommonDocTagcloudComponent = /** @class */ (function (_super) {
     __extends(CommonDocTagcloudComponent, _super);
     function CommonDocTagcloudComponent(searchParameterUtils, searchFormUtils, cd) {
@@ -36,8 +34,8 @@ var CommonDocTagcloudComponent = /** @class */ (function (_super) {
         _this.valuePrefix = '';
         _this.labelPrefix = '';
         _this.sortKey = 'label';
-        _this.columnClicked = new core_1.EventEmitter();
-        _this.columnsFound = new core_1.EventEmitter();
+        _this.columnClicked = new EventEmitter();
+        _this.columnsFound = new EventEmitter();
         _this.minCount = 0;
         _this.maxCount = 0;
         _this.factor = 0;
@@ -106,52 +104,52 @@ var CommonDocTagcloudComponent = /** @class */ (function (_super) {
         return Math.round((count - this.minCount) * this.factor);
     };
     __decorate([
-        core_1.Input(),
-        __metadata("design:type", cdoc_searchresult_1.CommonDocSearchResult)
+        Input(),
+        __metadata("design:type", CommonDocSearchResult)
     ], CommonDocTagcloudComponent.prototype, "searchResult", void 0);
     __decorate([
-        core_1.Input(),
+        Input(),
         __metadata("design:type", String)
     ], CommonDocTagcloudComponent.prototype, "facetName", void 0);
     __decorate([
-        core_1.Input(),
+        Input(),
         __metadata("design:type", String)
     ], CommonDocTagcloudComponent.prototype, "label", void 0);
     __decorate([
-        core_1.Input(),
+        Input(),
         __metadata("design:type", Object)
     ], CommonDocTagcloudComponent.prototype, "max", void 0);
     __decorate([
-        core_1.Input(),
+        Input(),
         __metadata("design:type", Object)
     ], CommonDocTagcloudComponent.prototype, "valuePrefix", void 0);
     __decorate([
-        core_1.Input(),
+        Input(),
         __metadata("design:type", Object)
     ], CommonDocTagcloudComponent.prototype, "labelPrefix", void 0);
     __decorate([
-        core_1.Input(),
+        Input(),
         __metadata("design:type", Object)
     ], CommonDocTagcloudComponent.prototype, "sortKey", void 0);
     __decorate([
-        core_1.Output(),
-        __metadata("design:type", core_1.EventEmitter)
+        Output(),
+        __metadata("design:type", EventEmitter)
     ], CommonDocTagcloudComponent.prototype, "columnClicked", void 0);
     __decorate([
-        core_1.Output(),
-        __metadata("design:type", core_1.EventEmitter)
+        Output(),
+        __metadata("design:type", EventEmitter)
     ], CommonDocTagcloudComponent.prototype, "columnsFound", void 0);
     CommonDocTagcloudComponent = __decorate([
-        core_1.Component({
+        Component({
             selector: 'app-cdoc-tagcloud',
             templateUrl: './cdoc-tagcloud.component.html',
             styleUrls: ['./cdoc-tagcloud.component.css'],
-            changeDetection: core_1.ChangeDetectionStrategy.OnPush
+            changeDetection: ChangeDetectionStrategy.OnPush
         }),
-        __metadata("design:paramtypes", [searchparameter_utils_1.SearchParameterUtils, searchform_utils_service_1.SearchFormUtils,
-            core_1.ChangeDetectorRef])
+        __metadata("design:paramtypes", [SearchParameterUtils, SearchFormUtils,
+            ChangeDetectorRef])
     ], CommonDocTagcloudComponent);
     return CommonDocTagcloudComponent;
-}(inline_component_1.AbstractInlineComponent));
-exports.CommonDocTagcloudComponent = CommonDocTagcloudComponent;
+}(AbstractInlineComponent));
+export { CommonDocTagcloudComponent };
 //# sourceMappingURL=cdoc-tagcloud.component.js.map

@@ -1,4 +1,3 @@
-"use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
@@ -18,10 +17,9 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = require("@angular/core");
-var cdoc_contentutils_service_1 = require("../../services/cdoc-contentutils.service");
-var inline_component_1 = require("../../../angular-commons/components/inline.component");
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input } from '@angular/core';
+import { CommonDocContentUtils } from '../../services/cdoc-contentutils.service';
+import { AbstractInlineComponent } from '../../../angular-commons/components/inline.component';
 var CommonDocTagsComponent = /** @class */ (function (_super) {
     __extends(CommonDocTagsComponent, _super);
     function CommonDocTagsComponent(contentUtils, cd) {
@@ -41,31 +39,31 @@ var CommonDocTagsComponent = /** @class */ (function (_super) {
         this.tagsKats = this.contentUtils.getStructuredKeywords(this.tagsConfig, this.tags.split(', '), this.blacklist, this.possiblePrefixes);
     };
     __decorate([
-        core_1.Input(),
+        Input(),
         __metadata("design:type", String)
     ], CommonDocTagsComponent.prototype, "tags", void 0);
     __decorate([
-        core_1.Input(),
+        Input(),
         __metadata("design:type", Array)
     ], CommonDocTagsComponent.prototype, "tagsConfig", void 0);
     __decorate([
-        core_1.Input(),
+        Input(),
         __metadata("design:type", Object)
     ], CommonDocTagsComponent.prototype, "possiblePrefixes", void 0);
     __decorate([
-        core_1.Input(),
+        Input(),
         __metadata("design:type", Object)
     ], CommonDocTagsComponent.prototype, "blacklist", void 0);
     CommonDocTagsComponent = __decorate([
-        core_1.Component({
+        Component({
             selector: 'app-cdoc-tags',
             templateUrl: './cdoc-tags.component.html',
             styleUrls: ['./cdoc-tags.component.css'],
-            changeDetection: core_1.ChangeDetectionStrategy.OnPush
+            changeDetection: ChangeDetectionStrategy.OnPush
         }),
-        __metadata("design:paramtypes", [cdoc_contentutils_service_1.CommonDocContentUtils, core_1.ChangeDetectorRef])
+        __metadata("design:paramtypes", [CommonDocContentUtils, ChangeDetectorRef])
     ], CommonDocTagsComponent);
     return CommonDocTagsComponent;
-}(inline_component_1.AbstractInlineComponent));
-exports.CommonDocTagsComponent = CommonDocTagsComponent;
+}(AbstractInlineComponent));
+export { CommonDocTagsComponent };
 //# sourceMappingURL=cdoc-tags.component.js.map

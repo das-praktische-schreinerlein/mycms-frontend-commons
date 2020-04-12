@@ -1,7 +1,5 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-var generic_app_service_1 = require("@dps/mycms-commons/dist/commons/services/generic-app.service");
-var resolver_utils_1 = require("../../angular-commons/resolver/resolver.utils");
+import { AppState, GenericAppService } from '@dps/mycms-commons/dist/commons/services/generic-app.service';
+import { ResolverError } from '../../angular-commons/resolver/resolver.utils';
 var CommonDocSearchFormResolver = /** @class */ (function () {
     function CommonDocSearchFormResolver(appService, searchFormConverter) {
         this.appService = appService;
@@ -16,17 +14,17 @@ var CommonDocSearchFormResolver = /** @class */ (function () {
         return new Promise(function (resolve) {
             var searchForm = _this.searchFormConverter.newSearchForm({});
             _this.appService.getAppState().subscribe(function (appState) {
-                if (appState === generic_app_service_1.AppState.Ready) {
+                if (appState === AppState.Ready) {
                     _this.searchFormConverter.paramsToSearchForm(route.params, route.data['searchFormDefaults'], searchForm);
                     if (!_this.searchFormConverter.isValid(searchForm)) {
-                        result.error = new resolver_utils_1.ResolverError(CommonDocSearchFormResolver.ERROR_INVALID_SEARCHFORM, searchForm, undefined);
+                        result.error = new ResolverError(CommonDocSearchFormResolver.ERROR_INVALID_SEARCHFORM, searchForm, undefined);
                         return resolve(result);
                     }
                     result.data = searchForm;
                     return resolve(result);
                 }
-                else if (appState === generic_app_service_1.AppState.Failed) {
-                    result.error = new resolver_utils_1.ResolverError(generic_app_service_1.GenericAppService.ERROR_APP_NOT_INITIALIZED, undefined, undefined);
+                else if (appState === AppState.Failed) {
+                    result.error = new ResolverError(GenericAppService.ERROR_APP_NOT_INITIALIZED, undefined, undefined);
                     return resolve(result);
                 }
             });
@@ -35,5 +33,5 @@ var CommonDocSearchFormResolver = /** @class */ (function () {
     CommonDocSearchFormResolver.ERROR_INVALID_SEARCHFORM = 'ERROR_INVALID_SEARCHFORM';
     return CommonDocSearchFormResolver;
 }());
-exports.CommonDocSearchFormResolver = CommonDocSearchFormResolver;
+export { CommonDocSearchFormResolver };
 //# sourceMappingURL=cdoc-searchform.resolver.js.map

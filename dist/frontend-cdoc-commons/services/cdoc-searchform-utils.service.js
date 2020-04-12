@@ -1,4 +1,3 @@
-"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,10 +7,9 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = require("@angular/core");
-var searchform_utils_service_1 = require("../../angular-commons/services/searchform-utils.service");
-var searchparameter_utils_1 = require("@dps/mycms-commons/dist/search-commons/services/searchparameter.utils");
+import { Injectable } from '@angular/core';
+import { SearchFormUtils } from '../../angular-commons/services/searchform-utils.service';
+import { SearchParameterUtils } from '@dps/mycms-commons/dist/search-commons/services/searchparameter.utils';
 var CommonDocSearchFormUtils = /** @class */ (function () {
     function CommonDocSearchFormUtils(searchFormUtils, searchParameterUtils) {
         this.searchFormUtils = searchFormUtils;
@@ -39,10 +37,10 @@ var CommonDocSearchFormUtils = /** @class */ (function () {
         return this.searchFormUtils.getFacetValues(searchResult, 'initial_s', '', '');
     };
     CommonDocSearchFormUtils = __decorate([
-        core_1.Injectable(),
-        __metadata("design:paramtypes", [searchform_utils_service_1.SearchFormUtils, searchparameter_utils_1.SearchParameterUtils])
+        Injectable(),
+        __metadata("design:paramtypes", [SearchFormUtils, SearchParameterUtils])
     ], CommonDocSearchFormUtils);
     return CommonDocSearchFormUtils;
 }());
-exports.CommonDocSearchFormUtils = CommonDocSearchFormUtils;
+export { CommonDocSearchFormUtils };
 //# sourceMappingURL=cdoc-searchform-utils.service.js.map

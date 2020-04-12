@@ -1,4 +1,3 @@
-"use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
@@ -18,14 +17,13 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = require("@angular/core");
-var facets_1 = require("@dps/mycms-commons/dist/search-commons/model/container/facets");
-var layout_service_1 = require("../../../angular-commons/services/layout.service");
-var generic_app_service_1 = require("@dps/mycms-commons/dist/commons/services/generic-app.service");
-var inline_component_1 = require("../../../angular-commons/components/inline.component");
-var angular_html_service_1 = require("../../../angular-commons/services/angular-html.service");
-var bean_utils_1 = require("@dps/mycms-commons/dist/commons/utils/bean.utils");
+import { EventEmitter, Input, Output } from '@angular/core';
+import { Facets } from '@dps/mycms-commons/dist/search-commons/model/container/facets';
+import { Layout } from '../../../angular-commons/services/layout.service';
+import { AppState } from '@dps/mycms-commons/dist/commons/services/generic-app.service';
+import { AbstractInlineComponent } from '../../../angular-commons/components/inline.component';
+import { AngularHtmlService } from '../../../angular-commons/services/angular-html.service';
+import { BeanUtils } from '@dps/mycms-commons/dist/commons/utils/bean.utils';
 var CommonDocInlineSearchpageComponent = /** @class */ (function (_super) {
     __extends(CommonDocInlineSearchpageComponent, _super);
     function CommonDocInlineSearchpageComponent(appService, commonRoutingService, cdocDataService, searchFormConverter, cdocRoutingService, toastr, cd, elRef, pageUtils, searchFormUtils, cdocSearchFormUtils, multiActionManager) {
@@ -44,7 +42,7 @@ var CommonDocInlineSearchpageComponent = /** @class */ (function (_super) {
         _this.multiActionManager = multiActionManager;
         _this.initialized = false;
         _this.showLoadingSpinner = false;
-        _this.Layout = layout_service_1.Layout;
+        _this.Layout = Layout;
         _this.m3uExportAvailable = false;
         _this.maxAllowedM3UExportItems = -1;
         _this.multiActionSelectValueMap = new Map();
@@ -60,10 +58,10 @@ var CommonDocInlineSearchpageComponent = /** @class */ (function (_super) {
         _this.baseSearchUrl = 'cdoc/';
         _this.short = false;
         _this.perPageOnToSearchPage = 10;
-        _this.show = new core_1.EventEmitter();
-        _this.searchResultFound = new core_1.EventEmitter();
+        _this.show = new EventEmitter();
+        _this.searchResultFound = new EventEmitter();
         _this.searchForm = _this.cdocDataService.newSearchForm({});
-        _this.searchResult = _this.cdocDataService.newSearchResult(_this.searchForm, 0, [], new facets_1.Facets());
+        _this.searchResult = _this.cdocDataService.newSearchResult(_this.searchForm, 0, [], new Facets());
         return _this;
     }
     CommonDocInlineSearchpageComponent.prototype.ngOnInit = function () {
@@ -72,7 +70,7 @@ var CommonDocInlineSearchpageComponent = /** @class */ (function (_super) {
         this.initialized = false;
         // do search
         this.appStateSubscription = this.appService.getAppState().subscribe(function (appState) {
-            if (appState === generic_app_service_1.AppState.Ready) {
+            if (appState === AppState.Ready) {
                 _this.configureComponent(_this.appService.getAppConfig());
                 return _this.doSearchWithParams(_this.params);
             }
@@ -160,7 +158,7 @@ var CommonDocInlineSearchpageComponent = /** @class */ (function (_super) {
             _this.toastr.info('Export wurde erfolgreich ausgeführt.', 'Juhu!');
             _this.showLoadingSpinner = false;
             _this.cd.markForCheck();
-            angular_html_service_1.AngularHtmlService.browserSaveTextAsFile(value, 'playlist.m3u', 'application/m3u');
+            AngularHtmlService.browserSaveTextAsFile(value, 'playlist.m3u', 'application/m3u');
         }).catch(function (reason) {
             _this.toastr.error('Leider trat ein Fehler auf :-(.', 'Oje!');
             _this.showLoadingSpinner = false;
@@ -170,7 +168,7 @@ var CommonDocInlineSearchpageComponent = /** @class */ (function (_super) {
     };
     CommonDocInlineSearchpageComponent.prototype.getComponentConfig = function (config) {
         return {
-            maxAllowedM3UExportItems: bean_utils_1.BeanUtils.getValue(config, 'services.serverItemExport.maxAllowedM3UItems')
+            maxAllowedM3UExportItems: BeanUtils.getValue(config, 'services.serverItemExport.maxAllowedM3UItems')
         };
     };
     CommonDocInlineSearchpageComponent.prototype.configureComponent = function (config) {
@@ -201,7 +199,7 @@ var CommonDocInlineSearchpageComponent = /** @class */ (function (_super) {
             me.showLoadingSpinner = false;
             if (cdocSearchResult === undefined) {
                 // console.log('empty searchResult', cdocSearchResult);
-                me.searchResult = me.cdocDataService.newSearchResult(me.searchForm, 0, [], new facets_1.Facets());
+                me.searchResult = me.cdocDataService.newSearchResult(me.searchForm, 0, [], new Facets());
             }
             else {
                 // console.log('update searchResult', cdocSearchResult);
@@ -216,7 +214,7 @@ var CommonDocInlineSearchpageComponent = /** @class */ (function (_super) {
             me.toastr.error('Es gibt leider Probleme bei der Suche - am besten noch einmal probieren :-(', 'Oje!');
             console.error('doSearch failed:', reason);
             me.showLoadingSpinner = false;
-            me.searchResult = me.cdocDataService.newSearchResult(me.searchForm, 0, [], new facets_1.Facets());
+            me.searchResult = me.cdocDataService.newSearchResult(me.searchForm, 0, [], new Facets());
             me.searchResultFound.emit(me.searchResult);
             me.cd.markForCheck();
         });
@@ -228,7 +226,7 @@ var CommonDocInlineSearchpageComponent = /** @class */ (function (_super) {
     };
     CommonDocInlineSearchpageComponent.prototype.doCheckSearchResultAfterSearch = function (searchResult) {
         var config = this.appService.getAppConfig();
-        var maxAllowedItems = bean_utils_1.BeanUtils.getValue(config, 'services.serverItemExport.maxAllowedM3UItems');
+        var maxAllowedItems = BeanUtils.getValue(config, 'services.serverItemExport.maxAllowedM3UItems');
         if (maxAllowedItems > 0 && this.m3uLinkLabel && searchResult && searchResult.recordCount > 0 &&
             maxAllowedItems > searchResult.recordCount) {
             this.m3uExportAvailable = true;
@@ -241,82 +239,82 @@ var CommonDocInlineSearchpageComponent = /** @class */ (function (_super) {
         this.multiActionSelectValueMap = valueMap;
     };
     __decorate([
-        core_1.Input(),
+        Input(),
         __metadata("design:type", Object)
     ], CommonDocInlineSearchpageComponent.prototype, "params", void 0);
     __decorate([
-        core_1.Input(),
+        Input(),
         __metadata("design:type", Object)
     ], CommonDocInlineSearchpageComponent.prototype, "showForm", void 0);
     __decorate([
-        core_1.Input(),
+        Input(),
         __metadata("design:type", Object)
     ], CommonDocInlineSearchpageComponent.prototype, "showTimetable", void 0);
     __decorate([
-        core_1.Input(),
+        Input(),
         __metadata("design:type", Object)
     ], CommonDocInlineSearchpageComponent.prototype, "showLayout", void 0);
     __decorate([
-        core_1.Input(),
+        Input(),
         __metadata("design:type", Object)
     ], CommonDocInlineSearchpageComponent.prototype, "showResultList", void 0);
     __decorate([
-        core_1.Input(),
+        Input(),
         __metadata("design:type", Object)
     ], CommonDocInlineSearchpageComponent.prototype, "loadFacets", void 0);
     __decorate([
-        core_1.Input(),
+        Input(),
         __metadata("design:type", Object)
     ], CommonDocInlineSearchpageComponent.prototype, "loadTrack", void 0);
     __decorate([
-        core_1.Input(),
+        Input(),
         __metadata("design:type", Object)
     ], CommonDocInlineSearchpageComponent.prototype, "showOnlyIfRecordsFound", void 0);
     __decorate([
-        core_1.Input(),
+        Input(),
         __metadata("design:type", Object)
     ], CommonDocInlineSearchpageComponent.prototype, "showMultiActionHeader", void 0);
     __decorate([
-        core_1.Input(),
+        Input(),
         __metadata("design:type", String)
     ], CommonDocInlineSearchpageComponent.prototype, "label", void 0);
     __decorate([
-        core_1.Input(),
+        Input(),
         __metadata("design:type", Object)
     ], CommonDocInlineSearchpageComponent.prototype, "baseSearchUrl", void 0);
     __decorate([
-        core_1.Input(),
+        Input(),
         __metadata("design:type", String)
     ], CommonDocInlineSearchpageComponent.prototype, "searchLinkLabel", void 0);
     __decorate([
-        core_1.Input(),
+        Input(),
         __metadata("design:type", String)
     ], CommonDocInlineSearchpageComponent.prototype, "m3uLinkLabel", void 0);
     __decorate([
-        core_1.Input(),
+        Input(),
         __metadata("design:type", String)
     ], CommonDocInlineSearchpageComponent.prototype, "htmlId", void 0);
     __decorate([
-        core_1.Input(),
+        Input(),
         __metadata("design:type", Number)
     ], CommonDocInlineSearchpageComponent.prototype, "layout", void 0);
     __decorate([
-        core_1.Input(),
+        Input(),
         __metadata("design:type", Object)
     ], CommonDocInlineSearchpageComponent.prototype, "short", void 0);
     __decorate([
-        core_1.Input(),
+        Input(),
         __metadata("design:type", Object)
     ], CommonDocInlineSearchpageComponent.prototype, "perPageOnToSearchPage", void 0);
     __decorate([
-        core_1.Output(),
-        __metadata("design:type", core_1.EventEmitter)
+        Output(),
+        __metadata("design:type", EventEmitter)
     ], CommonDocInlineSearchpageComponent.prototype, "show", void 0);
     __decorate([
-        core_1.Output(),
-        __metadata("design:type", core_1.EventEmitter)
+        Output(),
+        __metadata("design:type", EventEmitter)
     ], CommonDocInlineSearchpageComponent.prototype, "searchResultFound", void 0);
     return CommonDocInlineSearchpageComponent;
-}(inline_component_1.AbstractInlineComponent));
-exports.CommonDocInlineSearchpageComponent = CommonDocInlineSearchpageComponent;
+}(AbstractInlineComponent));
+export { CommonDocInlineSearchpageComponent };
 //# sourceMappingURL=cdoc-inline-searchpage.component.js.map

@@ -1,4 +1,3 @@
-"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,10 +7,9 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = require("@angular/core");
-var ngx_lightbox_1 = require("ngx-lightbox");
-var cdoc_contentutils_service_1 = require("./cdoc-contentutils.service");
+import { Injectable } from '@angular/core';
+import { Lightbox } from 'ngx-lightbox';
+import { CommonDocContentUtils } from './cdoc-contentutils.service';
 var CommonDocLightBoxService = /** @class */ (function () {
     function CommonDocLightBoxService(contentUtils, lightbox) {
         this.contentUtils = contentUtils;
@@ -50,10 +48,10 @@ var CommonDocLightBoxService = /** @class */ (function () {
         return record && record.type === 'IMAGE' && this.contentUtils.getImages(record).length > 0;
     };
     CommonDocLightBoxService = __decorate([
-        core_1.Injectable(),
-        __metadata("design:paramtypes", [cdoc_contentutils_service_1.CommonDocContentUtils, ngx_lightbox_1.Lightbox])
+        Injectable(),
+        __metadata("design:paramtypes", [CommonDocContentUtils, Lightbox])
     ], CommonDocLightBoxService);
     return CommonDocLightBoxService;
 }());
-exports.CommonDocLightBoxService = CommonDocLightBoxService;
+export { CommonDocLightBoxService };
 //# sourceMappingURL=cdoc-lightbox.service.js.map

@@ -1,4 +1,3 @@
-"use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
@@ -18,10 +17,9 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = require("@angular/core");
-var cdoc_contentutils_service_1 = require("../../services/cdoc-contentutils.service");
-var inline_component_1 = require("../../../angular-commons/components/inline.component");
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, Output } from '@angular/core';
+import { CommonDocContentUtils, KeywordsState } from '../../services/cdoc-contentutils.service';
+import { AbstractInlineComponent } from '../../../angular-commons/components/inline.component';
 var CommonDocTagsStateComponent = /** @class */ (function (_super) {
     __extends(CommonDocTagsStateComponent, _super);
     function CommonDocTagsStateComponent(contentUtils, cd) {
@@ -29,13 +27,13 @@ var CommonDocTagsStateComponent = /** @class */ (function (_super) {
         _this.contentUtils = contentUtils;
         _this.cd = cd;
         _this.tagsKats = [];
-        _this.KeywordState = cdoc_contentutils_service_1.KeywordsState;
+        _this.KeywordState = KeywordsState;
         _this.suggestions = [];
         _this.possiblePrefixes = [];
         _this.prefix = '';
-        _this.unsetTag = new core_1.EventEmitter();
-        _this.setTag = new core_1.EventEmitter();
-        _this.tagsFound = new core_1.EventEmitter();
+        _this.unsetTag = new EventEmitter();
+        _this.setTag = new EventEmitter();
+        _this.tagsFound = new EventEmitter();
         return _this;
     }
     CommonDocTagsStateComponent.prototype.doSetTag = function (keyword) {
@@ -49,47 +47,47 @@ var CommonDocTagsStateComponent = /** @class */ (function (_super) {
         this.tagsFound.emit(this.tagsKats);
     };
     __decorate([
-        core_1.Input(),
+        Input(),
         __metadata("design:type", String)
     ], CommonDocTagsStateComponent.prototype, "tags", void 0);
     __decorate([
-        core_1.Input(),
+        Input(),
         __metadata("design:type", Array)
     ], CommonDocTagsStateComponent.prototype, "suggestions", void 0);
     __decorate([
-        core_1.Input(),
+        Input(),
         __metadata("design:type", Array)
     ], CommonDocTagsStateComponent.prototype, "tagsConfig", void 0);
     __decorate([
-        core_1.Input(),
+        Input(),
         __metadata("design:type", Object)
     ], CommonDocTagsStateComponent.prototype, "possiblePrefixes", void 0);
     __decorate([
-        core_1.Input(),
+        Input(),
         __metadata("design:type", Object)
     ], CommonDocTagsStateComponent.prototype, "prefix", void 0);
     __decorate([
-        core_1.Output(),
-        __metadata("design:type", core_1.EventEmitter)
+        Output(),
+        __metadata("design:type", EventEmitter)
     ], CommonDocTagsStateComponent.prototype, "unsetTag", void 0);
     __decorate([
-        core_1.Output(),
-        __metadata("design:type", core_1.EventEmitter)
+        Output(),
+        __metadata("design:type", EventEmitter)
     ], CommonDocTagsStateComponent.prototype, "setTag", void 0);
     __decorate([
-        core_1.Output(),
-        __metadata("design:type", core_1.EventEmitter)
+        Output(),
+        __metadata("design:type", EventEmitter)
     ], CommonDocTagsStateComponent.prototype, "tagsFound", void 0);
     CommonDocTagsStateComponent = __decorate([
-        core_1.Component({
+        Component({
             selector: 'app-cdoc-tagsstate',
             templateUrl: './cdoc-tagsstate.component.html',
             styleUrls: ['./cdoc-tagsstate.component.css'],
-            changeDetection: core_1.ChangeDetectionStrategy.OnPush
+            changeDetection: ChangeDetectionStrategy.OnPush
         }),
-        __metadata("design:paramtypes", [cdoc_contentutils_service_1.CommonDocContentUtils, core_1.ChangeDetectorRef])
+        __metadata("design:paramtypes", [CommonDocContentUtils, ChangeDetectorRef])
     ], CommonDocTagsStateComponent);
     return CommonDocTagsStateComponent;
-}(inline_component_1.AbstractInlineComponent));
-exports.CommonDocTagsStateComponent = CommonDocTagsStateComponent;
+}(AbstractInlineComponent));
+export { CommonDocTagsStateComponent };
 //# sourceMappingURL=cdoc-tagsstate.component.js.map

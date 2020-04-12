@@ -1,4 +1,3 @@
-"use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
@@ -18,11 +17,11 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-var http_1 = require("@angular/common/http");
-var minimal_http_backend_client_1 = require("@dps/mycms-commons/dist/commons/services/minimal-http-backend-client");
-var core_1 = require("@angular/core");
-var util_1 = require("util");
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { MinimalHttpBackendClient } from '@dps/mycms-commons/dist/commons/services/minimal-http-backend-client';
+import { Injectable } from '@angular/core';
+import { map } from 'rxjs/operators';
+import { isArray } from 'util';
 var SimpleAngularBackendHttpClient = /** @class */ (function (_super) {
     __extends(SimpleAngularBackendHttpClient, _super);
     function SimpleAngularBackendHttpClient(http) {
@@ -37,7 +36,7 @@ var SimpleAngularBackendHttpClient = /** @class */ (function (_super) {
             var params = [];
             for (var paramName in requestConfig.params) {
                 var value = requestConfig.params[paramName];
-                if (util_1.isArray(value)) {
+                if (isArray(value)) {
                     for (var _i = 0, value_1 = value; _i < value_1.length; _i++) {
                         var singleValue = value_1[_i];
                         params.push(encodeURIComponent(paramName) + '=' + encodeURIComponent(singleValue));
@@ -95,7 +94,7 @@ var SimpleAngularBackendHttpClient = /** @class */ (function (_super) {
         };
     };
     SimpleAngularBackendHttpClient.doClientRequest = function (http, httpConfig, headers) {
-        var httpHeaders = new http_1.HttpHeaders();
+        var httpHeaders = new HttpHeaders();
         if (headers) {
             for (var key in headers) {
                 if (headers[key]) {
@@ -119,10 +118,10 @@ var SimpleAngularBackendHttpClient = /** @class */ (function (_super) {
         // console.log('makeHttpRequest:', requestConfig);
         var result;
         var request = http.request(requestConfig.method, requestConfig.url, requestConfig);
-        result = request.map(function (res) {
+        result = request.pipe(map(function (res) {
             // console.log('response makeHttpRequest:' + httpConfig.url, res);
             return SimpleAngularBackendHttpClient_1.createBackendHttpResponse(requestConfig, res);
-        });
+        }));
         return result.toPromise();
     };
     SimpleAngularBackendHttpClient.prototype.makeHttpRequest = function (httpConfig) {
@@ -130,10 +129,10 @@ var SimpleAngularBackendHttpClient = /** @class */ (function (_super) {
     };
     var SimpleAngularBackendHttpClient_1;
     SimpleAngularBackendHttpClient = SimpleAngularBackendHttpClient_1 = __decorate([
-        core_1.Injectable(),
-        __metadata("design:paramtypes", [http_1.HttpClient])
+        Injectable(),
+        __metadata("design:paramtypes", [HttpClient])
     ], SimpleAngularBackendHttpClient);
     return SimpleAngularBackendHttpClient;
-}(minimal_http_backend_client_1.MinimalHttpBackendClient));
-exports.SimpleAngularBackendHttpClient = SimpleAngularBackendHttpClient;
+}(MinimalHttpBackendClient));
+export { SimpleAngularBackendHttpClient };
 //# sourceMappingURL=simple-angular-backend-http-client.js.map

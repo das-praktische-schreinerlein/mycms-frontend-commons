@@ -1,4 +1,3 @@
-"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,10 +7,9 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = require("@angular/core");
-var core_2 = require("@ngx-translate/core");
-var searchparameter_utils_1 = require("@dps/mycms-commons/dist/search-commons/services/searchparameter.utils");
+import { Injectable } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
+import { SearchParameterUtils } from '@dps/mycms-commons/dist/search-commons/services/searchparameter.utils';
 var SearchFormUtils = /** @class */ (function () {
     function SearchFormUtils(translateService, searchParameterUtils) {
         this.translateService = translateService;
@@ -193,10 +191,10 @@ var SearchFormUtils = /** @class */ (function () {
         return res;
     };
     SearchFormUtils = __decorate([
-        core_1.Injectable(),
-        __metadata("design:paramtypes", [core_2.TranslateService, searchparameter_utils_1.SearchParameterUtils])
+        Injectable(),
+        __metadata("design:paramtypes", [TranslateService, SearchParameterUtils])
     ], SearchFormUtils);
     return SearchFormUtils;
 }());
-exports.SearchFormUtils = SearchFormUtils;
+export { SearchFormUtils };
 //# sourceMappingURL=searchform-utils.service.js.map

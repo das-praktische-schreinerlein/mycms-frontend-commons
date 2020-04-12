@@ -1,4 +1,3 @@
-"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,21 +7,20 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = require("@angular/core");
-var geo_loader_1 = require("../../services/geo.loader");
-var geojson_parser_1 = require("../../services/geojson.parser");
-var geogpx_parser_1 = require("../../services/geogpx.parser");
-var visjs_geoprofilemap_plugin_1 = require("../../services/visjs-geoprofilemap.plugin");
-var component_utils_1 = require("../../../angular-commons/services/component.utils");
-var minimal_http_backend_client_1 = require("@dps/mycms-commons/dist/commons/services/minimal-http-backend-client");
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { GeoLoader } from '../../services/geo.loader';
+import { GeoJsonParser } from '../../services/geojson.parser';
+import { GeoGpxParser } from '../../services/geogpx.parser';
+import { VisJsGeoProfileMap } from '../../services/visjs-geoprofilemap.plugin';
+import { ComponentUtils } from '../../../angular-commons/services/component.utils';
+import { MinimalHttpBackendClient } from '@dps/mycms-commons/dist/commons/services/minimal-http-backend-client';
 var VisJsProfileMapComponent = /** @class */ (function () {
     function VisJsProfileMapComponent(http) {
         this.http = http;
         this.flgfullScreen = false;
         this.mapHeight = '';
-        this.gpxLoader = new geo_loader_1.GeoLoader(http, new geogpx_parser_1.GeoGpxParser());
-        this.jsonLoader = new geo_loader_1.GeoLoader(http, new geojson_parser_1.GeoJsonParser());
+        this.gpxLoader = new GeoLoader(http, new GeoGpxParser());
+        this.jsonLoader = new GeoLoader(http, new GeoJsonParser());
     }
     VisJsProfileMapComponent.prototype.ngAfterViewChecked = function () {
         if (this.initialized) {
@@ -32,7 +30,7 @@ var VisJsProfileMapComponent = /** @class */ (function () {
         this.renderMap();
     };
     VisJsProfileMapComponent.prototype.ngOnChanges = function (changes) {
-        if (this.initialized && component_utils_1.ComponentUtils.hasNgChanged(changes)) {
+        if (this.initialized && ComponentUtils.hasNgChanged(changes)) {
             this.renderMap();
         }
     };
@@ -99,35 +97,35 @@ var VisJsProfileMapComponent = /** @class */ (function () {
                 }
             };
             var container = document.getElementById(this.mapId);
-            var mapProfileObj = new visjs_geoprofilemap_plugin_1.VisJsGeoProfileMap(dataSources, container, options);
+            var mapProfileObj = new VisJsGeoProfileMap(dataSources, container, options);
         }
     };
     __decorate([
-        core_1.Input(),
+        Input(),
         __metadata("design:type", String)
     ], VisJsProfileMapComponent.prototype, "mapId", void 0);
     __decorate([
-        core_1.Input(),
+        Input(),
         __metadata("design:type", String)
     ], VisJsProfileMapComponent.prototype, "height", void 0);
     __decorate([
-        core_1.Input(),
+        Input(),
         __metadata("design:type", Array)
     ], VisJsProfileMapComponent.prototype, "mapElements", void 0);
     __decorate([
-        core_1.Input(),
+        Input(),
         __metadata("design:type", Boolean)
     ], VisJsProfileMapComponent.prototype, "flgGenerateNameFromGpx", void 0);
     VisJsProfileMapComponent = __decorate([
-        core_1.Component({
+        Component({
             selector: 'app-visjs-profilemap',
             templateUrl: './visjs-profilemap.component.html',
             styleUrls: ['./visjs-profilemap.component.css'],
-            changeDetection: core_1.ChangeDetectionStrategy.OnPush
+            changeDetection: ChangeDetectionStrategy.OnPush
         }),
-        __metadata("design:paramtypes", [minimal_http_backend_client_1.MinimalHttpBackendClient])
+        __metadata("design:paramtypes", [MinimalHttpBackendClient])
     ], VisJsProfileMapComponent);
     return VisJsProfileMapComponent;
 }());
-exports.VisJsProfileMapComponent = VisJsProfileMapComponent;
+export { VisJsProfileMapComponent };
 //# sourceMappingURL=visjs-profilemap.component.js.map

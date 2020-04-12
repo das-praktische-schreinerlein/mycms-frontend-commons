@@ -1,4 +1,3 @@
-"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,17 +7,16 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = require("@angular/core");
-var Layout;
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+export var Layout;
 (function (Layout) {
     Layout[Layout["FLAT"] = 0] = "FLAT";
     Layout[Layout["SMALL"] = 1] = "SMALL";
     Layout[Layout["BIG"] = 2] = "BIG";
-})(Layout = exports.Layout || (exports.Layout = {}));
+})(Layout || (Layout = {}));
 var PDocListComponent = /** @class */ (function () {
     function PDocListComponent() {
-        this.show = new core_1.EventEmitter();
+        this.show = new EventEmitter();
         this.Layout = Layout;
     }
     PDocListComponent.prototype.onShow = function (record) {
@@ -26,27 +24,27 @@ var PDocListComponent = /** @class */ (function () {
         return false;
     };
     __decorate([
-        core_1.Input(),
+        Input(),
         __metadata("design:type", Array)
     ], PDocListComponent.prototype, "records", void 0);
     __decorate([
-        core_1.Input(),
+        Input(),
         __metadata("design:type", Number)
     ], PDocListComponent.prototype, "layout", void 0);
     __decorate([
-        core_1.Output(),
-        __metadata("design:type", core_1.EventEmitter)
+        Output(),
+        __metadata("design:type", EventEmitter)
     ], PDocListComponent.prototype, "show", void 0);
     PDocListComponent = __decorate([
-        core_1.Component({
+        Component({
             selector: 'app-pdoc-list',
             templateUrl: './pdoc-list.component.html',
             styleUrls: ['./pdoc-list.component.css'],
-            changeDetection: core_1.ChangeDetectionStrategy.OnPush
+            changeDetection: ChangeDetectionStrategy.OnPush
         }),
         __metadata("design:paramtypes", [])
     ], PDocListComponent);
     return PDocListComponent;
 }());
-exports.PDocListComponent = PDocListComponent;
+export { PDocListComponent };
 //# sourceMappingURL=pdoc-list.component.js.map

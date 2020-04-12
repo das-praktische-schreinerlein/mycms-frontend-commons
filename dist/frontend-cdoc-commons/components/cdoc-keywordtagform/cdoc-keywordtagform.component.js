@@ -1,4 +1,3 @@
-"use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
@@ -18,12 +17,11 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = require("@angular/core");
-var inline_component_1 = require("../../../angular-commons/components/inline.component");
-var Subject_1 = require("rxjs/Subject");
-var component_utils_1 = require("../../../angular-commons/services/component.utils");
-var bean_utils_1 = require("@dps/mycms-commons/dist/commons/utils/bean.utils");
+import { Input, SimpleChange } from '@angular/core';
+import { AbstractInlineComponent } from '../../../angular-commons/components/inline.component';
+import { Subject } from 'rxjs';
+import { ComponentUtils } from '../../../angular-commons/services/component.utils';
+import { BeanUtils } from '@dps/mycms-commons/dist/commons/utils/bean.utils';
 var CommonDocKeywordTagFormComponent = /** @class */ (function (_super) {
     __extends(CommonDocKeywordTagFormComponent, _super);
     function CommonDocKeywordTagFormComponent(fb, activeModal, cd, toastr) {
@@ -89,8 +87,8 @@ var CommonDocKeywordTagFormComponent = /** @class */ (function (_super) {
     };
     CommonDocKeywordTagFormComponent.prototype.updateData = function () {
         var changes = {};
-        changes['records'] = new core_1.SimpleChange(this.records, this.lastRecords, false);
-        if (this.records != null && !component_utils_1.ComponentUtils.hasNgChanged(changes)) {
+        changes['records'] = new SimpleChange(this.records, this.lastRecords, false);
+        if (this.records != null && !ComponentUtils.hasNgChanged(changes)) {
             return;
         }
         this.lastRecords = this.records;
@@ -101,8 +99,8 @@ var CommonDocKeywordTagFormComponent = /** @class */ (function (_super) {
     };
     CommonDocKeywordTagFormComponent.prototype.getComponentConfig = function (config) {
         var prefix = '';
-        if (bean_utils_1.BeanUtils.getValue(config, 'components.cdoc-keywords.editPrefix')) {
-            prefix = bean_utils_1.BeanUtils.getValue(config, 'components.cdoc-keywords.editPrefix');
+        if (BeanUtils.getValue(config, 'components.cdoc-keywords.editPrefix')) {
+            prefix = BeanUtils.getValue(config, 'components.cdoc-keywords.editPrefix');
         }
         return {
             editPrefix: prefix
@@ -138,14 +136,14 @@ var CommonDocKeywordTagFormComponent = /** @class */ (function (_super) {
         }
     };
     __decorate([
-        core_1.Input(),
+        Input(),
         __metadata("design:type", Array)
     ], CommonDocKeywordTagFormComponent.prototype, "records", void 0);
     __decorate([
-        core_1.Input(),
-        __metadata("design:type", Subject_1.Subject)
+        Input(),
+        __metadata("design:type", Subject)
     ], CommonDocKeywordTagFormComponent.prototype, "resultObservable", void 0);
     return CommonDocKeywordTagFormComponent;
-}(inline_component_1.AbstractInlineComponent));
-exports.CommonDocKeywordTagFormComponent = CommonDocKeywordTagFormComponent;
+}(AbstractInlineComponent));
+export { CommonDocKeywordTagFormComponent };
 //# sourceMappingURL=cdoc-keywordtagform.component.js.map

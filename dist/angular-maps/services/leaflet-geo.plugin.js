@@ -1,4 +1,3 @@
-"use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
@@ -9,11 +8,10 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-Object.defineProperty(exports, "__esModule", { value: true });
-var geo_parser_1 = require("./geo.parser");
-var L = require("leaflet");
-require("leaflet.markercluster");
-require("leaflet-editable-polyline");
+import { GeoElementType } from './geo.parser';
+import * as L from 'leaflet';
+import 'leaflet.markercluster';
+import 'leaflet-editable-polyline';
 var GeoParsedFeature = /** @class */ (function (_super) {
     __extends(GeoParsedFeature, _super);
     function GeoParsedFeature(geoLoader, geoElement, options) {
@@ -30,14 +28,14 @@ var GeoParsedFeature = /** @class */ (function (_super) {
         };
         for (var i = 0; i < geoElements.length; i++) {
             var geoElement = geoElements[i];
-            flags.hasRoute = flags.hasRoute || geoElement.type === geo_parser_1.GeoElementType.ROUTE;
-            flags.hasTrack = flags.hasTrack || geoElement.type === geo_parser_1.GeoElementType.TRACK;
+            flags.hasRoute = flags.hasRoute || geoElement.type === GeoElementType.ROUTE;
+            flags.hasTrack = flags.hasTrack || geoElement.type === GeoElementType.TRACK;
         }
         for (var i = 0; i < geoElements.length; i++) {
             var geoElement = geoElements[i];
             var prefix = (gpxElement.code !== undefined ? gpxElement.code + ' ' : '');
             switch (geoElement.type) {
-                case geo_parser_1.GeoElementType.WAYPOINT:
+                case GeoElementType.WAYPOINT:
                     var point = void 0;
                     point = new L.Marker(geoElement.points[0], {
                         title: gpxElement.title || (prefix + gpxElement.type + ': ' + gpxElement.name),
@@ -48,8 +46,8 @@ var GeoParsedFeature = /** @class */ (function (_super) {
                     break;
                 default:
                     if (geoElements.length > 1
-                        && ((gpxElement.type === 'TRACK' && geoElement.type !== geo_parser_1.GeoElementType.TRACK && flags.hasTrack)
-                            || (gpxElement.type === 'ROUTE' && geoElement.type !== geo_parser_1.GeoElementType.ROUTE && flags.hasRoute))) {
+                        && ((gpxElement.type === 'TRACK' && geoElement.type !== GeoElementType.TRACK && flags.hasTrack)
+                            || (gpxElement.type === 'ROUTE' && geoElement.type !== GeoElementType.ROUTE && flags.hasRoute))) {
                         break;
                     }
                     var lineOptions = {};
@@ -67,7 +65,7 @@ var GeoParsedFeature = /** @class */ (function (_super) {
                         element = L.Polyline.PolylineEditor(geoElement.points, lineOptions);
                     }
                     else {
-                        if (geoElement.type === geo_parser_1.GeoElementType.AREA) {
+                        if (geoElement.type === GeoElementType.AREA) {
                             element = new L.Polygon(geoElement.points, lineOptions);
                             lineOptions['fillOpacity'] = 0.1;
                         }
@@ -79,7 +77,7 @@ var GeoParsedFeature = /** @class */ (function (_super) {
                         element.bindPopup(gpxElement.popupContent);
                     }
                     layers.push(element);
-                    if (geoElement.type === geo_parser_1.GeoElementType.AREA) {
+                    if (geoElement.type === GeoElementType.AREA) {
                         if (options['showAreaMarker']) {
                             layers.push(new L.Marker(geoElement.points[0], {
                                 title: gpxElement.title || (prefix + 'Area: ' + gpxElement.name),
@@ -146,5 +144,5 @@ var GeoParsedFeature = /** @class */ (function (_super) {
     };
     return GeoParsedFeature;
 }(L.FeatureGroup));
-exports.GeoParsedFeature = GeoParsedFeature;
+export { GeoParsedFeature };
 //# sourceMappingURL=leaflet-geo.plugin.js.map

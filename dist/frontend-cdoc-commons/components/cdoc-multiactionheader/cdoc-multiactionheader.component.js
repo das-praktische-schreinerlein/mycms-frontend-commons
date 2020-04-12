@@ -1,4 +1,3 @@
-"use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
@@ -18,15 +17,13 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = require("@angular/core");
-var generic_app_service_1 = require("@dps/mycms-commons/dist/commons/services/generic-app.service");
-var actiontag_utils_1 = require("@dps/mycms-commons/dist/commons/utils/actiontag.utils");
-var bean_utils_1 = require("@dps/mycms-commons/dist/commons/utils/bean.utils");
-var inline_component_1 = require("../../../angular-commons/components/inline.component");
-var cdoc_multiaction_manager_1 = require("../../services/cdoc-multiaction.manager");
-var string_utils_1 = require("@dps/mycms-commons/dist/commons/utils/string.utils");
-var isArray_1 = require("rxjs/util/isArray");
+import { EventEmitter, Input, Output } from '@angular/core';
+import { AppState } from '@dps/mycms-commons/dist/commons/services/generic-app.service';
+import { ActionTagUtils } from '@dps/mycms-commons/dist/commons/utils/actiontag.utils';
+import { BeanUtils } from '@dps/mycms-commons/dist/commons/utils/bean.utils';
+import { AbstractInlineComponent } from '../../../angular-commons/components/inline.component';
+import { CommonDocMultiActionManager } from '../../services/cdoc-multiaction.manager';
+import { StringUtils } from '@dps/mycms-commons/dist/commons/utils/string.utils';
 var CommonDocMultiActionHeaderComponent = /** @class */ (function (_super) {
     __extends(CommonDocMultiActionHeaderComponent, _super);
     function CommonDocMultiActionHeaderComponent(appService, contentUtils, cd) {
@@ -74,13 +71,13 @@ var CommonDocMultiActionHeaderComponent = /** @class */ (function (_super) {
         _this.flgShowInputParam = false;
         _this.flgShowSelectParam = false;
         _this.flgRecordsSelected = false;
-        _this.submitSelectedMultiActions = new core_1.EventEmitter();
+        _this.submitSelectedMultiActions = new EventEmitter();
         return _this;
     }
     CommonDocMultiActionHeaderComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.appService.getAppState().subscribe(function (appState) {
-            if (appState === generic_app_service_1.AppState.Ready) {
+            if (appState === AppState.Ready) {
                 _this.config = _this.appService.getAppConfig();
                 _this.configureComponent(_this.config);
                 _this.updateData();
@@ -117,7 +114,7 @@ var CommonDocMultiActionHeaderComponent = /** @class */ (function (_super) {
         var actionTagConfigs = [];
         this.flgShowInputParam = false;
         this.flgShowSelectParam = false;
-        this.tagsValues = string_utils_1.StringUtils.uniqueKeywords(this.tagsValues.join(','));
+        this.tagsValues = StringUtils.uniqueKeywords(this.tagsValues.join(','));
         var _loop_1 = function (tagKey) {
             var actionTag = this_1.tags.find(function (value) { return value.config.key === tagKey; });
             if (actionTag) {
@@ -131,13 +128,13 @@ var CommonDocMultiActionHeaderComponent = /** @class */ (function (_super) {
                     this_1.flgShowSelectParam = true;
                     this_1.selectParamOptions = [];
                     this_1.selectParamValues = [];
-                    if (isArray_1.isArray(multiConfig.selectParameterConstants)) {
+                    if (Array.isArray(multiConfig.selectParameterConstants)) {
                         multiConfig.selectParameterConstants.map(function (value) {
                             _this.selectParamOptions.push({ id: value[0], name: value[1] });
                         });
                     }
                     else if (multiConfig.selectParameterValueListKey && this_1.selectValueMap &&
-                        isArray_1.isArray(this_1.selectValueMap.get(multiConfig.selectParameterValueListKey))) {
+                        Array.isArray(this_1.selectValueMap.get(multiConfig.selectParameterValueListKey))) {
                         this_1.selectValueMap.get(multiConfig.selectParameterValueListKey).map(function (value) {
                             _this.selectParamOptions.push(value);
                         });
@@ -167,23 +164,23 @@ var CommonDocMultiActionHeaderComponent = /** @class */ (function (_super) {
                 _this.flgShowSelectParam = true;
                 _this.flgShowInputParam = true;
                 multiConfig.payload[multiConfig.inputFieldName] =
-                    string_utils_1.StringUtils.mergeKeywords(_this.inputParamValue, _this.selectParamValues.join(','), false);
+                    StringUtils.mergeKeywords(_this.inputParamValue, _this.selectParamValues.join(','), false);
             }
             else if (multiConfig.flgUseInput) {
                 _this.flgShowInputParam = true;
                 _this.flgShowSelectParam = false;
-                multiConfig.payload[multiConfig.inputFieldName] = string_utils_1.StringUtils.mergeKeywords(_this.inputParamValue, '', false);
+                multiConfig.payload[multiConfig.inputFieldName] = StringUtils.mergeKeywords(_this.inputParamValue, '', false);
             }
             else if (multiConfig.flgUseSelect) {
                 _this.flgShowInputParam = false;
                 _this.flgShowSelectParam = true;
-                multiConfig.payload[multiConfig.inputFieldName] = string_utils_1.StringUtils.mergeKeywords(_this.selectParamValues.join(','), '', false);
+                multiConfig.payload[multiConfig.inputFieldName] = StringUtils.mergeKeywords(_this.selectParamValues.join(','), '', false);
             }
         });
         this.cd.markForCheck();
     };
     CommonDocMultiActionHeaderComponent.prototype.getComponentConfig = function (config) {
-        if (bean_utils_1.BeanUtils.getValue(config, 'components.cdoc-multiactionheader.actionTags')) {
+        if (BeanUtils.getValue(config, 'components.cdoc-multiactionheader.actionTags')) {
             return {
                 tagConfigs: config['components']['cdoc-multiactionheader']['actionTags']
             };
@@ -206,7 +203,7 @@ var CommonDocMultiActionHeaderComponent = /** @class */ (function (_super) {
             this.tags = [];
         }
         else {
-            this.tags = actiontag_utils_1.ActionTagUtils.generateTagsForRecords(this.tagConfigs, this.searchResult.currentRecords, this.config, { type: this.type });
+            this.tags = ActionTagUtils.generateTagsForRecords(this.tagConfigs, this.searchResult.currentRecords, this.config, { type: this.type });
             this.tags.map(function (value) {
                 if (value.available) {
                     _this.tagsOptions.push({ id: value.config.key, name: value.config.name });
@@ -241,26 +238,26 @@ var CommonDocMultiActionHeaderComponent = /** @class */ (function (_super) {
     };
     var _a;
     __decorate([
-        core_1.Input(),
+        Input(),
         __metadata("design:type", typeof (_a = typeof S !== "undefined" && S) === "function" && _a || Object)
     ], CommonDocMultiActionHeaderComponent.prototype, "searchResult", void 0);
     __decorate([
-        core_1.Input(),
-        __metadata("design:type", cdoc_multiaction_manager_1.CommonDocMultiActionManager)
+        Input(),
+        __metadata("design:type", CommonDocMultiActionManager)
     ], CommonDocMultiActionHeaderComponent.prototype, "multiActionManager", void 0);
     __decorate([
-        core_1.Input(),
+        Input(),
         __metadata("design:type", Map)
     ], CommonDocMultiActionHeaderComponent.prototype, "selectValueMap", void 0);
     __decorate([
-        core_1.Input(),
+        Input(),
         __metadata("design:type", String)
     ], CommonDocMultiActionHeaderComponent.prototype, "type", void 0);
     __decorate([
-        core_1.Output(),
-        __metadata("design:type", core_1.EventEmitter)
+        Output(),
+        __metadata("design:type", EventEmitter)
     ], CommonDocMultiActionHeaderComponent.prototype, "submitSelectedMultiActions", void 0);
     return CommonDocMultiActionHeaderComponent;
-}(inline_component_1.AbstractInlineComponent));
-exports.CommonDocMultiActionHeaderComponent = CommonDocMultiActionHeaderComponent;
+}(AbstractInlineComponent));
+export { CommonDocMultiActionHeaderComponent };
 //# sourceMappingURL=cdoc-multiactionheader.component.js.map

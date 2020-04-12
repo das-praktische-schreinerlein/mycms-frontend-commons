@@ -1,8 +1,6 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-var leaflet_1 = require("leaflet");
-var math_utils_1 = require("@dps/mycms-commons/dist/commons/utils/math.utils");
-var geo_utils_1 = require("./geo.utils");
+import { latLngBounds } from 'leaflet';
+import { MathUtils } from '@dps/mycms-commons/dist/commons/utils/math.utils';
+import { GeoUtils } from './geo.utils';
 var TrackStatisticService = /** @class */ (function () {
     function TrackStatisticService() {
     }
@@ -36,8 +34,8 @@ var TrackStatisticService = /** @class */ (function () {
     TrackStatisticService.prototype.trackStatistics = function (ll) {
         var posStart = (ll.length > 0 ? ll[0] : undefined);
         var posEnd = (ll.length > 0 ? ll[ll.length - 1] : undefined);
-        var dateStart = geo_utils_1.GeoUtils.getLocalDateTimeForLatLng(posStart);
-        var dateEnd = geo_utils_1.GeoUtils.getLocalDateTimeForLatLng(posEnd);
+        var dateStart = GeoUtils.getLocalDateTimeForLatLng(posStart);
+        var dateEnd = GeoUtils.getLocalDateTimeForLatLng(posEnd);
         var t = {
             altAsc: undefined,
             altDesc: undefined,
@@ -50,7 +48,7 @@ var TrackStatisticService = /** @class */ (function () {
             altAvg: undefined,
             altStart: undefined,
             altEnd: undefined,
-            bounds: leaflet_1.latLngBounds(ll),
+            bounds: latLngBounds(ll),
             posStart: posStart,
             posEnd: posEnd,
             dateStart: dateStart,
@@ -65,7 +63,7 @@ var TrackStatisticService = /** @class */ (function () {
             }
             if (p.alt !== undefined) {
                 if (t.altEnd !== undefined) {
-                    var diff = math_utils_1.MathUtils.sub(math_utils_1.MathUtils.round(p.alt), math_utils_1.MathUtils.round(t.altEnd));
+                    var diff = MathUtils.sub(MathUtils.round(p.alt), MathUtils.round(t.altEnd));
                     if (diff > 0) {
                         t.altAsc = (t.altAsc !== undefined ? t.altAsc + diff : diff);
                     }
@@ -73,13 +71,13 @@ var TrackStatisticService = /** @class */ (function () {
                         t.altDesc = (t.altDesc !== undefined ? t.altDesc - diff : -diff);
                     }
                 }
-                t.altMin = math_utils_1.MathUtils.min(t.altMin, p.alt);
-                t.altMax = math_utils_1.MathUtils.max(t.altMax, p.alt);
+                t.altMin = MathUtils.min(t.altMin, p.alt);
+                t.altMax = MathUtils.max(t.altMax, p.alt);
                 if (t.altStart === undefined) {
                     t.altStart = p.alt;
                 }
                 t.altEnd = p.alt;
-                altSum = math_utils_1.MathUtils.sum(altSum, p.alt);
+                altSum = MathUtils.sum(altSum, p.alt);
                 altCount++;
             }
             l = p;
@@ -133,26 +131,26 @@ var TrackStatisticService = /** @class */ (function () {
                 stat2.bounds.getSouthEast(), stat2.bounds.getSouthWest()]);
         }
         var t = {
-            altAsc: math_utils_1.MathUtils.sum(stat1.altAsc, stat2.altAsc),
-            altDesc: math_utils_1.MathUtils.sum(stat1.altDesc, stat2.altDesc),
-            dist: math_utils_1.MathUtils.sum(stat1.dist, stat2.dist),
+            altAsc: MathUtils.sum(stat1.altAsc, stat2.altAsc),
+            altDesc: MathUtils.sum(stat1.altDesc, stat2.altDesc),
+            dist: MathUtils.sum(stat1.dist, stat2.dist),
             velocity: stat1.velocity,
             altAscVelocity: stat1.altAscVelocity,
             altDescVelocity: stat1.altDescVelocity,
-            altMin: math_utils_1.MathUtils.min(stat1.altMin, stat2.altMin),
-            altMax: math_utils_1.MathUtils.max(stat1.altMax, stat2.altMax),
+            altMin: MathUtils.min(stat1.altMin, stat2.altMin),
+            altMax: MathUtils.max(stat1.altMax, stat2.altMax),
             altAvg: stat1.altAvg,
             altStart: stat1.altStart !== undefined ? stat1.altStart : stat2.altStart,
             altEnd: stat2.altEnd !== undefined ? stat2.altEnd : stat1.altEnd,
-            bounds: leaflet_1.latLngBounds(coords),
+            bounds: latLngBounds(coords),
             posStart: stat1.posStart !== undefined ? stat1.posStart : stat2.posStart,
             posEnd: stat2.posEnd !== undefined ? stat2.posEnd : stat1.posEnd,
             dateStart: stat1.dateStart !== undefined ? stat1.dateStart : stat2.dateStart,
             dateEnd: stat2.dateEnd !== undefined ? stat2.dateEnd : stat1.dateEnd,
-            duration: math_utils_1.MathUtils.sum(stat1.duration, stat2.duration)
+            duration: MathUtils.sum(stat1.duration, stat2.duration)
         };
         var fullDuration = 0;
-        t.altAvg = this.formatM(math_utils_1.MathUtils.sum(t.altMin, t.altMax) / 2);
+        t.altAvg = this.formatM(MathUtils.sum(t.altMin, t.altMax) / 2);
         if (stat1.dateEnd !== undefined && stat1.dateStart !== undefined) {
             fullDuration = stat1.dateEnd.getTime() - stat1.dateStart.getTime();
         }
@@ -190,5 +188,5 @@ var TrackStatisticService = /** @class */ (function () {
     };
     return TrackStatisticService;
 }());
-exports.TrackStatisticService = TrackStatisticService;
+export { TrackStatisticService };
 //# sourceMappingURL=track-statistic.service.js.map

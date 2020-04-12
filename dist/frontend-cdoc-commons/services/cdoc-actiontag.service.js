@@ -1,8 +1,6 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = require("@angular/core");
-var js_data_1 = require("js-data");
-var angular_html_service_1 = require("../../angular-commons/services/angular-html.service");
+import { EventEmitter } from '@angular/core';
+import { utils } from 'js-data';
+import { AngularHtmlService } from '../../angular-commons/services/angular-html.service';
 var CommonDocActionTagService = /** @class */ (function () {
     function CommonDocActionTagService(router, cdocDataService, cdocPlaylistService, cdocAlbumService, appService) {
         this.router = router;
@@ -33,7 +31,7 @@ var CommonDocActionTagService = /** @class */ (function () {
         };
     };
     CommonDocActionTagService.actionTagEventEmitterToMultiActionTagEventEmitter = function (actionTagEventEmitter) {
-        var multiRecordActionTagEventEmitter = new core_1.EventEmitter();
+        var multiRecordActionTagEventEmitter = new EventEmitter();
         multiRecordActionTagEventEmitter.subscribe(function (data) {
             actionTagEventEmitter.emit(CommonDocActionTagService.multiActionTagEventToActionTagEvent(data));
         }, function (error) {
@@ -124,13 +122,13 @@ var CommonDocActionTagService = /** @class */ (function () {
             actionTagEvent.error = undefined;
             actionTagEvent.result = cdoc;
             actionTagEventEmitter.emit(actionTagEvent);
-            return js_data_1.utils.resolve(actionTagEvent);
+            return utils.resolve(actionTagEvent);
         }).catch(function (reason) {
             actionTagEvent.processed = true;
             actionTagEvent.error = reason;
             actionTagEventEmitter.emit(actionTagEvent);
             console.error('cdocactions failed:', reason);
-            return js_data_1.utils.reject(reason);
+            return utils.reject(reason);
         });
     };
     CommonDocActionTagService.prototype.processActionTagEventUnknown = function (actionTagEvent, actionTagEventEmitter) {
@@ -149,7 +147,7 @@ var CommonDocActionTagService = /** @class */ (function () {
         }
     };
     CommonDocActionTagService.prototype.processMultiRecordActionTagEventPlaylistExport = function (actionTagEvent, actionTagEventEmitter) {
-        angular_html_service_1.AngularHtmlService.browserSaveTextAsFile(this.cdocPlaylistService.generateM3uForRecords('', actionTagEvent.records), 'playlist.m3u', 'application/m3u');
+        AngularHtmlService.browserSaveTextAsFile(this.cdocPlaylistService.generateM3uForRecords('', actionTagEvent.records), 'playlist.m3u', 'application/m3u');
         actionTagEvent.processed = true;
         actionTagEvent.error = undefined;
         actionTagEvent.results = actionTagEvent.records;
@@ -165,5 +163,5 @@ var CommonDocActionTagService = /** @class */ (function () {
     };
     return CommonDocActionTagService;
 }());
-exports.CommonDocActionTagService = CommonDocActionTagService;
+export { CommonDocActionTagService };
 //# sourceMappingURL=cdoc-actiontag.service.js.map

@@ -1,4 +1,3 @@
-"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,10 +7,9 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-var angular2_markdown_1 = require("angular2-markdown");
-var core_1 = require("@angular/core");
-var angular_html_service_1 = require("./angular-html.service");
+import { NgxMdService } from 'ngx-md';
+import { Injectable } from '@angular/core';
+import { AngularHtmlService } from './angular-html.service';
 var AngularMarkdownService = /** @class */ (function () {
     function AngularMarkdownService(htmlService, markdownService) {
         this.htmlService = htmlService;
@@ -26,10 +24,10 @@ var AngularMarkdownService = /** @class */ (function () {
         return this.htmlService.renderHtml(parentSelector, html, routeLocalLinkWithAngularRouter);
     };
     AngularMarkdownService = __decorate([
-        core_1.Injectable(),
-        __metadata("design:paramtypes", [angular_html_service_1.AngularHtmlService, angular2_markdown_1.MarkdownService])
+        Injectable(),
+        __metadata("design:paramtypes", [AngularHtmlService, NgxMdService])
     ], AngularMarkdownService);
     return AngularMarkdownService;
 }());
-exports.AngularMarkdownService = AngularMarkdownService;
+export { AngularMarkdownService };
 //# sourceMappingURL=angular-markdown.service.js.map

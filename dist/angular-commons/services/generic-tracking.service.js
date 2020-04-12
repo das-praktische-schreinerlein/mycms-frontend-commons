@@ -1,4 +1,3 @@
-"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,22 +7,20 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = require("@angular/core");
-var angulartics2_1 = require("angulartics2");
+import { Injectable } from '@angular/core';
+import { Angulartics2 } from 'angulartics2';
 var GenericTrackingService = /** @class */ (function () {
     function GenericTrackingService(angulartics2) {
         this.angulartics2 = angulartics2;
-        this.angulartics2.virtualPageviews(false);
     }
     GenericTrackingService.prototype.trackPageView = function () {
         this.angulartics2.pageTrack.next({ path: window.location.href });
     };
     GenericTrackingService = __decorate([
-        core_1.Injectable(),
-        __metadata("design:paramtypes", [angulartics2_1.Angulartics2])
+        Injectable(),
+        __metadata("design:paramtypes", [Angulartics2])
     ], GenericTrackingService);
     return GenericTrackingService;
 }());
-exports.GenericTrackingService = GenericTrackingService;
+export { GenericTrackingService };
 //# sourceMappingURL=generic-tracking.service.js.map

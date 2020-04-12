@@ -1,4 +1,3 @@
-"use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
@@ -9,15 +8,14 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-Object.defineProperty(exports, "__esModule", { value: true });
-var layout_service_1 = require("../../angular-commons/services/layout.service");
-var error_resolver_1 = require("../resolver/error.resolver");
-var sections_pdoc_details_resolver_1 = require("../resolver/sections-pdoc-details.resolver");
-var generic_validator_util_1 = require("@dps/mycms-commons/dist/search-commons/model/forms/generic-validator.util");
-var generic_app_service_1 = require("@dps/mycms-commons/dist/commons/services/generic-app.service");
-var common_routing_service_1 = require("../../angular-commons/services/common-routing.service");
-var cdoc_details_resolver_1 = require("../resolver/cdoc-details.resolver");
-var pdoc_page_component_1 = require("../../frontend-pdoc-commons/components/pdoc-page.component");
+import { Layout } from '../../angular-commons/services/layout.service';
+import { ErrorResolver } from '../resolver/error.resolver';
+import { SectionsPDocRecordResolver } from '../resolver/sections-pdoc-details.resolver';
+import { IdValidationRule, KeywordValidationRule } from '@dps/mycms-commons/dist/search-commons/model/forms/generic-validator.util';
+import { GenericAppService } from '@dps/mycms-commons/dist/commons/services/generic-app.service';
+import { RoutingState } from '../../angular-commons/services/common-routing.service';
+import { CommonDocRecordResolver } from '../resolver/cdoc-details.resolver';
+import { AbstractPageComponent } from '../../frontend-pdoc-commons/components/pdoc-page.component';
 var CommonDocShowpageComponent = /** @class */ (function (_super) {
     __extends(CommonDocShowpageComponent, _super);
     function CommonDocShowpageComponent(route, cdocRoutingService, toastr, contentUtils, errorResolver, pageUtils, commonRoutingService, angularMarkdownService, angularHtmlService, cd, trackingProvider, appService, platformService, layoutService, environment) {
@@ -37,9 +35,9 @@ var CommonDocShowpageComponent = /** @class */ (function (_super) {
         _this.layoutService = layoutService;
         _this.environment = environment;
         _this.flgDescRendered = false;
-        _this.idValidationRule = new generic_validator_util_1.IdValidationRule(true);
-        _this.keywordsValidationRule = new generic_validator_util_1.KeywordValidationRule(true);
-        _this.Layout = layout_service_1.Layout;
+        _this.idValidationRule = new IdValidationRule(true);
+        _this.keywordsValidationRule = new KeywordValidationRule(true);
+        _this.Layout = Layout;
         _this.queryParamMap = undefined;
         _this.contentUtils = contentUtils;
         return _this;
@@ -51,7 +49,7 @@ var CommonDocShowpageComponent = /** @class */ (function (_super) {
             me.queryParamMap = value;
         });
         this.route.data.subscribe(function (data) {
-            me.commonRoutingService.setRoutingState(common_routing_service_1.RoutingState.DONE);
+            me.commonRoutingService.setRoutingState(RoutingState.DONE);
             me.flgDescRendered = false;
             me.configureProcessingOfResolvedData(me.config);
             if (me.processError(data)) {
@@ -145,9 +143,9 @@ var CommonDocShowpageComponent = /** @class */ (function (_super) {
     CommonDocShowpageComponent.prototype.setPageLayoutAndStyles = function () {
     };
     CommonDocShowpageComponent.prototype.processError = function (data) {
-        var flgCommonDocError = error_resolver_1.ErrorResolver.isResolverError(data.record);
-        var flgPDocError = error_resolver_1.ErrorResolver.isResolverError(data.pdoc);
-        var flgBaseSearchUrlError = error_resolver_1.ErrorResolver.isResolverError(data.baseSearchUrl);
+        var flgCommonDocError = ErrorResolver.isResolverError(data.record);
+        var flgPDocError = ErrorResolver.isResolverError(data.pdoc);
+        var flgBaseSearchUrlError = ErrorResolver.isResolverError(data.baseSearchUrl);
         if (!flgCommonDocError && !flgPDocError && !flgBaseSearchUrlError) {
             return false;
         }
@@ -163,9 +161,9 @@ var CommonDocShowpageComponent = /** @class */ (function (_super) {
         var cdocId = (flgCommonDocError ? data.record.error.data : data.record.data.id);
         var cdocName = (flgCommonDocError ? 'name' : data.record.data.name);
         switch (errorCode) {
-            case sections_pdoc_details_resolver_1.SectionsPDocRecordResolver.ERROR_INVALID_SECTION_ID:
-            case cdoc_details_resolver_1.CommonDocRecordResolver.ERROR_INVALID_DOC_ID:
-                code = error_resolver_1.ErrorResolver.ERROR_INVALID_ID;
+            case SectionsPDocRecordResolver.ERROR_INVALID_SECTION_ID:
+            case CommonDocRecordResolver.ERROR_INVALID_DOC_ID:
+                code = ErrorResolver.ERROR_INVALID_ID;
                 if (sectionId && sectionId !== '') {
                     this.baseSearchUrl = ['sections', this.idValidationRule.sanitize(sectionId)].join('/');
                 }
@@ -178,8 +176,8 @@ var CommonDocShowpageComponent = /** @class */ (function (_super) {
                     this.idValidationRule.sanitize(cdocId)].join('/');
                 msg = undefined;
                 break;
-            case sections_pdoc_details_resolver_1.SectionsPDocRecordResolver.ERROR_UNKNOWN_SECTION_ID:
-                code = error_resolver_1.ErrorResolver.ERROR_UNKNOWN_ID;
+            case SectionsPDocRecordResolver.ERROR_UNKNOWN_SECTION_ID:
+                code = ErrorResolver.ERROR_UNKNOWN_ID;
                 this.baseSearchUrl = this.baseSearchUrlDefault;
                 newUrl = [this.baseSearchUrl,
                     'show',
@@ -187,8 +185,8 @@ var CommonDocShowpageComponent = /** @class */ (function (_super) {
                     this.idValidationRule.sanitize(cdocId)].join('/');
                 msg = undefined;
                 break;
-            case cdoc_details_resolver_1.CommonDocRecordResolver.ERROR_UNKNOWN_DOC_ID:
-                code = error_resolver_1.ErrorResolver.ERROR_UNKNOWN_ID;
+            case CommonDocRecordResolver.ERROR_UNKNOWN_DOC_ID:
+                code = ErrorResolver.ERROR_UNKNOWN_ID;
                 if (sectionId && sectionId !== '') {
                     this.baseSearchUrl = ['sections', this.idValidationRule.sanitize(sectionId)].join('/');
                 }
@@ -198,20 +196,20 @@ var CommonDocShowpageComponent = /** @class */ (function (_super) {
                 newUrl = [this.baseSearchUrl].join('/');
                 msg = undefined;
                 break;
-            case sections_pdoc_details_resolver_1.SectionsPDocRecordResolver.ERROR_READING_SECTION_ID:
-            case cdoc_details_resolver_1.CommonDocRecordResolver.ERROR_READING_DOC_ID:
-                code = error_resolver_1.ErrorResolver.ERROR_WHILE_READING;
+            case SectionsPDocRecordResolver.ERROR_READING_SECTION_ID:
+            case CommonDocRecordResolver.ERROR_READING_DOC_ID:
+                code = ErrorResolver.ERROR_WHILE_READING;
                 this.baseSearchUrl = this.baseSearchUrlDefault;
                 newUrl = undefined;
                 msg = undefined;
                 break;
-            case generic_app_service_1.GenericAppService.ERROR_APP_NOT_INITIALIZED:
-                code = error_resolver_1.ErrorResolver.ERROR_APP_NOT_INITIALIZED;
+            case GenericAppService.ERROR_APP_NOT_INITIALIZED:
+                code = ErrorResolver.ERROR_APP_NOT_INITIALIZED;
                 newUrl = undefined;
                 msg = undefined;
                 break;
             default:
-                code = error_resolver_1.ErrorResolver.ERROR_OTHER;
+                code = ErrorResolver.ERROR_OTHER;
                 this.baseSearchUrl = this.baseSearchUrlDefault;
                 newUrl = undefined;
                 msg = undefined;
@@ -221,6 +219,6 @@ var CommonDocShowpageComponent = /** @class */ (function (_super) {
         return true;
     };
     return CommonDocShowpageComponent;
-}(pdoc_page_component_1.AbstractPageComponent));
-exports.CommonDocShowpageComponent = CommonDocShowpageComponent;
+}(AbstractPageComponent));
+export { CommonDocShowpageComponent };
 //# sourceMappingURL=cdoc-showpage.component.js.map

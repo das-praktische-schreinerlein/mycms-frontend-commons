@@ -1,16 +1,14 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-var Promise_serial = require("promise-serial");
-var core_1 = require("@angular/core");
-var BehaviorSubject_1 = require("rxjs/BehaviorSubject");
+import * as Promise_serial from 'promise-serial';
+import { EventEmitter } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 var CommonDocMultiActionManager = /** @class */ (function () {
     function CommonDocMultiActionManager(appService, actionTagService) {
         this.appService = appService;
         this.actionTagService = actionTagService;
         this.selectedActionTags = [];
         this.selectedRecords = [];
-        this.selectedMultiActionTagsObservable = new BehaviorSubject_1.BehaviorSubject([]);
-        this.selectedRecordsObservable = new BehaviorSubject_1.BehaviorSubject([]);
+        this.selectedMultiActionTagsObservable = new BehaviorSubject([]);
+        this.selectedRecordsObservable = new BehaviorSubject([]);
         this.configureComponent({});
     }
     CommonDocMultiActionManager.prototype.configureComponent = function (config) {
@@ -110,7 +108,7 @@ var CommonDocMultiActionManager = /** @class */ (function () {
             processed: false,
             set: true
         };
-        var actionTagEventEmitter = new core_1.EventEmitter();
+        var actionTagEventEmitter = new EventEmitter();
         return new Promise(function (resolve, reject) {
             actionTagEventEmitter.subscribe(function (value) {
                 if (value.error !== undefined) {
@@ -139,7 +137,7 @@ var CommonDocMultiActionManager = /** @class */ (function () {
             processed: false,
             set: true
         };
-        var actionTagEventEmitter = new core_1.EventEmitter();
+        var actionTagEventEmitter = new EventEmitter();
         return new Promise(function (resolve, reject) {
             actionTagEventEmitter.subscribe(function (value) {
                 if (value.error !== undefined) {
@@ -160,5 +158,5 @@ var CommonDocMultiActionManager = /** @class */ (function () {
     };
     return CommonDocMultiActionManager;
 }());
-exports.CommonDocMultiActionManager = CommonDocMultiActionManager;
+export { CommonDocMultiActionManager };
 //# sourceMappingURL=cdoc-multiaction.manager.js.map

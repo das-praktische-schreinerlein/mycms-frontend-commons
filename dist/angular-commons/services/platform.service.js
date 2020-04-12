@@ -1,4 +1,3 @@
-"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -11,9 +10,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = require("@angular/core");
-var common_1 = require("@angular/common");
+import { Inject, Injectable, Optional, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 var PlatformService = /** @class */ (function () {
     function PlatformService(baseUrl, platformId) {
         this.baseUrl = baseUrl;
@@ -23,15 +21,15 @@ var PlatformService = /** @class */ (function () {
         return this.baseUrl ? this.baseUrl + url : url;
     };
     PlatformService.prototype.isClient = function () {
-        return common_1.isPlatformBrowser(this.platformId);
+        return isPlatformBrowser(this.platformId);
     };
     PlatformService = __decorate([
-        core_1.Injectable(),
-        __param(0, core_1.Optional()), __param(0, core_1.Inject('baseUrl')),
-        __param(1, core_1.Inject(core_1.PLATFORM_ID)),
+        Injectable(),
+        __param(0, Optional()), __param(0, Inject('baseUrl')),
+        __param(1, Inject(PLATFORM_ID)),
         __metadata("design:paramtypes", [String, Object])
     ], PlatformService);
     return PlatformService;
 }());
-exports.PlatformService = PlatformService;
+export { PlatformService };
 //# sourceMappingURL=platform.service.js.map

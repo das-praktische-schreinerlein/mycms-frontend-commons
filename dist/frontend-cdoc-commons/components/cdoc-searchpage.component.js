@@ -1,4 +1,3 @@
-"use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
@@ -9,16 +8,15 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-Object.defineProperty(exports, "__esModule", { value: true });
-var facets_1 = require("@dps/mycms-commons/dist/search-commons/model/container/facets");
-var layout_service_1 = require("../../angular-commons/services/layout.service");
-var error_resolver_1 = require("../resolver/error.resolver");
-var generic_validator_util_1 = require("@dps/mycms-commons/dist/search-commons/model/forms/generic-validator.util");
-var generic_app_service_1 = require("@dps/mycms-commons/dist/commons/services/generic-app.service");
-var common_routing_service_1 = require("../../angular-commons/services/common-routing.service");
-var cdoc_section_searchform_resolver_1 = require("../resolver/cdoc-section-searchform.resolver");
-var pdoc_page_component_1 = require("../../frontend-pdoc-commons/components/pdoc-page.component");
-var angular_html_service_1 = require("../../angular-commons/services/angular-html.service");
+import { Facets } from '@dps/mycms-commons/dist/search-commons/model/container/facets';
+import { Layout, LayoutSize, SearchFormLayout } from '../../angular-commons/services/layout.service';
+import { ErrorResolver } from '../resolver/error.resolver';
+import { IdValidationRule } from '@dps/mycms-commons/dist/search-commons/model/forms/generic-validator.util';
+import { GenericAppService } from '@dps/mycms-commons/dist/commons/services/generic-app.service';
+import { RoutingState } from '../../angular-commons/services/common-routing.service';
+import { CommonSectionSearchFormResolver } from '../resolver/cdoc-section-searchform.resolver';
+import { AbstractPageComponent } from '../../frontend-pdoc-commons/components/pdoc-page.component';
+import { AngularHtmlService } from '../../angular-commons/services/angular-html.service';
 var CommonDocSearchpageComponent = /** @class */ (function (_super) {
     __extends(CommonDocSearchpageComponent, _super);
     function CommonDocSearchpageComponent(route, commonRoutingService, errorResolver, cdocDataService, searchFormConverter, cdocRoutingService, toastr, pageUtils, cd, trackingProvider, appService, platformService, layoutService, searchFormUtils, cdocSearchFormUtils, multiActionManager, environment) {
@@ -40,14 +38,14 @@ var CommonDocSearchpageComponent = /** @class */ (function (_super) {
         _this.cdocSearchFormUtils = cdocSearchFormUtils;
         _this.multiActionManager = multiActionManager;
         _this.environment = environment;
-        _this.idValidationRule = new generic_validator_util_1.IdValidationRule(true);
-        _this.Layout = layout_service_1.Layout;
-        _this.SearchFormLayout = layout_service_1.SearchFormLayout;
-        _this.LayoutSize = layout_service_1.LayoutSize;
-        _this.layout = layout_service_1.Layout.FLAT;
+        _this.idValidationRule = new IdValidationRule(true);
+        _this.Layout = Layout;
+        _this.SearchFormLayout = SearchFormLayout;
+        _this.LayoutSize = LayoutSize;
+        _this.layout = Layout.FLAT;
         _this.sort = 'relevance';
         _this.perPage = 10;
-        _this.searchFormLayout = layout_service_1.SearchFormLayout.GRID;
+        _this.searchFormLayout = SearchFormLayout.GRID;
         _this.showSearchFormElements = true;
         _this.pauseAutoPlay = false;
         _this.anchor = '';
@@ -55,7 +53,7 @@ var CommonDocSearchpageComponent = /** @class */ (function (_super) {
         _this.maxAllowedM3UExportItems = -1;
         _this.multiActionSelectValueMap = new Map();
         _this.searchForm = cdocDataService.newSearchForm({});
-        _this.searchResult = cdocDataService.newSearchResult(_this.searchForm, 0, [], new facets_1.Facets());
+        _this.searchResult = cdocDataService.newSearchResult(_this.searchForm, 0, [], new Facets());
         return _this;
     }
     CommonDocSearchpageComponent.prototype.configureProcessing = function () {
@@ -65,7 +63,7 @@ var CommonDocSearchpageComponent = /** @class */ (function (_super) {
             _this.anchor = _this.idValidationRule.sanitize(value);
         });
         this.route.data.subscribe(function (data) {
-            me.commonRoutingService.setRoutingState(common_routing_service_1.RoutingState.DONE);
+            me.commonRoutingService.setRoutingState(RoutingState.DONE);
             me.onResize(_this.layoutSizeObservable.getValue());
             me.configureProcessingOfResolvedData(me.config);
             if (me.processError(data)) {
@@ -165,7 +163,7 @@ var CommonDocSearchpageComponent = /** @class */ (function (_super) {
             return;
         }
         this.layout = layout;
-        if (layout.toString() === layout_service_1.Layout.PAGE.toString()) {
+        if (layout.toString() === Layout.PAGE.toString()) {
             this.onPerPageChange(1);
         }
         else if (this.perPage === 1) {
@@ -242,7 +240,7 @@ var CommonDocSearchpageComponent = /** @class */ (function (_super) {
             _this.toastr.info('Export wurde erfolgreich ausgeführt.', 'Juhu!');
             _this.showLoadingSpinner = false;
             _this.cd.markForCheck();
-            angular_html_service_1.AngularHtmlService.browserSaveTextAsFile(value, 'playlist.m3u', 'application/m3u');
+            AngularHtmlService.browserSaveTextAsFile(value, 'playlist.m3u', 'application/m3u');
         }).catch(function (reason) {
             _this.toastr.error('Leider trat ein Fehler auf :-(.', 'Oje!');
             _this.showLoadingSpinner = false;
@@ -259,12 +257,12 @@ var CommonDocSearchpageComponent = /** @class */ (function (_super) {
         return false;
     };
     CommonDocSearchpageComponent.prototype.onResize = function (layoutSizeData) {
-        if (this.platformService.isClient() && layoutSizeData.layoutSize >= layout_service_1.LayoutSize.VERYBIG && this.showSearchFormElements &&
+        if (this.platformService.isClient() && layoutSizeData.layoutSize >= LayoutSize.VERYBIG && this.showSearchFormElements &&
             !this.layoutService.isPrintMode()) {
-            this.searchFormLayout = layout_service_1.SearchFormLayout.STACKED;
+            this.searchFormLayout = SearchFormLayout.STACKED;
         }
         else {
-            this.searchFormLayout = layout_service_1.SearchFormLayout.GRID;
+            this.searchFormLayout = SearchFormLayout.GRID;
         }
         this.cd.markForCheck();
     };
@@ -293,7 +291,7 @@ var CommonDocSearchpageComponent = /** @class */ (function (_super) {
     };
     CommonDocSearchpageComponent.prototype.setPageLayoutAndStyles = function () {
         if (this.searchForm.perPage === 1) {
-            this.layout = layout_service_1.Layout.PAGE;
+            this.layout = Layout.PAGE;
             this.pageUtils.setGlobalStyle('.hide-on-fullpage { display: none; } ' +
                 '.show-on-fullpage-block { display: block; } ' +
                 '.content-container, .list-container, .card-deck, .card { background: #130b0b !IMPORTANT; border: none !IMPORTANT;} ' +
@@ -306,9 +304,9 @@ var CommonDocSearchpageComponent = /** @class */ (function (_super) {
         }
     };
     CommonDocSearchpageComponent.prototype.processError = function (data) {
-        var flgSearchFormError = error_resolver_1.ErrorResolver.isResolverError(data.searchForm);
-        var flgPDocError = error_resolver_1.ErrorResolver.isResolverError(data.pdoc);
-        var flgBaseSearchUrlError = error_resolver_1.ErrorResolver.isResolverError(data.baseSearchUrl);
+        var flgSearchFormError = ErrorResolver.isResolverError(data.searchForm);
+        var flgPDocError = ErrorResolver.isResolverError(data.pdoc);
+        var flgBaseSearchUrlError = ErrorResolver.isResolverError(data.baseSearchUrl);
         if (!flgSearchFormError && !flgBaseSearchUrlError) {
             return false;
         }
@@ -332,8 +330,8 @@ var CommonDocSearchpageComponent = /** @class */ (function (_super) {
             searchForm = data.searchForm.data;
         }
         switch (errorCode) {
-            case cdoc_section_searchform_resolver_1.CommonSectionSearchFormResolver.ERROR_INVALID_SEARCHFORM:
-                code = error_resolver_1.ErrorResolver.ERROR_INVALID_DATA;
+            case CommonSectionSearchFormResolver.ERROR_INVALID_SEARCHFORM:
+                code = ErrorResolver.ERROR_INVALID_DATA;
                 if (sectionId && sectionId !== '') {
                     this.baseSearchUrl = ['sections', this.idValidationRule.sanitize(sectionId)].join('/');
                 }
@@ -343,8 +341,8 @@ var CommonDocSearchpageComponent = /** @class */ (function (_super) {
                 newUrl = this.searchFormConverter.searchFormToUrl(this.baseSearchUrl + '/', this.cdocDataService.cloneSanitizedSearchForm(searchForm));
                 msg = undefined;
                 break;
-            case cdoc_section_searchform_resolver_1.CommonSectionSearchFormResolver.ERROR_INVALID_SEARCHFORM_SECTION_ID:
-                code = error_resolver_1.ErrorResolver.ERROR_INVALID_ID;
+            case CommonSectionSearchFormResolver.ERROR_INVALID_SEARCHFORM_SECTION_ID:
+                code = ErrorResolver.ERROR_INVALID_ID;
                 if (sectionId && sectionId !== '') {
                     this.baseSearchUrl = ['sections', this.idValidationRule.sanitize(sectionId)].join('/');
                 }
@@ -354,13 +352,13 @@ var CommonDocSearchpageComponent = /** @class */ (function (_super) {
                 newUrl = this.searchFormConverter.searchFormToUrl(this.baseSearchUrl + '/', searchForm);
                 msg = undefined;
                 break;
-            case generic_app_service_1.GenericAppService.ERROR_APP_NOT_INITIALIZED:
-                code = error_resolver_1.ErrorResolver.ERROR_APP_NOT_INITIALIZED;
+            case GenericAppService.ERROR_APP_NOT_INITIALIZED:
+                code = ErrorResolver.ERROR_APP_NOT_INITIALIZED;
                 newUrl = undefined;
                 msg = undefined;
                 break;
             default:
-                code = error_resolver_1.ErrorResolver.ERROR_OTHER;
+                code = ErrorResolver.ERROR_OTHER;
                 this.baseSearchUrl = this.baseSearchUrlDefault + '/';
                 newUrl = undefined;
                 msg = undefined;
@@ -410,7 +408,7 @@ var CommonDocSearchpageComponent = /** @class */ (function (_super) {
             if (cdocSearchResult === undefined) {
                 // console.log('empty searchResult', mdocSearchResult);
                 me.initialized = true;
-                me.searchResult = me.cdocDataService.newSearchResult(me.searchForm, 0, [], new facets_1.Facets());
+                me.searchResult = me.cdocDataService.newSearchResult(me.searchForm, 0, [], new Facets());
             }
             else {
                 // console.log('update searchResult', mdocSearchResult);
@@ -429,7 +427,7 @@ var CommonDocSearchpageComponent = /** @class */ (function (_super) {
             me.toastr.error('Es gibt leider Probleme bei der Suche - am besten noch einmal probieren :-(', 'Oje!');
             console.error('doSearch failed:', reason);
             me.initialized = true;
-            me.searchResult = me.cdocDataService.newSearchResult(me.searchForm, 0, [], new facets_1.Facets());
+            me.searchResult = me.cdocDataService.newSearchResult(me.searchForm, 0, [], new Facets());
             me.showLoadingSpinner = false;
             me.cd.markForCheck();
         });
@@ -455,6 +453,6 @@ var CommonDocSearchpageComponent = /** @class */ (function (_super) {
         return false;
     };
     return CommonDocSearchpageComponent;
-}(pdoc_page_component_1.AbstractPageComponent));
-exports.CommonDocSearchpageComponent = CommonDocSearchpageComponent;
+}(AbstractPageComponent));
+export { CommonDocSearchpageComponent };
 //# sourceMappingURL=cdoc-searchpage.component.js.map

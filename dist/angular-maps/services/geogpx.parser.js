@@ -1,4 +1,3 @@
-"use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
@@ -9,11 +8,10 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-Object.defineProperty(exports, "__esModule", { value: true });
-var L = require("leaflet");
-var geo_parser_1 = require("./geo.parser");
-var date_utils_1 = require("@dps/mycms-commons/dist/commons/utils/date.utils");
-var string_utils_1 = require("@dps/mycms-commons/dist/commons/utils/string.utils");
+import * as L from 'leaflet';
+import { GeoElement, GeoElementType, GeoParser, LatLngTime } from './geo.parser';
+import { DateUtils } from '@dps/mycms-commons/dist/commons/utils/date.utils';
+import { StringUtils } from '@dps/mycms-commons/dist/commons/utils/string.utils';
 var GeoGpxParser = /** @class */ (function (_super) {
     __extends(GeoGpxParser, _super);
     function GeoGpxParser() {
@@ -99,7 +97,7 @@ var GeoGpxParser = /** @class */ (function (_super) {
             return track;
         }
         var newTrack = track;
-        var lastPos = string_utils_1.StringUtils.findNeedle(track, '<trkseg>', delSegIdx);
+        var lastPos = StringUtils.findNeedle(track, '<trkseg>', delSegIdx);
         if (lastPos >= 0) {
             newTrack = track.substring(0, lastPos - 1);
             var endPos = track.indexOf('</trkseg>', lastPos);
@@ -114,7 +112,7 @@ var GeoGpxParser = /** @class */ (function (_super) {
             return track;
         }
         var newTrack = track;
-        var lastPos = string_utils_1.StringUtils.findNeedle(track, '</trkseg>', mergeSegIdx - 1);
+        var lastPos = StringUtils.findNeedle(track, '</trkseg>', mergeSegIdx - 1);
         if (lastPos >= 0) {
             newTrack = track.substring(0, lastPos - 1);
             var endPos = track.indexOf('<trkseg>', lastPos);
@@ -144,7 +142,7 @@ var GeoGpxParser = /** @class */ (function (_super) {
                 var idx = -1;
                 do {
                     idx++;
-                    lastPos = string_utils_1.StringUtils.findNeedle(track, element[0], idx);
+                    lastPos = StringUtils.findNeedle(track, element[0], idx);
                     if (lastPos >= 0) {
                         var endPos = track.indexOf(element[1], lastPos);
                         if (endPos >= 0) {
@@ -259,11 +257,11 @@ var GeoGpxParser = /** @class */ (function (_super) {
                 ele = eleElement[0].childNodes[0].nodeValue;
             }
             if (timeElement && timeElement.length > 0) {
-                time = date_utils_1.DateUtils.parseDate(timeElement[0].childNodes[0].nodeValue);
+                time = DateUtils.parseDate(timeElement[0].childNodes[0].nodeValue);
             }
             var ll = void 0;
             if (time !== undefined) {
-                ll = new geo_parser_1.LatLngTime(ptElement.getAttribute('lat'), ptElement.getAttribute('lon'), ele, time);
+                ll = new LatLngTime(ptElement.getAttribute('lat'), ptElement.getAttribute('lon'), ele, time);
             }
             else {
                 ll = ele !== undefined ? new L.LatLng(ptElement.getAttribute('lat'), ptElement.getAttribute('lon'), ele) :
@@ -272,17 +270,17 @@ var GeoGpxParser = /** @class */ (function (_super) {
             coords.push(ll);
         }
         var typeEl = gpxDom.getElementsByTagName('type');
-        var type = tag === 'trkpt' ? geo_parser_1.GeoElementType.TRACK : geo_parser_1.GeoElementType.ROUTE;
+        var type = tag === 'trkpt' ? GeoElementType.TRACK : GeoElementType.ROUTE;
         if (typeEl.length && typeEl[0].childNodes[0].nodeValue === 'AREA') {
-            type = geo_parser_1.GeoElementType.AREA;
+            type = GeoElementType.AREA;
         }
-        return new geo_parser_1.GeoElement(type, coords, name);
+        return new GeoElement(type, coords, name);
     };
     GeoGpxParser.prototype.parse_wpt = function (e, gpxDom) {
-        var m = new geo_parser_1.GeoElement(geo_parser_1.GeoElementType.WAYPOINT, [new L.LatLng(e.getAttribute('lat'), e.getAttribute('lon'))], undefined);
+        var m = new GeoElement(GeoElementType.WAYPOINT, [new L.LatLng(e.getAttribute('lat'), e.getAttribute('lon'))], undefined);
         return m;
     };
     return GeoGpxParser;
-}(geo_parser_1.GeoParser));
-exports.GeoGpxParser = GeoGpxParser;
+}(GeoParser));
+export { GeoGpxParser };
 //# sourceMappingURL=geogpx.parser.js.map

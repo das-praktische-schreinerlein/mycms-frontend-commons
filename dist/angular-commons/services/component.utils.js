@@ -1,6 +1,4 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-var deepEqual = require("deep-equal");
+import * as deepEqual from 'deep-equal';
 var ComponentUtils = /** @class */ (function () {
     function ComponentUtils() {
     }
@@ -27,5 +25,5 @@ var ComponentUtils = /** @class */ (function () {
     };
     return ComponentUtils;
 }());
-exports.ComponentUtils = ComponentUtils;
+export { ComponentUtils };
 //# sourceMappingURL=component.utils.js.map

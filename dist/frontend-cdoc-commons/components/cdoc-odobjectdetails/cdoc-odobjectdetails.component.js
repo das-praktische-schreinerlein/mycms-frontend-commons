@@ -1,4 +1,3 @@
-"use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
@@ -18,11 +17,10 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = require("@angular/core");
-var inline_component_1 = require("../../../angular-commons/components/inline.component");
-var generic_app_service_1 = require("@dps/mycms-commons/dist/commons/services/generic-app.service");
-var bean_utils_1 = require("@dps/mycms-commons/dist/commons/utils/bean.utils");
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input } from '@angular/core';
+import { AbstractInlineComponent } from '../../../angular-commons/components/inline.component';
+import { AppState, GenericAppService } from '@dps/mycms-commons/dist/commons/services/generic-app.service';
+import { BeanUtils } from '@dps/mycms-commons/dist/commons/utils/bean.utils';
 var CommonDocODObjectDetailsComponent = /** @class */ (function (_super) {
     __extends(CommonDocODObjectDetailsComponent, _super);
     function CommonDocODObjectDetailsComponent(appService, cd) {
@@ -39,7 +37,7 @@ var CommonDocODObjectDetailsComponent = /** @class */ (function (_super) {
     CommonDocODObjectDetailsComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.appService.getAppState().subscribe(function (appState) {
-            if (appState === generic_app_service_1.AppState.Ready) {
+            if (appState === AppState.Ready) {
                 _this.config = _this.appService.getAppConfig();
                 _this.configureComponent(_this.config);
                 _this.updateData();
@@ -48,8 +46,8 @@ var CommonDocODObjectDetailsComponent = /** @class */ (function (_super) {
     };
     CommonDocODObjectDetailsComponent.prototype.getComponentConfig = function (config) {
         return {
-            defaultShowKeyAsTooltip: bean_utils_1.BeanUtils.getValue(config, 'components.cdoc-odobjectdetails.defaultShowKeyAsTooltip') || false,
-            defaultFilterForNameToShowNameAndKey: bean_utils_1.BeanUtils.getValue(config, 'components.cdoc-odobjectdetails.defaultFilterForNameToShowNameAndKey') || []
+            defaultShowKeyAsTooltip: BeanUtils.getValue(config, 'components.cdoc-odobjectdetails.defaultShowKeyAsTooltip') || false,
+            defaultFilterForNameToShowNameAndKey: BeanUtils.getValue(config, 'components.cdoc-odobjectdetails.defaultFilterForNameToShowNameAndKey') || []
         };
     };
     CommonDocODObjectDetailsComponent.prototype.configureComponent = function (config) {
@@ -86,27 +84,27 @@ var CommonDocODObjectDetailsComponent = /** @class */ (function (_super) {
         this.cd.markForCheck();
     };
     __decorate([
-        core_1.Input(),
+        Input(),
         __metadata("design:type", Array)
     ], CommonDocODObjectDetailsComponent.prototype, "objects", void 0);
     __decorate([
-        core_1.Input(),
+        Input(),
         __metadata("design:type", Boolean)
     ], CommonDocODObjectDetailsComponent.prototype, "showKeyAsTooltip", void 0);
     __decorate([
-        core_1.Input(),
+        Input(),
         __metadata("design:type", String)
     ], CommonDocODObjectDetailsComponent.prototype, "filterForNameToShowNameAndKey", void 0);
     CommonDocODObjectDetailsComponent = __decorate([
-        core_1.Component({
+        Component({
             selector: 'app-cdoc-odobjectdetails',
             templateUrl: './cdoc-odobjectdetails.component.html',
             styleUrls: ['./cdoc-odobjectdetails.component.css'],
-            changeDetection: core_1.ChangeDetectionStrategy.OnPush
+            changeDetection: ChangeDetectionStrategy.OnPush
         }),
-        __metadata("design:paramtypes", [generic_app_service_1.GenericAppService, core_1.ChangeDetectorRef])
+        __metadata("design:paramtypes", [GenericAppService, ChangeDetectorRef])
     ], CommonDocODObjectDetailsComponent);
     return CommonDocODObjectDetailsComponent;
-}(inline_component_1.AbstractInlineComponent));
-exports.CommonDocODObjectDetailsComponent = CommonDocODObjectDetailsComponent;
+}(AbstractInlineComponent));
+export { CommonDocODObjectDetailsComponent };
 //# sourceMappingURL=cdoc-odobjectdetails.component.js.map

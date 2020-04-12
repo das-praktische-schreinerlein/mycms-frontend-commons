@@ -1,4 +1,3 @@
-"use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
@@ -18,12 +17,11 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = require("@angular/core");
-var inline_component_1 = require("../../../angular-commons/components/inline.component");
-var Subject_1 = require("rxjs/Subject");
-var component_utils_1 = require("../../../angular-commons/services/component.utils");
-var facets_1 = require("@dps/mycms-commons/dist/search-commons/model/container/facets");
+import { Input, SimpleChange } from '@angular/core';
+import { AbstractInlineComponent } from '../../../angular-commons/components/inline.component';
+import { Subject } from 'rxjs';
+import { ComponentUtils } from '../../../angular-commons/services/component.utils';
+import { Facets } from '@dps/mycms-commons/dist/search-commons/model/container/facets';
 var CommonDocAssignFormComponent = /** @class */ (function (_super) {
     __extends(CommonDocAssignFormComponent, _super);
     function CommonDocAssignFormComponent(fb, activeModal, cd, searchFormUtils, cdocDataService, toastr) {
@@ -112,8 +110,8 @@ var CommonDocAssignFormComponent = /** @class */ (function (_super) {
     };
     CommonDocAssignFormComponent.prototype.updateData = function () {
         var changes = {};
-        changes['records'] = new core_1.SimpleChange(this.records, this.lastRecords, false);
-        if (this.records != null && !component_utils_1.ComponentUtils.hasNgChanged(changes)) {
+        changes['records'] = new SimpleChange(this.records, this.lastRecords, false);
+        if (this.records != null && !ComponentUtils.hasNgChanged(changes)) {
             return;
         }
         this.lastRecords = this.records;
@@ -242,7 +240,7 @@ var CommonDocAssignFormComponent = /** @class */ (function (_super) {
             me.showLoadingSpinner = false;
             if (cdocSearchResult === undefined) {
                 console.log('empty searchResult', cdocSearchResult);
-                cdocSearchResult = me.cdocDataService.newSearchResult(searchForm, 0, [], new facets_1.Facets());
+                cdocSearchResult = me.cdocDataService.newSearchResult(searchForm, 0, [], new Facets());
             }
             else {
                 console.log('update searchResult', cdocSearchResult);
@@ -279,14 +277,14 @@ var CommonDocAssignFormComponent = /** @class */ (function (_super) {
         return values;
     };
     __decorate([
-        core_1.Input(),
+        Input(),
         __metadata("design:type", Array)
     ], CommonDocAssignFormComponent.prototype, "records", void 0);
     __decorate([
-        core_1.Input(),
-        __metadata("design:type", Subject_1.Subject)
+        Input(),
+        __metadata("design:type", Subject)
     ], CommonDocAssignFormComponent.prototype, "resultObservable", void 0);
     return CommonDocAssignFormComponent;
-}(inline_component_1.AbstractInlineComponent));
-exports.CommonDocAssignFormComponent = CommonDocAssignFormComponent;
+}(AbstractInlineComponent));
+export { CommonDocAssignFormComponent };
 //# sourceMappingURL=cdoc-assignform.component.js.map

@@ -4,7 +4,7 @@ import {IMultiSelectOption, IMultiSelectSettings, IMultiSelectTexts} from 'angul
 import {SearchFormUtils} from '../../../angular-commons/services/searchform-utils.service';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {FormBuilder, FormGroup} from '@angular/forms';
-import {Subject} from 'rxjs/Subject';
+import {Subject} from 'rxjs';
 import {ComponentUtils} from '../../../angular-commons/services/component.utils';
 import {Facets} from '@dps/mycms-commons/dist/search-commons/model/container/facets';
 import {ToastrService} from 'ngx-toastr';

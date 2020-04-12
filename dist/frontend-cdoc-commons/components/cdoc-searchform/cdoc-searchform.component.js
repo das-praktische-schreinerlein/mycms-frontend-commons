@@ -1,4 +1,3 @@
-"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,13 +7,12 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = require("@angular/core");
-var BehaviorSubject_1 = require("rxjs/BehaviorSubject");
-var facets_1 = require("@dps/mycms-commons/dist/search-commons/model/container/facets");
-var layout_service_1 = require("../../../angular-commons/services/layout.service");
-var cdoc_searchform_1 = require("@dps/mycms-commons/dist/search-commons/model/forms/cdoc-searchform");
-var cdoc_searchresult_1 = require("@dps/mycms-commons/dist/search-commons/model/container/cdoc-searchresult");
+import { EventEmitter, Input, Output } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
+import { Facets } from '@dps/mycms-commons/dist/search-commons/model/container/facets';
+import { SearchFormLayout } from '../../../angular-commons/services/layout.service';
+import { CommonDocSearchForm } from '@dps/mycms-commons/dist/search-commons/model/forms/cdoc-searchform';
+import { CommonDocSearchResult } from '@dps/mycms-commons/dist/search-commons/model/container/cdoc-searchresult';
 var CommonDocSearchformComponent = /** @class */ (function () {
     function CommonDocSearchformComponent(sanitizer, fb, searchFormUtils, cdocSearchFormUtils, searchFormConverter, cdocDataCacheService, toastr, cd) {
         this.sanitizer = sanitizer;
@@ -68,7 +66,7 @@ var CommonDocSearchformComponent = /** @class */ (function () {
         this.width4 = 'col-sm-4';
         this.width3 = 'col-sm-3';
         this.width2 = 'col-sm-2';
-        this.searchFormLayout = layout_service_1.SearchFormLayout.GRID;
+        this.searchFormLayout = SearchFormLayout.GRID;
         this.short = false;
         this.showForm = false;
         this.showWhat = this.showForm;
@@ -76,9 +74,9 @@ var CommonDocSearchformComponent = /** @class */ (function () {
         this.showDetails = this.showForm;
         this.showMeta = this.showForm;
         this.showSpecialFilter = this.showForm;
-        this.search = new core_1.EventEmitter();
-        this.changedShowForm = new core_1.EventEmitter();
-        this._searchResult = new BehaviorSubject_1.BehaviorSubject(this.createDefaultSearchResult());
+        this.search = new EventEmitter();
+        this.changedShowForm = new EventEmitter();
+        this._searchResult = new BehaviorSubject(this.createDefaultSearchResult());
         this.searchFormGroup = this.createDefaultFormGroup();
     }
     Object.defineProperty(CommonDocSearchformComponent.prototype, "searchResult", {
@@ -109,7 +107,7 @@ var CommonDocSearchformComponent = /** @class */ (function () {
         return false;
     };
     CommonDocSearchformComponent.prototype.createDefaultSearchResult = function () {
-        return new cdoc_searchresult_1.CommonDocSearchResult(new cdoc_searchform_1.CommonDocSearchForm({}), 0, undefined, new facets_1.Facets());
+        return new CommonDocSearchResult(new CommonDocSearchForm({}), 0, undefined, new Facets());
     };
     CommonDocSearchformComponent.prototype.createDefaultFormGroup = function () {
         return this.fb.group({
@@ -124,7 +122,7 @@ var CommonDocSearchformComponent = /** @class */ (function () {
         });
     };
     CommonDocSearchformComponent.prototype.updateSearchForm = function (searchSearchResult) {
-        if (this.searchFormLayout === layout_service_1.SearchFormLayout.STACKED) {
+        if (this.searchFormLayout === SearchFormLayout.STACKED) {
             this.width8 = 'col-sm-12';
             this.width4 = 'col-sm-12';
             this.width3 = 'col-sm-12';
@@ -220,51 +218,51 @@ var CommonDocSearchformComponent = /** @class */ (function () {
     };
     var _a, _b;
     __decorate([
-        core_1.Input(),
+        Input(),
         __metadata("design:type", Number)
     ], CommonDocSearchformComponent.prototype, "searchFormLayout", void 0);
     __decorate([
-        core_1.Input(),
+        Input(),
         __metadata("design:type", Object)
     ], CommonDocSearchformComponent.prototype, "short", void 0);
     __decorate([
-        core_1.Input(),
+        Input(),
         __metadata("design:type", Object)
     ], CommonDocSearchformComponent.prototype, "showForm", void 0);
     __decorate([
-        core_1.Input(),
+        Input(),
         __metadata("design:type", Object)
     ], CommonDocSearchformComponent.prototype, "showWhat", void 0);
     __decorate([
-        core_1.Input(),
+        Input(),
         __metadata("design:type", Object)
     ], CommonDocSearchformComponent.prototype, "showFulltext", void 0);
     __decorate([
-        core_1.Input(),
+        Input(),
         __metadata("design:type", Object)
     ], CommonDocSearchformComponent.prototype, "showDetails", void 0);
     __decorate([
-        core_1.Input(),
+        Input(),
         __metadata("design:type", Object)
     ], CommonDocSearchformComponent.prototype, "showMeta", void 0);
     __decorate([
-        core_1.Input(),
+        Input(),
         __metadata("design:type", Object)
     ], CommonDocSearchformComponent.prototype, "showSpecialFilter", void 0);
     __decorate([
-        core_1.Input(),
+        Input(),
         __metadata("design:type", typeof (_a = typeof S !== "undefined" && S) === "function" && _a || Object),
         __metadata("design:paramtypes", [typeof (_b = typeof S !== "undefined" && S) === "function" && _b || Object])
     ], CommonDocSearchformComponent.prototype, "searchResult", null);
     __decorate([
-        core_1.Output(),
-        __metadata("design:type", core_1.EventEmitter)
+        Output(),
+        __metadata("design:type", EventEmitter)
     ], CommonDocSearchformComponent.prototype, "search", void 0);
     __decorate([
-        core_1.Output(),
-        __metadata("design:type", core_1.EventEmitter)
+        Output(),
+        __metadata("design:type", EventEmitter)
     ], CommonDocSearchformComponent.prototype, "changedShowForm", void 0);
     return CommonDocSearchformComponent;
 }());
-exports.CommonDocSearchformComponent = CommonDocSearchformComponent;
+export { CommonDocSearchformComponent };
 //# sourceMappingURL=cdoc-searchform.component.js.map

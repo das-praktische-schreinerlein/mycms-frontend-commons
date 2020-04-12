@@ -1,4 +1,3 @@
-"use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
@@ -18,11 +17,10 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = require("@angular/core");
-var generic_app_service_1 = require("@dps/mycms-commons/dist/commons/services/generic-app.service");
-var bean_utils_1 = require("@dps/mycms-commons/dist/commons/utils/bean.utils");
-var inline_component_1 = require("../../../angular-commons/components/inline.component");
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, Output } from '@angular/core';
+import { AppState, GenericAppService } from '@dps/mycms-commons/dist/commons/services/generic-app.service';
+import { BeanUtils } from '@dps/mycms-commons/dist/commons/utils/bean.utils';
+import { AbstractInlineComponent } from '../../../angular-commons/components/inline.component';
 var CommonDocKeywordsStateComponent = /** @class */ (function (_super) {
     __extends(CommonDocKeywordsStateComponent, _super);
     function CommonDocKeywordsStateComponent(appService, cd) {
@@ -33,15 +31,15 @@ var CommonDocKeywordsStateComponent = /** @class */ (function (_super) {
         _this.keywordsConfig = [];
         _this.prefix = '';
         _this.suggestions = [];
-        _this.unsetKeyword = new core_1.EventEmitter();
-        _this.setKeyword = new core_1.EventEmitter();
-        _this.tagsFound = new core_1.EventEmitter();
+        _this.unsetKeyword = new EventEmitter();
+        _this.setKeyword = new EventEmitter();
+        _this.tagsFound = new EventEmitter();
         return _this;
     }
     CommonDocKeywordsStateComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.appService.getAppState().subscribe(function (appState) {
-            if (appState === generic_app_service_1.AppState.Ready) {
+            if (appState === AppState.Ready) {
                 var config = _this.appService.getAppConfig();
                 _this.configureComponent(config);
                 _this.updateData();
@@ -55,11 +53,11 @@ var CommonDocKeywordsStateComponent = /** @class */ (function (_super) {
         this.unsetKeyword.emit(keyword);
     };
     CommonDocKeywordsStateComponent.prototype.getComponentConfig = function (config) {
-        if (bean_utils_1.BeanUtils.getValue(config, 'components.cdoc-keywords.structuredKeywords')) {
+        if (BeanUtils.getValue(config, 'components.cdoc-keywords.structuredKeywords')) {
             return {
-                keywordsConfig: bean_utils_1.BeanUtils.getValue(config, 'components.cdoc-keywords.structuredKeywords'),
-                possiblePrefixes: bean_utils_1.BeanUtils.getValue(config, 'components.cdoc-keywords.possiblePrefixes'),
-                prefix: bean_utils_1.BeanUtils.getValue(config, 'components.cdoc-keywords.editPrefix') || ''
+                keywordsConfig: BeanUtils.getValue(config, 'components.cdoc-keywords.structuredKeywords'),
+                possiblePrefixes: BeanUtils.getValue(config, 'components.cdoc-keywords.possiblePrefixes'),
+                prefix: BeanUtils.getValue(config, 'components.cdoc-keywords.editPrefix') || ''
             };
         }
         else {
@@ -81,35 +79,35 @@ var CommonDocKeywordsStateComponent = /** @class */ (function (_super) {
         this.cd.markForCheck();
     };
     __decorate([
-        core_1.Input(),
+        Input(),
         __metadata("design:type", String)
     ], CommonDocKeywordsStateComponent.prototype, "keywords", void 0);
     __decorate([
-        core_1.Input(),
+        Input(),
         __metadata("design:type", Array)
     ], CommonDocKeywordsStateComponent.prototype, "suggestions", void 0);
     __decorate([
-        core_1.Output(),
-        __metadata("design:type", core_1.EventEmitter)
+        Output(),
+        __metadata("design:type", EventEmitter)
     ], CommonDocKeywordsStateComponent.prototype, "unsetKeyword", void 0);
     __decorate([
-        core_1.Output(),
-        __metadata("design:type", core_1.EventEmitter)
+        Output(),
+        __metadata("design:type", EventEmitter)
     ], CommonDocKeywordsStateComponent.prototype, "setKeyword", void 0);
     __decorate([
-        core_1.Output(),
-        __metadata("design:type", core_1.EventEmitter)
+        Output(),
+        __metadata("design:type", EventEmitter)
     ], CommonDocKeywordsStateComponent.prototype, "tagsFound", void 0);
     CommonDocKeywordsStateComponent = __decorate([
-        core_1.Component({
+        Component({
             selector: 'app-cdoc-keywordsstate',
             templateUrl: './cdoc-keywordsstate.component.html',
             styleUrls: ['./cdoc-keywordsstate.component.css'],
-            changeDetection: core_1.ChangeDetectionStrategy.OnPush
+            changeDetection: ChangeDetectionStrategy.OnPush
         }),
-        __metadata("design:paramtypes", [generic_app_service_1.GenericAppService, core_1.ChangeDetectorRef])
+        __metadata("design:paramtypes", [GenericAppService, ChangeDetectorRef])
     ], CommonDocKeywordsStateComponent);
     return CommonDocKeywordsStateComponent;
-}(inline_component_1.AbstractInlineComponent));
-exports.CommonDocKeywordsStateComponent = CommonDocKeywordsStateComponent;
+}(AbstractInlineComponent));
+export { CommonDocKeywordsStateComponent };
 //# sourceMappingURL=cdoc-keywordsstate.component.js.map
