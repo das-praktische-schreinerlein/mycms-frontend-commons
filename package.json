@@ -21,9 +21,9 @@
       "linux": "./node_modules/.bin/rimraf tsc-out",
       "win32": "node_modules\\.bin\\rimraf tsc-out"
     },
-    "test": "ng test --log-level=info --app=frontend --preserve-symlinks=true --environment=dev",
-    "testCoverage": "ng test frontend --preserveSymlinks=true --environment=dev --code-coverage true --progress=true --watch=false",
-    "testwatch": "ng test --log-level=info --app=frontend --preserve-symlinks=true --environment=dev"
+    "test": "ng test frontend --preserve-symlinks=true --environment=dev watch=false",
+    "testCoverage": "ng test frontend --preserve-symlinks=true --environment=dev --code-coverage true --progress=true --watch=false",
+    "testwatch": "ng test frontend --preserve-symlinks=true --environment=dev watch=true"
   },
   "main": "dist/",
   "types": "dist/",
