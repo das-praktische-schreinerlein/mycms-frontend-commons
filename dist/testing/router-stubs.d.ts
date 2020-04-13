@@ -1,25 +1,7 @@
-import { CommonDocRecord } from '@dps/mycms-commons/dist/search-commons/model/records/cdoc-entity-record';
-import { CommonDocSearchForm } from '@dps/mycms-commons/dist/search-commons/model/forms/cdoc-searchform';
-import { PDocRecord } from '@dps/mycms-commons/dist/pdoc-commons/model/records/pdoc-record';
+import { Observable } from 'rxjs';
 export declare class ActivatedRouteStub {
-    params: import("../../../../Projekte/mycms-frontend-commons/node_modules/rxjs/internal/Observable").Observable<{
-        id: number;
-    }>;
-    data: import("../../../../Projekte/mycms-frontend-commons/node_modules/rxjs/internal/Observable").Observable<{
-        record: {
-            data: CommonDocRecord;
-        };
-        pdoc: {
-            data: PDocRecord;
-        };
-        searchForm: {
-            data: CommonDocSearchForm;
-        };
-        flgDoSearch: boolean;
-        baseSearchUrl: {
-            data: string;
-        };
-    }>;
+    params: Observable<any>;
+    data: Observable<any>;
     queryParamMap: {};
     fragment: {};
 }
