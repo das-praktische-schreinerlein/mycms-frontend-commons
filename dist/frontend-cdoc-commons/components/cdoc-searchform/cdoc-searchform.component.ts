@@ -102,7 +102,7 @@ export abstract class CommonDocSearchformComponent <R extends CommonDocRecord, F
     public set searchResult(value: S) {
         // set the latest value for _data BehaviorSubject
         this._searchResult.next(value);
-    };
+    }
 
     public get searchResult(): S {
         // get the latest value from _data BehaviorSubject

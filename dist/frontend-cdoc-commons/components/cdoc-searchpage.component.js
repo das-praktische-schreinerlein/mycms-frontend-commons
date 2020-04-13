@@ -305,7 +305,6 @@ var CommonDocSearchpageComponent = /** @class */ (function (_super) {
     };
     CommonDocSearchpageComponent.prototype.processError = function (data) {
         var flgSearchFormError = ErrorResolver.isResolverError(data.searchForm);
-        var flgPDocError = ErrorResolver.isResolverError(data.pdoc);
         var flgBaseSearchUrlError = ErrorResolver.isResolverError(data.baseSearchUrl);
         if (!flgSearchFormError && !flgBaseSearchUrlError) {
             return false;

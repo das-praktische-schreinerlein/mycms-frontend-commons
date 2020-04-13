@@ -34,7 +34,7 @@ var GeoParsedFeature = /** @class */ (function (_super) {
         for (var i = 0; i < geoElements.length; i++) {
             var geoElement = geoElements[i];
             var prefix = (gpxElement.code !== undefined ? gpxElement.code + ' ' : '');
-            switch (geoElement.type) {
+            switch (geoElement.type) { // NOSONAR: for later extends
                 case GeoElementType.WAYPOINT:
                     var point = void 0;
                     point = new L.Marker(geoElement.points[0], {

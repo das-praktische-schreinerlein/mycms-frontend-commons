@@ -156,8 +156,6 @@ export abstract class CommonDocCreatepageComponent <R extends CommonDocRecord, F
         } else {
             errorCode = data.baseSearchUrl.error.code;
         }
-        const cdocId = (flgCdocError ? data.record.error.data : data.record.data.id);
-        const cdocName = (flgCdocError ? 'name' : data.record.data.name);
         switch (errorCode) {
             case CommonDocRecordCreateResolver.ERROR_UNKNOWN_DOC_TYPE:
                 code = ErrorResolver.ERROR_UNKNOWN_ID;

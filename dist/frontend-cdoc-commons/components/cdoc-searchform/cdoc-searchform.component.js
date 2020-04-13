@@ -91,7 +91,6 @@ var CommonDocSearchformComponent = /** @class */ (function () {
         enumerable: true,
         configurable: true
     });
-    ;
     CommonDocSearchformComponent.prototype.ngOnInit = function () {
         var _this = this;
         this._searchResult.subscribe(function (cdocSearchSearchResult) {

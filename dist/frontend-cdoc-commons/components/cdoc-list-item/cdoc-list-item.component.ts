@@ -112,18 +112,18 @@ export class CommonDocListItemComponent extends AbstractInlineComponent implemen
 
     isMultiActionAvailableForRecord(): boolean {
         return this.multiActionManager &&
-            !this.multiActionManager.isMultiActionTagAvailableForRecord(<CommonDocRecord>this.listItem.currentRecord);
+            !this.multiActionManager.isMultiActionTagAvailableForRecord(this.listItem.currentRecord);
     }
 
     isMultiActionSelectedForRecord(): boolean {
-        return this.multiActionManager && this.multiActionManager.isRecordOnMultiActionTag(<CommonDocRecord>this.listItem.currentRecord);
+        return this.multiActionManager && this.multiActionManager.isRecordOnMultiActionTag(this.listItem.currentRecord);
     }
 
     onChangeMultiActionForRecord(event): boolean {
         if (this.multiActionManager) {
             event.target.checked ?
-                this.multiActionManager.appendRecordToMultiActionTag(<CommonDocRecord>this.listItem.currentRecord)
-                : this.multiActionManager.removeRecordFromMultiActionTag(<CommonDocRecord>this.listItem.currentRecord);
+                this.multiActionManager.appendRecordToMultiActionTag(this.listItem.currentRecord)
+                : this.multiActionManager.removeRecordFromMultiActionTag(this.listItem.currentRecord);
         }
 
         return true;

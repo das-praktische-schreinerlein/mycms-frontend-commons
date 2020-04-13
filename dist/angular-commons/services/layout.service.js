@@ -75,21 +75,11 @@ var LayoutService = /** @class */ (function () {
     };
     LayoutService.prototype.isSpider = function () {
         var browser = this.getBrowser();
-        switch (browser && browser.name) {
-            case 'bot':
-                return true;
-            default:
-                return false;
-        }
+        return browser && browser.name === 'bot';
     };
     LayoutService.prototype.isServer = function () {
         var browser = this.getBrowser();
-        switch (browser && browser.name) {
-            case 'node':
-                return true;
-            default:
-                return false;
-        }
+        return browser && browser.name === 'node';
     };
     LayoutService.prototype.isDesktop = function () {
         return !this.isMobile() && !this.isSpider() && !this.isServer();

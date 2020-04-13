@@ -51,7 +51,7 @@ export declare abstract class CommonDocEditformComponent<R extends CommonDocReco
     setKeyword(keyword: string): void;
     unsetKeyword(keyword: string): void;
     setValue(field: string, value: any): void;
-    formatInputDate(value: Date): String;
+    formatInputDate(value: Date): string;
     recommendName(): void;
     submitSave(event: Event, backToSearch: boolean): boolean;
     protected getComponentConfig(config: {}): CommonDocEditformComponentConfig;

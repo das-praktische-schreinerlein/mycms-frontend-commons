@@ -27,7 +27,6 @@ var CommonDocDataServiceStub = /** @class */ (function () {
     CommonDocDataServiceStub.prototype.search = function (searchForm) {
         return Promise.resolve(new CommonDocSearchResult(searchForm, 0, [], new Facets()));
     };
-    ;
     CommonDocDataServiceStub.prototype.newSearchResult = function (tdocSearchForm, recordCount, currentRecords, facets) {
         return new CommonDocSearchResult(tdocSearchForm, recordCount, currentRecords, facets);
     };

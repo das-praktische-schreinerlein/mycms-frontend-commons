@@ -268,8 +268,8 @@ var CommonDocEditformComponent = /** @class */ (function (_super) {
     CommonDocEditformComponent.prototype.updateOptionValues = function (cdocSearchResult) {
         var me = this;
         if (cdocSearchResult !== undefined) {
-            var rawValues = this.editFormGroup.getRawValue();
-            // console.log('update searchResult', cdocSearchResult);
+            // for debug only: const rawValues = this.editFormGroup.getRawValue();
+            // for debug only: console.log('update searchResult', cdocSearchResult);
             me.optionsSelect['playlists'] = me.searchFormUtils.getIMultiSelectOptionsFromExtractedFacetValuesList(me.cdocSearchFormUtils.getPlaylistValues(cdocSearchResult), true, [], true);
         }
         else {

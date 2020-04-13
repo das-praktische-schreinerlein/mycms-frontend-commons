@@ -131,7 +131,7 @@ export class CommonDocActionTagsComponent extends AbstractInlineComponent implem
         if (this.record === undefined) {
             this.tags = [];
         } else {
-            this.cdocAlbumService.initAlbenForDocId(<CommonDocRecord>this.item.currentRecord);
+            this.cdocAlbumService.initAlbenForDocId(this.item.currentRecord);
             this.tags = ActionTagUtils.generateTags(this.tagConfigs, this.item.currentRecord, this.config,
                 { type: this.type});
         }

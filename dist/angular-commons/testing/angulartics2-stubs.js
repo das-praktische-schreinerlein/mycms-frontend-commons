@@ -11,7 +11,6 @@ var Angulartics2Stub = /** @class */ (function () {
         this.pageTrack = new ReplaySubject();
     }
     Angulartics2Stub.prototype.virtualPageviews = function (bla) { };
-    ;
     Angulartics2Stub = __decorate([
         Injectable()
     ], Angulartics2Stub);

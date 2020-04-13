@@ -79,22 +79,12 @@ export class LayoutService {
 
     public isSpider(): boolean {
         const browser = this.getBrowser();
-        switch (browser && browser.name) {
-            case 'bot':
-                return true;
-            default:
-                return false;
-        }
+        return browser && browser.name === 'bot';
     }
 
     public isServer(): boolean {
         const browser = this.getBrowser();
-        switch (browser && browser.name) {
-            case 'node':
-                return true;
-            default:
-                return false;
-        }
+        return browser && browser.name === 'node';
     }
 
     public isDesktop(): boolean {

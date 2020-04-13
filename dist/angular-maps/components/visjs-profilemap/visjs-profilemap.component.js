@@ -97,7 +97,7 @@ var VisJsProfileMapComponent = /** @class */ (function () {
                 }
             };
             var container = document.getElementById(this.mapId);
-            var mapProfileObj = new VisJsGeoProfileMap(dataSources, container, options);
+            var mapProfileObj = new VisJsGeoProfileMap(dataSources, container, options); // NOSONAR do not remove !!!
         }
     };
     __decorate([

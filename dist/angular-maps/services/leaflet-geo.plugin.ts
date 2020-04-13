@@ -48,7 +48,7 @@ export class GeoParsedFeature extends L.FeatureGroup {
         for (let i = 0; i < geoElements.length; i++) {
             const geoElement = geoElements[i];
             const prefix = (gpxElement.code !== undefined ? gpxElement.code + ' ' : '');
-            switch (geoElement.type) {
+            switch (geoElement.type) { // NOSONAR: for later extends
                 case GeoElementType.WAYPOINT:
                     let point;
                     point = new L.Marker(geoElement.points[0], {

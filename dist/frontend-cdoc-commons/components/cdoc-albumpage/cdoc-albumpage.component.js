@@ -63,7 +63,7 @@ var CommonDocAlbumpageComponent = /** @class */ (function (_super) {
     }
     CommonDocAlbumpageComponent.prototype.configureProcessing = function () {
         var _this = this;
-        if (!(this.maxAllowedItems > 0)) {
+        if (this.maxAllowedItems <= 0) {
             console.warn('album not allowed');
             this.record = undefined;
             this.searchForm = undefined;

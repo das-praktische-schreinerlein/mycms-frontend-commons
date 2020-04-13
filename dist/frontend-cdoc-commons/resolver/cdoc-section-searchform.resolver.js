@@ -9,7 +9,6 @@ var CommonSectionSearchFormResolver = /** @class */ (function () {
     }
     CommonSectionSearchFormResolver.prototype.resolve = function (route, state) {
         var _this = this;
-        var me = this;
         var result = {
             route: route,
             state: state

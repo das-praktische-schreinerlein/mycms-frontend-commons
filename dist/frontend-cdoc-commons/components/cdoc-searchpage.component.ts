@@ -375,7 +375,6 @@ export abstract class CommonDocSearchpageComponent<R extends CommonDocRecord, F 
     protected processError(data: { searchForm: ResolvedData<F>, pdoc: ResolvedData<PDocRecord>,
         flgDoSearch: boolean, baseSearchUrl: ResolvedData<string> }): boolean {
         const flgSearchFormError = ErrorResolver.isResolverError(data.searchForm);
-        const flgPDocError = ErrorResolver.isResolverError(data.pdoc);
         const flgBaseSearchUrlError = ErrorResolver.isResolverError(data.baseSearchUrl);
         if (!flgSearchFormError && !flgBaseSearchUrlError) {
             return false;

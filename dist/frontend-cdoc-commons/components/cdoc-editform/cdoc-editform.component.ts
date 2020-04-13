@@ -111,7 +111,7 @@ export abstract class CommonDocEditformComponent<R extends CommonDocRecord, F ex
         this.editFormGroup.patchValue(config);
     }
 
-    formatInputDate(value: Date): String {
+    formatInputDate(value: Date): string {
         return DateUtils.dateToLocalISOString(value);
     }
 
@@ -321,8 +321,8 @@ export abstract class CommonDocEditformComponent<R extends CommonDocRecord, F ex
         const me = this;
 
         if (cdocSearchResult !== undefined) {
-            const rawValues = this.editFormGroup.getRawValue();
-            // console.log('update searchResult', cdocSearchResult);
+            // for debug only: const rawValues = this.editFormGroup.getRawValue();
+            // for debug only: console.log('update searchResult', cdocSearchResult);
             me.optionsSelect['playlists'] = me.searchFormUtils.getIMultiSelectOptionsFromExtractedFacetValuesList(
                 me.cdocSearchFormUtils.getPlaylistValues(cdocSearchResult), true, [], true);
         } else {

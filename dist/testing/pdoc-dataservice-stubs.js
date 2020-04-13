@@ -21,11 +21,9 @@ var PDocDataServiceStub = /** @class */ (function () {
     PDocDataServiceStub.prototype.search = function (searchForm) {
         return Promise.resolve(new PDocSearchResult(searchForm, 0, [], new Facets()));
     };
-    ;
     PDocDataServiceStub.prototype.getById = function (id) {
         return Promise.resolve(new PDocRecord({ id: '1' }));
     };
-    ;
     PDocDataServiceStub.prototype.getSubDocuments = function (pdoc) {
         return [];
     };

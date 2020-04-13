@@ -117,7 +117,7 @@ export class VisJsProfileMapComponent implements AfterViewChecked, OnChanges {
                 }
             };
             const container = document.getElementById(this.mapId);
-            const mapProfileObj = new VisJsGeoProfileMap(dataSources, container, options);
+            const mapProfileObj = new VisJsGeoProfileMap(dataSources, container, options); // NOSONAR do not remove !!!
         }
     }
 }

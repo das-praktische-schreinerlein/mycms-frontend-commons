@@ -34,7 +34,7 @@ var GeoGpxParser = /** @class */ (function (_super) {
         xml = xml.replace(/^[ \r\n]+/, '');
         xml = xml.replace(/[ \r\n]+$/, '');
         xml = xml.replace(/'/g, '"');
-        if (!(xml.indexOf('<gpx ') >= 0) && !(xml.indexOf('<gpx>') >= 0)) {
+        if (xml.indexOf('<gpx ') < 0 && xml.indexOf('<gpx>') < 0) {
             xml = '<gpx xmlns="http://www.topografix.com/GPX/1/1" version="1.1"' +
                 ' xmlns:gpxx="http://www.garmin.com/xmlschemas/GpxExtensions/v3"' +
                 ' xmlns:wptx1="http://www.garmin.com/xmlschemas/WaypointExtension/v1"' +
