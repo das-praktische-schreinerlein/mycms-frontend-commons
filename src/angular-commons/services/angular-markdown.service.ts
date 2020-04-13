@@ -11,7 +11,9 @@ export class AngularMarkdownService {
         let html = '';
         try {
             html = this.markdownService.compile(markdown);
-        } finally {}
+        } finally {
+            // NOOP
+        }
 
         return this.htmlService.renderHtml(parentSelector, html, routeLocalLinkWithAngularRouter);
     }

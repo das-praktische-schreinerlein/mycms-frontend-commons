@@ -88,7 +88,7 @@ export abstract class CommonDocAlbumpageComponent <R extends CommonDocRecord, F 
     }
 
     protected configureProcessing() {
-        if (!(this.maxAllowedItems > 0)) {
+        if (this.maxAllowedItems <= 0) {
             console.warn('album not allowed');
             this.record = undefined;
             this.searchForm = undefined;

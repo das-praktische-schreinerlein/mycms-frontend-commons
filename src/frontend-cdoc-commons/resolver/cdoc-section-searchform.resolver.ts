@@ -13,7 +13,6 @@ export abstract class CommonSectionSearchFormResolver<F extends CommonDocSearchF
     constructor(private appService: GenericAppService, private searchFormConverter: GenericSearchFormSearchFormConverter<F>) {}
 
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<ResolvedData<F>> {
-        const me = this;
         const result: ResolvedData<F> = {
             route: route,
             state: state

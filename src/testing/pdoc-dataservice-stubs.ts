@@ -17,11 +17,11 @@ export class PDocDataServiceStub {
 
     search(searchForm: PDocSearchForm): Promise<PDocSearchResult> {
         return Promise.resolve(new PDocSearchResult(searchForm, 0, [], new Facets()));
-    };
+    }
 
     getById(id: any): Promise<PDocRecord> {
         return Promise.resolve(new PDocRecord({id: '1'}));
-    };
+    }
 
     getSubDocuments(pdoc: any): PDocRecord[] {
         return [];
