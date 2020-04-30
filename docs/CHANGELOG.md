@@ -15,11 +15,11 @@
 - frontend: fixed keyword-handing in cdoc-editform
  
 ### breaking changes
-- frontend: migrate to angular6
 - frontend: export "real" angular-modules
 
 
-## 4.3.1
+## 4.4.0
+- fix some minor bugs
 
 ### new features
 - none
