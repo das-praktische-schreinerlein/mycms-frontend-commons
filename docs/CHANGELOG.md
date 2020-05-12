@@ -11,7 +11,6 @@
 - none
 
 ### bug fixes
-- frontend: IE till 11 not functional (can block rendering sometimes)
 - frontend: fixed keyword-handing in cdoc-editform
  
 ### breaking changes
@@ -20,6 +19,8 @@
 
 ## 5.0.0
 - upgraded all dev-dependencies to latest
+- build: use peerDependencies
+- fixed frontend: IE 11 now functional (no more block rendering)
 
 ### new features
 - none
@@ -28,14 +29,14 @@
 - none
 
 ### bug fixes
-- none 
+- fixed frontend: IE 11 now functional (no more block rendering)
  
 ### breaking changes
 - build: upgraded all dev-dependencies to latest
+- build: use peerDependencies
 
 ### known issues
-- frontend: IE till 11 not functional (can block rendering sometimes)
-
+- none
 
 ## 4.4.0
 - fix some minor bugs
