@@ -122,6 +122,7 @@
     "detect-browser": "4.8.0",
     "jquery": "3.5.0",
     "js-data": "3.0.8",
+    "js-data-http": "3.0.1",
     "leaflet": "1.6.0",
     "leaflet-editable-polyline": "1.0.8",
     "leaflet.markercluster": "1.4.1",
@@ -132,6 +133,7 @@
     "promise-serial": "0.1.5",
     "rxjs": "6.5.5",
     "tz-lookup": "6.1.25",
-    "vis": "4.21.0"
+    "vis": "4.21.0",
+    "xregexp": "4.3.0"
   }
 }
