@@ -160,7 +160,7 @@ export class GeoParsedFeature extends L.FeatureGroup {
         }
         promise.then(function onLoaded(geoElements) {
             if (!geoElements) {
-                this.fire('error');
+                me.fire('error', { mapElement: mapElement });
                 return;
             }
             const layers = GeoParsedFeature.convertGeoElementsToLayers(mapElement, geoElements, options);

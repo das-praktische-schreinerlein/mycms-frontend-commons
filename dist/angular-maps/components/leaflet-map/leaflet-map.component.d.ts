@@ -45,5 +45,7 @@ export declare class LeafletMapComponent implements AfterViewChecked, OnChanges 
     toggleFullScreen(): void;
     private renderMap();
     private pushLoadedMapElement(loadedMapElement);
+    private pushNoCoorMapElement(noCoorElement);
+    private checkAndEmitLoadedEventIfAllProcessed();
     private extendBounds(bounds, element);
 }

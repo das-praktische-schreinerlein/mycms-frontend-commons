@@ -53,7 +53,7 @@ export class CommonDocTypetableComponent implements OnChanges {
                 value: value['count'],
                 label: value.name,
                 key: value.id,
-                active: formValue && formValue.indexOf(value.id) >= 0
+                active: formValue && formValue.split(',').indexOf(value.id) >= 0
             };
             result.push(column);
         }

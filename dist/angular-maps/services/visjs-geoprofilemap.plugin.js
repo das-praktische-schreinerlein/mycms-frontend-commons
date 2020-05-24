@@ -98,6 +98,9 @@ var VisJsGeoProfileMap = /** @class */ (function () {
         var style = 0;
         for (var i = 0; i < geoElements.length; i++) {
             var geoElement = geoElements[i];
+            if (geoElement === undefined || geoElement.points === undefined) {
+                continue;
+            }
             for (var p = 0; p < geoElement.points.length; p++) {
                 var point = geoElement.points[p];
                 if (point.lat && point.lng && point.alt !== undefined) {
