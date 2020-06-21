@@ -15,6 +15,15 @@ import {CommonDocContentUtils, KeywordSuggestion} from '../../services/cdoc-cont
 import {CommonDocSearchFormUtils} from '../../services/cdoc-searchform-utils.service';
 import {AbstractInlineComponent} from '../../../angular-commons/components/inline.component';
 
+export enum CommonDocEditformComponentForwardMode {
+    SHOW, BACK_TO_SEARCH, BACK_TO_SOURCE_SHOW, BACK_TO_SOURCE_EDIT
+}
+
+export interface CommonDocEditformComponentReturnType<R extends CommonDocRecord> {
+    returnMode: CommonDocEditformComponentForwardMode;
+    result: R;
+}
+
 export interface CommonDocEditformComponentConfig {
     numBeanFieldConfig: {};
     stringBeanFieldConfig: {};
@@ -46,6 +55,8 @@ export abstract class CommonDocEditformComponent<R extends CommonDocRecord, F ex
 
     public inputSuggestionValues = {};
 
+    public CommonDocEditformComponentForwardMode = CommonDocEditformComponentForwardMode;
+
     public textsSelectPlaylists: IMultiSelectTexts = { checkAll: 'Alle auswählen',
         uncheckAll: 'Alle abwählen',
         checked: 'Typ ausgewählt',
@@ -69,11 +80,17 @@ export abstract class CommonDocEditformComponent<R extends CommonDocRecord, F ex
     @Input()
     public backToSearch? = false;
 
+    @Input()
+    public availableForwardModes: CommonDocEditformComponentForwardMode[];
+
     @Output()
     public save: EventEmitter<R> = new EventEmitter();
 
     @Output()
     public saveAndSearch: EventEmitter<R> = new EventEmitter();
+
+    @Output()
+    public saveAndForward: EventEmitter<CommonDocEditformComponentReturnType<R>> = new EventEmitter();
 
     constructor(public fb: FormBuilder, protected toastr: ToastrService, protected cd: ChangeDetectorRef,
                 protected appService: GenericAppService, protected cdocSearchFormUtils: CommonDocSearchFormUtils,
@@ -134,6 +151,19 @@ export abstract class CommonDocEditformComponent<R extends CommonDocRecord, F ex
         } else {
             this.save.emit(values);
         }
+
+        return false;
+    }
+
+    submitSaveAndForward(event: Event, returnMode: CommonDocEditformComponentForwardMode): boolean {
+        const values = this.editFormGroup.getRawValue();
+
+        this.prepareSubmitValues(values);
+        if (!this.validateSubmitValues(values)) {
+            return false;
+        }
+
+        this.saveAndForward.emit({ returnMode: returnMode, result: values});
 
         return false;
     }

@@ -9,6 +9,7 @@ export class CommonDocRoutingService {
     protected lastSearchUrlPredecessor: string = undefined;
     protected lastSearchUrlSuccessor: string = undefined;
     protected lastBaseUrl = '/cdoc/';
+    protected lastAdminBaseUrl = '/cdocadmin/';
 
     constructor(protected commonRoutingService: CommonRoutingService) {
     }
@@ -45,9 +46,22 @@ export class CommonDocRoutingService {
         return this.lastBaseUrl;
     }
 
+    setLastAdminBaseUrl(lastAdminBaseUrl: string): void {
+        this.lastAdminBaseUrl = lastAdminBaseUrl;
+    }
+
+    getLastAdminBaseUrl(): string {
+        return this.lastAdminBaseUrl;
+    }
+
     getShowUrl(cdoc: CommonDocRecord, from: string): string {
         const name = StringUtils.generateTechnicalName(cdoc.name ? cdoc.name : 'name');
         return this.lastBaseUrl + 'show/' + name + '/' + cdoc.id; // + (from ? '?from=' + from : '');
+    }
+
+    getEditUrl(cdoc: CommonDocRecord, from: string): string {
+        const name = StringUtils.generateTechnicalName(cdoc.name ? cdoc.name : 'name');
+        return this.lastAdminBaseUrl + 'edit/' + name + '/' + cdoc.id; // + (from ? '?from=' + from : '');
     }
 
     navigateBackToSearch(suffix?: string): Promise<boolean> {
@@ -63,6 +77,10 @@ export class CommonDocRoutingService {
     }
 
     navigateToShow(cdoc: CommonDocRecord, from: string): Promise<boolean> {
+        return this.commonRoutingService.navigateByUrl(this.getShowUrl(cdoc, from));
+    }
+
+    navigateToEdit(cdoc: CommonDocRecord, from: string): Promise<boolean> {
         return this.commonRoutingService.navigateByUrl(this.getShowUrl(cdoc, from));
     }
 }

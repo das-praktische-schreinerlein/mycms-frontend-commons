@@ -40,6 +40,7 @@ export abstract class CommonDocRecordCreateResolver<R extends CommonDocRecord, F
 
                     const baseId = route.params['createBaseId'];
                     if (baseId && this.idValidationRule.isValid(baseId)) {
+                        result.sourceId = baseId;
                         this.dataService.getById(baseId).then(
                             function doneGetById(cdoc: R) {
                                 if (cdoc === undefined) {
@@ -57,6 +58,7 @@ export abstract class CommonDocRecordCreateResolver<R extends CommonDocRecord, F
                                 me.copyDefaultFields(type, cdoc, values);
 
                                 result.data = me.dataService.newRecord(values);
+                                result.sourceData = cdoc;
 
                                 return resolve(result);
                             }).catch(function errorGetById(reason: any) {

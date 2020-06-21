@@ -17,6 +17,7 @@ var common_routing_service_1 = require("../../angular-commons/services/common-ro
 var generic_app_service_1 = require("@dps/mycms-commons/dist/commons/services/generic-app.service");
 var layout_service_1 = require("../../angular-commons/services/layout.service");
 var cdoc_create_resolver_1 = require("../resolver/cdoc-create.resolver");
+var cdoc_editform_component_1 = require("../components/cdoc-editform/cdoc-editform.component");
 var CommonDocCreatepageComponent = /** @class */ (function (_super) {
     __extends(CommonDocCreatepageComponent, _super);
     function CommonDocCreatepageComponent(route, cdocRoutingService, toastr, contentUtils, errorResolver, pageUtils, commonRoutingService, angularMarkdownService, angularHtmlService, cd, trackingProvider, appService, platformService, layoutService, environment, cdocDataService) {
@@ -38,6 +39,7 @@ var CommonDocCreatepageComponent = /** @class */ (function (_super) {
         _this.cdocDataService = cdocDataService;
         _this.idValidationRule = new generic_validator_util_1.IdValidationRule(true);
         _this.keywordsValidationRule = new generic_validator_util_1.KeywordValidationRule(true);
+        _this.CommonDocEditformComponentForwardMode = cdoc_editform_component_1.CommonDocEditformComponentForwardMode;
         _this.Layout = layout_service_1.Layout;
         _this.editAllowed = false;
         _this.contentUtils = contentUtils;
@@ -49,20 +51,30 @@ var CommonDocCreatepageComponent = /** @class */ (function (_super) {
         if (!this.editAllowed) {
             console.warn('cdoc not writable');
             this.record = undefined;
+            this.baseRecord = undefined;
             this.pdoc = undefined;
+            this.suggestedForwardModes = [];
             this.errorResolver.redirectAfterRouterError(error_resolver_1.ErrorResolver.ERROR_READONLY, undefined, this.toastr, undefined);
             me.cd.markForCheck();
             return;
         }
         this.route.data.subscribe(function (data) {
             _this.commonRoutingService.setRoutingState(common_routing_service_1.RoutingState.DONE);
-            me.configureProcessingOfResolvedData(_this.config);
+            me.configureProcessingOfResolvedData(_this.config, data.record);
             if (me.processError(data)) {
                 return;
             }
             _this.record = data.record.data;
+            _this.baseRecord = data.record.sourceData;
             _this.baseSearchUrl = data.baseSearchUrl.data;
-            _this.doProcessAfterResolvedData(_this.config);
+            _this.suggestedForwardModes = _this.baseRecord
+                ? [cdoc_editform_component_1.CommonDocEditformComponentForwardMode.SHOW,
+                    cdoc_editform_component_1.CommonDocEditformComponentForwardMode.BACK_TO_SOURCE_EDIT,
+                    cdoc_editform_component_1.CommonDocEditformComponentForwardMode.BACK_TO_SOURCE_SHOW,
+                    cdoc_editform_component_1.CommonDocEditformComponentForwardMode.BACK_TO_SEARCH]
+                : [cdoc_editform_component_1.CommonDocEditformComponentForwardMode.SHOW,
+                    cdoc_editform_component_1.CommonDocEditformComponentForwardMode.BACK_TO_SEARCH];
+            _this.doProcessAfterResolvedData(_this.config, data.record);
             _this.setMetaTags(_this.config, _this.pdoc, _this.record);
             _this.pageUtils.setMetaLanguage();
             _this.cd.markForCheck();
@@ -80,15 +92,42 @@ var CommonDocCreatepageComponent = /** @class */ (function (_super) {
         });
         return false;
     };
+    CommonDocCreatepageComponent.prototype.submitSaveAndForward = function (returnType) {
+        var me = this;
+        var values = returnType.result;
+        var returnMode = returnType.returnMode;
+        this.cdocDataService.add(values).then(function doneDocCreated(cdoc) {
+            switch (returnMode) {
+                case cdoc_editform_component_1.CommonDocEditformComponentForwardMode.BACK_TO_SEARCH:
+                    me.cdocRoutingService.navigateBackToSearch('#' + (me.baseRecord ? me.baseRecord.id : cdoc.id));
+                    break;
+                case cdoc_editform_component_1.CommonDocEditformComponentForwardMode.BACK_TO_SOURCE_SHOW:
+                    me.cdocRoutingService.navigateToShow(me.baseRecord, cdoc.id);
+                    break;
+                case cdoc_editform_component_1.CommonDocEditformComponentForwardMode.BACK_TO_SOURCE_EDIT:
+                    me.cdocRoutingService.navigateToEdit(me.baseRecord, cdoc.id);
+                    break;
+                case cdoc_editform_component_1.CommonDocEditformComponentForwardMode.SHOW:
+                    me.cdocRoutingService.navigateToShow(cdoc, me.baseRecord.id);
+                    break;
+                default:
+                    me.cdocRoutingService.navigateToShow(cdoc, me.baseRecord.id);
+            }
+        }, function errorCreate(reason) {
+            console.error('create add failed:', reason);
+            me.toastr.error('Es gibt leider Probleme bei der Speichern - am besten noch einmal probieren :-(', 'Oje!');
+        });
+        return false;
+    };
     CommonDocCreatepageComponent.prototype.configureComponent = function (config) {
         var componentConfig = this.getComponentConfig(config);
         this.baseSearchUrl = componentConfig.baseSearchUrl;
         this.baseSearchUrlDefault = componentConfig.baseSearchUrlDefault;
         this.editAllowed = componentConfig.editAllowed;
     };
-    CommonDocCreatepageComponent.prototype.configureProcessingOfResolvedData = function (config) {
+    CommonDocCreatepageComponent.prototype.configureProcessingOfResolvedData = function (config, resolvedData) {
     };
-    CommonDocCreatepageComponent.prototype.doProcessAfterResolvedData = function (config) {
+    CommonDocCreatepageComponent.prototype.doProcessAfterResolvedData = function (config, resolvedData) {
     };
     CommonDocCreatepageComponent.prototype.setMetaTags = function (config, pdoc, record) {
         var recordName = this.keywordsValidationRule.sanitize(this.record.name);

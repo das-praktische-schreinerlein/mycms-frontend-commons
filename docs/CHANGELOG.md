@@ -18,6 +18,26 @@
 - frontend: export "real" angular-modules
 
 
+## 4.5.0
+- improved create/save-handling
+- fixed build-deps
+
+### new features
+- none
+
+### improvements
+- frontend: improved create/save-handling
+
+### bug fixes
+- build: fixed build-deps
+ 
+### breaking changes
+- none
+
+### known issues
+- frontend: IE till 11 not functional (can block rendering sometimes)
+
+
 ## 4.4.0
 - fix some minor bugs
 

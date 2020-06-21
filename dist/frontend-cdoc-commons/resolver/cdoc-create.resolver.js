@@ -31,6 +31,7 @@ var CommonDocRecordCreateResolver = /** @class */ (function () {
                     var values_1 = { type: type_1.toUpperCase(), keywords: '' };
                     var baseId_1 = route.params['createBaseId'];
                     if (baseId_1 && _this.idValidationRule.isValid(baseId_1)) {
+                        result.sourceId = baseId_1;
                         _this.dataService.getById(baseId_1).then(function doneGetById(cdoc) {
                             if (cdoc === undefined) {
                                 console.log('no cdoc for id:' + log_utils_1.LogUtils.sanitizeLogMsg(baseId_1));
@@ -45,6 +46,7 @@ var CommonDocRecordCreateResolver = /** @class */ (function () {
                             }
                             me.copyDefaultFields(type_1, cdoc, values_1);
                             result.data = me.dataService.newRecord(values_1);
+                            result.sourceData = cdoc;
                             return resolve(result);
                         }).catch(function errorGetById(reason) {
                             console.error('error cdoc for id:' + log_utils_1.LogUtils.sanitizeLogMsg(baseId_1), reason);

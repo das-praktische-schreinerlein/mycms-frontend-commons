@@ -19,6 +19,7 @@ var CommonDocRoutingService = /** @class */ (function () {
         this.lastSearchUrlPredecessor = undefined;
         this.lastSearchUrlSuccessor = undefined;
         this.lastBaseUrl = '/cdoc/';
+        this.lastAdminBaseUrl = '/cdocadmin/';
     }
     CommonDocRoutingService.prototype.setLastSearchUrl = function (lastSearchUrl) {
         this.lastSearchUrl = lastSearchUrl;
@@ -44,9 +45,19 @@ var CommonDocRoutingService = /** @class */ (function () {
     CommonDocRoutingService.prototype.getLastBaseUrl = function () {
         return this.lastBaseUrl;
     };
+    CommonDocRoutingService.prototype.setLastAdminBaseUrl = function (lastAdminBaseUrl) {
+        this.lastAdminBaseUrl = lastAdminBaseUrl;
+    };
+    CommonDocRoutingService.prototype.getLastAdminBaseUrl = function () {
+        return this.lastAdminBaseUrl;
+    };
     CommonDocRoutingService.prototype.getShowUrl = function (cdoc, from) {
         var name = string_utils_1.StringUtils.generateTechnicalName(cdoc.name ? cdoc.name : 'name');
         return this.lastBaseUrl + 'show/' + name + '/' + cdoc.id; // + (from ? '?from=' + from : '');
+    };
+    CommonDocRoutingService.prototype.getEditUrl = function (cdoc, from) {
+        var name = string_utils_1.StringUtils.generateTechnicalName(cdoc.name ? cdoc.name : 'name');
+        return this.lastAdminBaseUrl + 'edit/' + name + '/' + cdoc.id; // + (from ? '?from=' + from : '');
     };
     CommonDocRoutingService.prototype.navigateBackToSearch = function (suffix) {
         return this.commonRoutingService.navigateByUrl(this.getLastSearchUrl() + (suffix ? suffix : ''));
@@ -58,6 +69,9 @@ var CommonDocRoutingService = /** @class */ (function () {
         return this.commonRoutingService.navigateByUrl(this.getLastSearchUrlSuccessor() + (suffix ? suffix : ''));
     };
     CommonDocRoutingService.prototype.navigateToShow = function (cdoc, from) {
+        return this.commonRoutingService.navigateByUrl(this.getShowUrl(cdoc, from));
+    };
+    CommonDocRoutingService.prototype.navigateToEdit = function (cdoc, from) {
         return this.commonRoutingService.navigateByUrl(this.getShowUrl(cdoc, from));
     };
     CommonDocRoutingService = __decorate([

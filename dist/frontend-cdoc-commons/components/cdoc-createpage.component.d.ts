@@ -21,6 +21,7 @@ import { PlatformService } from '../../angular-commons/services/platform.service
 import { Layout, LayoutService } from '../../angular-commons/services/layout.service';
 import { CommonEnvironment } from '../../frontend-pdoc-commons/common-environment';
 import { ResolvedData } from '../../angular-commons/resolver/resolver.utils';
+import { CommonDocEditformComponentForwardMode, CommonDocEditformComponentReturnType } from '../components/cdoc-editform/cdoc-editform.component';
 export interface CommonDocCreatepageComponentConfig {
     baseSearchUrl: string;
     baseSearchUrlDefault: string;
@@ -44,8 +45,11 @@ export declare abstract class CommonDocCreatepageComponent<R extends CommonDocRe
     protected cdocDataService: D;
     idValidationRule: IdValidationRule;
     keywordsValidationRule: KeywordValidationRule;
+    CommonDocEditformComponentForwardMode: typeof CommonDocEditformComponentForwardMode;
     contentUtils: CommonDocContentUtils;
     record: R;
+    baseRecord: R;
+    suggestedForwardModes: CommonDocEditformComponentForwardMode[];
     Layout: typeof Layout;
     pdoc: PDocRecord;
     baseSearchUrl: string;
@@ -53,10 +57,11 @@ export declare abstract class CommonDocCreatepageComponent<R extends CommonDocRe
     constructor(route: ActivatedRoute, cdocRoutingService: CommonDocRoutingService, toastr: ToastrService, contentUtils: CommonDocContentUtils, errorResolver: ErrorResolver, pageUtils: PageUtils, commonRoutingService: CommonRoutingService, angularMarkdownService: AngularMarkdownService, angularHtmlService: AngularHtmlService, cd: ChangeDetectorRef, trackingProvider: GenericTrackingService, appService: GenericAppService, platformService: PlatformService, layoutService: LayoutService, environment: CommonEnvironment, cdocDataService: D);
     protected configureProcessing(): void;
     submitSave(values: {}): boolean;
+    submitSaveAndForward(returnType: CommonDocEditformComponentReturnType<R>): boolean;
     protected abstract getComponentConfig(config: {}): CommonDocCreatepageComponentConfig;
     protected configureComponent(config: {}): void;
-    protected configureProcessingOfResolvedData(config: {}): void;
-    protected doProcessAfterResolvedData(config: {}): void;
+    protected configureProcessingOfResolvedData(config: {}, resolvedData: ResolvedData<R>): void;
+    protected doProcessAfterResolvedData(config: {}, resolvedData: ResolvedData<R>): void;
     protected setMetaTags(config: {}, pdoc: PDocRecord, record: CommonDocRecord): void;
     protected setPageLayoutAndStyles(): void;
     protected processError(data: {

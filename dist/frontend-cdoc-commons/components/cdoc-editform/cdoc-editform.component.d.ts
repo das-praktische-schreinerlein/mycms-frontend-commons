@@ -12,6 +12,16 @@ import { CommonDocDataService } from '@dps/mycms-commons/dist/search-commons/ser
 import { CommonDocContentUtils, KeywordSuggestion } from '../../services/cdoc-contentutils.service';
 import { CommonDocSearchFormUtils } from '../../services/cdoc-searchform-utils.service';
 import { AbstractInlineComponent } from '../../../angular-commons/components/inline.component';
+export declare enum CommonDocEditformComponentForwardMode {
+    SHOW = 0,
+    BACK_TO_SEARCH = 1,
+    BACK_TO_SOURCE_SHOW = 2,
+    BACK_TO_SOURCE_EDIT = 3,
+}
+export interface CommonDocEditformComponentReturnType<R extends CommonDocRecord> {
+    returnMode: CommonDocEditformComponentForwardMode;
+    result: R;
+}
 export interface CommonDocEditformComponentConfig {
     numBeanFieldConfig: {};
     stringBeanFieldConfig: {};
@@ -40,13 +50,16 @@ export declare abstract class CommonDocEditformComponent<R extends CommonDocReco
     protected inputSuggestionValueConfig: {};
     optionsSelect: {};
     inputSuggestionValues: {};
+    CommonDocEditformComponentForwardMode: typeof CommonDocEditformComponentForwardMode;
     textsSelectPlaylists: IMultiSelectTexts;
     editFormGroup: FormGroup;
     keywordSuggestions: string[];
     record: R;
     backToSearch?: boolean;
+    availableForwardModes: CommonDocEditformComponentForwardMode[];
     save: EventEmitter<R>;
     saveAndSearch: EventEmitter<R>;
+    saveAndForward: EventEmitter<CommonDocEditformComponentReturnType<R>>;
     constructor(fb: FormBuilder, toastr: ToastrService, cd: ChangeDetectorRef, appService: GenericAppService, cdocSearchFormUtils: CommonDocSearchFormUtils, searchFormUtils: SearchFormUtils, cdocDataService: D, contentUtils: CommonDocContentUtils);
     setKeyword(keyword: string): void;
     unsetKeyword(keyword: string): void;
@@ -54,6 +67,7 @@ export declare abstract class CommonDocEditformComponent<R extends CommonDocReco
     formatInputDate(value: Date): String;
     recommendName(): void;
     submitSave(event: Event, backToSearch: boolean): boolean;
+    submitSaveAndForward(event: Event, returnMode: CommonDocEditformComponentForwardMode): boolean;
     protected getComponentConfig(config: {}): CommonDocEditformComponentConfig;
     protected configureComponent(config: {}): void;
     protected prepareSubmitValues(values: {}): void;

@@ -5,6 +5,8 @@ export interface ResolvedData<S> {
     state: RouterStateSnapshot;
     data?: S;
     error?: ResolverError;
+    sourceId?: any;
+    sourceData?: S;
 }
 export class ResolverError {
     private _code: string;
