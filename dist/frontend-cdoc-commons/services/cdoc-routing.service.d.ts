@@ -20,9 +20,11 @@ export declare class CommonDocRoutingService {
     getLastAdminBaseUrl(): string;
     getShowUrl(cdoc: CommonDocRecord, from: string): string;
     getEditUrl(cdoc: CommonDocRecord, from: string): string;
+    getCreateUrl(type: String, cdoc: CommonDocRecord, from: string): string;
     navigateBackToSearch(suffix?: string): Promise<boolean>;
     navigateToSearchPredecessor(suffix?: string): Promise<boolean>;
     navigateToSearchSuccessor(suffix?: string): Promise<boolean>;
     navigateToShow(cdoc: CommonDocRecord, from: string): Promise<boolean>;
     navigateToEdit(cdoc: CommonDocRecord, from: string): Promise<boolean>;
+    navigateToCreate(type: String, cdoc: CommonDocRecord, from: string): Promise<boolean>;
 }

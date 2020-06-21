@@ -64,6 +64,10 @@ export class CommonDocRoutingService {
         return this.lastAdminBaseUrl + 'edit/' + name + '/' + cdoc.id; // + (from ? '?from=' + from : '');
     }
 
+    getCreateUrl(type: String, cdoc: CommonDocRecord, from: string): string {
+        return this.lastAdminBaseUrl + 'create/' + type + (cdoc ? '/' + cdoc.id : ''); // + (from ? '?from=' + from : '');
+    }
+
     navigateBackToSearch(suffix?: string): Promise<boolean> {
         return this.commonRoutingService.navigateByUrl(this.getLastSearchUrl() + (suffix ? suffix : ''));
     }
@@ -81,6 +85,10 @@ export class CommonDocRoutingService {
     }
 
     navigateToEdit(cdoc: CommonDocRecord, from: string): Promise<boolean> {
-        return this.commonRoutingService.navigateByUrl(this.getShowUrl(cdoc, from));
+        return this.commonRoutingService.navigateByUrl(this.getEditUrl(cdoc, from));
+    }
+
+    navigateToCreate(type: String, cdoc: CommonDocRecord, from: string): Promise<boolean> {
+        return this.commonRoutingService.navigateByUrl(this.getCreateUrl(type, cdoc, from));
     }
 }

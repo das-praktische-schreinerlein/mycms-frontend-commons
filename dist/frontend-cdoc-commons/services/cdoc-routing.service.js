@@ -59,6 +59,9 @@ var CommonDocRoutingService = /** @class */ (function () {
         var name = string_utils_1.StringUtils.generateTechnicalName(cdoc.name ? cdoc.name : 'name');
         return this.lastAdminBaseUrl + 'edit/' + name + '/' + cdoc.id; // + (from ? '?from=' + from : '');
     };
+    CommonDocRoutingService.prototype.getCreateUrl = function (type, cdoc, from) {
+        return this.lastAdminBaseUrl + 'create/' + type + (cdoc ? '/' + cdoc.id : ''); // + (from ? '?from=' + from : '');
+    };
     CommonDocRoutingService.prototype.navigateBackToSearch = function (suffix) {
         return this.commonRoutingService.navigateByUrl(this.getLastSearchUrl() + (suffix ? suffix : ''));
     };
@@ -72,7 +75,10 @@ var CommonDocRoutingService = /** @class */ (function () {
         return this.commonRoutingService.navigateByUrl(this.getShowUrl(cdoc, from));
     };
     CommonDocRoutingService.prototype.navigateToEdit = function (cdoc, from) {
-        return this.commonRoutingService.navigateByUrl(this.getShowUrl(cdoc, from));
+        return this.commonRoutingService.navigateByUrl(this.getEditUrl(cdoc, from));
+    };
+    CommonDocRoutingService.prototype.navigateToCreate = function (type, cdoc, from) {
+        return this.commonRoutingService.navigateByUrl(this.getCreateUrl(type, cdoc, from));
     };
     CommonDocRoutingService = __decorate([
         core_1.Injectable(),
