@@ -51,6 +51,7 @@ var CommonDocSearchpageComponent = /** @class */ (function (_super) {
         _this.anchor = '';
         _this.m3uExportAvailable = false;
         _this.maxAllowedM3UExportItems = -1;
+        _this.availableCreateActionTypes = [];
         _this.multiActionSelectValueMap = new Map();
         _this.searchForm = cdocDataService.newSearchForm({});
         _this.searchResult = cdocDataService.newSearchResult(_this.searchForm, 0, [], new Facets());
@@ -64,6 +65,7 @@ var CommonDocSearchpageComponent = /** @class */ (function (_super) {
         });
         this.route.data.subscribe(function (data) {
             me.commonRoutingService.setRoutingState(RoutingState.DONE);
+            _this.availableCreateActionType = undefined;
             me.onResize(_this.layoutSizeObservable.getValue());
             me.configureProcessingOfResolvedData(me.config);
             if (me.processError(data)) {
@@ -271,6 +273,7 @@ var CommonDocSearchpageComponent = /** @class */ (function (_super) {
         this.baseSearchUrl = componentConfig.baseSearchUrl;
         this.baseSearchUrlDefault = componentConfig.baseSearchUrlDefault;
         this.maxAllowedM3UExportItems = componentConfig.maxAllowedM3UExportItems;
+        this.availableCreateActionTypes = componentConfig.availableCreateActionTypes || [];
     };
     CommonDocSearchpageComponent.prototype.configureProcessingOfResolvedData = function (config) {
     };
@@ -390,6 +393,11 @@ var CommonDocSearchpageComponent = /** @class */ (function (_super) {
         var valueMap = new Map();
         this.generateMultiActionSelectValueMapFromSearchResult(searchResult, valueMap);
         this.multiActionSelectValueMap = valueMap;
+        this.availableCreateActionType = undefined;
+        if (this.searchForm.type && this.searchForm.type.split(',').length === 1
+            && this.availableCreateActionTypes && this.availableCreateActionTypes.includes(this.searchForm.type.toUpperCase())) {
+            this.availableCreateActionType = this.searchForm.type.toUpperCase();
+        }
     };
     CommonDocSearchpageComponent.prototype.doSearch = function () {
         this.doPreChecksBeforeSearch();

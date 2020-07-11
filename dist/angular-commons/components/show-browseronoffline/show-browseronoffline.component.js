@@ -7,7 +7,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-import { Component, Injectable } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Injectable } from '@angular/core';
 import { BrowserOnlineState, GenericAppService } from '@dps/mycms-commons/dist/commons/services/generic-app.service';
 var ShowBrowserOnOfflineComponent = /** @class */ (function () {
     function ShowBrowserOnOfflineComponent(appService) {
@@ -29,7 +29,8 @@ var ShowBrowserOnOfflineComponent = /** @class */ (function () {
         Component({
             selector: 'app-browser-onoffline',
             templateUrl: './show-browseronoffline.component.html',
-            styleUrls: ['./show-browseronoffline.component.css']
+            styleUrls: ['./show-browseronoffline.component.css'],
+            changeDetection: ChangeDetectionStrategy.OnPush
         }),
         Injectable(),
         __metadata("design:paramtypes", [GenericAppService])

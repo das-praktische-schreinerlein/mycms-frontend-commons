@@ -1,10 +1,11 @@
-import {Component, Injectable, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Injectable, OnInit} from '@angular/core';
 import {BrowserOnlineState, GenericAppService} from '@dps/mycms-commons/dist/commons/services/generic-app.service';
 
 @Component({
     selector: 'app-browser-onoffline',
     templateUrl: './show-browseronoffline.component.html',
-    styleUrls: ['./show-browseronoffline.component.css']
+    styleUrls: ['./show-browseronoffline.component.css'],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 @Injectable()
 export class ShowBrowserOnOfflineComponent implements OnInit {

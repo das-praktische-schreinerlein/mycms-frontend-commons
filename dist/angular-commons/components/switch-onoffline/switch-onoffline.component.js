@@ -7,7 +7,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-import { Component, Injectable } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Injectable } from '@angular/core';
 import { AppOnlineState, GenericAppService } from '@dps/mycms-commons/dist/commons/services/generic-app.service';
 import { FormBuilder } from '@angular/forms';
 var SwitchOnOfflineComponent = /** @class */ (function () {
@@ -39,7 +39,8 @@ var SwitchOnOfflineComponent = /** @class */ (function () {
         Component({
             selector: 'app-switch-onoffline',
             templateUrl: './switch-onoffline.component.html',
-            styleUrls: ['./switch-onoffline.component.css']
+            styleUrls: ['./switch-onoffline.component.css'],
+            changeDetection: ChangeDetectionStrategy.OnPush
         }),
         Injectable(),
         __metadata("design:paramtypes", [FormBuilder, GenericAppService])

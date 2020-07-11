@@ -54,7 +54,7 @@ var CommonDocRoutingService = /** @class */ (function () {
         return this.lastBaseUrl + 'show/' + name + '/' + cdoc.id; // + (from ? '?from=' + from : '');
     };
     CommonDocRoutingService.prototype.getEditUrl = function (cdoc, from) {
-        var name = string_utils_1.StringUtils.generateTechnicalName(cdoc.name ? cdoc.name : 'name');
+        var name = StringUtils.generateTechnicalName(cdoc.name ? cdoc.name : 'name');
         return this.lastAdminBaseUrl + 'edit/' + name + '/' + cdoc.id; // + (from ? '?from=' + from : '');
     };
     CommonDocRoutingService.prototype.getCreateUrl = function (type, cdoc, from) {

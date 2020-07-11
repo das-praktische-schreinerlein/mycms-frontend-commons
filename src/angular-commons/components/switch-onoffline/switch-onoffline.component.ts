@@ -1,11 +1,12 @@
-import {Component, Injectable, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Injectable, OnInit} from '@angular/core';
 import {AppOnlineState, GenericAppService} from '@dps/mycms-commons/dist/commons/services/generic-app.service';
 import {FormBuilder, FormGroup} from '@angular/forms';
 
 @Component({
     selector: 'app-switch-onoffline',
     templateUrl: './switch-onoffline.component.html',
-    styleUrls: ['./switch-onoffline.component.css']
+    styleUrls: ['./switch-onoffline.component.css'],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 @Injectable()
 export class SwitchOnOfflineComponent implements OnInit {

@@ -21,6 +21,13 @@ import { EventEmitter, Input, Output } from '@angular/core';
 import { BeanUtils } from '@dps/mycms-commons/dist/commons/utils/bean.utils';
 import { DateUtils } from '@dps/mycms-commons/dist/commons/utils/date.utils';
 import { AbstractInlineComponent } from '../../../angular-commons/components/inline.component';
+export var CommonDocEditformComponentForwardMode;
+(function (CommonDocEditformComponentForwardMode) {
+    CommonDocEditformComponentForwardMode[CommonDocEditformComponentForwardMode["SHOW"] = 0] = "SHOW";
+    CommonDocEditformComponentForwardMode[CommonDocEditformComponentForwardMode["BACK_TO_SEARCH"] = 1] = "BACK_TO_SEARCH";
+    CommonDocEditformComponentForwardMode[CommonDocEditformComponentForwardMode["BACK_TO_SOURCE_SHOW"] = 2] = "BACK_TO_SOURCE_SHOW";
+    CommonDocEditformComponentForwardMode[CommonDocEditformComponentForwardMode["BACK_TO_SOURCE_EDIT"] = 3] = "BACK_TO_SOURCE_EDIT";
+})(CommonDocEditformComponentForwardMode || (CommonDocEditformComponentForwardMode = {}));
 var CommonDocEditformComponent = /** @class */ (function (_super) {
     __extends(CommonDocEditformComponent, _super);
     function CommonDocEditformComponent(fb, toastr, cd, appService, cdocSearchFormUtils, searchFormUtils, cdocDataService, contentUtils) {
@@ -48,6 +55,7 @@ var CommonDocEditformComponent = /** @class */ (function (_super) {
         _this.inputSuggestionValueConfig = {};
         _this.optionsSelect = {};
         _this.inputSuggestionValues = {};
+        _this.CommonDocEditformComponentForwardMode = CommonDocEditformComponentForwardMode;
         _this.textsSelectPlaylists = { checkAll: 'Alle auswählen',
             uncheckAll: 'Alle abwählen',
             checked: 'Typ ausgewählt',
@@ -66,6 +74,7 @@ var CommonDocEditformComponent = /** @class */ (function (_super) {
         _this.backToSearch = false;
         _this.save = new EventEmitter();
         _this.saveAndSearch = new EventEmitter();
+        _this.saveAndForward = new EventEmitter();
         return _this;
     }
     CommonDocEditformComponent.prototype.setKeyword = function (keyword) {
@@ -112,6 +121,15 @@ var CommonDocEditformComponent = /** @class */ (function (_super) {
         else {
             this.save.emit(values);
         }
+        return false;
+    };
+    CommonDocEditformComponent.prototype.submitSaveAndForward = function (event, returnMode) {
+        var values = this.editFormGroup.getRawValue();
+        this.prepareSubmitValues(values);
+        if (!this.validateSubmitValues(values)) {
+            return false;
+        }
+        this.saveAndForward.emit({ returnMode: returnMode, result: values });
         return false;
     };
     CommonDocEditformComponent.prototype.getComponentConfig = function (config) {
@@ -338,6 +356,10 @@ var CommonDocEditformComponent = /** @class */ (function (_super) {
         __metadata("design:type", Object)
     ], CommonDocEditformComponent.prototype, "backToSearch", void 0);
     __decorate([
+        Input(),
+        __metadata("design:type", Array)
+    ], CommonDocEditformComponent.prototype, "availableForwardModes", void 0);
+    __decorate([
         Output(),
         __metadata("design:type", EventEmitter)
     ], CommonDocEditformComponent.prototype, "save", void 0);
@@ -345,6 +367,10 @@ var CommonDocEditformComponent = /** @class */ (function (_super) {
         Output(),
         __metadata("design:type", EventEmitter)
     ], CommonDocEditformComponent.prototype, "saveAndSearch", void 0);
+    __decorate([
+        Output(),
+        __metadata("design:type", EventEmitter)
+    ], CommonDocEditformComponent.prototype, "saveAndForward", void 0);
     return CommonDocEditformComponent;
 }(AbstractInlineComponent));
 export { CommonDocEditformComponent };

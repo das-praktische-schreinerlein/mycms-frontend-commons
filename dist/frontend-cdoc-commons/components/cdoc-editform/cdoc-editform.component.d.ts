@@ -16,7 +16,7 @@ export declare enum CommonDocEditformComponentForwardMode {
     SHOW = 0,
     BACK_TO_SEARCH = 1,
     BACK_TO_SOURCE_SHOW = 2,
-    BACK_TO_SOURCE_EDIT = 3,
+    BACK_TO_SOURCE_EDIT = 3
 }
 export interface CommonDocEditformComponentReturnType<R extends CommonDocRecord> {
     returnMode: CommonDocEditformComponentForwardMode;
