@@ -6,6 +6,7 @@ export declare class CommonDocRoutingService {
     protected lastSearchUrlPredecessor: string;
     protected lastSearchUrlSuccessor: string;
     protected lastBaseUrl: string;
+    protected lastAdminBaseUrl: string;
     constructor(commonRoutingService: CommonRoutingService);
     setLastSearchUrl(lastSearchUrl: string): void;
     getLastSearchUrl(): string;
@@ -15,9 +16,15 @@ export declare class CommonDocRoutingService {
     setLastSearchUrlSuccessor(value: string): void;
     setLastBaseUrl(lastBaseUrl: string): void;
     getLastBaseUrl(): string;
+    setLastAdminBaseUrl(lastAdminBaseUrl: string): void;
+    getLastAdminBaseUrl(): string;
     getShowUrl(cdoc: CommonDocRecord, from: string): string;
+    getEditUrl(cdoc: CommonDocRecord, from: string): string;
+    getCreateUrl(type: String, cdoc: CommonDocRecord, from: string): string;
     navigateBackToSearch(suffix?: string): Promise<boolean>;
     navigateToSearchPredecessor(suffix?: string): Promise<boolean>;
     navigateToSearchSuccessor(suffix?: string): Promise<boolean>;
     navigateToShow(cdoc: CommonDocRecord, from: string): Promise<boolean>;
+    navigateToEdit(cdoc: CommonDocRecord, from: string): Promise<boolean>;
+    navigateToCreate(type: String, cdoc: CommonDocRecord, from: string): Promise<boolean>;
 }

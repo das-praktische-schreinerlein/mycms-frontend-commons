@@ -37,6 +37,7 @@ export interface CommonDocSearchpageComponentConfig {
     baseSearchUrl: string;
     baseSearchUrlDefault: string;
     maxAllowedM3UExportItems: number;
+    availableCreateActionTypes: String[];
 }
 
 export abstract class CommonDocSearchpageComponent<R extends CommonDocRecord, F extends CommonDocSearchForm,
@@ -58,6 +59,8 @@ export abstract class CommonDocSearchpageComponent<R extends CommonDocRecord, F 
     anchor = '';
     m3uExportAvailable = false;
     maxAllowedM3UExportItems = -1;
+    availableCreateActionType: String;
+    availableCreateActionTypes: String[] = [];
 
     multiActionSelectValueMap = new Map<string, IMultiSelectOption[]>();
 
@@ -84,6 +87,7 @@ export abstract class CommonDocSearchpageComponent<R extends CommonDocRecord, F 
             (data: { searchForm: ResolvedData<F>, pdoc: ResolvedData<PDocRecord>,
                 flgDoSearch: boolean, baseSearchUrl: ResolvedData<string> }) => {
                 me.commonRoutingService.setRoutingState(RoutingState.DONE);
+                this.availableCreateActionType = undefined;
                 me.onResize(this.layoutSizeObservable.getValue());
 
                 me.configureProcessingOfResolvedData(me.config);
@@ -332,6 +336,7 @@ export abstract class CommonDocSearchpageComponent<R extends CommonDocRecord, F 
         this.baseSearchUrl = componentConfig.baseSearchUrl;
         this.baseSearchUrlDefault = componentConfig.baseSearchUrlDefault;
         this.maxAllowedM3UExportItems = componentConfig.maxAllowedM3UExportItems;
+        this.availableCreateActionTypes = componentConfig.availableCreateActionTypes || [];
     }
 
     protected configureProcessingOfResolvedData(config: {}): void {
@@ -465,6 +470,12 @@ export abstract class CommonDocSearchpageComponent<R extends CommonDocRecord, F 
         const valueMap = new Map<string, IMultiSelectOption[]>();
         this.generateMultiActionSelectValueMapFromSearchResult(searchResult, valueMap);
         this.multiActionSelectValueMap = valueMap;
+
+        this.availableCreateActionType = undefined;
+        if (this.searchForm.type && this.searchForm.type.split(',').length === 1
+            && this.availableCreateActionTypes && this.availableCreateActionTypes.includes(this.searchForm.type.toUpperCase())) {
+            this.availableCreateActionType = this.searchForm.type.toUpperCase();
+        }
     }
 
     protected doSearch() {

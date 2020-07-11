@@ -27,6 +27,7 @@ export interface CommonDocSearchpageComponentConfig {
     baseSearchUrl: string;
     baseSearchUrlDefault: string;
     maxAllowedM3UExportItems: number;
+    availableCreateActionTypes: String[];
 }
 export declare abstract class CommonDocSearchpageComponent<R extends CommonDocRecord, F extends CommonDocSearchForm, S extends CommonDocSearchResult<R, F>, D extends CommonDocDataService<R, F, S>> extends AbstractPageComponent {
     protected route: ActivatedRoute;
@@ -62,6 +63,8 @@ export declare abstract class CommonDocSearchpageComponent<R extends CommonDocRe
     anchor: string;
     m3uExportAvailable: boolean;
     maxAllowedM3UExportItems: number;
+    availableCreateActionType: String;
+    availableCreateActionTypes: String[];
     multiActionSelectValueMap: Map<string, IMultiSelectOption[]>;
     constructor(route: ActivatedRoute, commonRoutingService: CommonRoutingService, errorResolver: ErrorResolver, cdocDataService: D, searchFormConverter: GenericSearchFormSearchFormConverter<F>, cdocRoutingService: CommonDocRoutingService, toastr: ToastrService, pageUtils: PageUtils, cd: ChangeDetectorRef, trackingProvider: GenericTrackingService, appService: GenericAppService, platformService: PlatformService, layoutService: LayoutService, searchFormUtils: SearchFormUtils, cdocSearchFormUtils: CommonDocSearchFormUtils, multiActionManager: CommonDocMultiActionManager<R, F, S, D>, environment: CommonEnvironment);
     protected configureProcessing(): void;

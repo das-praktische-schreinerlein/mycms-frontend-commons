@@ -25,6 +25,7 @@ import {Layout, LayoutService} from '../../angular-commons/services/layout.servi
 import {CommonEnvironment} from '../../frontend-pdoc-commons/common-environment';
 import {ResolvedData} from '../../angular-commons/resolver/resolver.utils';
 import {CommonDocRecordCreateResolver} from '../resolver/cdoc-create.resolver';
+import {CommonDocEditformComponentForwardMode, CommonDocEditformComponentReturnType} from '../components/cdoc-editform/cdoc-editform.component';
 
 export interface CommonDocCreatepageComponentConfig {
     baseSearchUrl: string;
@@ -36,8 +37,11 @@ export abstract class CommonDocCreatepageComponent <R extends CommonDocRecord, F
     S extends CommonDocSearchResult<R, F>, D extends CommonDocDataService<R, F, S>> extends AbstractPageComponent {
     idValidationRule = new IdValidationRule(true);
     keywordsValidationRule = new KeywordValidationRule(true);
+    public CommonDocEditformComponentForwardMode = CommonDocEditformComponentForwardMode;
     public contentUtils: CommonDocContentUtils;
     public record: R;
+    public baseRecord: R;
+    public suggestedForwardModes: CommonDocEditformComponentForwardMode[];
     public Layout = Layout;
     pdoc: PDocRecord;
     baseSearchUrl: string;
@@ -60,7 +64,9 @@ export abstract class CommonDocCreatepageComponent <R extends CommonDocRecord, F
         if (!this.editAllowed) {
             console.warn('cdoc not writable');
             this.record = undefined;
+            this.baseRecord = undefined;
             this.pdoc = undefined;
+            this.suggestedForwardModes = [];
 
             this.errorResolver.redirectAfterRouterError(ErrorResolver.ERROR_READONLY, undefined, this.toastr, undefined);
             me.cd.markForCheck();
@@ -71,15 +77,23 @@ export abstract class CommonDocCreatepageComponent <R extends CommonDocRecord, F
             (data: { record: ResolvedData<R>, baseSearchUrl: ResolvedData<string> }) => {
                 this.commonRoutingService.setRoutingState(RoutingState.DONE);
 
-                me.configureProcessingOfResolvedData(this.config);
+                me.configureProcessingOfResolvedData(this.config, data.record);
                 if (me.processError(data)) {
                     return;
                 }
 
                 this.record = data.record.data;
+                this.baseRecord = data.record.sourceData;
                 this.baseSearchUrl = data.baseSearchUrl.data;
+                this.suggestedForwardModes = this.baseRecord
+                    ? [CommonDocEditformComponentForwardMode.SHOW,
+                        CommonDocEditformComponentForwardMode.BACK_TO_SOURCE_EDIT,
+                        CommonDocEditformComponentForwardMode.BACK_TO_SOURCE_SHOW,
+                        CommonDocEditformComponentForwardMode.BACK_TO_SEARCH]
+                    : [CommonDocEditformComponentForwardMode.SHOW,
+                        CommonDocEditformComponentForwardMode.BACK_TO_SEARCH];
 
-                this.doProcessAfterResolvedData(this.config);
+                this.doProcessAfterResolvedData(this.config, data.record);
 
                 this.setMetaTags(this.config, this.pdoc, this.record);
                 this.pageUtils.setMetaLanguage();
@@ -105,6 +119,38 @@ export abstract class CommonDocCreatepageComponent <R extends CommonDocRecord, F
         return false;
     }
 
+    submitSaveAndForward(returnType: CommonDocEditformComponentReturnType<R>) {
+        const me = this;
+        const values: {} = returnType.result;
+        const returnMode: CommonDocEditformComponentForwardMode = returnType.returnMode;
+
+        this.cdocDataService.add(values).then(
+            function doneDocCreated(cdoc: R) {
+                switch (returnMode) {
+                    case CommonDocEditformComponentForwardMode.BACK_TO_SEARCH:
+                        me.cdocRoutingService.navigateBackToSearch('#' + (me.baseRecord ? me.baseRecord.id : cdoc.id));
+                        break
+                    case CommonDocEditformComponentForwardMode.BACK_TO_SOURCE_SHOW:
+                        me.cdocRoutingService.navigateToShow(me.baseRecord, cdoc.id);
+                        break
+                    case CommonDocEditformComponentForwardMode.BACK_TO_SOURCE_EDIT:
+                        me.cdocRoutingService.navigateToEdit(me.baseRecord, cdoc.id);
+                        break
+                    case CommonDocEditformComponentForwardMode.SHOW:
+                        me.cdocRoutingService.navigateToShow(cdoc, me.baseRecord.id);
+                        break
+                    default:
+                        me.cdocRoutingService.navigateToShow(cdoc, me.baseRecord.id);
+                }
+            },
+            function errorCreate(reason: any) {
+                console.error('create add failed:', reason);
+                me.toastr.error('Es gibt leider Probleme bei der Speichern - am besten noch einmal probieren :-(', 'Oje!');
+            }
+        );
+        return false;
+    }
+
     protected abstract getComponentConfig(config: {}): CommonDocCreatepageComponentConfig;
 
     protected configureComponent(config: {}): void {
@@ -115,10 +161,10 @@ export abstract class CommonDocCreatepageComponent <R extends CommonDocRecord, F
         this.editAllowed = componentConfig.editAllowed;
     }
 
-    protected configureProcessingOfResolvedData(config: {}): void {
+    protected configureProcessingOfResolvedData(config: {}, resolvedData: ResolvedData<R>): void {
     }
 
-    protected doProcessAfterResolvedData(config: {}): void {
+    protected doProcessAfterResolvedData(config: {}, resolvedData: ResolvedData<R>): void {
     }
 
     protected setMetaTags(config: {}, pdoc: PDocRecord, record: CommonDocRecord): void {
