@@ -18,8 +18,8 @@
 
 
 ## 5.0.0
-- upgraded all dev-dependencies to latest
-- build: use peerDependencies
+- upgraded all dev-dependencies to latest running
+- build: use peerDependencies (HINT: dont use deep-equal >=2.0.0 its very slow)
 - fixed frontend: IE 11 now functional (no more block rendering)
 
 ### new features
