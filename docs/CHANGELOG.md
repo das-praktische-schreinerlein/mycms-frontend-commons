@@ -21,9 +21,11 @@
 - upgraded all dev-dependencies to latest running
 - build: use peerDependencies (HINT: dont use deep-equal >=2.0.0 its very slow)
 - fixed frontend: IE 11 now functional (no more block rendering)
+- added new common components
 
 ### new features
-- none
+- frontend: added component to show ExtendedObjectProperties
+- frontend: added component to assign joins
 
 ### improvements
 - none
@@ -37,6 +39,8 @@
 
 ### known issues
 - none
+
+
 
 ## 4.5.0
 - improved create/save-handling
