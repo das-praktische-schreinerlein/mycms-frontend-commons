@@ -24,6 +24,7 @@ import {CommonDocInitialtableComponent} from './components/cdoc-initialtable/cdo
 import {CommonDocODObjectRectanglesComponent} from './components/cdoc-odobjectrectangles/cdoc-odobjectrectangles.component';
 import {CommonDocODObjectDetailsComponent} from './components/cdoc-odobjectdetails/cdoc-odobjectdetails.component';
 import {CommonDocObjectNavigationComponent} from './components/cdoc-object-navigation/cdoc-object-navigation.component';
+import {CommonDocExtendedObjectPropertiesComponent} from './components/cdoc-extended-object-properties/cdoc-extended-object-properties.component';
 
 @NgModule({
     declarations: [
@@ -44,7 +45,8 @@ import {CommonDocObjectNavigationComponent} from './components/cdoc-object-navig
         CommonDocInitialtableComponent,
         CommonDocODObjectRectanglesComponent,
         CommonDocODObjectDetailsComponent,
-        CommonDocObjectNavigationComponent
+        CommonDocObjectNavigationComponent,
+        CommonDocExtendedObjectPropertiesComponent
     ],
     imports: [
         NgbModule,
@@ -74,7 +76,8 @@ import {CommonDocObjectNavigationComponent} from './components/cdoc-object-navig
         CommonDocInitialtableComponent,
         CommonDocODObjectRectanglesComponent,
         CommonDocODObjectDetailsComponent,
-        CommonDocObjectNavigationComponent
+        CommonDocObjectNavigationComponent,
+        CommonDocExtendedObjectPropertiesComponent
     ]
 })
 export class FrontendCommonDocCommonsModule {

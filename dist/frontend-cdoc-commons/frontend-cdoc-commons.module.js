@@ -30,6 +30,7 @@ import { CommonDocInitialtableComponent } from './components/cdoc-initialtable/c
 import { CommonDocODObjectRectanglesComponent } from './components/cdoc-odobjectrectangles/cdoc-odobjectrectangles.component';
 import { CommonDocODObjectDetailsComponent } from './components/cdoc-odobjectdetails/cdoc-odobjectdetails.component';
 import { CommonDocObjectNavigationComponent } from './components/cdoc-object-navigation/cdoc-object-navigation.component';
+import { CommonDocExtendedObjectPropertiesComponent } from './components/cdoc-extended-object-properties/cdoc-extended-object-properties.component';
 var FrontendCommonDocCommonsModule = /** @class */ (function () {
     function FrontendCommonDocCommonsModule() {
     }
@@ -53,7 +54,8 @@ var FrontendCommonDocCommonsModule = /** @class */ (function () {
                 CommonDocInitialtableComponent,
                 CommonDocODObjectRectanglesComponent,
                 CommonDocODObjectDetailsComponent,
-                CommonDocObjectNavigationComponent
+                CommonDocObjectNavigationComponent,
+                CommonDocExtendedObjectPropertiesComponent
             ],
             imports: [
                 NgbModule,
@@ -83,7 +85,8 @@ var FrontendCommonDocCommonsModule = /** @class */ (function () {
                 CommonDocInitialtableComponent,
                 CommonDocODObjectRectanglesComponent,
                 CommonDocODObjectDetailsComponent,
-                CommonDocObjectNavigationComponent
+                CommonDocObjectNavigationComponent,
+                CommonDocExtendedObjectPropertiesComponent
             ]
         })
     ], FrontendCommonDocCommonsModule);
