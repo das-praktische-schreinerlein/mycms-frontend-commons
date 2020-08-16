@@ -106,10 +106,10 @@ var CommonDocCreatepageComponent = /** @class */ (function (_super) {
                     me.cdocRoutingService.navigateToEdit(me.baseRecord, cdoc.id);
                     break;
                 case CommonDocEditformComponentForwardMode.SHOW:
-                    me.cdocRoutingService.navigateToShow(cdoc, me.baseRecord.id);
+                    me.cdocRoutingService.navigateToShow(cdoc, (me.baseRecord ? me.baseRecord.id : undefined));
                     break;
                 default:
-                    me.cdocRoutingService.navigateToShow(cdoc, me.baseRecord.id);
+                    me.cdocRoutingService.navigateToShow(cdoc, (me.baseRecord ? me.baseRecord.id : undefined));
             }
         }, function errorCreate(reason) {
             console.error('create add failed:', reason);
