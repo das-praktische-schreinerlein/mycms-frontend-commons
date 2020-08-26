@@ -26,6 +26,7 @@
 ### new features
 - frontend: added component to show ExtendedObjectProperties
 - frontend: added component to assign joins
+- frontend: added suggester-service
 
 ### improvements
 - none
