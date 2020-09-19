@@ -17,6 +17,21 @@
 - frontend: export "real" angular-modules
 
 
+## 5.1.0
+
+### new features
+- none
+
+### improvements
+- none
+
+### bug fixes
+- none
+ 
+### breaking changes
+- none
+
+
 ## 5.0.0
 - upgraded all dev-dependencies to latest running
 - build: use peerDependencies (HINT: dont use deep-equal >=2.0.0 its very slow)
