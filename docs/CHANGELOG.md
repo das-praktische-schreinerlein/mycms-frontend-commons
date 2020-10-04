@@ -23,10 +23,10 @@
 - none
 
 ### improvements
-- none
+- frontend: added actiontag for opening links
 
 ### bug fixes
-- none
+- frontend: fixed lightbox-service (use full-url)
  
 ### breaking changes
 - none

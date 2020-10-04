@@ -1,6 +1,7 @@
 import { EventEmitter } from '@angular/core';
 import { utils } from 'js-data';
 import { AngularHtmlService } from '../../angular-commons/services/angular-html.service';
+import { BeanUtils } from '@dps/mycms-commons/dist/commons/utils/bean.utils';
 var CommonDocActionTagService = /** @class */ (function () {
     function CommonDocActionTagService(router, cdocDataService, cdocPlaylistService, cdocAlbumService, appService) {
         this.router = router;
@@ -60,6 +61,9 @@ var CommonDocActionTagService = /** @class */ (function () {
         }
         else if (actionTagEvent.config.type === 'tag') {
             return this.processActionTagEventTag(actionTagEvent, actionTagEventEmitter);
+        }
+        else if (actionTagEvent.config.type === 'link') {
+            return this.processActionTagEventLink(actionTagEvent, actionTagEventEmitter);
         }
         else {
             return this.processActionTagEventUnknown(actionTagEvent, actionTagEventEmitter);
@@ -130,6 +134,33 @@ var CommonDocActionTagService = /** @class */ (function () {
             console.error('cdocactions failed:', reason);
             return utils.reject(reason);
         });
+    };
+    CommonDocActionTagService.prototype.processActionTagEventLink = function (actionTagEvent, actionTagEventEmitter) {
+        var payload = JSON.parse(JSON.stringify(actionTagEvent.config.payload));
+        if (payload === undefined || payload.url === undefined) {
+            var reason = 'payload and url required';
+            actionTagEvent.processed = true;
+            actionTagEvent.error = reason;
+            actionTagEventEmitter.emit(actionTagEvent);
+            console.error('cdocactions failed:', reason);
+            return utils.reject(reason);
+        }
+        var target = payload.target;
+        var url = payload.url;
+        if (payload.replacements) {
+            for (var field in payload.replacements) {
+                if (!payload.replacements.hasOwnProperty(field)) {
+                    continue;
+                }
+                url = url.replace('{{' + field + '}}', BeanUtils.getValue(actionTagEvent, payload.replacements[field]));
+            }
+        }
+        window.open(url, target ? target : '_blank');
+        actionTagEvent.processed = true;
+        actionTagEvent.error = undefined;
+        actionTagEvent.result = actionTagEvent.record;
+        actionTagEventEmitter.emit(actionTagEvent);
+        return utils.resolve(actionTagEvent);
     };
     CommonDocActionTagService.prototype.processActionTagEventUnknown = function (actionTagEvent, actionTagEventEmitter) {
         actionTagEvent.processed = true;

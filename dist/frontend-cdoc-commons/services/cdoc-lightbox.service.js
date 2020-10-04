@@ -23,7 +23,7 @@ var CommonDocLightBoxService = /** @class */ (function () {
         for (var i = 0; i <= searchResult.currentRecords.length; i++) {
             var record = searchResult.currentRecords[i];
             if (this.hasImage(record)) {
-                var src = this.contentUtils.getPreview(this.contentUtils.getImages(record)[0]);
+                var src = this.contentUtils.getFullUrl(this.contentUtils.getImages(record)[0]);
                 var caption = record.name;
                 var thumb = this.contentUtils.getThumbnail(this.contentUtils.getImages(record)[0]);
                 var image = {

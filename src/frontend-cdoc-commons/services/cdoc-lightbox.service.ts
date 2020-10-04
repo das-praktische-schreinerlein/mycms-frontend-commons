@@ -25,7 +25,7 @@ export class CommonDocLightBoxService <R extends CommonDocRecord, F extends Comm
         for (let i = 0; i <= searchResult.currentRecords.length; i++) {
             const record = searchResult.currentRecords[i];
             if (this.hasImage(record)) {
-                const src = this.contentUtils.getPreview(this.contentUtils.getImages(record)[0]);
+                const src = this.contentUtils.getFullUrl(this.contentUtils.getImages(record)[0]);
                 const caption = record.name;
                 const thumb = this.contentUtils.getThumbnail(this.contentUtils.getImages(record)[0]);
                 const image = {

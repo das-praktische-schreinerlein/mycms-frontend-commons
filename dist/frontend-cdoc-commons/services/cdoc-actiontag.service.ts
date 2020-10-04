@@ -11,6 +11,7 @@ import {ActionTagEvent, MultiRecordActionTagEvent} from '../components/cdoc-acti
 import {utils} from 'js-data';
 import {AngularHtmlService} from '../../angular-commons/services/angular-html.service';
 import {CommonDocPlaylistService} from '@dps/mycms-commons/dist/search-commons/services/cdoc-playlist.service';
+import {BeanUtils} from '@dps/mycms-commons/dist/commons/utils/bean.utils';
 
 export interface CommonDocActionTagServiceConfig {
     baseEditPath: string;
@@ -82,6 +83,8 @@ export abstract class CommonDocActionTagService <R extends CommonDocRecord, F ex
             return this.processActionTagEventAlbumTag(actionTagEvent, actionTagEventEmitter);
         } else if (actionTagEvent.config.type === 'tag') {
             return this.processActionTagEventTag(actionTagEvent, actionTagEventEmitter);
+        } else if (actionTagEvent.config.type === 'link') {
+            return this.processActionTagEventLink(actionTagEvent, actionTagEventEmitter);
         } else {
             return this.processActionTagEventUnknown(actionTagEvent, actionTagEventEmitter);
         }
@@ -158,6 +161,41 @@ export abstract class CommonDocActionTagService <R extends CommonDocRecord, F ex
             console.error('cdocactions failed:', reason);
             return utils.reject(reason);
         });
+    }
+
+    protected processActionTagEventLink(actionTagEvent: ActionTagEvent,
+                                        actionTagEventEmitter: EventEmitter<ActionTagEvent>): Promise<R> {
+        const payload = JSON.parse(JSON.stringify(actionTagEvent.config.payload));
+        if (payload === undefined || payload.url === undefined) {
+            const reason = 'payload and url required';
+            actionTagEvent.processed = true;
+            actionTagEvent.error = reason;
+            actionTagEventEmitter.emit(actionTagEvent);
+            console.error('cdocactions failed:', reason);
+            return utils.reject(reason);
+        }
+
+        const target = payload.target;
+        let url: string = payload.url;
+        if (payload.replacements) {
+            for (const field in payload.replacements) {
+                if (!payload.replacements.hasOwnProperty(field)) {
+                    continue;
+                }
+
+                url = url.replace('{{' + field + '}}',
+                    BeanUtils.getValue(actionTagEvent, payload.replacements[field]));
+            }
+        }
+
+        window.open(url, target ? target : '_blank');
+
+        actionTagEvent.processed = true;
+        actionTagEvent.error = undefined;
+        actionTagEvent.result = actionTagEvent.record;
+        actionTagEventEmitter.emit(actionTagEvent);
+
+        return utils.resolve(actionTagEvent);
     }
 
     protected processActionTagEventUnknown(actionTagEvent: ActionTagEvent,
