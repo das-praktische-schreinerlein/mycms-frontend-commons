@@ -26,6 +26,7 @@ import {CommonDocDataService} from '@dps/mycms-commons/dist/search-commons/servi
 })
 export class CommonDocListItemComponent extends AbstractInlineComponent implements OnDestroy {
     private layoutSizeObservable: BehaviorSubject<LayoutSizeData>;
+    flgIsPlaying = false;
     listLayoutName = 'default';
     listItem: CommonItemData = {
         currentRecord: undefined,
@@ -58,18 +59,30 @@ export class CommonDocListItemComponent extends AbstractInlineComponent implemen
     public layout: Layout;
 
     @Input()
-    public short? = false;
+    public short ? = false;
 
     @Input()
     public multiActionManager?: CommonDocMultiActionManager<CommonDocRecord, CommonDocSearchForm,
         CommonDocSearchResult<CommonDocRecord, CommonDocSearchForm>,
         CommonDocDataService<CommonDocRecord, CommonDocSearchForm, CommonDocSearchResult<CommonDocRecord, CommonDocSearchForm>>>;
 
+    @Input()
+    public autoplay?: boolean = false;
+
+    @Input()
+    public playerIdPrefix ? = 'mdocListItem';
+
     @Output()
     public show: EventEmitter<CommonDocRecord> = new EventEmitter();
 
     @Output()
     public showImage: EventEmitter<CommonDocRecord> = new EventEmitter();
+
+    @Output()
+    public playerStarted: EventEmitter<CommonDocRecord> = new EventEmitter();
+
+    @Output()
+    public playerStopped: EventEmitter<CommonDocRecord> = new EventEmitter();
 
     constructor(contentUtils: CommonDocContentUtils, protected cd: ChangeDetectorRef,
         protected layoutService: LayoutService) {
@@ -104,6 +117,16 @@ export class CommonDocListItemComponent extends AbstractInlineComponent implemen
         }
 
         return false;
+    }
+
+    onPlayerStarted() {
+        this.flgIsPlaying = true;
+        this.playerStarted.emit(this.record);
+    }
+
+    onPlayerEnded() {
+        this.flgIsPlaying = false;
+        this.playerStopped.emit(this.record);
     }
 
     isMultiActionTagSelected(): boolean {

@@ -27,6 +27,8 @@ var CommonDocListComponent = /** @class */ (function (_super) {
         var _this = _super.call(this, cd) || this;
         _this.cd = cd;
         _this.short = false;
+        _this.playerStarted = new EventEmitter();
+        _this.playerStopped = new EventEmitter();
         _this.show = new EventEmitter();
         _this.Layout = Layout;
         return _this;
@@ -35,12 +37,18 @@ var CommonDocListComponent = /** @class */ (function (_super) {
         this.show.emit(record);
         return false;
     };
+    CommonDocListComponent.prototype.onPlayerStarted = function (mdoc) {
+        this.playerStarted.emit(mdoc);
+    };
+    CommonDocListComponent.prototype.onPlayerStopped = function (mdoc) {
+        this.playerStopped.emit(mdoc);
+    };
     CommonDocListComponent.prototype.getBackToSearchUrl = function (searchResult) {
         return '';
     };
     CommonDocListComponent.prototype.updateData = function () {
     };
-    var _a;
+    var _a, _b;
     __decorate([
         Input(),
         __metadata("design:type", typeof (_a = typeof S !== "undefined" && S) === "function" && _a || Object)
@@ -61,6 +69,22 @@ var CommonDocListComponent = /** @class */ (function (_super) {
         Input(),
         __metadata("design:type", CommonDocMultiActionManager)
     ], CommonDocListComponent.prototype, "multiActionManager", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", typeof (_b = typeof R !== "undefined" && R) === "function" && _b || Object)
+    ], CommonDocListComponent.prototype, "playRecord", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", String)
+    ], CommonDocListComponent.prototype, "playerIdPrefix", void 0);
+    __decorate([
+        Output(),
+        __metadata("design:type", EventEmitter)
+    ], CommonDocListComponent.prototype, "playerStarted", void 0);
+    __decorate([
+        Output(),
+        __metadata("design:type", EventEmitter)
+    ], CommonDocListComponent.prototype, "playerStopped", void 0);
     __decorate([
         Output(),
         __metadata("design:type", EventEmitter)

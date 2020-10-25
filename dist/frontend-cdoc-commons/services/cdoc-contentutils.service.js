@@ -45,7 +45,7 @@ var CommonDocContentUtils = /** @class */ (function () {
         }
         var audios = this.getAudios(record);
         if (audios && audios.length > 0) {
-            return this.getAudioUrl(audios[0], 'x600');
+            return this.getAudioUrl(audios[0], 'mp3');
         }
         var images = this.getImages(record);
         if (images && images.length > 0) {
@@ -78,7 +78,7 @@ var CommonDocContentUtils = /** @class */ (function () {
         return this.getVideoUrl(video, 'thumbnail', '.gif.mp4');
     };
     CommonDocContentUtils.prototype.getAudioPreview = function (audio) {
-        return this.getAudioUrl(audio, 'thumbnail', '');
+        return this.getAudioUrl(audio, 'mp3', '');
     };
     CommonDocContentUtils.prototype.getPreviewUrl = function (image) {
         return this.sanitizer.bypassSecurityTrustResourceUrl(this.getPreview(image));
@@ -96,7 +96,7 @@ var CommonDocContentUtils = /** @class */ (function () {
         return this.sanitizer.bypassSecurityTrustResourceUrl(this.getVideoUrl(video, 'x600'));
     };
     CommonDocContentUtils.prototype.getFullAudioUrl = function (audio) {
-        return this.sanitizer.bypassSecurityTrustResourceUrl(this.getAudioUrl(audio, 'x600'));
+        return this.sanitizer.bypassSecurityTrustResourceUrl(this.getAudioUrl(audio, 'mp3'));
     };
     CommonDocContentUtils.prototype.getImageUrl = function (image, resolution) {
         if (image === undefined) {

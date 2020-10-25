@@ -3,6 +3,7 @@
         <ng-container *ngSwitchDefault>
             <app-cdoc-list-item style="min-width: 300px; margin-bottom: 10px" class="card app-cdoc-list-item"
                                 [record]="record"
+                                [playerIdPrefix]="playerIdPrefix"
                                 [idx]="idx"
                                 [rowNr]="((searchResult.searchForm.pageNum - 1) * searchResult.searchForm.perPage) + idx"
                                 [layout]="layout"
@@ -11,6 +12,8 @@
                                 [backToSearchUrl]="getBackToSearchUrl(searchResult)"
                                 (show)="onShow($event)"
                                 (showImage)="onShowImage($event)"
+                                (playerStarted)="onPlayerStarted($event)"
+                                (playerStopped)="onPlayerStopped($event)"
                                 *ngFor="let record of searchResult.currentRecords; let idx = index"></app-cdoc-list-item>
         </ng-container>
     </ng-container>

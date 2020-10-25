@@ -59,6 +59,7 @@ export declare abstract class CommonDocSearchpageComponent<R extends CommonDocRe
     perPage: number;
     searchFormLayout: SearchFormLayout;
     showSearchFormElements: boolean;
+    curPlayingRecord: R;
     pauseAutoPlay: boolean;
     anchor: string;
     m3uExportAvailable: boolean;
@@ -81,6 +82,7 @@ export declare abstract class CommonDocSearchpageComponent<R extends CommonDocRe
     onTagcloudClicked(filterValue: any, filter: string): boolean;
     onPlayerStarted(cdoc: R): void;
     onPlayerStopped(cdoc: R): void;
+    onPlayingRecordChange(playingRecord: R, started: boolean): boolean;
     onSubmitSelectedMultiActions(event: any): boolean;
     onM3UExport(): boolean;
     protected redirectToSearch(): boolean;

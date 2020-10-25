@@ -216,9 +216,25 @@ var CommonDocSearchpageComponent = /** @class */ (function (_super) {
     };
     CommonDocSearchpageComponent.prototype.onPlayerStarted = function (cdoc) {
         this.pauseAutoPlay = true;
+        this.onPlayingRecordChange(cdoc, true);
     };
     CommonDocSearchpageComponent.prototype.onPlayerStopped = function (cdoc) {
         this.pauseAutoPlay = false;
+        this.onPlayingRecordChange(cdoc, false);
+    };
+    CommonDocSearchpageComponent.prototype.onPlayingRecordChange = function (playingRecord, started) {
+        if (started) {
+            this.curPlayingRecord = playingRecord;
+            return;
+        }
+        var idx = this.searchResult.currentRecords.indexOf(playingRecord);
+        if (idx < this.searchResult.currentRecords.length - 1) {
+            this.curPlayingRecord = this.searchResult.currentRecords[idx + 1];
+            this.cd.markForCheck();
+        }
+        else if (this.searchForm.pageNum < this.searchResult.recordCount / this.searchForm.perPage) {
+        }
+        return false;
     };
     CommonDocSearchpageComponent.prototype.onSubmitSelectedMultiActions = function (event) {
         var _this = this;

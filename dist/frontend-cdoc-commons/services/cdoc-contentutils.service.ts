@@ -78,7 +78,7 @@ export class CommonDocContentUtils {
         }
         const audios = this.getAudios(record);
         if (audios && audios.length > 0) {
-            return this.getAudioUrl(audios[0], 'x600');
+            return this.getAudioUrl(audios[0], 'mp3');
         }
         const images = this.getImages(record);
         if (images && images.length > 0) {
@@ -121,7 +121,7 @@ export class CommonDocContentUtils {
     }
 
     getAudioPreview(audio: BaseAudioRecord): string {
-        return this.getAudioUrl(audio, 'thumbnail', '');
+        return this.getAudioUrl(audio, 'mp3', '');
     }
 
     getPreviewUrl(image: BaseImageRecord): SafeUrl {
@@ -145,7 +145,7 @@ export class CommonDocContentUtils {
     }
 
     getFullAudioUrl(audio: BaseAudioRecord): SafeUrl {
-        return this.sanitizer.bypassSecurityTrustResourceUrl(this.getAudioUrl(audio, 'x600'));
+        return this.sanitizer.bypassSecurityTrustResourceUrl(this.getAudioUrl(audio, 'mp3'));
     }
 
     getImageUrl(image: BaseImageRecord, resolution: string): string {

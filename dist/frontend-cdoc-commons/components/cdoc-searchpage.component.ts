@@ -55,6 +55,7 @@ export abstract class CommonDocSearchpageComponent<R extends CommonDocRecord, F 
     perPage = 10;
     searchFormLayout: SearchFormLayout = SearchFormLayout.GRID;
     showSearchFormElements = true;
+    curPlayingRecord: R;
     pauseAutoPlay = false;
     anchor = '';
     m3uExportAvailable = false;
@@ -266,10 +267,28 @@ export abstract class CommonDocSearchpageComponent<R extends CommonDocRecord, F 
 
     onPlayerStarted(cdoc: R) {
         this.pauseAutoPlay = true;
+        this.onPlayingRecordChange(cdoc, true);
     }
 
     onPlayerStopped(cdoc: R) {
         this.pauseAutoPlay = false;
+        this.onPlayingRecordChange(cdoc, false);
+    }
+
+    onPlayingRecordChange(playingRecord: R, started: boolean) {
+        if (started) {
+            this.curPlayingRecord = playingRecord;
+            return;
+        }
+
+        const idx = this.searchResult.currentRecords.indexOf(playingRecord);
+        if (idx < this.searchResult.currentRecords.length - 1) {
+            this.curPlayingRecord = this.searchResult.currentRecords[idx + 1];
+            this.cd.markForCheck();
+        } else if (this.searchForm.pageNum < this.searchResult.recordCount /  this.searchForm.perPage) {
+        }
+
+        return false;
     }
 
     onSubmitSelectedMultiActions(event): boolean {

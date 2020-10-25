@@ -4,15 +4,29 @@ import { CommonDocRecord } from '@dps/mycms-commons/dist/search-commons/model/re
 import { AbstractInlineComponent } from '../../../angular-commons/components/inline.component';
 export declare class CommonDocAudioplayerComponent extends AbstractInlineComponent {
     protected cd: ChangeDetectorRef;
+    maxWidth: number;
+    maxHeight: number;
+    maxFullWidth: number;
+    maxFullHeight: number;
+    flgIsPlaying: boolean;
+    playerId: any;
     contentUtils: CommonDocContentUtils;
     listItem: CommonItemData;
     audioplayer: any;
     record: CommonDocRecord;
     width: 150;
     styleClass: 'picture-small';
+    playerIdPrefix?: string;
+    autoplay?: boolean;
+    playerStarted: EventEmitter<CommonDocRecord>;
+    playerStopped: EventEmitter<CommonDocRecord>;
     show: EventEmitter<CommonDocRecord>;
     constructor(contentUtils: CommonDocContentUtils, cd: ChangeDetectorRef);
     submitShow(cdoc: CommonDocRecord): boolean;
-    startPlaying(): void;
+    onPlayerStarted(): void;
+    onPlayerEnded(): void;
+    onPlayerPaused(): void;
     protected updateData(): void;
+    startPlaying(): void;
+    startAutoPlayPlayer(): void;
 }

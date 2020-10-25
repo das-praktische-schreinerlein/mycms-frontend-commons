@@ -1,7 +1,15 @@
-div.picture-small {
+.audio-small {
+    width: 200px;
+    max-width: 95% !important;
+    max-height: 50px !important;
+    overflow: hidden;
+    border-radius: 10px;
+}
+
+.audio-verysmall {
     width: 150px;
-    max-width: 95%;
-    max-height: 50px;
+    max-width: 95% !important;
+    max-height: 50px !important;
     overflow: hidden;
     border-radius: 10px;
 }
@@ -10,9 +18,34 @@ div.audio-player-container {
 }
 
 div.audio-player {
+    border: 5px solid transparent;
+    border-radius: 20px;
 }
 
 audio {
-    width: 150px;
+    width: 200px;
+    min-width: 200px !important;
     max-width: 95%;
+    background: indianred;
+}
+
+div.audio-player-container[data-isplaying="true"] {
+}
+
+div.audio-player[data-isplaying="true"] {
+    animation: blinker 5s linear infinite;
+    background: #53b92e;
+    border: 5px solid #53b92e;
+    border-radius: 20px;
+}
+
+audio[data-isplaying="true"] {
+    animation: blinker 5s linear infinite;
+    background: #53b92e;
+}
+
+@keyframes blinker {
+    50% {
+        opacity: 50%;
+    }
 }

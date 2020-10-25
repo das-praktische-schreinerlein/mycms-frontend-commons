@@ -25,10 +25,22 @@ export class CommonDocListComponent <R extends CommonDocRecord, F extends Common
     public layout: Layout;
 
     @Input()
-    public short? = false;
+    public short ? = false;
 
     @Input()
     public multiActionManager?: CommonDocMultiActionManager<R, F, S, CommonDocDataService<R, F, S>>;
+
+    @Input()
+    public playRecord: R;
+
+    @Input()
+    public playerIdPrefix?: string;
+
+    @Output()
+    public playerStarted: EventEmitter<R> = new EventEmitter();
+
+    @Output()
+    public playerStopped: EventEmitter<R> = new EventEmitter();
 
     @Output()
     public show: EventEmitter<R> = new EventEmitter();
@@ -42,6 +54,14 @@ export class CommonDocListComponent <R extends CommonDocRecord, F extends Common
     onShow(record: R) {
         this.show.emit(record);
         return false;
+    }
+
+    onPlayerStarted(mdoc: R) {
+        this.playerStarted.emit(mdoc);
+    }
+
+    onPlayerStopped(mdoc: R) {
+        this.playerStopped.emit(mdoc);
     }
 
     getBackToSearchUrl(searchResult: S): string {

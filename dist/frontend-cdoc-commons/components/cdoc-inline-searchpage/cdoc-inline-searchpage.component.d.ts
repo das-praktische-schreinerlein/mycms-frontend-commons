@@ -38,6 +38,9 @@ export declare class CommonDocInlineSearchpageComponent<R extends CommonDocRecor
     Layout: typeof Layout;
     m3uExportAvailable: boolean;
     maxAllowedM3UExportItems: number;
+    curPlayingRecord: R;
+    pauseAutoPlay: boolean;
+    playerIdPrefix: string;
     searchResult: S;
     searchForm: F;
     multiActionSelectValueMap: Map<string, IMultiSelectOption[]>;
@@ -71,6 +74,9 @@ export declare class CommonDocInlineSearchpageComponent<R extends CommonDocRecor
     onSearchDoc(cdocSearchForm: F): boolean;
     getToSearchUrl(): string;
     onToSearchPage(event: any): boolean;
+    onPlayerStarted(cdoc: R): void;
+    onPlayerStopped(cdoc: R): void;
+    onPlayingRecordChange(playingRecord: R, started: boolean): boolean;
     onSubmitSelectedMultiActions(event: any): boolean;
     onM3UExport(): boolean;
     protected getComponentConfig(config: {}): CommonDocInlineSearchpageComponentConfig;

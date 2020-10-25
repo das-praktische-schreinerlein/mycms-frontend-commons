@@ -35,6 +35,10 @@ export class CommonDocInlineSearchpageComponent <R extends CommonDocRecord, F ex
     m3uExportAvailable = false;
     maxAllowedM3UExportItems = -1;
 
+    curPlayingRecord: R;
+    pauseAutoPlay = false;
+    playerIdPrefix = 'mdocInlineSearch_' + (Math.random() * 100).toFixed(0);
+
     searchResult: S;
     searchForm: F;
     multiActionSelectValueMap = new Map<string, IMultiSelectOption[]>();
@@ -46,31 +50,31 @@ export class CommonDocInlineSearchpageComponent <R extends CommonDocRecord, F ex
     public showForm = false;
 
     @Input()
-    public showTimetable? = false;
+    public showTimetable ? = false;
 
     @Input()
-    public showLayout? = false;
+    public showLayout ? = false;
 
     @Input()
-    public showResultList? = false;
+    public showResultList ? = false;
 
     @Input()
-    public loadFacets? = false;
+    public loadFacets ? = false;
 
     @Input()
-    public loadTrack? = false;
+    public loadTrack ? = false;
 
     @Input()
     public showOnlyIfRecordsFound = true;
 
     @Input()
-    public showMultiActionHeader? = false;
+    public showMultiActionHeader ? = false;
 
     @Input()
     public label: string;
 
     @Input()
-    public baseSearchUrl? = 'cdoc/';
+    public baseSearchUrl ? = 'cdoc/';
 
     @Input()
     public searchLinkLabel?: string;
@@ -79,16 +83,16 @@ export class CommonDocInlineSearchpageComponent <R extends CommonDocRecord, F ex
     public m3uLinkLabel?: string;
 
     @Input()
-    public htmlId?: string;
+    public htmlId ?: string;
 
     @Input()
     public layout: Layout;
 
     @Input()
-    public short? = false;
+    public short ? = false;
 
     @Input()
-    public perPageOnToSearchPage? = 10;
+    public perPageOnToSearchPage ? = 10;
 
     @Output()
     public show: EventEmitter<R> = new EventEmitter();
@@ -194,6 +198,31 @@ export class CommonDocInlineSearchpageComponent <R extends CommonDocRecord, F ex
 
     onToSearchPage(event: any) {
         this.commonRoutingService.navigateByUrl(this.getToSearchUrl());
+        return false;
+    }
+
+    onPlayerStarted(cdoc: R) {
+        this.pauseAutoPlay = true;
+        this.onPlayingRecordChange(cdoc, true);
+    }
+
+    onPlayerStopped(cdoc: R) {
+        this.pauseAutoPlay = false;
+        this.onPlayingRecordChange(cdoc, false);
+    }
+
+    onPlayingRecordChange(playingRecord: R, started: boolean) {
+        if (started) {
+            this.curPlayingRecord = playingRecord;
+            return;
+        }
+
+        const idx = this.searchResult.currentRecords.indexOf(playingRecord);
+        if (idx < this.searchResult.currentRecords.length - 1) {
+            this.curPlayingRecord = this.searchResult.currentRecords[idx + 1];
+            this.cd.markForCheck();
+        }
+
         return false;
     }
 

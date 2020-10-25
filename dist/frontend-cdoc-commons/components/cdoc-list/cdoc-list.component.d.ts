@@ -13,10 +13,16 @@ export declare class CommonDocListComponent<R extends CommonDocRecord, F extends
     layout: Layout;
     short?: boolean;
     multiActionManager?: CommonDocMultiActionManager<R, F, S, CommonDocDataService<R, F, S>>;
+    playRecord: R;
+    playerIdPrefix?: string;
+    playerStarted: EventEmitter<R>;
+    playerStopped: EventEmitter<R>;
     show: EventEmitter<R>;
     Layout: typeof Layout;
     constructor(cd: ChangeDetectorRef);
     onShow(record: R): boolean;
+    onPlayerStarted(mdoc: R): void;
+    onPlayerStopped(mdoc: R): void;
     getBackToSearchUrl(searchResult: S): string;
     protected updateData(): void;
 }

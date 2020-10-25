@@ -18,12 +18,14 @@
 
 
 ## 5.1.0
+- improved autoplay and audioPlayer
 
 ### new features
-- none
+- frontend: added common support for autoPlay and player
 
 ### improvements
 - frontend: added actiontag for opening links
+- frontend: improved layout of CommonDocAudioplayerComponent
 
 ### bug fixes
 - frontend: fixed lightbox-service (use full-url)

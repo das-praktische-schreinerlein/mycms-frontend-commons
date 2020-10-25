@@ -45,6 +45,8 @@ var CommonDocInlineSearchpageComponent = /** @class */ (function (_super) {
         _this.Layout = Layout;
         _this.m3uExportAvailable = false;
         _this.maxAllowedM3UExportItems = -1;
+        _this.pauseAutoPlay = false;
+        _this.playerIdPrefix = 'mdocInlineSearch_' + (Math.random() * 100).toFixed(0);
         _this.multiActionSelectValueMap = new Map();
         _this.params = {};
         _this.showForm = false;
@@ -134,6 +136,26 @@ var CommonDocInlineSearchpageComponent = /** @class */ (function (_super) {
     };
     CommonDocInlineSearchpageComponent.prototype.onToSearchPage = function (event) {
         this.commonRoutingService.navigateByUrl(this.getToSearchUrl());
+        return false;
+    };
+    CommonDocInlineSearchpageComponent.prototype.onPlayerStarted = function (cdoc) {
+        this.pauseAutoPlay = true;
+        this.onPlayingRecordChange(cdoc, true);
+    };
+    CommonDocInlineSearchpageComponent.prototype.onPlayerStopped = function (cdoc) {
+        this.pauseAutoPlay = false;
+        this.onPlayingRecordChange(cdoc, false);
+    };
+    CommonDocInlineSearchpageComponent.prototype.onPlayingRecordChange = function (playingRecord, started) {
+        if (started) {
+            this.curPlayingRecord = playingRecord;
+            return;
+        }
+        var idx = this.searchResult.currentRecords.indexOf(playingRecord);
+        if (idx < this.searchResult.currentRecords.length - 1) {
+            this.curPlayingRecord = this.searchResult.currentRecords[idx + 1];
+            this.cd.markForCheck();
+        }
         return false;
     };
     CommonDocInlineSearchpageComponent.prototype.onSubmitSelectedMultiActions = function (event) {

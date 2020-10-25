@@ -29,6 +29,7 @@ var CommonDocListItemComponent = /** @class */ (function (_super) {
         var _this = _super.call(this, cd) || this;
         _this.cd = cd;
         _this.layoutService = layoutService;
+        _this.flgIsPlaying = false;
         _this.listLayoutName = 'default';
         _this.listItem = {
             currentRecord: undefined,
@@ -43,8 +44,12 @@ var CommonDocListItemComponent = /** @class */ (function (_super) {
         _this.LayoutSize = LayoutSize;
         _this.layoutSize = LayoutSize.BIG;
         _this.short = false;
+        _this.autoplay = false;
+        _this.playerIdPrefix = 'mdocListItem';
         _this.show = new EventEmitter();
         _this.showImage = new EventEmitter();
+        _this.playerStarted = new EventEmitter();
+        _this.playerStopped = new EventEmitter();
         _this.contentUtils = contentUtils;
         _this.layoutSizeObservable = _this.layoutService.getLayoutSizeData();
         _this.layoutSizeObservable.subscribe(function (layoutSizeData) {
@@ -71,6 +76,14 @@ var CommonDocListItemComponent = /** @class */ (function (_super) {
             this.updateData();
         }
         return false;
+    };
+    CommonDocListItemComponent.prototype.onPlayerStarted = function () {
+        this.flgIsPlaying = true;
+        this.playerStarted.emit(this.record);
+    };
+    CommonDocListItemComponent.prototype.onPlayerEnded = function () {
+        this.flgIsPlaying = false;
+        this.playerStopped.emit(this.record);
     };
     CommonDocListItemComponent.prototype.isMultiActionTagSelected = function () {
         return this.multiActionManager && this.multiActionManager.getSelectedMultiActionTags().length > 0;
@@ -129,6 +142,14 @@ var CommonDocListItemComponent = /** @class */ (function (_super) {
         __metadata("design:type", CommonDocMultiActionManager)
     ], CommonDocListItemComponent.prototype, "multiActionManager", void 0);
     __decorate([
+        Input(),
+        __metadata("design:type", Boolean)
+    ], CommonDocListItemComponent.prototype, "autoplay", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Object)
+    ], CommonDocListItemComponent.prototype, "playerIdPrefix", void 0);
+    __decorate([
         Output(),
         __metadata("design:type", EventEmitter)
     ], CommonDocListItemComponent.prototype, "show", void 0);
@@ -136,6 +157,14 @@ var CommonDocListItemComponent = /** @class */ (function (_super) {
         Output(),
         __metadata("design:type", EventEmitter)
     ], CommonDocListItemComponent.prototype, "showImage", void 0);
+    __decorate([
+        Output(),
+        __metadata("design:type", EventEmitter)
+    ], CommonDocListItemComponent.prototype, "playerStarted", void 0);
+    __decorate([
+        Output(),
+        __metadata("design:type", EventEmitter)
+    ], CommonDocListItemComponent.prototype, "playerStopped", void 0);
     CommonDocListItemComponent = __decorate([
         Component({
             selector: 'app-cdoc-list-item',

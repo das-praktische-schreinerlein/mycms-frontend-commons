@@ -12,6 +12,7 @@ export declare class CommonDocListItemComponent extends AbstractInlineComponent 
     protected cd: ChangeDetectorRef;
     protected layoutService: LayoutService;
     private layoutSizeObservable;
+    flgIsPlaying: boolean;
     listLayoutName: string;
     listItem: CommonItemData;
     LayoutSize: typeof LayoutSize;
@@ -24,13 +25,19 @@ export declare class CommonDocListItemComponent extends AbstractInlineComponent 
     layout: Layout;
     short?: boolean;
     multiActionManager?: CommonDocMultiActionManager<CommonDocRecord, CommonDocSearchForm, CommonDocSearchResult<CommonDocRecord, CommonDocSearchForm>, CommonDocDataService<CommonDocRecord, CommonDocSearchForm, CommonDocSearchResult<CommonDocRecord, CommonDocSearchForm>>>;
+    autoplay?: boolean;
+    playerIdPrefix?: string;
     show: EventEmitter<CommonDocRecord>;
     showImage: EventEmitter<CommonDocRecord>;
+    playerStarted: EventEmitter<CommonDocRecord>;
+    playerStopped: EventEmitter<CommonDocRecord>;
     constructor(contentUtils: CommonDocContentUtils, cd: ChangeDetectorRef, layoutService: LayoutService);
     ngOnDestroy(): void;
     submitShow(cdoc: CommonDocRecord): boolean;
     submitShowImage(cdoc: CommonDocRecord): boolean;
     onActionTagEvent(event: ActionTagEvent): boolean;
+    onPlayerStarted(): void;
+    onPlayerEnded(): void;
     isMultiActionTagSelected(): boolean;
     isMultiActionAvailableForRecord(): boolean;
     isMultiActionSelectedForRecord(): boolean;
