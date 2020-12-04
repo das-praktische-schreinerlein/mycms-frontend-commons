@@ -2,21 +2,6 @@
  
 # Versions
  
-## Planned
-
-### new features
-- none
-
-### improvements
-- none
-
-### bug fixes
-- frontend: fixed keyword-handing in cdoc-editform
- 
-### breaking changes
-- frontend: export "real" angular-modules
-
-
 ## 5.1.0
 - improved autoplay and audioPlayer
 
