@@ -9,7 +9,7 @@ For more information take a look at documentation:
 
 MyCMS-Frontend-Commons contains the services+utils for the client-part of an application as browser-components and services.
 
-Some amazing Features
+Some amazing features:
 - common angular-services, directives, pipes, components
     - service to render html/markdown into page
     - simple http-backend
