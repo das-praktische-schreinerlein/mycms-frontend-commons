@@ -12,9 +12,11 @@ import {SectionBarComponent} from './components/sectionbar/sectionbar.component'
 import {SectionComponent} from './components/section/section.component';
 import {RouterModule} from '@angular/router';
 import {SectionPageComponent} from './components/sectionpage/section-page.component';
+import {AdminJobAreaComponent} from "./components/admin-jobarea/admin-jobarea.component";
 
 @NgModule({
     declarations: [
+        AdminJobAreaComponent,
         PDocListComponent,
         PDocListItemComponent,
         PDocListItemFlatComponent,
@@ -33,6 +35,7 @@ import {SectionPageComponent} from './components/sectionpage/section-page.compon
         AngularCommonsModule
     ],
     exports: [
+        AdminJobAreaComponent,
         PDocListComponent,
         PDocListItemComponent,
         PDocListItemFlatComponent,

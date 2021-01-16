@@ -1,6 +1,6 @@
 {
   "name": "@dps/mycms-frontend-commons",
-  "version": "5.1.0",
+  "version": "5.2.0",
   "license": "Apache-2.0",
   "angular-cli": {},
   "scripts": {
@@ -37,7 +37,7 @@
     "@angular/platform-browser": ">= 6.1.10",
     "@angular/platform-browser-dynamic": ">= 6.1.10",
     "@angular/router": ">= 6.1.10",
-    "@dps/mycms-commons": ">= git://github.com/das-praktische-schreinerlein/mycms-commons.git#5.1.0",
+    "@dps/mycms-commons": ">= git://github.com/das-praktische-schreinerlein/mycms-commons.git#5.2.0",
     "@ng-bootstrap/ng-bootstrap": ">= 2.2.2",
     "@ngx-translate/core": ">= 10.0.2",
     "@ngx-translate/http-loader": ">= 3.0.1",
@@ -110,7 +110,7 @@
     "@angular/platform-browser": "6.1.10",
     "@angular/platform-browser-dynamic": "6.1.10",
     "@angular/router": "6.1.10",
-    "@dps/mycms-commons": "git://github.com/das-praktische-schreinerlein/mycms-commons.git#5.1.0",
+    "@dps/mycms-commons": "git://github.com/das-praktische-schreinerlein/mycms-commons.git#5.2.0",
     "@ng-bootstrap/ng-bootstrap": "2.2.2",
     "@ngx-translate/core": "10.0.2",
     "@ngx-translate/http-loader": "3.0.1",

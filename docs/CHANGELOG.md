@@ -2,6 +2,23 @@
  
 # Versions
  
+## 5.2.0
+- added admin-area
+
+### new features
+- frontend: added admin-area
+- frontend: added duration-pipe
+
+### improvements
+- none
+
+### bug fixes
+- none
+ 
+### breaking changes
+- none
+
+
 ## 5.1.0
 - improved autoplay and audioPlayer
 

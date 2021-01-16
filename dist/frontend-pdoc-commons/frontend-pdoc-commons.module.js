@@ -18,12 +18,14 @@ import { SectionBarComponent } from './components/sectionbar/sectionbar.componen
 import { SectionComponent } from './components/section/section.component';
 import { RouterModule } from '@angular/router';
 import { SectionPageComponent } from './components/sectionpage/section-page.component';
+import { AdminJobAreaComponent } from "./components/admin-jobarea/admin-jobarea.component";
 var FrontendPDocCommonsModule = /** @class */ (function () {
     function FrontendPDocCommonsModule() {
     }
     FrontendPDocCommonsModule = __decorate([
         NgModule({
             declarations: [
+                AdminJobAreaComponent,
                 PDocListComponent,
                 PDocListItemComponent,
                 PDocListItemFlatComponent,
@@ -42,6 +44,7 @@ var FrontendPDocCommonsModule = /** @class */ (function () {
                 AngularCommonsModule
             ],
             exports: [
+                AdminJobAreaComponent,
                 PDocListComponent,
                 PDocListItemComponent,
                 PDocListItemFlatComponent,
