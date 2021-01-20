@@ -7,4 +7,6 @@ export interface CommonEnvironment {
     allowAutoPlay: boolean;
     cookieLawSeenName: string;
     trackingProviders: any[];
+    adminBackendApiBaseUrl?: string;
+    adminWritable?: boolean;
 }

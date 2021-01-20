@@ -1,3 +1,30 @@
+<ng-container *ngIf="pdoc !== undefined">
+    <ng-container [ngSwitch]="searchFormLayout">
+        <ng-container *ngSwitchCase="SearchFormLayout.STACKED">
+            <div class="container content-container sectionpage-stacked-sidebar-container" style="width: 25%; float: right">
+                <ng-container *ngTemplateOutlet="sidebarContainer"></ng-container>
+            </div>
+
+            <div class="sectionpage-stacked-left-content-container" style="width: 73%; display: inline-block;">
+                <ng-container *ngTemplateOutlet="contentContainer"></ng-container>
+                <ng-container *ngTemplateOutlet="sectionsContainer"></ng-container>
+                <ng-container *ngTemplateOutlet="topTenContainer"></ng-container>
+                <ng-container *ngTemplateOutlet="dashBoardContainer"></ng-container>
+                <ng-container *ngTemplateOutlet="adminAreaContainer"></ng-container>
+                <ng-container *ngTemplateOutlet="sectionPrevNextNavigationContainer"></ng-container>
+            </div>
+        </ng-container>
+        <ng-container *ngSwitchDefault="">
+            <ng-container *ngTemplateOutlet="contentContainer"></ng-container>
+            <ng-container *ngTemplateOutlet="sectionsContainer"></ng-container>
+            <ng-container *ngTemplateOutlet="topTenContainer"></ng-container>
+            <ng-container *ngTemplateOutlet="dashBoardContainer"></ng-container>
+            <ng-container *ngTemplateOutlet="adminAreaContainer"></ng-container>
+            <ng-container *ngTemplateOutlet="sectionPrevNextNavigationContainer"></ng-container>
+        </ng-container>
+    </ng-container>
+</ng-container>
+
 <ng-template #contentContainer>
     <div class="container content-container sectionpage-content-container" *ngIf="(pdoc.descHtml !== undefined && pdoc.descHtml.length > 0) || (pdoc.descMd !== undefined && pdoc.descMd.length > 0)">
         <img src="{{pdoc.image}}" width="170px" class="picture" style="float: left; margin: 0 15px 15px 0;" alt="{{pdoc.name}}" *ngIf="pdoc.image !== undefined && pdoc.image.length > 0">
@@ -91,23 +118,26 @@
     </div>
 </ng-template>
 
-<ng-container *ngIf="pdoc !== undefined">
-    <ng-container [ngSwitch]="searchFormLayout">
-        <ng-container *ngSwitchCase="SearchFormLayout.STACKED">
-            <div class="container content-container sectionpage-stacked-sidebar-container" style="width: 25%; float: right">
-                <ng-container *ngTemplateOutlet="sidebarContainer"></ng-container>
-            </div>
+<ng-template #adminArea>
+    <app-admin-jobarea></app-admin-jobarea>
+</ng-template>
 
-            <div class="sectionpage-stacked-left-content-container" style="width: 73%; display: inline-block;">
-                <ng-container *ngTemplateOutlet="contentContainer"></ng-container>
-                <ng-container *ngTemplateOutlet="sectionsContainer"></ng-container>
-                <ng-container *ngTemplateOutlet="sectionPrevNextNavigationContainer"></ng-container>
-            </div>
-        </ng-container>
-        <ng-container *ngSwitchDefault="">
-            <ng-container *ngTemplateOutlet="contentContainer"></ng-container>
-            <ng-container *ngTemplateOutlet="sectionsContainer"></ng-container>
-            <ng-container *ngTemplateOutlet="sectionPrevNextNavigationContainer"></ng-container>
-        </ng-container>
+<ng-template #topTenContainer>
+    <ng-container *ngIf="pdoc.flgShowTopTen">
     </ng-container>
-</ng-container>
+</ng-template>
+
+<ng-template #dashBoardContainer>
+    <ng-container *ngIf="pdoc.flgShowDashboard">
+    </ng-container>
+</ng-template>
+
+<ng-template #adminAreaContainer>
+    <ng-container *ngIf="pdoc.flgShowAdminArea">
+        <div class="container content-container sectionpage-dashBoard-container">
+            <ng-container *ngTemplateOutlet="adminArea"></ng-container>
+            <div (click)="onScrollToTop()" class="scroll-to-top-container hidden-print"><span></span></div>
+        </div>
+    </ng-container>
+</ng-template>
+

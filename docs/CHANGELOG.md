@@ -8,6 +8,7 @@
 ### new features
 - frontend: added admin-area
 - frontend: added duration-pipe
+- frontend: added admin-area to common section-page and environment-config
 
 ### improvements
 - none
