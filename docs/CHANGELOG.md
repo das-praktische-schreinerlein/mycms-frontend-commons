@@ -18,7 +18,7 @@
 - none
 
 
-## 5.2.0
+## 5.2.0 (2021-02-05)
 - added admin-area
 
 ### new features
@@ -36,7 +36,7 @@
 - none
 
 
-## 5.1.0
+## 5.1.0 (2020-12-20)
 - improved autoplay and audioPlayer
 
 ### new features
@@ -53,7 +53,7 @@
 - none
 
 
-## 5.0.0
+## 5.0.0 (2020-08-26)
 - upgraded all dev-dependencies to latest running
 - build: use peerDependencies (HINT: dont use deep-equal >=2.0.0 its very slow)
 - fixed frontend: IE 11 now functional (no more block rendering)
@@ -79,7 +79,7 @@
 
 
 
-## 4.5.0
+## 4.5.0 (2020-07-11)
 - improved create/save-handling
 - fixed build-deps
 
@@ -99,7 +99,7 @@
 - frontend: IE till 11 not functional (can block rendering sometimes)
 
 
-## 4.4.0
+## 4.4.0 (2020-05-24)
 - fix some minor bugs
 
 ### new features
@@ -119,7 +119,7 @@
 - frontend: IE till 11 not functional (can block rendering sometimes)
 
 
-## 4.3.0
+## 4.3.0 (2020-03-20)
 - added simple route-editor to maps
 - improved build-process
 - moved common action-tag-components and navigation-components from mytourbook to frontend-commons
@@ -145,7 +145,7 @@
 - frontend: IE till 11 not functional (can block rendering sometimes)
 
 
-## 4.2.0
+## 4.2.0 (2019-09-07)
 - added new components for managing object-detection image-objects
 - improved trackmanagement
 
@@ -165,7 +165,7 @@
 - frontend: IE till 11 not functional (can block rendering sometimes)
 
 
-## 4.1.0
+## 4.1.0 (2019-02-11)
 - improved build-process
 - frontend: several improvements for maps, filters, itemlists
 
@@ -188,7 +188,7 @@
 - frontend: IE till 11 not functional (can block rendering sometimes)
 
 
-## 4.0.0
+## 4.0.0 (2018-11-07)
 - upgraded packages to be angular5/6-compatible
 - added common layout-styles
 - fixed minor bugs
@@ -221,7 +221,7 @@
 - frontend: IE till 11 not functional (can block rendering sometimes)
 
 
-## 3.0.0
+## 3.0.0 (2018-10-10)
 - improvements on albumpage and actiontags
 
 ### new features
@@ -242,7 +242,7 @@
 - none
 
 
-## 2.0.0
+## 2.0.0 (2018-09-13)
 - improved dependencies
 - added multiactiontag-functionality
 
@@ -262,7 +262,7 @@
 - changed constructor for CommonDocSearchPageComponent
 - changed constructor for CommonDocInlineSearchpageComponent
 
-## 1.0.0
+## 1.0.0 (2018-09-02)
 - initial version based on mytourbook-1.5.0
 
 ### new features
