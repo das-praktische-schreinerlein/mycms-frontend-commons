@@ -2,6 +2,23 @@
  
 # Versions
 
+## 5.4.0
+- added support for ordering playlists
+
+### new features
+- none
+
+### improvements
+- frontend: added support for ordering playlists
+- frontend: improved assign-forms
+
+### bug fixes
+- none
+
+### breaking changes
+- none
+
+
 ## 5.3.0 (2021-05-13)
 - bumped version up to be in sync with mycms-server-commons, mycms-commons
 
