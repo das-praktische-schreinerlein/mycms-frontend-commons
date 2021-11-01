@@ -7,7 +7,7 @@ import {CommonDocODObjectDetailsComponent} from './cdoc-odobjectdetails.componen
 import {GenericAppService} from '@dps/mycms-commons/dist/commons/services/generic-app.service';
 import {AppServiceStub} from '../../../angular-commons/testing/appservice-stubs';
 
-describe('TourDocODObjectDetailsComponent', () => {
+describe('CommonDocODObjectDetailsComponent', () => {
     let component: CommonDocODObjectDetailsComponent;
     let fixture: ComponentFixture<CommonDocODObjectDetailsComponent>;
 

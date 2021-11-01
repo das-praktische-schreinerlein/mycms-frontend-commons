@@ -27,8 +27,8 @@ export class CommonDocDataServiceStub {
         return Promise.resolve(new CommonDocSearchResult(searchForm, 0, [], new Facets()));
     }
 
-    newSearchResult(tdocSearchForm: CommonDocSearchForm, recordCount: number,
+    newSearchResult(cdocSearchForm: CommonDocSearchForm, recordCount: number,
                     currentRecords: CommonDocRecord[], facets: Facets): CommonDocSearchResult<CommonDocRecord, CommonDocSearchForm> {
-        return new CommonDocSearchResult(tdocSearchForm, recordCount, currentRecords, facets);
+        return new CommonDocSearchResult(cdocSearchForm, recordCount, currentRecords, facets);
     }
 }
