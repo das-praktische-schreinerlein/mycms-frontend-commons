@@ -25,7 +25,10 @@ import {Layout, LayoutService} from '../../angular-commons/services/layout.servi
 import {CommonEnvironment} from '../../frontend-pdoc-commons/common-environment';
 import {ResolvedData} from '../../angular-commons/resolver/resolver.utils';
 import {CommonDocRecordCreateResolver} from '../resolver/cdoc-create.resolver';
-import {CommonDocEditformComponentForwardMode, CommonDocEditformComponentReturnType} from '../components/cdoc-editform/cdoc-editform.component';
+import {
+    CommonDocEditformComponentForwardMode,
+    CommonDocEditformComponentReturnType
+} from '../components/cdoc-editform/cdoc-editform.component';
 
 export interface CommonDocCreatepageComponentConfig {
     baseSearchUrl: string;

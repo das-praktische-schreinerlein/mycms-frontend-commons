@@ -19,14 +19,34 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 import { Input } from '@angular/core';
 import { GenericCommonDocAssignFormComponent } from '../cdoc-assignform/generic-cdoc-assignform.component';
+import { BeanUtils } from '@dps/mycms-commons/dist/commons/utils/bean.utils';
+import { AppState } from '@dps/mycms-commons/dist/commons/services/generic-app.service';
 var CommonDocAssignPlaylistFormComponent = /** @class */ (function (_super) {
     __extends(CommonDocAssignPlaylistFormComponent, _super);
-    function CommonDocAssignPlaylistFormComponent() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
+    function CommonDocAssignPlaylistFormComponent(fb, activeModal, cd, searchFormUtils, cdocDataService, toastr, appService) {
+        var _this = _super.call(this, fb, activeModal, cd, searchFormUtils, cdocDataService, toastr) || this;
+        _this.fb = fb;
+        _this.activeModal = activeModal;
+        _this.cd = cd;
+        _this.appService = appService;
         _this.facetNamePrefix = 'label.assignplaylist.reference.';
         _this.position = undefined;
+        _this.set = undefined;
+        _this.details = undefined;
+        _this.detailsFieldConfig = undefined;
         return _this;
     }
+    CommonDocAssignPlaylistFormComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.appService.getAppState().subscribe(function (appState) {
+            if (appState === AppState.Ready) {
+                var config = _this.appService.getAppConfig();
+                _this.configureComponent(config);
+                _this.createFormGroup();
+                _this.updateData();
+            }
+        });
+    };
     CommonDocAssignPlaylistFormComponent.prototype.createResultObject = function () {
         return {
             action: 'assignplaylist',
@@ -34,7 +54,9 @@ var CommonDocAssignPlaylistFormComponent = /** @class */ (function (_super) {
             referenceField: this.getCurrentReferenceField(),
             newId: this.newId,
             playlistkey: this.newId,
-            position: this.position
+            position: this.position,
+            set: this.set,
+            details: this.details
         };
     };
     CommonDocAssignPlaylistFormComponent.prototype.createFormGroup = function () {
@@ -43,8 +65,23 @@ var CommonDocAssignPlaylistFormComponent = /** @class */ (function (_super) {
             newIdOption: 'select',
             newIdInput: '',
             position: '',
+            set: true,
+            details: '',
             newIdSelect: ''
         });
+    };
+    CommonDocAssignPlaylistFormComponent.prototype.configureComponent = function (config) {
+        var componentConfig = this.getComponentConfig(config);
+        this.detailsFieldConfig = componentConfig.detailsField;
+    };
+    CommonDocAssignPlaylistFormComponent.prototype.getComponentConfig = function (config) {
+        var componentConfig = {};
+        if (BeanUtils.getValue(config, 'components.cdoc-assignplaylistform.detailsField.type')) {
+            componentConfig.detailsField = {
+                type: config['components']['cdoc-assignplaylistform']['detailsField']['type']
+            };
+        }
+        return componentConfig;
     };
     CommonDocAssignPlaylistFormComponent.prototype.getReferenceNamesForRecordType = function (type) {
         var referenceName = this.getReferenceNameForRecordType(type);
@@ -57,6 +94,15 @@ var CommonDocAssignPlaylistFormComponent = /** @class */ (function (_super) {
         return false;
     };
     CommonDocAssignPlaylistFormComponent.prototype.onUpdateNewIdSelect = function () {
+        this.checkFormAndSetValidFlag();
+        return false;
+    };
+    CommonDocAssignPlaylistFormComponent.prototype.onUpdateSet = function () {
+        this.checkFormAndSetValidFlag();
+        return false;
+    };
+    CommonDocAssignPlaylistFormComponent.prototype.onUpdatePosition = function () {
+        this.assignFormGroup.patchValue({ set: true });
         this.checkFormAndSetValidFlag();
         return false;
     };
@@ -77,8 +123,18 @@ var CommonDocAssignPlaylistFormComponent = /** @class */ (function (_super) {
             this.assignFormGroup.patchValue({
                 newIdOption: 'select',
                 referenceField: this.getReferenceNameForRecordType(this.records[0].type),
-                newIdSelect: this.actionTagEvent.config.payload['playlistkey'],
-                position: this.actionTagEvent.config.payload['position']
+                newIdSelect: this.actionTagEvent.config.payload
+                    ? this.actionTagEvent.config.payload['playlistkey']
+                    : undefined,
+                set: this.actionTagEvent.config.payload
+                    ? this.actionTagEvent.config.payload['set']
+                    : true,
+                position: this.actionTagEvent.config.payload
+                    ? this.actionTagEvent.config.payload['position']
+                    : undefined,
+                details: this.actionTagEvent.config.payload
+                    ? this.actionTagEvent.config.payload['details']
+                    : undefined
             });
         }
     };
@@ -86,12 +142,20 @@ var CommonDocAssignPlaylistFormComponent = /** @class */ (function (_super) {
         var values = this.assignFormGroup.getRawValue();
         this.newId = undefined;
         this.position = undefined;
+        this.details = undefined;
+        this.set = undefined;
         this.newId = Array.isArray(values['newIdSelect'])
             ? values['newIdSelect'][0]
             : values['newIdSelect'];
         this.position = Array.isArray(values['position'])
             ? values['position'][0]
             : values['position'];
+        this.details = Array.isArray(values['details'])
+            ? values['details'][0]
+            : values['details'];
+        this.set = Array.isArray(values['set'])
+            ? values['set'][0]
+            : values['set'];
         this.position = this.position === null || this.position <= 0
             ? undefined
             : this.position;

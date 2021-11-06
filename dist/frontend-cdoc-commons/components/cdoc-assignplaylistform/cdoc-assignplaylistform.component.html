@@ -29,13 +29,29 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-sm-12 form-inline input-group input-group-sm">
+                <div class="col-sm-2 form-inline input-group input-group-sm form-check-inline">
+                    <input formControlName="set" required="required" class="form-control form-check-input"
+                           type="radio" [value]="true"
+                           (change)="onUpdateSet()">
+                </div>
+                <div class="col-sm-6 form-inline input-group input-group-sm">
                     <label class="col-sm-3 col-form-label mr-2 form-check-label"
                            i18n="position label|Label for field: position@@label.assignPlaylistform.cdoc.position">Position:</label>
                     <input formControlName="position" required="required" class="form-control" type="number" placeholder="position"
-                           (change)="checkFormAndSetValidFlag()"
+                           (change)="onUpdatePosition()"
                            class="col-sm-3 mr-2"
                            i18n-placeholder="position placeholder|Placeholder for position@@placeholder.assignPlaylistform.cdoc.position">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-2 form-inline input-group input-group-sm form-check-inline">
+                    <input formControlName="set" required="required" class="form-control form-check-input"
+                           type="radio" [value]="false"
+                           (change)="onUpdateSet()">
+                </div>
+                <div class="col-sm-6 form-inline input-group input-group-sm">
+                    <label class="col-sm-6 col-form-label mr-2 form-check-label"
+                           i18n="unset label|Label for field: unset@@label.assignPlaylistform.cdoc.unset">aus Playlist entfernen</label>
                 </div>
             </div>
             <div class="row">
@@ -45,6 +61,14 @@
                             [disabled]="!validForSubmit"
                             i18n="button assignRecord cdoc|Buttontext to assignRecord cdoc@@button.assignPlaylistform.cdoc.assignRecord">Zuordnen</button>
                     <button type="button" (click)="onCancel()" class="btn btn-action btn-sm">Abbrechen</button>
+                </div>
+            </div>
+            <div class="row" *ngIf="detailsFieldConfig">
+                <div class="col-sm-12 form-inline input-group input-group-sm recommended-desc-form-block">
+                    <label class="col-xs-3 col-form-label mr-2" i18n="details label|Label for field: details@@label.assignPlaylistform.cdoc.details">Details:</label>
+                    <textarea formControlName="details" class="form-control" type="text"
+                              placeholder="Details"
+                              i18n-placeholder="details placeholder|Placeholder for details@@placeholder.assignPlaylistform.cdoc.details"></textarea>
                 </div>
             </div>
         </fieldset>

@@ -113,8 +113,16 @@ var CommonDocActionTagService = /** @class */ (function () {
     };
     CommonDocActionTagService.prototype.processActionTagEventTag = function (actionTagEvent, actionTagEventEmitter) {
         var payload = JSON.parse(JSON.stringify(actionTagEvent.config.payload));
-        payload['set'] = actionTagEvent.set;
         payload['name'] = actionTagEvent.config.name;
+        if (payload.hasOwnProperty('set')) {
+            // tslint:disable-next-line:triple-equals
+            if (payload['set'] != actionTagEvent.set) {
+                console.log('dont override payload.set for ', actionTagEvent.config.name, payload['set'], actionTagEvent.set);
+            }
+        }
+        else {
+            payload['set'] = actionTagEvent.set;
+        }
         var actinTagForm = {
             key: actionTagEvent.config.key,
             payload: payload,
