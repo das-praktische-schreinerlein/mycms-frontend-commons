@@ -44,6 +44,7 @@ var AdminJobAreaComponent = /** @class */ (function (_super) {
         _this.fb = fb;
         _this.objectKeys = Object.keys;
         _this.arrayIsArray = Array.isArray;
+        _this.typeOf = function (blim) { return typeof blim; };
         _this.availableCommands = {};
         _this.commandsStates = {};
         _this.adminResponse = _this.createErrorsResponse('admindata not loaded');

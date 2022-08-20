@@ -44,6 +44,8 @@ export class AdminJobAreaComponent extends AbstractInlineComponent
 
     objectKeys = Object.keys;
     arrayIsArray = Array.isArray;
+    typeOf = function (blim) { return typeof blim};
+
     availableCommands: {[key: string]: CommonAdminCommandsListResponseType} = {};
     commandsStates: {[key: string]: CommonAdminCommandStateType} = {};
     adminResponse: CommonAdminResponseType = this.createErrorsResponse('admindata not loaded');

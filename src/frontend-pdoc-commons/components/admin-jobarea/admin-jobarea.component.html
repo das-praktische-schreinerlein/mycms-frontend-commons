@@ -27,7 +27,21 @@
                         }"></ng-container>
                 </ng-container>
             </table>
-            <span *ngIf="!arrayIsArray(jobState.resultMsg)">{{jobState.resultMsg}}</span>
+            <table class="ml-5" *ngIf="!arrayIsArray(jobState.resultMsg)">
+                <tr *ngIf="typeOf(jobState.resultMsg) === 'string'">
+                    <td>Message:</td><td>{{jobState.resultMsg}}</td>
+                </tr>
+                <ng-container *ngIf="typeOf(jobState.resultMsg) !== 'string'">
+                    <tr *ngIf="objectKeys(jobState.resultMsg).length === 0">
+                        <td>Result:</td><td>{{jobState.resultMsg}}</td>
+                    </tr>
+                    <ng-container *ngIf="objectKeys(jobState.resultMsg).length !== 0">
+                        <tr *ngFor="let key of objectKeys(jobState.resultMsg)">
+                            <td>{{key}}:</td><td>{{jobState.resultMsg[key]}}</td>
+                        </tr>
+                    </ng-container>
+                </ng-container>
+            </table>
         </td>
     </tr>
 </ng-template>
