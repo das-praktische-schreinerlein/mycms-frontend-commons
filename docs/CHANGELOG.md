@@ -2,6 +2,23 @@
  
 # Versions
 
+## 5.5.0 (2022-08-29)
+- bumped version up to be in sync with mycms-frontend-commons, mycms-commons
+- fixed admin-area display of result-messages
+
+### new features
+- none
+
+### improvements
+- none
+
+### bug fixes
+- frontend: fixed admin-area display of result-messages
+
+### breaking changes
+- none
+
+
 ## 5.4.0 (2021-11-25)
 - added support for ordering playlists
 
