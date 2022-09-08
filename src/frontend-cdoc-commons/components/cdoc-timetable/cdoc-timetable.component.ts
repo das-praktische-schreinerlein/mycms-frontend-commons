@@ -43,6 +43,11 @@ export class CommonDocTimetableComponent extends AbstractInlineComponent {
     protected updateData(): void {
         const result = [];
         const facetName = 'month_is';
+        if (this.searchResult.facets === undefined || this.searchResult.facets.facets === undefined) {
+            this.columns = [];
+            return;
+        }
+
         const origFacet = this.searchResult.facets.facets.get(facetName);
         if (origFacet === undefined || origFacet.facet === undefined) {
             this.columns = [];

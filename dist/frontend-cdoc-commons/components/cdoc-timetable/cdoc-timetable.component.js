@@ -41,6 +41,10 @@ var CommonDocTimetableComponent = /** @class */ (function (_super) {
     CommonDocTimetableComponent.prototype.updateData = function () {
         var result = [];
         var facetName = 'month_is';
+        if (this.searchResult.facets === undefined || this.searchResult.facets.facets === undefined) {
+            this.columns = [];
+            return;
+        }
         var origFacet = this.searchResult.facets.facets.get(facetName);
         if (origFacet === undefined || origFacet.facet === undefined) {
             this.columns = [];
