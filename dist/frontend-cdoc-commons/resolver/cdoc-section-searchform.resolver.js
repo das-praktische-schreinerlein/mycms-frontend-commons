@@ -18,7 +18,7 @@ var CommonSectionSearchFormResolver = /** @class */ (function () {
             var searchForm = _this.searchFormConverter.newSearchForm({});
             _this.appService.getAppState().subscribe(function (appState) {
                 if (appState === AppState.Ready) {
-                    _this.searchFormConverter.paramsToSearchForm(route.params, route.data['searchFormDefaults'], searchForm);
+                    _this.searchFormConverter.paramsToSearchForm(route.params, route.data['searchFormDefaults'], searchForm, route.queryParams);
                     searchForm.theme = _this.idValidationRule.sanitize(id);
                     if (!_this.searchFormConverter.isValid(searchForm)) {
                         result.error = new ResolverError(CommonSectionSearchFormResolver.ERROR_INVALID_SEARCHFORM, searchForm, undefined);

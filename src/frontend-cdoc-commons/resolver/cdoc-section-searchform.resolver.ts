@@ -24,7 +24,8 @@ export abstract class CommonSectionSearchFormResolver<F extends CommonDocSearchF
             const searchForm = this.searchFormConverter.newSearchForm({});
             this.appService.getAppState().subscribe(appState => {
                 if (appState === AppState.Ready) {
-                    this.searchFormConverter.paramsToSearchForm(route.params, route.data['searchFormDefaults'], searchForm);
+                    this.searchFormConverter.paramsToSearchForm(route.params, route.data['searchFormDefaults'],
+                        searchForm, route.queryParams);
                     searchForm.theme = this.idValidationRule.sanitize(id);
                     if (!this.searchFormConverter.isValid(searchForm)) {
                         result.error = new ResolverError(CommonSectionSearchFormResolver.ERROR_INVALID_SEARCHFORM, searchForm,

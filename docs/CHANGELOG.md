@@ -5,12 +5,13 @@
 ## 5.6.0
 - bumped version up to be in sync with mycms-server-commons, mycms-commons
 - fixed components if there are no facets
+- added query-params to SearchFormResolver
 
 ### new features
 - none
 
 ### improvements
-- none
+- frontend: added query-params to SearchFormResolver
 
 ### bug fixes
 - frontend: fixed components if there are no facets
