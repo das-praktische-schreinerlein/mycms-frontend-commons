@@ -30,7 +30,6 @@ export interface AdminJobAreaComponentConfig {
     jobsAllowed: boolean;
 }
 
-// TODO move to commons
 @Component({
     selector: 'app-admin-jobarea',
     templateUrl: './admin-jobarea.component.html',
