@@ -29,7 +29,6 @@ import { CommonAdminResponseResultState } from '@dps/mycms-commons/dist/commons/
 import { FormBuilder } from '@angular/forms';
 import { AbstractInlineComponent } from '../../../angular-commons/components/inline.component';
 import { PageUtils } from '../../../angular-commons/services/page.utils';
-// TODO move to commons
 var AdminJobAreaComponent = /** @class */ (function (_super) {
     __extends(AdminJobAreaComponent, _super);
     function AdminJobAreaComponent(appService, toastr, locale, cd, elRef, pageUtils, backendHttpClient, fb) {
