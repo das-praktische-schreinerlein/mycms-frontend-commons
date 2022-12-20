@@ -1,7 +1,7 @@
 import {LatLng, latLngBounds, LatLngBounds} from 'leaflet';
 import {MathUtils} from '@dps/mycms-commons/dist/commons/utils/math.utils';
 import {GeoElement} from './geo.parser';
-import {GeoUtils} from './geo.utils';
+import {GeoDateUtils} from './geodate.utils';
 
 export interface TrackStatistic {
     altAsc?: number;
@@ -57,8 +57,8 @@ export class TrackStatisticService  {
     public trackStatistics(ll: LatLng[]): TrackStatistic {
         const posStart: LatLng = (ll.length > 0 ? ll[0] : undefined);
         const posEnd: LatLng = (ll.length > 0 ? ll[ll.length - 1] : undefined);
-        const dateStart = GeoUtils.getLocalDateTimeForLatLng(posStart);
-        const dateEnd = GeoUtils.getLocalDateTimeForLatLng(posEnd);
+        const dateStart = GeoDateUtils.getLocalDateTimeForLatLng(posStart);
+        const dateEnd = GeoDateUtils.getLocalDateTimeForLatLng(posEnd);
         const t: TrackStatistic = {
             altAsc: undefined,
             altDesc: undefined,

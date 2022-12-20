@@ -1,6 +1,6 @@
 import { latLngBounds } from 'leaflet';
 import { MathUtils } from '@dps/mycms-commons/dist/commons/utils/math.utils';
-import { GeoUtils } from './geo.utils';
+import { GeoDateUtils } from './geodate.utils';
 var TrackStatisticService = /** @class */ (function () {
     function TrackStatisticService() {
     }
@@ -34,8 +34,8 @@ var TrackStatisticService = /** @class */ (function () {
     TrackStatisticService.prototype.trackStatistics = function (ll) {
         var posStart = (ll.length > 0 ? ll[0] : undefined);
         var posEnd = (ll.length > 0 ? ll[ll.length - 1] : undefined);
-        var dateStart = GeoUtils.getLocalDateTimeForLatLng(posStart);
-        var dateEnd = GeoUtils.getLocalDateTimeForLatLng(posEnd);
+        var dateStart = GeoDateUtils.getLocalDateTimeForLatLng(posStart);
+        var dateEnd = GeoDateUtils.getLocalDateTimeForLatLng(posEnd);
         var t = {
             altAsc: undefined,
             altDesc: undefined,
