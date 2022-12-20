@@ -1,4 +1,4 @@
-import {DataSet, Graph3d} from 'vis/index-graph3d';
+import {DataSet, Graph3d} from 'vis/dist/vis-graph3d.min';
 import {GeoLoader} from './geo.loader';
 import {GeoElement} from './geo.parser';
 
