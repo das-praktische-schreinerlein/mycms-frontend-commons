@@ -1,4 +1,4 @@
-import { DataSet, Graph3d } from 'vis';
+import { DataSet, Graph3d } from 'vis/index-graph3d';
 import { GeoLoader } from './geo.loader';
 import { GeoElement } from './geo.parser';
 export declare class VisJsGeoProfileMapPoint {

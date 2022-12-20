@@ -1,4 +1,4 @@
-import { DataSet, Graph3d } from 'vis';
+import { DataSet, Graph3d } from 'vis/index-graph3d';
 var VisJsGeoProfileMapPoint = /** @class */ (function () {
     function VisJsGeoProfileMapPoint(values) {
         this.x = values.x;
