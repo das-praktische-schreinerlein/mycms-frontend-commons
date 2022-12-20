@@ -16,11 +16,9 @@ import {GeoJsonParser} from '../../services/geojson.parser';
 import {GeoGpxParser} from '../../services/geogpx.parser';
 import {ComponentUtils} from '../../../angular-commons/services/component.utils';
 import {MinimalHttpBackendClient} from '@dps/mycms-commons/dist/commons/services/minimal-http-backend-client';
-
 import * as L from 'leaflet';
+import {LatLng, LatLngBounds, TileLayer, MarkerClusterGroup, markerClusterGroup, FeatureGroup} from 'leaflet';
 import {GeoElement, GeoElementType} from '../../services/geo.parser';
-import LatLng = L.LatLng;
-import LatLngBounds = L.LatLngBounds;
 
 export interface LeafletMapOptions {
     flgGenerateNameFromGpx: boolean;
@@ -40,7 +38,7 @@ export class LeafletMapComponent implements AfterViewChecked, OnChanges {
     // create the tile layer with correct attribution
     private osmUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
     private osmAttrib = 'Map data © <a href="https://openstreetmap.org">OpenStreetMap</a> contributors';
-    private osm = new L.TileLayer(this.osmUrl, {
+    private osm = new TileLayer(this.osmUrl, {
         minZoom: 1, maxZoom: 16,
         attribution: this.osmAttrib
     });
@@ -51,7 +49,7 @@ export class LeafletMapComponent implements AfterViewChecked, OnChanges {
     map: L.Map;
     mapHeight = '390px';
     flgfullScreen = false;
-    private featureGroup: L.MarkerClusterGroup;
+    private featureGroup: MarkerClusterGroup;
     private loadedMapElements: MapElement[];
     private noCoorElements: MapElement[];
     private bounds: LatLngBounds = undefined;
@@ -69,7 +67,7 @@ export class LeafletMapComponent implements AfterViewChecked, OnChanges {
     public centerOnMapElements: MapElement[] = undefined;
 
     @Input()
-    public center: L.LatLng;
+    public center: LatLng;
 
     @Input()
     public zoom: number;
@@ -78,7 +76,7 @@ export class LeafletMapComponent implements AfterViewChecked, OnChanges {
     public options: LeafletMapOptions;
 
     @Output()
-    public centerChanged: EventEmitter<L.LatLng> = new EventEmitter();
+    public centerChanged: EventEmitter<LatLng> = new EventEmitter();
 
     @Output()
     public mapCreated: EventEmitter<L.Map> = new EventEmitter();
@@ -149,7 +147,7 @@ export class LeafletMapComponent implements AfterViewChecked, OnChanges {
         const center = this.center || new LatLng(43, 16);
         this.map.setView(center, this.zoom);
         const me = this;
-        this.featureGroup = L.markerClusterGroup();
+        this.featureGroup = markerClusterGroup();
         this.featureGroup.addTo(this.map);
 
         for (let i = 0; i < this.mapElements.length; i++) {
@@ -185,7 +183,7 @@ export class LeafletMapComponent implements AfterViewChecked, OnChanges {
                     me.pushNoCoorMapElement(loadedMapElement);
                 });
                 geoFeature.on('loaded', function (e) {
-                    const loadedTrackFeature = <L.FeatureGroup>e.target;
+                    const loadedTrackFeature = <FeatureGroup>e.target;
                     const loadedMapElement = <MapElement>e['mapElement'];
                     me.featureGroup.addLayer(loadedTrackFeature);
                     loadedTrackFeature.on('click', function () {
@@ -209,7 +207,7 @@ export class LeafletMapComponent implements AfterViewChecked, OnChanges {
                 const prefix = (mapElement.code !== undefined ? mapElement.code + ' ' : '');
                 const geoElement = new GeoElement(GeoElementType.WAYPOINT, [mapElement.point],
                     mapElement.title || (prefix + mapElement.name));
-                const pointFeature: L.FeatureGroup = GeoParsedFeature.convertGeoElementsToLayers(mapElement, [geoElement], {
+                const pointFeature: FeatureGroup = GeoParsedFeature.convertGeoElementsToLayers(mapElement, [geoElement], {
                     async: true,
                     display_wpt: true,
                     editable: this.options.editable,

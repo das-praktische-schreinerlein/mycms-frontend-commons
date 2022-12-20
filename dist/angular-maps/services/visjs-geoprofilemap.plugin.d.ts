@@ -27,7 +27,9 @@ export declare class VisJsGeoProfileMap {
     private options;
     graph: Graph3d;
     constructor(dataSources: VisJsGeoProfileMapDataSource[], element: any, options: {});
-    _initialize(): void;
-    _addData(dataSources: VisJsGeoProfileMapDataSource[], element: any, options: any): Promise<void>;
-    _convertGeoElementsToDataSet(geoElements: GeoElement[], element: any, options: any): DataSet<any>;
+    protected initialize(): void;
+    protected _addData(dataSources: VisJsGeoProfileMapDataSource[], element: any, options: any): Promise<void>;
+    protected _convertGeoElementsToDataSet(geoElements: GeoElement[], element: any, options: any): DataSet<any>;
+    protected addData(dataSources: VisJsGeoProfileMapDataSource[], element: any, options: any): Promise<void>;
+    protected convertGeoElementsToDataSet(geoElements: GeoElement[], element: any, options: any): DataSet<any>;
 }

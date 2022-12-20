@@ -49,14 +49,22 @@ var VisJsGeoProfileMap = /** @class */ (function () {
         this.dataSources = dataSources;
         this.element = element;
         this.options = options;
-        this._initialize();
+        this.initialize();
     }
-    VisJsGeoProfileMap.prototype._initialize = function () {
+    VisJsGeoProfileMap.prototype.initialize = function () {
         if (this.dataSources) {
-            this._addData(this.dataSources, this.element, this.options);
+            this.addData(this.dataSources, this.element, this.options);
         }
     };
+    // TODO deprecated
     VisJsGeoProfileMap.prototype._addData = function (dataSources, element, options) {
+        return this.addData(dataSources, element, options);
+    };
+    // TODO deprecated
+    VisJsGeoProfileMap.prototype._convertGeoElementsToDataSet = function (geoElements, element, options) {
+        return this.convertGeoElementsToDataSet(geoElements, element, options);
+    };
+    VisJsGeoProfileMap.prototype.addData = function (dataSources, element, options) {
         var me = this;
         var promises = [];
         for (var _i = 0, dataSources_1 = dataSources; _i < dataSources_1.length; _i++) {
@@ -79,21 +87,24 @@ var VisJsGeoProfileMap = /** @class */ (function () {
             if (allGeoElements.length <= 0) {
                 return;
             }
-            var layers = me._convertGeoElementsToDataSet(allGeoElements, element, options);
+            var layers = me.convertGeoElementsToDataSet(allGeoElements, element, options);
             if (layers !== undefined) {
                 me.graph = new Graph3d(element, layers, options);
+            }
+            else {
+                console.log('SKIPPED visjs-profilemap: no Dataset');
             }
         }).catch(function onError(error) {
             console.error('failed to load gpx for VisJsGeoProfileMap:', error);
         });
     };
-    VisJsGeoProfileMap.prototype._convertGeoElementsToDataSet = function (geoElements, element, options) {
-        var data = new DataSet();
+    VisJsGeoProfileMap.prototype.convertGeoElementsToDataSet = function (geoElements, element, options) {
         if (!geoElements) {
-            return data;
+            return undefined;
         }
         var counter = 0;
         var style = 0;
+        var points = [];
         for (var i = 0; i < geoElements.length; i++) {
             var geoElement = geoElements[i];
             if (geoElement === undefined || geoElement.points === undefined) {
@@ -102,17 +113,25 @@ var VisJsGeoProfileMap = /** @class */ (function () {
             for (var p = 0; p < geoElement.points.length; p++) {
                 var point = geoElement.points[p];
                 if (point.lat && point.lng && point.alt !== undefined) {
-                    data.add(new VisJsGeoProfileMapPoint({
+                    points.push(new VisJsGeoProfileMapPoint({
                         id: counter++,
-                        x: point.lng,
-                        y: point.lat,
-                        z: point.alt,
+                        x: Number(point.lng),
+                        y: Number(point.lat),
+                        z: Number(point.alt),
                         style: style
                     }));
+                }
+                else {
+                    // console.trace('SKIPPED visjs-profilemap poin: no values', point);
                 }
             }
             style = style + 1;
         }
+        if (points.length < 1) {
+            return undefined;
+        }
+        var data = new DataSet();
+        points.map(function (value) { return data.add(value); });
         return data;
     };
     return VisJsGeoProfileMap;

@@ -1,28 +1,20 @@
-import { LogUtils } from '@dps/mycms-commons/dist/commons/utils/log.utils';
-var GeoLoader = /** @class */ (function () {
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+import { CommonGeoLoader } from '@dps/mycms-commons/dist/geo-commons/services/geo.loader';
+var GeoLoader = /** @class */ (function (_super) {
+    __extends(GeoLoader, _super);
     function GeoLoader(http, parser) {
-        this.http = http;
-        this.parser = parser;
+        return _super.call(this, http, parser) || this;
     }
-    GeoLoader.prototype.loadDataFromUrl = function (url, options) {
-        var me = this;
-        return new Promise(function (resolve, reject) {
-            me.http.makeHttpRequest({ method: 'get', url: url, withCredentials: true })
-                .then(function onLoaded(res) {
-                return resolve(me.parser.parse(res.text(), options));
-            }).catch(function onError(error) {
-                console.error('loading geofeature failed:' + LogUtils.sanitizeLogMsg(url), error);
-                return reject(error);
-            });
-        });
-    };
-    GeoLoader.prototype.loadData = function (src, options) {
-        var _this = this;
-        return new Promise(function (resolve) {
-            return resolve(_this.parser.parse(src, options));
-        });
-    };
     return GeoLoader;
-}());
+}(CommonGeoLoader));
 export { GeoLoader };
 //# sourceMappingURL=geo.loader.js.map

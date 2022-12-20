@@ -9,7 +9,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 import { GeoElementType } from './geo.parser';
-import * as L from 'leaflet';
+import { Marker, DivIcon, FeatureGroup, Polygon, Polyline, Util } from 'leaflet';
 import 'leaflet.markercluster';
 import 'leaflet-editable-polyline';
 var GeoParsedFeature = /** @class */ (function (_super) {
@@ -37,10 +37,10 @@ var GeoParsedFeature = /** @class */ (function (_super) {
             switch (geoElement.type) { // NOSONAR: for later extends
                 case GeoElementType.WAYPOINT:
                     var point = void 0;
-                    point = new L.Marker(geoElement.points[0], {
+                    point = new Marker(geoElement.points[0], {
                         title: gpxElement.title || (prefix + gpxElement.type + ': ' + gpxElement.name),
                         icon: gpxElement.iconStart
-                            || new L.DivIcon({ className: 'leaflet-div-icon-point', html: '&#128204;' + prefix + gpxElement.name })
+                            || new DivIcon({ className: 'leaflet-div-icon-point', html: '&#128204;' + prefix + gpxElement.name })
                     });
                     layers.push(point);
                     break;
@@ -57,20 +57,20 @@ var GeoParsedFeature = /** @class */ (function (_super) {
                     var element = void 0;
                     if (options.editable) {
                         lineOptions['pointIcon'] = gpxElement.iconPolylineEditor
-                            || new L.DivIcon({ className: 'leaflet-div-icon-editorpoint', html: '&#128204;' });
+                            || new DivIcon({ className: 'leaflet-div-icon-editorpoint', html: '&#128204;' });
                         lineOptions['newPointIcon'] = gpxElement.iconPolylineEditor
-                            || new L.DivIcon({ className: 'leaflet-div-icon-neweditorpoint', html: '+' });
+                            || new DivIcon({ className: 'leaflet-div-icon-neweditorpoint', html: '+' });
                         lineOptions['newPolylines'] = true;
                         // @ts-ignore
-                        element = L.Polyline.PolylineEditor(geoElement.points, lineOptions);
+                        element = Polyline.PolylineEditor(geoElement.points, lineOptions);
                     }
                     else {
                         if (geoElement.type === GeoElementType.AREA) {
-                            element = new L.Polygon(geoElement.points, lineOptions);
+                            element = new Polygon(geoElement.points, lineOptions);
                             lineOptions['fillOpacity'] = 0.1;
                         }
                         else {
-                            element = new L.Polyline(geoElement.points, lineOptions);
+                            element = new Polyline(geoElement.points, lineOptions);
                         }
                     }
                     if (gpxElement.popupContent) {
@@ -79,26 +79,26 @@ var GeoParsedFeature = /** @class */ (function (_super) {
                     layers.push(element);
                     if (geoElement.type === GeoElementType.AREA) {
                         if (options['showAreaMarker']) {
-                            layers.push(new L.Marker(geoElement.points[0], {
+                            layers.push(new Marker(geoElement.points[0], {
                                 title: gpxElement.title || (prefix + 'Area: ' + gpxElement.name),
                                 icon: gpxElement.iconStart ||
-                                    new L.DivIcon({ className: 'leaflet-div-icon-area', html: '&#128506;' + prefix + gpxElement.name })
+                                    new DivIcon({ className: 'leaflet-div-icon-area', html: '&#128506;' + prefix + gpxElement.name })
                             }));
                         }
                     }
                     else {
                         if (options['showStartMarker']) {
-                            layers.push(new L.Marker(geoElement.points[0], {
+                            layers.push(new Marker(geoElement.points[0], {
                                 title: gpxElement.title || (prefix + 'Start: ' + gpxElement.name),
                                 icon: gpxElement.iconStart ||
-                                    new L.DivIcon({ className: 'leaflet-div-icon-start', html: '&#128204;' + prefix + 'S:' + gpxElement.name })
+                                    new DivIcon({ className: 'leaflet-div-icon-start', html: '&#128204;' + prefix + 'S:' + gpxElement.name })
                             }));
                         }
                         if (options['showEndMarker']) {
-                            layers.push(new L.Marker(geoElement.points[geoElement.points.length - 1], {
+                            layers.push(new Marker(geoElement.points[geoElement.points.length - 1], {
                                 title: gpxElement.title || (prefix + 'End: ' + gpxElement.name),
                                 icon: gpxElement.iconEnd ||
-                                    new L.DivIcon({ className: 'leaflet-div-icon-end', html: '&#128205;' + prefix + 'E:' + gpxElement.name })
+                                    new DivIcon({ className: 'leaflet-div-icon-end', html: '&#128205;' + prefix + 'E:' + gpxElement.name })
                             }));
                         }
                     }
@@ -108,11 +108,11 @@ var GeoParsedFeature = /** @class */ (function (_super) {
         if (!layers.length) {
             return;
         }
-        return new L.FeatureGroup(layers);
+        return new FeatureGroup(layers);
     };
     GeoParsedFeature.prototype.initialize = function (geoLoader, geoElement, options) {
         this.geoLoader = geoLoader;
-        L.Util.setOptions(this, options);
+        Util.setOptions(this, options);
         this._layers = {};
         if (geoElement) {
             this.addGeoData(geoElement, options);
@@ -143,6 +143,6 @@ var GeoParsedFeature = /** @class */ (function (_super) {
         });
     };
     return GeoParsedFeature;
-}(L.FeatureGroup));
+}(FeatureGroup));
 export { GeoParsedFeature };
 //# sourceMappingURL=leaflet-geo.plugin.js.map

@@ -1,4 +1,4 @@
-import { LatLng } from 'leaflet';
+import { LatLng, LatLngBounds } from 'leaflet';
 import { GeoElement } from './geo.parser';
 export interface TrackStatistic {
     altAsc?: number;
@@ -12,9 +12,9 @@ export interface TrackStatistic {
     altAvg?: number;
     altStart?: number;
     altEnd?: number;
-    bounds: L.LatLngBounds;
-    posStart: L.LatLng;
-    posEnd: L.LatLng;
+    bounds: LatLngBounds;
+    posStart: LatLng;
+    posEnd: LatLng;
     dateStart: Date;
     dateEnd: Date;
     duration: number;

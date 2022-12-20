@@ -8,37 +8,20 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-import * as L from 'leaflet';
-import { GeoElement, GeoElementType, GeoParser, LatLngTime } from './geo.parser';
-import { DateUtils } from '@dps/mycms-commons/dist/commons/utils/date.utils';
+import { AbstractGeoJsonParser } from '@dps/mycms-commons/dist/geo-commons/services/geojson.parser';
+import { GeoUtils } from './geo.utils';
 var GeoJsonParser = /** @class */ (function (_super) {
     __extends(GeoJsonParser, _super);
     function GeoJsonParser() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
-    GeoJsonParser.prototype.parse = function (json, options) {
-        var obj = typeof json === 'string' ? JSON.parse(json) : json;
-        var elements = this._parseJsonObj(obj, options);
-        if (!elements) {
-            return;
-        }
-        return elements;
+    GeoJsonParser.prototype.createLatLng = function (lat, lng, alt, time) {
+        return GeoUtils.createLatLng(lat, lng, alt, time);
     };
-    GeoJsonParser.prototype._parseJsonObj = function (obj, options) {
-        var j;
-        var coords = [];
-        for (j = 0; j < obj['track']['records'].length; j++) {
-            var record = obj['track']['records'][j];
-            if (record.length > 2) {
-                coords.push(new LatLngTime(record[0], record[1], record[2], DateUtils.parseDate(record[3])));
-            }
-            else {
-                coords.push(new L.LatLng(record[0], record[1], record[2]));
-            }
-        }
-        return [new GeoElement(GeoElementType.TRACK, coords, obj['track']['tName'])];
+    GeoJsonParser.prototype.createGeoElement = function (type, points, name) {
+        return GeoUtils.createGeoElement(type, points, name);
     };
     return GeoJsonParser;
-}(GeoParser));
+}(AbstractGeoJsonParser));
 export { GeoJsonParser };
 //# sourceMappingURL=geojson.parser.js.map

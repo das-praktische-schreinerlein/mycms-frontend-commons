@@ -3,7 +3,7 @@
  */
 import { GeoLoader } from './geo.loader';
 import { GeoElement } from './geo.parser';
-import * as L from 'leaflet';
+import { LatLng, DivIcon, Icon, Layer, FeatureGroup } from 'leaflet';
 import 'leaflet.markercluster';
 import 'leaflet-editable-polyline';
 export interface MapElement {
@@ -14,19 +14,19 @@ export interface MapElement {
     popupContent: string;
     trackUrl?: string;
     trackSrc?: string;
-    point?: L.LatLng;
+    point?: LatLng;
     type?: string;
     title?: string;
-    iconStart?: L.DivIcon;
-    iconPolylineEditor?: L.Icon;
-    iconEnd?: L.DivIcon;
-    featureLayer?: L.Layer;
+    iconStart?: DivIcon;
+    iconPolylineEditor?: Icon;
+    iconEnd?: DivIcon;
+    featureLayer?: Layer;
 }
-export declare class GeoParsedFeature extends L.FeatureGroup {
+export declare class GeoParsedFeature extends FeatureGroup {
     options: any;
     _layers: {};
     geoLoader: GeoLoader;
-    static convertGeoElementsToLayers(gpxElement: MapElement, geoElements: GeoElement[], options: any): L.FeatureGroup;
+    static convertGeoElementsToLayers(gpxElement: MapElement, geoElements: GeoElement[], options: any): FeatureGroup;
     constructor(geoLoader: GeoLoader, geoElement: MapElement, options: {});
     initialize(geoLoader: GeoLoader, geoElement: MapElement, options: {}): void;
     addGeoData(mapElement: MapElement, options: any): void;

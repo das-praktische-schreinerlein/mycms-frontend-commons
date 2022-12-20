@@ -83,11 +83,12 @@ export class VisJsProfileMapComponent implements AfterViewChecked, OnChanges {
                 loader = this.jsonLoader;
             } else if ((trackUrl !== undefined && trackUrl.endsWith('.gpx'))
                 || (trackSrc !== undefined && trackSrc !== null
-                    && (trackSrc.indexOf('<trkpt') >= 0 || trackSrc.indexOf('<rpt') >= 0))) {
+                    && (trackSrc.indexOf('<trkpt') >= 0 || trackSrc.indexOf('<rtept') >= 0))) {
                 loader = this.gpxLoader;
             } else {
                 loader = this.jsonLoader;
             }
+
             dataSources.push({ geoLoader: loader, url: trackUrl, src: trackSrc});
         }
 

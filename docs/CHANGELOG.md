@@ -6,15 +6,19 @@
 - bumped version up to be in sync with mycms-server-commons, mycms-commons
 - fixed components if there are no facets
 - added query-params to SearchFormResolver
+- moved common geo-functionality to commons/geo-commons
+- fixed visjs for routes
 
 ### new features
 - none
 
 ### improvements
 - frontend: added query-params to SearchFormResolver
+- frontend: moved common geo-functionality to commons/geo-commons
 
 ### bug fixes
 - frontend: fixed components if there are no facets
+- frontend: fixed visjs for routes
 
 ### breaking changes
 - none

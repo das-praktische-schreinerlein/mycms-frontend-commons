@@ -1,4 +1,4 @@
-import {LatLng, latLngBounds} from 'leaflet';
+import {LatLng, latLngBounds, LatLngBounds} from 'leaflet';
 import {MathUtils} from '@dps/mycms-commons/dist/commons/utils/math.utils';
 import {GeoElement} from './geo.parser';
 import {GeoUtils} from './geo.utils';
@@ -15,9 +15,9 @@ export interface TrackStatistic {
     altAvg?: number;
     altStart?: number;
     altEnd?: number;
-    bounds: L.LatLngBounds;
-    posStart: L.LatLng;
-    posEnd: L.LatLng;
+    bounds: LatLngBounds;
+    posStart: LatLng;
+    posEnd: LatLng;
     dateStart: Date;
     dateEnd: Date;
     duration: number;

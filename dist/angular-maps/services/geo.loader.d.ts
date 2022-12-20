@@ -1,9 +1,6 @@
-import { GeoElement, GeoParser } from './geo.parser';
+import { GeoParser } from './geo.parser';
 import { MinimalHttpBackendClient } from '@dps/mycms-commons/dist/commons/services/minimal-http-backend-client';
-export declare class GeoLoader {
-    private http;
-    private parser;
+import { CommonGeoLoader } from '@dps/mycms-commons/dist/geo-commons/services/geo.loader';
+export declare class GeoLoader extends CommonGeoLoader {
     constructor(http: MinimalHttpBackendClient, parser: GeoParser);
-    loadDataFromUrl(url: string, options: any): Promise<GeoElement[]>;
-    loadData(src: string, options: any): Promise<GeoElement[]>;
 }

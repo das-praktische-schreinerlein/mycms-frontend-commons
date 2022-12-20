@@ -17,15 +17,15 @@ import { GeoGpxParser } from '../../services/geogpx.parser';
 import { ComponentUtils } from '../../../angular-commons/services/component.utils';
 import { MinimalHttpBackendClient } from '@dps/mycms-commons/dist/commons/services/minimal-http-backend-client';
 import * as L from 'leaflet';
+import { LatLng, TileLayer, markerClusterGroup } from 'leaflet';
 import { GeoElement, GeoElementType } from '../../services/geo.parser';
-var LatLng = L.LatLng;
 var LeafletMapComponent = /** @class */ (function () {
     function LeafletMapComponent(http) {
         this.http = http;
         // create the tile layer with correct attribution
         this.osmUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
         this.osmAttrib = 'Map data © <a href="https://openstreetmap.org">OpenStreetMap</a> contributors';
-        this.osm = new L.TileLayer(this.osmUrl, {
+        this.osm = new TileLayer(this.osmUrl, {
             minZoom: 1, maxZoom: 16,
             attribution: this.osmAttrib
         });
@@ -86,7 +86,7 @@ var LeafletMapComponent = /** @class */ (function () {
         var center = this.center || new LatLng(43, 16);
         this.map.setView(center, this.zoom);
         var me = this;
-        this.featureGroup = L.markerClusterGroup();
+        this.featureGroup = markerClusterGroup();
         this.featureGroup.addTo(this.map);
         var _loop_1 = function (i) {
             var mapElement = this_1.mapElements[i];
@@ -220,7 +220,7 @@ var LeafletMapComponent = /** @class */ (function () {
     ], LeafletMapComponent.prototype, "centerOnMapElements", void 0);
     __decorate([
         Input(),
-        __metadata("design:type", L.LatLng)
+        __metadata("design:type", LatLng)
     ], LeafletMapComponent.prototype, "center", void 0);
     __decorate([
         Input(),

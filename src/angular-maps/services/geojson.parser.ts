@@ -1,33 +1,15 @@
-import * as L from 'leaflet';
+import {LatLng} from 'leaflet';
 import {GeoElement, GeoElementType, GeoParser, LatLngTime} from './geo.parser';
-import {DateUtils} from '@dps/mycms-commons/dist/commons/utils/date.utils';
+import {AbstractGeoJsonParser} from '@dps/mycms-commons/dist/geo-commons/services/geojson.parser';
+import {GeoUtils} from './geo.utils';
 
-export class GeoJsonParser extends GeoParser {
-    parse(json: string, options): GeoElement[] {
-        const obj = typeof json === 'string' ? JSON.parse(json) : json;
-
-        const elements = this._parseJsonObj(obj, options);
-        if (!elements) {
-            return;
-        }
-
-        return elements;
+export class GeoJsonParser extends AbstractGeoJsonParser<LatLng> implements GeoParser {
+    protected createLatLng(lat: string | number, lng: string | number, alt?: number, time?: Date): LatLng {
+        return GeoUtils.createLatLng(lat, lng, alt, time);
     }
 
-    _parseJsonObj(obj, options): GeoElement[] {
-        let j;
-        const coords = [];
-
-        for (j = 0; j < obj['track']['records'].length; j++) {
-            const record = obj['track']['records'][j];
-            if (record.length > 2) {
-                coords.push(new LatLngTime(record[0], record[1], record[2], DateUtils.parseDate(record[3])));
-            } else {
-                coords.push(new L.LatLng(record[0], record[1], record[2]));
-            }
-        }
-
-        return [new GeoElement(GeoElementType.TRACK, coords, obj['track']['tName'])];
+    protected createGeoElement(type: GeoElementType, points: LatLng[], name: string): GeoElement {
+        return GeoUtils.createGeoElement(type, points, name);
     }
 
 }

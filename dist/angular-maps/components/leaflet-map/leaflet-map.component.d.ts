@@ -4,6 +4,7 @@ import 'leaflet.markercluster';
 import { MapElement } from '../../services/leaflet-geo.plugin';
 import { MinimalHttpBackendClient } from '@dps/mycms-commons/dist/commons/services/minimal-http-backend-client';
 import * as L from 'leaflet';
+import { LatLng } from 'leaflet';
 export interface LeafletMapOptions {
     flgGenerateNameFromGpx: boolean;
     showAreaMarker: boolean;
@@ -30,10 +31,10 @@ export declare class LeafletMapComponent implements AfterViewChecked, OnChanges 
     height: string;
     mapElements: MapElement[];
     centerOnMapElements: MapElement[];
-    center: L.LatLng;
+    center: LatLng;
     zoom: number;
     options: LeafletMapOptions;
-    centerChanged: EventEmitter<L.LatLng>;
+    centerChanged: EventEmitter<LatLng>;
     mapCreated: EventEmitter<L.Map>;
     mapElementClicked: EventEmitter<MapElement>;
     mapElementsLoaded: EventEmitter<MapElement[]>;

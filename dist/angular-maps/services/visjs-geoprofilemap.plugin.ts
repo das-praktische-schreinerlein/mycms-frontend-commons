@@ -59,16 +59,26 @@ Object.defineProperty(Graph3d.prototype, '_redrawBarSizeGraphPoint', { value: fu
 export class VisJsGeoProfileMap {
     graph: Graph3d;
     constructor(private dataSources: VisJsGeoProfileMapDataSource[], private element: any, private options: {}) {
-        this._initialize();
+        this.initialize();
     }
 
-    _initialize() {
+    protected initialize() {
         if (this.dataSources) {
-            this._addData(this.dataSources, this.element, this.options);
+            this.addData(this.dataSources, this.element, this.options);
         }
     }
 
-    _addData(dataSources: VisJsGeoProfileMapDataSource[], element, options) {
+    // TODO deprecated
+    protected _addData(dataSources: VisJsGeoProfileMapDataSource[], element, options) {
+        return this.addData(dataSources, element, options);
+    }
+
+    // TODO deprecated
+    protected _convertGeoElementsToDataSet(geoElements: GeoElement[], element, options): DataSet<any> {
+        return this.convertGeoElementsToDataSet(geoElements, element, options);
+    }
+
+    protected addData(dataSources: VisJsGeoProfileMapDataSource[], element, options) {
         const me = this;
         const promises: Promise<GeoElement[]>[] = [];
         for (const dataSource of dataSources) {
@@ -78,8 +88,10 @@ export class VisJsGeoProfileMap {
             } else {
                 promise = dataSource.geoLoader.loadDataFromUrl(dataSource.url, options);
             }
+
             promises.push(promise);
         }
+
         return Promise.all(promises).then(function onLoaded(arrGeoElements: GeoElement[][]) {
             let allGeoElements: GeoElement[] = [];
             for (const geoElements of arrGeoElements) {
@@ -89,23 +101,25 @@ export class VisJsGeoProfileMap {
                 return;
             }
 
-            const layers = me._convertGeoElementsToDataSet(allGeoElements, element, options);
+            const layers = me.convertGeoElementsToDataSet(allGeoElements, element, options);
             if (layers !== undefined) {
                 me.graph = new Graph3d(element, layers, options);
+            } else {
+                console.log('SKIPPED visjs-profilemap: no Dataset');
             }
         }).catch(function onError(error) {
             console.error('failed to load gpx for VisJsGeoProfileMap:', error);
         });
     }
 
-    _convertGeoElementsToDataSet(geoElements: GeoElement[], element, options): DataSet<any> {
-        const data = new DataSet<any>();
+    protected convertGeoElementsToDataSet(geoElements: GeoElement[], element, options): DataSet<any> {
         if (!geoElements) {
-            return data;
+            return undefined;
         }
 
         let counter = 0;
         let style = 0;
+        const points: VisJsGeoProfileMapPoint[] = [];
         for (let i = 0; i < geoElements.length; i++) {
             const geoElement = geoElements[i];
             if (geoElement === undefined || geoElement.points === undefined) {
@@ -115,17 +129,26 @@ export class VisJsGeoProfileMap {
             for (let p = 0; p < geoElement.points.length; p++) {
                 const point = geoElement.points[p];
                 if (point.lat && point.lng && point.alt !== undefined) {
-                    data.add(new VisJsGeoProfileMapPoint({
+                    points.push(new VisJsGeoProfileMapPoint({
                         id: counter++,
-                        x: point.lng,
-                        y: point.lat,
-                        z: point.alt,
+                        x: Number(point.lng),
+                        y: Number(point.lat),
+                        z: Number(point.alt),
                         style: style
                     }));
+                } else {
+                    // console.trace('SKIPPED visjs-profilemap poin: no values', point);
                 }
             }
             style = style + 1;
         }
+
+        if (points.length < 1) {
+            return undefined;
+        }
+
+        const data = new DataSet<any>();
+        points.map(value => data.add(value));
 
         return data;
     }

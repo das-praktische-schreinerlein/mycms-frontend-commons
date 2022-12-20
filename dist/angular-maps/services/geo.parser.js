@@ -8,15 +8,9 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-import * as L from 'leaflet';
-var LatLng = L.LatLng;
-export var GeoElementType;
-(function (GeoElementType) {
-    GeoElementType[GeoElementType["TRACK"] = 0] = "TRACK";
-    GeoElementType[GeoElementType["ROUTE"] = 1] = "ROUTE";
-    GeoElementType[GeoElementType["WAYPOINT"] = 2] = "WAYPOINT";
-    GeoElementType[GeoElementType["AREA"] = 3] = "AREA";
-})(GeoElementType || (GeoElementType = {}));
+import { LatLng } from 'leaflet';
+import { GeoElementType } from '@dps/mycms-commons/dist/geo-commons/model/geoElementTypes';
+export { GeoElementType as GeoElementType };
 var LatLngTime = /** @class */ (function (_super) {
     __extends(LatLngTime, _super);
     function LatLngTime(latitude, longitude, altitude, time) {
@@ -37,28 +31,4 @@ var GeoElement = /** @class */ (function () {
     return GeoElement;
 }());
 export { GeoElement };
-var GeoParser = /** @class */ (function () {
-    function GeoParser() {
-    }
-    GeoParser.prototype._humanLen = function (l) {
-        if (l < 2000) {
-            return l.toFixed(0) + ' m';
-        }
-        else {
-            return (l / 1000).toFixed(1) + ' km';
-        }
-    };
-    GeoParser.prototype._polylineLen = function (ll) {
-        var d = 0, p = null;
-        for (var i = 0; i < ll.length; i++) {
-            if (i && p) {
-                d += p.distanceTo(ll[i]);
-            }
-            p = ll[i];
-        }
-        return d;
-    };
-    return GeoParser;
-}());
-export { GeoParser };
 //# sourceMappingURL=geo.parser.js.map
