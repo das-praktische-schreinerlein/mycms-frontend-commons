@@ -3,7 +3,6 @@ import {SectionsRoutingModule} from './sections-routing.module';
 import {SectionsBaseUrlResolver} from '../frontend-cdoc-commons/resolver/sections-baseurl.resolver';
 import {SectionsPDocRecordResolver} from '../frontend-cdoc-commons/resolver/sections-pdoc-details.resolver';
 import {BrowserModule} from '@angular/platform-browser';
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {SectionsPDocsResolver} from '../frontend-cdoc-commons/resolver/sections-pdocs.resolver';
 import {ErrorResolver} from '../frontend-cdoc-commons/resolver/error.resolver';
@@ -21,7 +20,6 @@ import {FrontendCommonDocCommonsModule} from '../frontend-cdoc-commons/frontend-
     ],
     imports: [
         TranslateModule,
-        NgbModule.forRoot(),
         NgxMdModule.forRoot(),
         BrowserModule,
         FormsModule,

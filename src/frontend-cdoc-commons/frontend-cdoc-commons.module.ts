@@ -14,17 +14,21 @@ import {CommonDocListItemComponent} from './components/cdoc-list-item/cdoc-list-
 import {AngularCommonsModule} from '../angular-commons/angular-commons.module';
 import {TranslateModule} from '@ngx-translate/core';
 import {MultiselectDropdownModule} from 'angular-2-dropdown-multiselect';
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import {NgbModalModule, NgbPaginationModule} from '@ng-bootstrap/ng-bootstrap';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {CommonDocListComponent} from './components/cdoc-list/cdoc-list.component';
 import {CommonDocAudioplayerComponent} from './components/cdoc-audioplayer/cdoc-audioplayer.component';
 import {CommonDocActionTagsComponent} from './components/cdoc-actiontags/cdoc-actiontags.component';
 import {FileDropModule} from 'ngx-file-drop';
 import {CommonDocInitialtableComponent} from './components/cdoc-initialtable/cdoc-initialtable.component';
-import {CommonDocODObjectRectanglesComponent} from './components/cdoc-odobjectrectangles/cdoc-odobjectrectangles.component';
+import {
+    CommonDocODObjectRectanglesComponent
+} from './components/cdoc-odobjectrectangles/cdoc-odobjectrectangles.component';
 import {CommonDocODObjectDetailsComponent} from './components/cdoc-odobjectdetails/cdoc-odobjectdetails.component';
 import {CommonDocObjectNavigationComponent} from './components/cdoc-object-navigation/cdoc-object-navigation.component';
-import {CommonDocExtendedObjectPropertiesComponent} from './components/cdoc-extended-object-properties/cdoc-extended-object-properties.component';
+import {
+    CommonDocExtendedObjectPropertiesComponent
+} from './components/cdoc-extended-object-properties/cdoc-extended-object-properties.component';
 
 @NgModule({
     declarations: [
@@ -49,7 +53,8 @@ import {CommonDocExtendedObjectPropertiesComponent} from './components/cdoc-exte
         CommonDocExtendedObjectPropertiesComponent
     ],
     imports: [
-        NgbModule,
+        NgbPaginationModule,
+        NgbModalModule,
         MultiselectDropdownModule,
         TranslateModule,
         BrowserAnimationsModule,

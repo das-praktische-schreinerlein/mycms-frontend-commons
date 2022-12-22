@@ -20,7 +20,7 @@ import { CommonDocListItemComponent } from './components/cdoc-list-item/cdoc-lis
 import { AngularCommonsModule } from '../angular-commons/angular-commons.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { MultiselectDropdownModule } from 'angular-2-dropdown-multiselect';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModalModule, NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CommonDocListComponent } from './components/cdoc-list/cdoc-list.component';
 import { CommonDocAudioplayerComponent } from './components/cdoc-audioplayer/cdoc-audioplayer.component';
@@ -58,7 +58,8 @@ var FrontendCommonDocCommonsModule = /** @class */ (function () {
                 CommonDocExtendedObjectPropertiesComponent
             ],
             imports: [
-                NgbModule,
+                NgbPaginationModule,
+                NgbModalModule,
                 MultiselectDropdownModule,
                 TranslateModule,
                 BrowserAnimationsModule,

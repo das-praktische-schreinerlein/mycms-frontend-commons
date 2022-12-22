@@ -8,6 +8,7 @@
 - added query-params to SearchFormResolver
 - moved common geo-functionality to commons/geo-commons
 - fixed visjs for routes
+- improved imports for bootstrap-modules
 
 ### new features
 - none
@@ -15,6 +16,7 @@
 ### improvements
 - frontend: added query-params to SearchFormResolver
 - frontend: moved common geo-functionality to commons/geo-commons
+- frontend: improved imports for bootstrap-modules
 
 ### bug fixes
 - frontend: fixed components if there are no facets

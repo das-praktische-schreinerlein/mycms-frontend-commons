@@ -1,7 +1,6 @@
 /* tslint:disable:no-unused-variable */
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {NO_ERRORS_SCHEMA} from '@angular/core';
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {TranslateModule} from '@ngx-translate/core';
 import {CommonDocODObjectDetailsComponent} from './cdoc-odobjectdetails.component';
 import {GenericAppService} from '@dps/mycms-commons/dist/commons/services/generic-app.service';
@@ -15,7 +14,7 @@ describe('CommonDocODObjectDetailsComponent', () => {
         TestBed.configureTestingModule({
             declarations: [CommonDocODObjectDetailsComponent],
             schemas: [NO_ERRORS_SCHEMA],
-            imports: [NgbModule.forRoot(),
+            imports: [
                 TranslateModule.forRoot()],
             providers: [
                 { provide: GenericAppService, useValue: new AppServiceStub() }

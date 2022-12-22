@@ -6,7 +6,6 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { LeafletMapComponent } from './components/leaflet-map/leaflet-map.component';
 import { VisJsProfileMapComponent } from './components/visjs-profilemap/visjs-profilemap.component';
 var AngularMapsModule = /** @class */ (function () {
@@ -19,7 +18,6 @@ var AngularMapsModule = /** @class */ (function () {
                 VisJsProfileMapComponent
             ],
             imports: [
-                NgbModule,
                 HttpClientModule
             ],
             providers: [],

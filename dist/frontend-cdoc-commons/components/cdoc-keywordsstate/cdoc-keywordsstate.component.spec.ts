@@ -2,7 +2,6 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {NO_ERRORS_SCHEMA} from '@angular/core';
 import {CommonDocKeywordsStateComponent} from './cdoc-keywordsstate.component';
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {TranslateModule} from '@ngx-translate/core';
 import {CommonDocContentUtils} from '../../services/cdoc-contentutils.service';
 import {GenericAppService} from '@dps/mycms-commons/dist/commons/services/generic-app.service';
@@ -27,7 +26,7 @@ describe('CommonDocKeywordsStateComponent', () => {
                 CommonDocContentUtils,
                 { provide: GenericAppService, useValue: new AppServiceStub() }
             ],
-            imports: [NgbModule.forRoot(),
+            imports: [
                 TranslateModule.forRoot()]
         })
             .compileComponents();

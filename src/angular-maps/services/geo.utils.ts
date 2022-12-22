@@ -1,5 +1,4 @@
 import {LatLng} from 'leaflet';
-import * as tzlookup from 'tz-lookup/tz';
 import {GeoElement, GeoElementType, LatLngTime} from './geo.parser';
 
 export class GeoUtils  {

@@ -9,7 +9,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AngularCommonsModule } from '../angular-commons/angular-commons.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { MultiselectDropdownModule } from 'angular-2-dropdown-multiselect';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PDocListItemFlatComponent } from './components/pdoc-list-item-flat/pdoc-list-item-flat.component';
 import { PDocListComponent } from './components/pdoc-list/pdoc-list.component';
@@ -18,7 +17,7 @@ import { SectionBarComponent } from './components/sectionbar/sectionbar.componen
 import { SectionComponent } from './components/section/section.component';
 import { RouterModule } from '@angular/router';
 import { SectionPageComponent } from './components/sectionpage/section-page.component';
-import { AdminJobAreaComponent } from "./components/admin-jobarea/admin-jobarea.component";
+import { AdminJobAreaComponent } from './components/admin-jobarea/admin-jobarea.component';
 var FrontendPDocCommonsModule = /** @class */ (function () {
     function FrontendPDocCommonsModule() {
     }
@@ -34,7 +33,6 @@ var FrontendPDocCommonsModule = /** @class */ (function () {
                 SectionPageComponent
             ],
             imports: [
-                NgbModule,
                 MultiselectDropdownModule,
                 TranslateModule,
                 RouterModule,
