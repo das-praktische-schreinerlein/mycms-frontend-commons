@@ -1,30 +1,9 @@
 import { LatLng, LatLngBounds } from 'leaflet';
-import { GeoElement } from './geo.parser';
-export interface TrackStatistic {
-    altAsc?: number;
-    altDesc?: number;
-    dist: number;
-    velocity?: number;
-    altAscVelocity?: number;
-    altDescVelocity?: number;
-    altMin?: number;
-    altMax?: number;
-    altAvg?: number;
-    altStart?: number;
-    altEnd?: number;
-    bounds: LatLngBounds;
-    posStart: LatLng;
-    posEnd: LatLng;
-    dateStart: Date;
-    dateEnd: Date;
-    duration: number;
+import { TrackStatisticBase } from '@dps/mycms-commons/dist/geo-commons/model/geoElementTypes';
+import { AbstractTrackStatisticService } from '@dps/mycms-commons/dist/geo-commons/services/track-statistic.service';
+export interface TrackStatistic extends TrackStatisticBase<LatLng, LatLngBounds> {
 }
-export declare class TrackStatisticService {
-    emptyStatistic(): TrackStatistic;
-    trackStatisticsForGeoElement(geoElement: GeoElement): TrackStatistic;
-    trackStatistics(ll: LatLng[]): TrackStatistic;
-    mergeStatistics(param1: TrackStatistic, param2: TrackStatistic): TrackStatistic;
-    formatMToKm(l: number): number;
-    formatM(l: number): number;
-    formatMillisToHH24(l: number): number;
+export declare class TrackStatisticService extends AbstractTrackStatisticService<LatLng, LatLngBounds> {
+    protected getLocalDateTimeForLatLng(position: LatLng): Date;
+    protected getLatLngBounds(coords: LatLng[]): LatLngBounds;
 }
