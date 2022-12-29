@@ -47,6 +47,9 @@ var GeoGpxParser = /** @class */ (function (_super) {
     GeoGpxParser.prototype.createGeoElement = function (type, points, name) {
         return GeoUtils.createGeoElement(type, points, name);
     };
+    GeoGpxParser.prototype.calcDistance = function (from, to) {
+        return from.distanceTo(to);
+    };
     GeoGpxParser.geoGpxUtils = new GeoGpxUtils();
     return GeoGpxParser;
 }(AbstractGeoGpxParser));

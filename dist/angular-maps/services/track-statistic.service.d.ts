@@ -6,4 +6,5 @@ export interface TrackStatistic extends TrackStatisticBase<LatLng, LatLngBounds>
 export declare class TrackStatisticService extends AbstractTrackStatisticService<LatLng, LatLngBounds> {
     protected getLocalDateTimeForLatLng(position: LatLng): Date;
     protected getLatLngBounds(coords: LatLng[]): LatLngBounds;
+    protected calcDistance(from: LatLng, to: LatLng): number;
 }

@@ -12,4 +12,7 @@ export class GeoJsonParser extends AbstractGeoJsonParser<LatLng> implements GeoP
         return GeoUtils.createGeoElement(type, points, name);
     }
 
+    protected calcDistance(from: LatLng, to: LatLng): number {
+        return from.distanceTo(to);
+    }
 }

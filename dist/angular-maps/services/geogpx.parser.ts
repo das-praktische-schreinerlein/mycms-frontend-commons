@@ -47,4 +47,8 @@ export class GeoGpxParser extends AbstractGeoGpxParser<LatLng> implements GeoPar
     protected createGeoElement(type: GeoElementType, points: LatLng[], name: string): GeoElement {
         return GeoUtils.createGeoElement(type, points, name);
     }
+
+    protected calcDistance(from: LatLng, to: LatLng): number {
+        return from.distanceTo(to);
+    }
 }

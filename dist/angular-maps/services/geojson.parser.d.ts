@@ -4,4 +4,5 @@ import { AbstractGeoJsonParser } from '@dps/mycms-commons/dist/geo-commons/servi
 export declare class GeoJsonParser extends AbstractGeoJsonParser<LatLng> implements GeoParser {
     protected createLatLng(lat: string | number, lng: string | number, alt?: number, time?: Date): LatLng;
     protected createGeoElement(type: GeoElementType, points: LatLng[], name: string): GeoElement;
+    protected calcDistance(from: LatLng, to: LatLng): number;
 }

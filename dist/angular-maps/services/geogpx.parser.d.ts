@@ -14,4 +14,5 @@ export declare class GeoGpxParser extends AbstractGeoGpxParser<LatLng> implement
     protected parseDomFromString(xml: string): Document;
     protected createLatLng(lat: string | number, lng: string | number, alt?: number, time?: Date): LatLng;
     protected createGeoElement(type: GeoElementType, points: LatLng[], name: string): GeoElement;
+    protected calcDistance(from: LatLng, to: LatLng): number;
 }

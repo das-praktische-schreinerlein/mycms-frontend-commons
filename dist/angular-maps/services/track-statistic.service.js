@@ -22,6 +22,9 @@ var TrackStatisticService = /** @class */ (function (_super) {
     TrackStatisticService.prototype.getLatLngBounds = function (coords) {
         return latLngBounds(coords);
     };
+    TrackStatisticService.prototype.calcDistance = function (from, to) {
+        return from.distanceTo(to);
+    };
     return TrackStatisticService;
 }(AbstractTrackStatisticService));
 export { TrackStatisticService };

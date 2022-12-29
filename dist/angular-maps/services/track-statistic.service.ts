@@ -15,4 +15,7 @@ export class TrackStatisticService extends AbstractTrackStatisticService<LatLng,
         return latLngBounds(coords);
     }
 
+    protected calcDistance(from: LatLng, to: LatLng): number {
+        return from.distanceTo(to);
+    }
 }

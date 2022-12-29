@@ -21,6 +21,9 @@ var GeoJsonParser = /** @class */ (function (_super) {
     GeoJsonParser.prototype.createGeoElement = function (type, points, name) {
         return GeoUtils.createGeoElement(type, points, name);
     };
+    GeoJsonParser.prototype.calcDistance = function (from, to) {
+        return from.distanceTo(to);
+    };
     return GeoJsonParser;
 }(AbstractGeoJsonParser));
 export { GeoJsonParser };
