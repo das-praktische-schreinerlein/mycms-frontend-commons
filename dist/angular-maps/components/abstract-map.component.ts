@@ -72,8 +72,7 @@ export abstract class AbstractMapComponent implements AfterViewChecked, OnChange
             || this.txtLoader.isResponsibleForSrc(trackSrc)) {
             return this.txtLoader;
         } else {
-            console.error('no loader for mapElement:', mapElement.id, mapElement, trackUrl, trackSrc,
-                this.gpxLoader.isResponsibleForSrc(trackSrc));
+            console.error('no loader for id/mapElement/url/src:', mapElement.id, mapElement, trackUrl, trackSrc);
         }
 
         return undefined;
