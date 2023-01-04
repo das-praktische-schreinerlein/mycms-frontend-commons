@@ -1,24 +1,13 @@
-import {
-    AfterViewChecked,
-    ChangeDetectionStrategy,
-    Component,
-    EventEmitter,
-    Input,
-    OnChanges,
-    Output,
-    SimpleChange
-} from '@angular/core';
+import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output} from '@angular/core';
 import 'leaflet';
 import 'leaflet.markercluster';
 import {GeoParsedFeature, MapElement} from '../../services/leaflet-geo.plugin';
-import {GeoLoader} from '../../services/geo.loader';
-import {GeoJsonParser} from '../../services/geojson.parser';
-import {GeoGpxParser} from '../../services/geogpx.parser';
-import {ComponentUtils} from '../../../angular-commons/services/component.utils';
-import {MinimalHttpBackendClient} from '@dps/mycms-commons/dist/commons/services/minimal-http-backend-client';
 import * as L from 'leaflet';
-import {LatLng, LatLngBounds, TileLayer, MarkerClusterGroup, markerClusterGroup, FeatureGroup} from 'leaflet';
+import {FeatureGroup, LatLng, LatLngBounds, markerClusterGroup, MarkerClusterGroup, TileLayer} from 'leaflet';
 import {GeoElement, GeoElementType} from '../../services/geo.parser';
+import {AbstractMapComponent} from '../abstract-map.component';
+import {MinimalHttpBackendClient} from '@dps/mycms-commons/dist/commons/services/minimal-http-backend-client';
+import {AbstractGeoGpxParser} from '@dps/mycms-commons/dist/geo-commons/services/geogpx.parser';
 
 export interface LeafletMapOptions {
     flgGenerateNameFromGpx: boolean;
@@ -34,7 +23,10 @@ export interface LeafletMapOptions {
     styleUrls: ['./leaflet-map.component.css'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class LeafletMapComponent implements AfterViewChecked, OnChanges {
+export class LeafletMapComponent extends AbstractMapComponent {
+    map: L.Map;
+    mapHeight = '390px';
+
     // create the tile layer with correct attribution
     private osmUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
     private osmAttrib = 'Map data © <a href="https://openstreetmap.org">OpenStreetMap</a> contributors';
@@ -42,26 +34,11 @@ export class LeafletMapComponent implements AfterViewChecked, OnChanges {
         minZoom: 1, maxZoom: 16,
         attribution: this.osmAttrib
     });
-    private gpxLoader: GeoLoader;
-    private jsonLoader: GeoLoader;
 
-    initialized: boolean;
-    map: L.Map;
-    mapHeight = '390px';
-    flgfullScreen = false;
     private featureGroup: MarkerClusterGroup;
     private loadedMapElements: MapElement[];
     private noCoorElements: MapElement[];
     private bounds: LatLngBounds = undefined;
-
-    @Input()
-    public mapId: string;
-
-    @Input()
-    public height: string;
-
-    @Input()
-    public mapElements: MapElement[];
 
     @Input()
     public centerOnMapElements: MapElement[] = undefined;
@@ -87,36 +64,11 @@ export class LeafletMapComponent implements AfterViewChecked, OnChanges {
     @Output()
     public mapElementsLoaded: EventEmitter<MapElement[]> = new EventEmitter();
 
-    constructor(private http: MinimalHttpBackendClient) {
-        this.gpxLoader = new GeoLoader(http, new GeoGpxParser());
-        this.jsonLoader = new GeoLoader(http, new GeoJsonParser());
+    constructor(http: MinimalHttpBackendClient) {
+        super(http);
     }
 
-    ngAfterViewChecked() {
-        if (this.initialized) {
-            return;
-        }
-
-        this.initialized = true;
-        this.renderMap();
-    }
-
-    ngOnChanges(changes: {[propKey: string]: SimpleChange}) {
-        if (this.initialized && ComponentUtils.hasNgChanged(changes)) {
-            this.renderMap();
-        }
-    }
-
-    toggleFullScreen() {
-        this.flgfullScreen = !this.flgfullScreen;
-        this.renderMap();
-        const me = this;
-        setTimeout(function init() {
-            me.map.invalidateSize();
-        }, 500);
-    }
-
-    private renderMap() {
+    protected renderMap() {
         // TODO: move to Service
         if (!this.initialized || !this.mapId) {
             return;
@@ -152,11 +104,12 @@ export class LeafletMapComponent implements AfterViewChecked, OnChanges {
 
         for (let i = 0; i < this.mapElements.length; i++) {
             const mapElement = this.mapElements[i];
-            if (mapElement.trackUrl || mapElement.trackSrc) {
+            const trackSrc = mapElement.trackSrc;
+            const trackUrl = mapElement.trackUrl;
+            if (trackUrl || trackSrc) {
                 let geoFeature: GeoParsedFeature;
-                if ((mapElement.trackUrl !== undefined && mapElement.trackUrl.endsWith('.gpx'))
-                    || (mapElement.trackSrc !== undefined && mapElement.trackSrc !== null &&
-                        (mapElement.trackSrc.indexOf('<trkpt') || mapElement.trackSrc.indexOf('<rpt')))) {
+                if (this.gpxLoader.isResponsibleForFile(trackUrl)
+                    || this.gpxLoader.isResponsibleForSrc(trackSrc)) {
                     geoFeature = new GeoParsedFeature(this.gpxLoader, mapElement, {
                         async: true,
                         display_wpt: false,
@@ -166,7 +119,19 @@ export class LeafletMapComponent implements AfterViewChecked, OnChanges {
                         showStartMarker: this.options.showStartMarker,
                         showEndMarker: this.options.showEndMarker
                     });
-                } else {
+                } else if (this.txtLoader.isResponsibleForFile(trackUrl)
+                    || this.txtLoader.isResponsibleForSrc(trackSrc)) {
+                    geoFeature = new GeoParsedFeature(this.txtLoader, mapElement, {
+                        async: true,
+                        display_wpt: false,
+                        editable: this.options.editable,
+                        generateName: this.options.flgGenerateNameFromGpx,
+                        showAreaMarker: this.options.showAreaMarker,
+                        showStartMarker: this.options.showStartMarker,
+                        showEndMarker: this.options.showEndMarker
+                    });
+                } else if (this.jsonLoader.isResponsibleForFile(trackUrl)
+                    || this.jsonLoader.isResponsibleForSrc(trackSrc)) {
                     geoFeature = new GeoParsedFeature(this.jsonLoader, mapElement, {
                         async: true,
                         display_wpt: false,
@@ -176,7 +141,20 @@ export class LeafletMapComponent implements AfterViewChecked, OnChanges {
                         showStartMarker: this.options.showStartMarker,
                         showEndMarker: this.options.showEndMarker
                     });
+                } else {
+                    console.error('no loader for mapElement responsible:', mapElement.id, mapElement, trackUrl, trackSrc,
+                        AbstractGeoGpxParser.isResponsibleForSrc(trackSrc));
+                    me.pushNoCoorMapElement(mapElement);
+                    continue;
                 }
+
+                if (!geoFeature) {
+                    console.error('no geoFeature for mapElement parsed by loader:', mapElement.id, mapElement, trackUrl, trackSrc,
+                        this.gpxLoader.isResponsibleForSrc(trackSrc));
+                    me.pushNoCoorMapElement(mapElement);
+                    continue;
+                }
+
                 geoFeature.on('error', function (e) {
                     const loadedMapElement = <MapElement>e['mapElement'];
                     console.error('cant load mapElement:', loadedMapElement.id);

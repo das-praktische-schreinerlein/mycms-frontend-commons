@@ -1,11 +1,9 @@
-import {AfterViewChecked, ChangeDetectionStrategy, Component, Input, OnChanges, SimpleChange} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
 import {GeoLoader} from '../../services/geo.loader';
-import {GeoJsonParser} from '../../services/geojson.parser';
-import {GeoGpxParser} from '../../services/geogpx.parser';
 import {VisJsGeoProfileMap, VisJsGeoProfileMapDataSource} from '../../services/visjs-geoprofilemap.plugin';
-import {ComponentUtils} from '../../../angular-commons/services/component.utils';
+import {AbstractMapComponent} from '../abstract-map.component';
 import {MinimalHttpBackendClient} from '@dps/mycms-commons/dist/commons/services/minimal-http-backend-client';
-import {MapElement} from '../../services/leaflet-geo.plugin';
+import {AbstractGeoGpxParser} from '@dps/mycms-commons/dist/geo-commons/services/geogpx.parser';
 
 @Component({
     selector: 'app-visjs-profilemap',
@@ -13,52 +11,16 @@ import {MapElement} from '../../services/leaflet-geo.plugin';
     styleUrls: ['./visjs-profilemap.component.css'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class VisJsProfileMapComponent implements AfterViewChecked, OnChanges {
-    private gpxLoader: GeoLoader;
-    private jsonLoader: GeoLoader;
-
-    initialized: boolean;
-    flgfullScreen = false;
-    mapHeight = '';
-
-    @Input()
-    public mapId: string;
-
-    @Input()
-    public height: string;
-
-    @Input()
-    public mapElements: MapElement[];
+export class VisJsProfileMapComponent extends AbstractMapComponent {
 
     @Input()
     public flgGenerateNameFromGpx?: boolean;
 
-    constructor(private http: MinimalHttpBackendClient) {
-        this.gpxLoader = new GeoLoader(http, new GeoGpxParser());
-        this.jsonLoader = new GeoLoader(http, new GeoJsonParser());
+    constructor(http: MinimalHttpBackendClient) {
+        super(http);
     }
 
-    ngAfterViewChecked() {
-        if (this.initialized) {
-            return;
-        }
-
-        this.initialized = true;
-        this.renderMap();
-    }
-
-    ngOnChanges(changes: {[propKey: string]: SimpleChange}) {
-        if (this.initialized && ComponentUtils.hasNgChanged(changes)) {
-            this.renderMap();
-        }
-    }
-
-    toggleFullScreen() {
-        this.flgfullScreen = !this.flgfullScreen;
-        this.renderMap();
-    }
-
-    private renderMap() {
+    protected renderMap() {
         if (!this.initialized || !this.mapId) {
             return;
         }
@@ -66,30 +28,32 @@ export class VisJsProfileMapComponent implements AfterViewChecked, OnChanges {
         this.mapHeight = this.flgfullScreen ? window.innerHeight + 'px' : this.height;
         const dataSources: VisJsGeoProfileMapDataSource[] = [];
         for (let i = 0; i < this.mapElements.length; i++) {
-            let trackSrc = this.mapElements[i].trackSrc;
-            const trackUrl = this.mapElements[i].trackUrl;
-            const point = this.mapElements[i].point;
+            const mapElement = this.mapElements[i];
+            let trackSrc = mapElement.trackSrc;
+            const trackUrl = mapElement.trackUrl;
+            const point = mapElement.point;
             // specify options
             let loader: GeoLoader;
             if ((trackSrc === undefined || trackSrc === null) && (trackUrl === undefined || trackUrl === null) && point !== undefined) {
                 trackSrc = '{ "track": {' +
                     '"tId":"dummy",' +
-                    '"tName":"' + this.mapElements[i].name.replace(/[^-a-zA-Z0-9+ .;,:]+/g, '') + '",' +
+                    '"tName":"' + mapElement.name.replace(/[^-a-zA-Z0-9+ .;,:]+/g, '') + '",' +
                     '"color":"Red",' +
                     '"colorIdx":"0",' +
-                    '"type":"' + this.mapElements[i].type + '",' +
+                    '"type":"' + mapElement.type + '",' +
                     '"header":["lat","lon","ele"],' +
                     '"records":[[' + point.lat + ', ' + point.lng + ', ' + (point.alt ? point.alt : 0) + ']]}}';
                 loader = this.jsonLoader;
-            } else if ((trackUrl !== undefined && trackUrl.endsWith('.gpx'))
-                || (trackSrc !== undefined && trackSrc !== null
-                    && (trackSrc.indexOf('<trkpt') >= 0 || trackSrc.indexOf('<rtept') >= 0))) {
-                loader = this.gpxLoader;
             } else {
-                loader = this.jsonLoader;
+                loader = this.determineLoader(mapElement);
             }
 
-            dataSources.push({ geoLoader: loader, url: trackUrl, src: trackSrc});
+            if (loader) {
+                dataSources.push({ geoLoader: loader, url: trackUrl, src: trackSrc});
+            } else {
+                console.error('no loader for mapElement:', mapElement.id, mapElement, trackUrl, trackSrc,
+                    this.gpxLoader.isResponsibleForSrc(trackSrc));
+            }
         }
 
         if (dataSources.length > 0) {

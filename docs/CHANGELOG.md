@@ -9,6 +9,7 @@
 - moved common geo-functionality to commons/geo-commons
 - fixed visjs for routes
 - improved imports for bootstrap-modules
+- introduced abstract map-component
 
 ### new features
 - none
@@ -17,6 +18,7 @@
 - frontend: added query-params to SearchFormResolver
 - frontend: moved common geo-functionality to commons/geo-commons
 - frontend: improved imports for bootstrap-modules
+- frontend: introduced abstract map-component
 
 ### bug fixes
 - frontend: fixed components if there are no facets

@@ -1,3 +1,13 @@
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -11,55 +21,32 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from 
 import 'leaflet';
 import 'leaflet.markercluster';
 import { GeoParsedFeature } from '../../services/leaflet-geo.plugin';
-import { GeoLoader } from '../../services/geo.loader';
-import { GeoJsonParser } from '../../services/geojson.parser';
-import { GeoGpxParser } from '../../services/geogpx.parser';
-import { ComponentUtils } from '../../../angular-commons/services/component.utils';
-import { MinimalHttpBackendClient } from '@dps/mycms-commons/dist/commons/services/minimal-http-backend-client';
 import * as L from 'leaflet';
-import { LatLng, TileLayer, markerClusterGroup } from 'leaflet';
+import { LatLng, markerClusterGroup, TileLayer } from 'leaflet';
 import { GeoElement, GeoElementType } from '../../services/geo.parser';
-var LeafletMapComponent = /** @class */ (function () {
+import { AbstractMapComponent } from '../abstract-map.component';
+import { MinimalHttpBackendClient } from '@dps/mycms-commons/dist/commons/services/minimal-http-backend-client';
+import { AbstractGeoGpxParser } from '@dps/mycms-commons/dist/geo-commons/services/geogpx.parser';
+var LeafletMapComponent = /** @class */ (function (_super) {
+    __extends(LeafletMapComponent, _super);
     function LeafletMapComponent(http) {
-        this.http = http;
+        var _this = _super.call(this, http) || this;
+        _this.mapHeight = '390px';
         // create the tile layer with correct attribution
-        this.osmUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
-        this.osmAttrib = 'Map data © <a href="https://openstreetmap.org">OpenStreetMap</a> contributors';
-        this.osm = new TileLayer(this.osmUrl, {
+        _this.osmUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+        _this.osmAttrib = 'Map data © <a href="https://openstreetmap.org">OpenStreetMap</a> contributors';
+        _this.osm = new TileLayer(_this.osmUrl, {
             minZoom: 1, maxZoom: 16,
-            attribution: this.osmAttrib
+            attribution: _this.osmAttrib
         });
-        this.mapHeight = '390px';
-        this.flgfullScreen = false;
-        this.bounds = undefined;
-        this.centerOnMapElements = undefined;
-        this.centerChanged = new EventEmitter();
-        this.mapCreated = new EventEmitter();
-        this.mapElementClicked = new EventEmitter();
-        this.mapElementsLoaded = new EventEmitter();
-        this.gpxLoader = new GeoLoader(http, new GeoGpxParser());
-        this.jsonLoader = new GeoLoader(http, new GeoJsonParser());
+        _this.bounds = undefined;
+        _this.centerOnMapElements = undefined;
+        _this.centerChanged = new EventEmitter();
+        _this.mapCreated = new EventEmitter();
+        _this.mapElementClicked = new EventEmitter();
+        _this.mapElementsLoaded = new EventEmitter();
+        return _this;
     }
-    LeafletMapComponent.prototype.ngAfterViewChecked = function () {
-        if (this.initialized) {
-            return;
-        }
-        this.initialized = true;
-        this.renderMap();
-    };
-    LeafletMapComponent.prototype.ngOnChanges = function (changes) {
-        if (this.initialized && ComponentUtils.hasNgChanged(changes)) {
-            this.renderMap();
-        }
-    };
-    LeafletMapComponent.prototype.toggleFullScreen = function () {
-        this.flgfullScreen = !this.flgfullScreen;
-        this.renderMap();
-        var me = this;
-        setTimeout(function init() {
-            me.map.invalidateSize();
-        }, 500);
-    };
     LeafletMapComponent.prototype.renderMap = function () {
         // TODO: move to Service
         if (!this.initialized || !this.mapId) {
@@ -90,11 +77,12 @@ var LeafletMapComponent = /** @class */ (function () {
         this.featureGroup.addTo(this.map);
         var _loop_1 = function (i) {
             var mapElement = this_1.mapElements[i];
-            if (mapElement.trackUrl || mapElement.trackSrc) {
+            var trackSrc = mapElement.trackSrc;
+            var trackUrl = mapElement.trackUrl;
+            if (trackUrl || trackSrc) {
                 var geoFeature = void 0;
-                if ((mapElement.trackUrl !== undefined && mapElement.trackUrl.endsWith('.gpx'))
-                    || (mapElement.trackSrc !== undefined && mapElement.trackSrc !== null &&
-                        (mapElement.trackSrc.indexOf('<trkpt') || mapElement.trackSrc.indexOf('<rpt')))) {
+                if (this_1.gpxLoader.isResponsibleForFile(trackUrl)
+                    || this_1.gpxLoader.isResponsibleForSrc(trackSrc)) {
                     geoFeature = new GeoParsedFeature(this_1.gpxLoader, mapElement, {
                         async: true,
                         display_wpt: false,
@@ -105,7 +93,20 @@ var LeafletMapComponent = /** @class */ (function () {
                         showEndMarker: this_1.options.showEndMarker
                     });
                 }
-                else {
+                else if (this_1.txtLoader.isResponsibleForFile(trackUrl)
+                    || this_1.txtLoader.isResponsibleForSrc(trackSrc)) {
+                    geoFeature = new GeoParsedFeature(this_1.txtLoader, mapElement, {
+                        async: true,
+                        display_wpt: false,
+                        editable: this_1.options.editable,
+                        generateName: this_1.options.flgGenerateNameFromGpx,
+                        showAreaMarker: this_1.options.showAreaMarker,
+                        showStartMarker: this_1.options.showStartMarker,
+                        showEndMarker: this_1.options.showEndMarker
+                    });
+                }
+                else if (this_1.jsonLoader.isResponsibleForFile(trackUrl)
+                    || this_1.jsonLoader.isResponsibleForSrc(trackSrc)) {
                     geoFeature = new GeoParsedFeature(this_1.jsonLoader, mapElement, {
                         async: true,
                         display_wpt: false,
@@ -115,6 +116,16 @@ var LeafletMapComponent = /** @class */ (function () {
                         showStartMarker: this_1.options.showStartMarker,
                         showEndMarker: this_1.options.showEndMarker
                     });
+                }
+                else {
+                    console.error('no loader for mapElement responsible:', mapElement.id, mapElement, trackUrl, trackSrc, AbstractGeoGpxParser.isResponsibleForSrc(trackSrc));
+                    me.pushNoCoorMapElement(mapElement);
+                    return "continue";
+                }
+                if (!geoFeature) {
+                    console.error('no geoFeature for mapElement parsed by loader:', mapElement.id, mapElement, trackUrl, trackSrc, this_1.gpxLoader.isResponsibleForSrc(trackSrc));
+                    me.pushNoCoorMapElement(mapElement);
+                    return "continue";
                 }
                 geoFeature.on('error', function (e) {
                     var loadedMapElement = e['mapElement'];
@@ -204,18 +215,6 @@ var LeafletMapComponent = /** @class */ (function () {
     };
     __decorate([
         Input(),
-        __metadata("design:type", String)
-    ], LeafletMapComponent.prototype, "mapId", void 0);
-    __decorate([
-        Input(),
-        __metadata("design:type", String)
-    ], LeafletMapComponent.prototype, "height", void 0);
-    __decorate([
-        Input(),
-        __metadata("design:type", Array)
-    ], LeafletMapComponent.prototype, "mapElements", void 0);
-    __decorate([
-        Input(),
         __metadata("design:type", Array)
     ], LeafletMapComponent.prototype, "centerOnMapElements", void 0);
     __decorate([
@@ -256,6 +255,6 @@ var LeafletMapComponent = /** @class */ (function () {
         __metadata("design:paramtypes", [MinimalHttpBackendClient])
     ], LeafletMapComponent);
     return LeafletMapComponent;
-}());
+}(AbstractMapComponent));
 export { LeafletMapComponent };
 //# sourceMappingURL=leaflet-map.component.js.map
