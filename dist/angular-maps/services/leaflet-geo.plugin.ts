@@ -4,7 +4,7 @@
 import {GeoLoader} from './geo.loader';
 import {GeoElement, GeoElementType} from './geo.parser';
 
-import {LatLng, Marker, DivIcon, Icon, Layer, FeatureGroup, Polygon, Polyline, Util, PolylineOptions} from 'leaflet';
+import {DivIcon, FeatureGroup, Icon, LatLng, Layer, Marker, Polygon, Polyline, PolylineOptions, Util} from 'leaflet';
 import 'leaflet.markercluster';
 import 'leaflet-editable-polyline';
 

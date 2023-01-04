@@ -9,7 +9,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 import { GeoElementType } from './geo.parser';
-import { Marker, DivIcon, FeatureGroup, Polygon, Polyline, Util } from 'leaflet';
+import { DivIcon, FeatureGroup, Marker, Polygon, Polyline, Util } from 'leaflet';
 import 'leaflet.markercluster';
 import 'leaflet-editable-polyline';
 var GeoParsedFeature = /** @class */ (function (_super) {

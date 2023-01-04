@@ -1,5 +1,5 @@
 import {LatLng} from 'leaflet';
-import {GeoElement, GeoElementType, GeoParser, LatLngTime} from './geo.parser';
+import {GeoElement, GeoElementType, GeoParser} from './geo.parser';
 import {AbstractGeoTxtParser} from '@dps/mycms-commons/dist/geo-commons/services/geotxt.parser';
 import {GeoUtils} from './geo.utils';
 

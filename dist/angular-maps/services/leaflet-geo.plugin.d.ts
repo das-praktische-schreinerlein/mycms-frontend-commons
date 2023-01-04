@@ -3,7 +3,7 @@
  */
 import { GeoLoader } from './geo.loader';
 import { GeoElement } from './geo.parser';
-import { LatLng, DivIcon, Icon, Layer, FeatureGroup } from 'leaflet';
+import { DivIcon, FeatureGroup, Icon, LatLng, Layer } from 'leaflet';
 import 'leaflet.markercluster';
 import 'leaflet-editable-polyline';
 export interface MapElement {
