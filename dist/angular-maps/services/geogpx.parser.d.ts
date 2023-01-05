@@ -5,6 +5,7 @@ import { GeoGpxUtils } from '@dps/mycms-commons/dist/geo-commons/services/geogpx
 export declare class GeoGpxParser extends AbstractGeoGpxParser<LatLng> implements GeoParser {
     protected static geoGpxUtils: GeoGpxUtils;
     static fixXml(xml: string): string;
+    static trimXml(xml: string): string;
     static fixXmlExtended(xml: string): string;
     static reformatXml(xml: string): string;
     static createNewRouteGpx(name: string, type: string, points: LatLng[]): string;

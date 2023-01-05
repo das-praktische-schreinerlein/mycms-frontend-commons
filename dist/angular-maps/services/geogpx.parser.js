@@ -19,6 +19,9 @@ var GeoGpxParser = /** @class */ (function (_super) {
     GeoGpxParser.fixXml = function (xml) {
         return GeoGpxParser.geoGpxUtils.fixXml(xml);
     };
+    GeoGpxParser.trimXml = function (xml) {
+        return GeoGpxParser.geoGpxUtils.trimXml(xml);
+    };
     GeoGpxParser.fixXmlExtended = function (xml) {
         return GeoGpxParser.geoGpxUtils.fixXmlExtended(xml);
     };

@@ -11,6 +11,10 @@ export class GeoGpxParser extends AbstractGeoGpxParser<LatLng> implements GeoPar
         return GeoGpxParser.geoGpxUtils.fixXml(xml);
     }
 
+    public static trimXml(xml: string): string {
+        return GeoGpxParser.geoGpxUtils.trimXml(xml);
+    }
+
     public static fixXmlExtended(xml: string): string {
         return GeoGpxParser.geoGpxUtils.fixXmlExtended(xml);
     }
