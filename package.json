@@ -131,6 +131,7 @@
     "ngx-toastr": "10.2.0",
     "promise-serial": "0.1.5",
     "rxjs": "6.6.0",
+    "tz-lookup": "6.1.25",
     "vis": "4.21.0",
     "xregexp": "4.3.0"
   }

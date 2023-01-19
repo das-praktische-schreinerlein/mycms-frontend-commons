@@ -137,7 +137,7 @@ export class VisJsGeoProfileMap {
                         style: style
                     }));
                 } else {
-                    // console.trace('SKIPPED visjs-profilemap poin: no values', point);
+                    // console.debug('SKIPPED visjs-profilemap poin: no values', point);
                 }
             }
             style = style + 1;
