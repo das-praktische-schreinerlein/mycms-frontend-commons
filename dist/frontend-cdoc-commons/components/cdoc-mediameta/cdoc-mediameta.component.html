@@ -1,0 +1,67 @@
+<ng-container *ngIf="record !== undefined && (record.dur > 0 || record.fileSize > 0 || record.fileName || record.metadata)">
+    <div *ngIf="!small" class="techvaluetable mediametavaluetable">
+        <div *ngIf="record.dur > 0" class="entry"><div class="label">&#8987;:</div><div class="value">{{record.dur / 60 | number : '1.0-1'}} min</div></div>
+        <div *ngIf="record.recordingDate" class="entry"><div class="label">📅:</div><div class="value">{{record.recordingDate | date : 'short'}}</div></div>
+        <div *ngIf="record.fileSize > 0 || record.fileName || record.fileCreated" class="entry"><div class="label">📁:</div><div class="value">
+            <ng-container *ngIf="record.fileName || record.fileCreated">
+                <span [ngbTooltip]="fileName" triggers="click">File</span>
+            </ng-container>
+            <ng-container *ngIf="record.fileSize">
+                {{record.fileSize / 1000000 | number : '1.0-1'}} mb
+            </ng-container>
+        </div></div>
+        <div *ngIf="!small && record.metadata && record.metadata.length > 0" class="entry">
+            <div class="label metadata-label" [ngbTooltip]="metadata" triggers="click">&#9432;</div><div class="value" [ngbTooltip]="metadata" triggers="click">Metadata</div>
+        </div>
+    </div>
+
+    <div *ngIf="small" class="techvaluetable mediametavaluetable">
+        <div class="entry smallentry">
+            <ng-container *ngIf="record.dur > 0">
+                <div class="float-left">&#8987;{{record.dur / 60 | number : '1.0-1'}} min</div>
+            </ng-container>
+            <ng-container *ngIf="record.fileSize > 0 || record.fileName || record.metadata || record.recordingDate">
+                <div class="float-left" [ngbTooltip]="fileInfo" triggers="click">&#9432;</div>
+            </ng-container>
+        </div>
+    </div>
+</ng-container>
+
+<ng-template #fileInfo>
+    <div class="fileInfo-tooltip">
+        <div *ngIf="record.dur > 0">
+            &#8987;: {{record.dur / 60 | number : '1.0-1'}} min
+        </div>
+        <div *ngIf="record.recordingDate">
+            📅: {{record.recordingDate | date : 'short'}}
+        </div>
+        <div *ngIf="record.fileSize > 0 || record.fileName || record.fileCreated">
+            📁:
+            <ng-container *ngIf="record.fileName">
+                "{{record.fileName}}"
+            </ng-container>
+            <ng-container *ngIf="record.fileCreated">
+                created: {{record.fileCreated | date : 'short'}}
+            </ng-container>
+            <ng-container *ngIf="record.fileSize">
+                {{record.fileSize / 1000000 | number : '1.0-1'}} mb
+            </ng-container>
+        </div>
+        <div *ngIf="record.metadata" class="metadata-content">{{json.stringify(json.parse(record.metadata), undefined, '\t')}}}</div>
+    </div>
+</ng-template>
+
+<ng-template #fileName>
+    <div class="fileName-tooltip">
+        <ng-container *ngIf="record.fileName">
+            "{{record.fileName}}"
+        </ng-container>
+        <ng-container *ngIf="record.fileCreated">
+            created: {{record.fileCreated | date : 'short'}}
+        </ng-container>
+    </div>
+</ng-template>
+
+<ng-template #metadata>
+    <div class="fileInfo-tooltip metadata-content">{{json.stringify(json.parse(record.metadata), undefined, '\t')}}}</div>
+</ng-template>

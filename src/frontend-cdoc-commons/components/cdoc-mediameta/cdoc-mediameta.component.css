@@ -1,0 +1,34 @@
+div.mediametavaluetable .entry {
+    min-width: 81px;
+}
+div.mediametavaluetable .entry .label {
+    min-width: 30px;
+}
+div.mediametavaluetable .entry .value {
+    text-align: right;
+    white-space: nowrap;
+}
+
+div.mediametavaluetable .smallentry {
+    min-width: 0!important;
+}
+
+div.fileInfo-tooltip, fileName-tooltip {
+    display: block;
+    max-width: 400px;
+    max-height: 400px;
+    overflow: scroll;
+    text-align: left;
+}
+
+div.metadata-content {
+    white-space: pre;
+}
+
+div.metadata-content {
+}
+
+:host >>> .tooltip-inner {
+    width: 400px;
+    max-width: 400px;
+}

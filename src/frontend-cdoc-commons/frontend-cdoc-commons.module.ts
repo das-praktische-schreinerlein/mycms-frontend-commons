@@ -14,7 +14,7 @@ import {CommonDocListItemComponent} from './components/cdoc-list-item/cdoc-list-
 import {AngularCommonsModule} from '../angular-commons/angular-commons.module';
 import {TranslateModule} from '@ngx-translate/core';
 import {MultiselectDropdownModule} from 'angular-2-dropdown-multiselect';
-import {NgbModalModule, NgbPaginationModule} from '@ng-bootstrap/ng-bootstrap';
+import {NgbModalModule, NgbPaginationModule, NgbTooltipModule} from '@ng-bootstrap/ng-bootstrap';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {CommonDocListComponent} from './components/cdoc-list/cdoc-list.component';
 import {CommonDocAudioplayerComponent} from './components/cdoc-audioplayer/cdoc-audioplayer.component';
@@ -29,6 +29,7 @@ import {CommonDocObjectNavigationComponent} from './components/cdoc-object-navig
 import {
     CommonDocExtendedObjectPropertiesComponent
 } from './components/cdoc-extended-object-properties/cdoc-extended-object-properties.component';
+import {CommonDocMediaMetaComponent} from './components/cdoc-mediameta/cdoc-mediameta.component';
 
 @NgModule({
     declarations: [
@@ -50,10 +51,11 @@ import {
         CommonDocODObjectRectanglesComponent,
         CommonDocODObjectDetailsComponent,
         CommonDocObjectNavigationComponent,
-        CommonDocExtendedObjectPropertiesComponent
+        CommonDocExtendedObjectPropertiesComponent,
+        CommonDocMediaMetaComponent
     ],
     imports: [
-        NgbPaginationModule,
+        NgbPaginationModule, NgbTooltipModule,
         NgbModalModule,
         MultiselectDropdownModule,
         TranslateModule,
@@ -82,7 +84,8 @@ import {
         CommonDocODObjectRectanglesComponent,
         CommonDocODObjectDetailsComponent,
         CommonDocObjectNavigationComponent,
-        CommonDocExtendedObjectPropertiesComponent
+        CommonDocExtendedObjectPropertiesComponent,
+        CommonDocMediaMetaComponent
     ]
 })
 export class FrontendCommonDocCommonsModule {

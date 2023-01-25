@@ -2,6 +2,22 @@
  
 # Versions
 
+## 5.7.0
+- added mediameta-component
+
+### new features
+- frontend: added mediameta-component
+
+### improvements
+- none
+
+### bug fixes
+- none
+
+### breaking changes
+- none
+
+
 ## 5.6.0 (2023-01-19)
 - bumped version up to be in sync with mycms-server-commons, mycms-commons
 - fixed components if there are no facets

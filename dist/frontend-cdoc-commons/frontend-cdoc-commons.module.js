@@ -20,7 +20,7 @@ import { CommonDocListItemComponent } from './components/cdoc-list-item/cdoc-lis
 import { AngularCommonsModule } from '../angular-commons/angular-commons.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { MultiselectDropdownModule } from 'angular-2-dropdown-multiselect';
-import { NgbModalModule, NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModalModule, NgbPaginationModule, NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CommonDocListComponent } from './components/cdoc-list/cdoc-list.component';
 import { CommonDocAudioplayerComponent } from './components/cdoc-audioplayer/cdoc-audioplayer.component';
@@ -31,6 +31,7 @@ import { CommonDocODObjectRectanglesComponent } from './components/cdoc-odobject
 import { CommonDocODObjectDetailsComponent } from './components/cdoc-odobjectdetails/cdoc-odobjectdetails.component';
 import { CommonDocObjectNavigationComponent } from './components/cdoc-object-navigation/cdoc-object-navigation.component';
 import { CommonDocExtendedObjectPropertiesComponent } from './components/cdoc-extended-object-properties/cdoc-extended-object-properties.component';
+import { CommonDocMediaMetaComponent } from './components/cdoc-mediameta/cdoc-mediameta.component';
 var FrontendCommonDocCommonsModule = /** @class */ (function () {
     function FrontendCommonDocCommonsModule() {
     }
@@ -55,10 +56,11 @@ var FrontendCommonDocCommonsModule = /** @class */ (function () {
                 CommonDocODObjectRectanglesComponent,
                 CommonDocODObjectDetailsComponent,
                 CommonDocObjectNavigationComponent,
-                CommonDocExtendedObjectPropertiesComponent
+                CommonDocExtendedObjectPropertiesComponent,
+                CommonDocMediaMetaComponent
             ],
             imports: [
-                NgbPaginationModule,
+                NgbPaginationModule, NgbTooltipModule,
                 NgbModalModule,
                 MultiselectDropdownModule,
                 TranslateModule,
@@ -87,7 +89,8 @@ var FrontendCommonDocCommonsModule = /** @class */ (function () {
                 CommonDocODObjectRectanglesComponent,
                 CommonDocODObjectDetailsComponent,
                 CommonDocObjectNavigationComponent,
-                CommonDocExtendedObjectPropertiesComponent
+                CommonDocExtendedObjectPropertiesComponent,
+                CommonDocMediaMetaComponent
             ]
         })
     ], FrontendCommonDocCommonsModule);
