@@ -4,6 +4,7 @@
 
 ## 5.7.0
 - added mediameta-component
+- fixed ComponentUtils.hasNgChanged
 
 ### new features
 - frontend: added mediameta-component
@@ -12,7 +13,7 @@
 - none
 
 ### bug fixes
-- none
+- frontend: fixed ComponentUtils.hasNgChanged -> deep-equals sometimes dont identify get differences for arrays
 
 ### breaking changes
 - none

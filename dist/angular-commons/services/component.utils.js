@@ -12,12 +12,32 @@ var ComponentUtils = /** @class */ (function () {
             }
             else {
                 var from = changedProp.previousValue;
-                if (from !== undefined && from !== null && to !== undefined && to !== null && from.id !== to.id) {
+                if (from !== undefined && from !== null &&
+                    to !== undefined && to !== null &&
+                    from.id !== to.id) {
                     return true;
                 }
-                if (!deepEqual(from, to)) {
+                if (!deepEqual(from, to, { strict: true })) {
                     // console.log(`${propName} changed from ${from} to ${to}`);
                     return true;
+                }
+                if (Array.isArray(from)) {
+                    if (!Array.isArray(to)) {
+                        return true;
+                    }
+                    if (from.length !== to.length) {
+                        return true;
+                    }
+                    for (var i = 0; i <= from.length; i++) {
+                        if (from[i] !== undefined && from[i] !== null &&
+                            to[i] !== undefined && to[i] !== null &&
+                            from[i].id !== to[i].id) {
+                            return true;
+                        }
+                        if (!deepEqual(from[i], to[i], { strict: true })) {
+                            return true;
+                        }
+                    }
                 }
             }
         }
