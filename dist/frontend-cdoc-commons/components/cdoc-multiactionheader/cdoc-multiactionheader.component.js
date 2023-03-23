@@ -1,7 +1,10 @@
 var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -236,10 +239,9 @@ var CommonDocMultiActionHeaderComponent = /** @class */ (function (_super) {
         }
         this.cd.markForCheck();
     };
-    var _a;
     __decorate([
         Input(),
-        __metadata("design:type", typeof (_a = typeof S !== "undefined" && S) === "function" && _a || Object)
+        __metadata("design:type", Object)
     ], CommonDocMultiActionHeaderComponent.prototype, "searchResult", void 0);
     __decorate([
         Input(),

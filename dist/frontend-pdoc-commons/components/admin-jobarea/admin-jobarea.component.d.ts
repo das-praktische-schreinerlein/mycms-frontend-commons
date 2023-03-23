@@ -22,7 +22,7 @@ export declare class AdminJobAreaComponent extends AbstractInlineComponent imple
     protected appStateSubscription: Subscription;
     objectKeys: (o: {}) => string[];
     arrayIsArray: (arg: any) => arg is any[];
-    typeOf: (blim: any) => "string" | "number" | "boolean" | "symbol" | "undefined" | "object" | "function";
+    typeOf: (blim: any) => "string" | "number" | "bigint" | "boolean" | "symbol" | "undefined" | "object" | "function";
     availableCommands: {
         [key: string]: CommonAdminCommandsListResponseType;
     };

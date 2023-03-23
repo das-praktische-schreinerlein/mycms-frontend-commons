@@ -1,7 +1,10 @@
 var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -143,10 +146,9 @@ var CommonDocLinkedPlaylistsComponent = /** @class */ (function (_super) {
         return this.cdocRoutingService.getShowUrl(this.cdocDataService.newRecord({ id: 'PLAYLIST_' + linkedPlaylist.refId,
             name: linkedPlaylist.name, type: 'PLAYLIST' }), '');
     };
-    var _a;
     __decorate([
         Input(),
-        __metadata("design:type", typeof (_a = typeof R !== "undefined" && R) === "function" && _a || Object)
+        __metadata("design:type", Object)
     ], CommonDocLinkedPlaylistsComponent.prototype, "record", void 0);
     __decorate([
         Input(),

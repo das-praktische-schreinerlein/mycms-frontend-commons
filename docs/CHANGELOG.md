@@ -2,6 +2,22 @@
  
 # Versions
 
+## 6.0.0
+- bumped up deps
+
+### new features
+- none
+
+### improvements
+- none
+
+### bug fixes
+- none
+
+### breaking changes
+- bumped up deps
+
+
 ## 5.7.0 (2023-03-18)
 - added mediameta-component
 - fixed ComponentUtils.hasNgChanged
