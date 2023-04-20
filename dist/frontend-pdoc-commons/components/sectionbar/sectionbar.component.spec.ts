@@ -8,7 +8,7 @@ import {ToastrService} from 'ngx-toastr';
 import {TranslateModule, TranslateService} from '@ngx-translate/core';
 import {CommonDocRoutingService} from '../../../frontend-cdoc-commons/services/cdoc-routing.service';
 import {PDocDataServiceStub} from '../../../testing/pdoc-dataservice-stubs';
-import {PDocDataService} from '@dps/mycms-commons/dist/pdoc-commons/services/pdoc-data.service';
+import {StaticPagesDataService} from '@dps/mycms-commons/dist/pdoc-commons/services/staticpages-data.service';
 import {FormBuilder} from '@angular/forms';
 import {ErrorResolver} from '../../../frontend-cdoc-commons/resolver/error.resolver';
 import {PageUtils} from '../../../angular-commons/services/page.utils';
@@ -29,7 +29,7 @@ describe('SectionBarComponent', () => {
             providers: [
                 { provide: ActivatedRoute, useValue: new ActivatedRouteStub() },
                 { provide: Router, useValue: new RouterStub() },
-                { provide: PDocDataService, useValue: new PDocDataServiceStub() },
+                { provide: StaticPagesDataService, useValue: new PDocDataServiceStub() },
                 CommonRoutingService,
                 FormBuilder,
                 { provide: ToastrService, useValue: new ToastrServiceStub() },

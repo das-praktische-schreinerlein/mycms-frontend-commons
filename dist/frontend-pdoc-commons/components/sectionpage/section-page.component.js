@@ -12,7 +12,7 @@ import { ActivatedRoute } from '@angular/router';
 import { PDocRecord } from '@dps/mycms-commons/dist/pdoc-commons/model/records/pdoc-record';
 import { ToastrService } from 'ngx-toastr';
 import { Layout, LayoutService, LayoutSize, SearchFormLayout } from '../../../angular-commons/services/layout.service';
-import { PDocDataService } from '@dps/mycms-commons/dist/pdoc-commons/services/pdoc-data.service';
+import { StaticPagesDataService } from '@dps/mycms-commons/dist/pdoc-commons/services/staticpages-data.service';
 import { ErrorResolver } from '../../../frontend-cdoc-commons/resolver/error.resolver';
 import { SectionsPDocRecordResolver } from '../../../frontend-cdoc-commons/resolver/sections-pdoc-details.resolver';
 import { IdValidationRule } from '@dps/mycms-commons/dist/search-commons/model/forms/generic-validator.util';
@@ -24,9 +24,9 @@ import { CommonRoutingService, RoutingState } from '../../../angular-commons/ser
 import { GenericTrackingService } from '../../../angular-commons/services/generic-tracking.service';
 import { PlatformService } from '../../../angular-commons/services/platform.service';
 var SectionPageComponent = /** @class */ (function () {
-    function SectionPageComponent(route, pdocDataService, commonRoutingService, errorResolver, toastr, pageUtils, angularMarkdownService, angularHtmlService, cd, trackingProvider, platformService, layoutService, appService) {
+    function SectionPageComponent(route, pagesDataService, commonRoutingService, errorResolver, toastr, pageUtils, angularMarkdownService, angularHtmlService, cd, trackingProvider, platformService, layoutService, appService) {
         this.route = route;
-        this.pdocDataService = pdocDataService;
+        this.pagesDataService = pagesDataService;
         this.commonRoutingService = commonRoutingService;
         this.errorResolver = errorResolver;
         this.toastr = toastr;
@@ -67,7 +67,7 @@ var SectionPageComponent = /** @class */ (function () {
                 me.flgDescRendered = false;
                 me.baseSearchUrl = data.baseSearchUrl.data;
                 me.sections = me.getSubSections(me.pdoc);
-                me.pdocDataService.getById('menu', { forceLocalStore: true }).then(function onThemesFound(pdoc) {
+                me.pagesDataService.getById('menu', { forceLocalStore: true }).then(function onThemesFound(pdoc) {
                     me.menuSections = me.getSubSections(pdoc);
                     me.calcSectionsNavRunner();
                     me.cd.markForCheck();
@@ -168,7 +168,7 @@ var SectionPageComponent = /** @class */ (function () {
         this.pageUtils.scrollToTop();
     };
     SectionPageComponent.prototype.getSubSections = function (pdoc) {
-        return this.pdocDataService.getSubDocuments(pdoc);
+        return this.pagesDataService.getSubDocuments(pdoc);
     };
     SectionPageComponent.prototype.calcSectionsNavRunner = function () {
         this.sectionPrev = undefined;
@@ -217,7 +217,7 @@ var SectionPageComponent = /** @class */ (function () {
             styleUrls: ['./section-page.component.css'],
             changeDetection: ChangeDetectionStrategy.OnPush
         }),
-        __metadata("design:paramtypes", [ActivatedRoute, PDocDataService,
+        __metadata("design:paramtypes", [ActivatedRoute, StaticPagesDataService,
             CommonRoutingService, ErrorResolver,
             ToastrService, PageUtils,
             AngularMarkdownService, AngularHtmlService,

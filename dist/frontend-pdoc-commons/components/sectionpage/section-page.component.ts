@@ -9,7 +9,7 @@ import {
     LayoutSizeData,
     SearchFormLayout
 } from '../../../angular-commons/services/layout.service';
-import {PDocDataService} from '@dps/mycms-commons/dist/pdoc-commons/services/pdoc-data.service';
+import {StaticPagesDataService} from '@dps/mycms-commons/dist/pdoc-commons/services/staticpages-data.service';
 import {ResolvedData} from '../../../angular-commons/resolver/resolver.utils';
 import {ErrorResolver} from '../../../frontend-cdoc-commons/resolver/error.resolver';
 import {SectionsPDocRecordResolver} from '../../../frontend-cdoc-commons/resolver/sections-pdoc-details.resolver';
@@ -43,7 +43,7 @@ export class SectionPageComponent implements OnInit {
     SearchFormLayout = SearchFormLayout;
     searchFormLayout: SearchFormLayout = SearchFormLayout.GRID;
 
-    constructor(protected route: ActivatedRoute, protected pdocDataService: PDocDataService,
+    constructor(protected route: ActivatedRoute, protected pagesDataService: StaticPagesDataService,
                 protected commonRoutingService: CommonRoutingService, protected errorResolver: ErrorResolver,
                 protected toastr: ToastrService, protected pageUtils: PageUtils,
                 protected angularMarkdownService: AngularMarkdownService, protected angularHtmlService: AngularHtmlService,
@@ -74,7 +74,7 @@ export class SectionPageComponent implements OnInit {
                     me.flgDescRendered = false;
                     me.baseSearchUrl = data.baseSearchUrl.data;
                     me.sections =  me.getSubSections(me.pdoc);
-                    me.pdocDataService.getById('menu', {forceLocalStore: true}).then(function onThemesFound(pdoc: PDocRecord) {
+                    me.pagesDataService.getById('menu', {forceLocalStore: true}).then(function onThemesFound(pdoc: PDocRecord) {
                         me.menuSections = me.getSubSections(pdoc);
                         me.calcSectionsNavRunner();
                         me.cd.markForCheck();
@@ -189,7 +189,7 @@ export class SectionPageComponent implements OnInit {
     }
 
     getSubSections(pdoc: PDocRecord): PDocRecord[] {
-        return this.pdocDataService.getSubDocuments(pdoc);
+        return this.pagesDataService.getSubDocuments(pdoc);
     }
 
     protected calcSectionsNavRunner(): void {

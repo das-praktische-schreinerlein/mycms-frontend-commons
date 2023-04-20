@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {ActivatedRouteSnapshot, Resolve, RouterStateSnapshot} from '@angular/router';
 import {AppState, GenericAppService} from '@dps/mycms-commons/dist/commons/services/generic-app.service';
-import {PDocDataService} from '@dps/mycms-commons/dist/pdoc-commons/services/pdoc-data.service';
+import {StaticPagesDataService} from '@dps/mycms-commons/dist/pdoc-commons/services/staticpages-data.service';
 import {PDocRecord} from '@dps/mycms-commons/dist/pdoc-commons/model/records/pdoc-record';
 import {CommonDocRoutingService} from '../services/cdoc-routing.service';
 import {ResolvedData, ResolverError} from '../../angular-commons/resolver/resolver.utils';
@@ -15,7 +15,7 @@ export class SectionsPDocRecordResolver implements Resolve<ResolvedData<PDocReco
     static ERROR_READING_SECTION_ID = 'ERROR_READING_SECTION_ID';
     idValidationRule = new IdValidationRule(true);
 
-    constructor(private appService: GenericAppService, private dataService: PDocDataService,
+    constructor(private appService: GenericAppService, private dataService: StaticPagesDataService,
         private routingService: CommonDocRoutingService) {}
 
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<ResolvedData<PDocRecord>> {

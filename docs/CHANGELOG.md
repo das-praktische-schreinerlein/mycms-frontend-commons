@@ -4,6 +4,7 @@
 
 ## 6.0.0
 - bumped up deps
+- use StaticPagesDataService instead of PDocDataService
 
 ### new features
 - none
@@ -16,6 +17,7 @@
 
 ### breaking changes
 - bumped up deps
+- use StaticPagesDataService instead of PDocDataService
 
 
 ## 5.7.0 (2023-03-18)

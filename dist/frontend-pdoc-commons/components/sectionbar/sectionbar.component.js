@@ -10,17 +10,17 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { PDocDataService } from '@dps/mycms-commons/dist/pdoc-commons/services/pdoc-data.service';
+import { StaticPagesDataService } from '@dps/mycms-commons/dist/pdoc-commons/services/staticpages-data.service';
 import { FormBuilder } from '@angular/forms';
 import { ErrorResolver } from '../../../frontend-cdoc-commons/resolver/error.resolver';
 import { IdValidationRule } from '@dps/mycms-commons/dist/search-commons/model/forms/generic-validator.util';
 import { PageUtils } from '../../../angular-commons/services/page.utils';
 import { CommonRoutingService } from '../../../angular-commons/services/common-routing.service';
 var SectionBarComponent = /** @class */ (function () {
-    function SectionBarComponent(fb, route, pdocDataService, commonRoutingService, errorResolver, toastr, router, pageUtils, cd) {
+    function SectionBarComponent(fb, route, pagesDataService, commonRoutingService, errorResolver, toastr, router, pageUtils, cd) {
         this.fb = fb;
         this.route = route;
-        this.pdocDataService = pdocDataService;
+        this.pagesDataService = pagesDataService;
         this.commonRoutingService = commonRoutingService;
         this.errorResolver = errorResolver;
         this.toastr = toastr;
@@ -50,7 +50,7 @@ var SectionBarComponent = /** @class */ (function () {
             me.themeFormGroup.patchValue({ 'theme': me.pdoc.theme });
             me.pageUtils.setGlobalStyle(me.pdoc.css, 'sectionStyle');
             me.cd.markForCheck();
-            _this.pdocDataService.getById('menu', { forceLocalStore: true }).then(function onThemesFound(pdoc) {
+            _this.pagesDataService.getById('menu', { forceLocalStore: true }).then(function onThemesFound(pdoc) {
                 me.sections = me.getSubSections(pdoc);
                 me.cd.markForCheck();
             }).catch(function onNotFound(error) {
@@ -69,7 +69,7 @@ var SectionBarComponent = /** @class */ (function () {
         return false;
     };
     SectionBarComponent.prototype.getSubSections = function (pdoc) {
-        return this.pdocDataService.getSubDocuments(pdoc);
+        return this.pagesDataService.getSubDocuments(pdoc);
     };
     SectionBarComponent = __decorate([
         Component({
@@ -78,7 +78,7 @@ var SectionBarComponent = /** @class */ (function () {
             styleUrls: ['./sectionbar.component.css'],
             changeDetection: ChangeDetectionStrategy.OnPush
         }),
-        __metadata("design:paramtypes", [FormBuilder, ActivatedRoute, PDocDataService,
+        __metadata("design:paramtypes", [FormBuilder, ActivatedRoute, StaticPagesDataService,
             CommonRoutingService, ErrorResolver,
             ToastrService, Router, PageUtils,
             ChangeDetectorRef])

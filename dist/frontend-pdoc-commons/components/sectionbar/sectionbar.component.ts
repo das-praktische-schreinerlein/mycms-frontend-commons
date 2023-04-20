@@ -2,7 +2,7 @@ import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit} from '@an
 import {ActivatedRoute, Router} from '@angular/router';
 import {PDocRecord} from '@dps/mycms-commons/dist/pdoc-commons/model/records/pdoc-record';
 import {ToastrService} from 'ngx-toastr';
-import {PDocDataService} from '@dps/mycms-commons/dist/pdoc-commons/services/pdoc-data.service';
+import {StaticPagesDataService} from '@dps/mycms-commons/dist/pdoc-commons/services/staticpages-data.service';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {ResolvedData} from '../../../angular-commons/resolver/resolver.utils';
 import {ErrorResolver} from '../../../frontend-cdoc-commons/resolver/error.resolver';
@@ -25,7 +25,7 @@ export class SectionBarComponent implements OnInit {
         theme: undefined
     });
 
-    constructor(public fb: FormBuilder, private route: ActivatedRoute, private pdocDataService: PDocDataService,
+    constructor(public fb: FormBuilder, private route: ActivatedRoute, private pagesDataService: StaticPagesDataService,
                 private commonRoutingService: CommonRoutingService, private errorResolver: ErrorResolver,
                 private toastr: ToastrService, private router: Router, private pageUtils: PageUtils,
                 private cd: ChangeDetectorRef) {
@@ -51,8 +51,8 @@ export class SectionBarComponent implements OnInit {
                 me.pageUtils.setGlobalStyle(me.pdoc.css, 'sectionStyle');
 
                 me.cd.markForCheck();
-                this.pdocDataService.getById('menu', {forceLocalStore: true}).then(function onThemesFound(pdoc: PDocRecord) {
-                        me.sections = me.getSubSections(pdoc);
+                this.pagesDataService.getById('menu', {forceLocalStore: true}).then(function onThemesFound(pdoc: PDocRecord) {
+                    me.sections = me.getSubSections(pdoc);
                     me.cd.markForCheck();
                     }).catch(function onNotFound(error) {
                         me.sections = [];
@@ -73,7 +73,7 @@ export class SectionBarComponent implements OnInit {
     }
 
     getSubSections(pdoc: PDocRecord): PDocRecord[] {
-        return this.pdocDataService.getSubDocuments(pdoc);
+        return this.pagesDataService.getSubDocuments(pdoc);
     }
 
 }

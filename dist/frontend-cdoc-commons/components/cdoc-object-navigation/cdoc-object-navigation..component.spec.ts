@@ -6,7 +6,6 @@ import {TranslateModule} from '@ngx-translate/core';
 import {CommonRoutingService} from '../../../angular-commons/services/common-routing.service';
 import {RouterStub} from '../../../angular-commons/testing/router-stubs';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {NgbModalStack} from '@ng-bootstrap/ng-bootstrap/modal/modal-stack';
 import {CommonDocObjectNavigationComponent} from './cdoc-object-navigation.component';
 
 describe('CommonDocObjectNavigationComponent', () => {
@@ -22,7 +21,6 @@ describe('CommonDocObjectNavigationComponent', () => {
             providers: [
                 { provide: Router, useValue: new RouterStub() },
                 NgbModal,
-                NgbModalStack,
                 CommonRoutingService
             ],
             schemas: [NO_ERRORS_SCHEMA]

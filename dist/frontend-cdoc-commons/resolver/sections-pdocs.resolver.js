@@ -9,7 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 import { Injectable } from '@angular/core';
 import { AppState, GenericAppService } from '@dps/mycms-commons/dist/commons/services/generic-app.service';
-import { PDocDataService } from '@dps/mycms-commons/dist/pdoc-commons/services/pdoc-data.service';
+import { StaticPagesDataService } from '@dps/mycms-commons/dist/pdoc-commons/services/staticpages-data.service';
 import { ResolverError } from '../../angular-commons/resolver/resolver.utils';
 var SectionsPDocsResolver = /** @class */ (function () {
     function SectionsPDocsResolver(appService, dataService) {
@@ -46,7 +46,7 @@ var SectionsPDocsResolver = /** @class */ (function () {
     SectionsPDocsResolver.ERROR_READING_SECTIONS = 'ERROR_READING_SECTIONS';
     SectionsPDocsResolver = SectionsPDocsResolver_1 = __decorate([
         Injectable(),
-        __metadata("design:paramtypes", [GenericAppService, PDocDataService])
+        __metadata("design:paramtypes", [GenericAppService, StaticPagesDataService])
     ], SectionsPDocsResolver);
     return SectionsPDocsResolver;
 }());
