@@ -60,7 +60,7 @@
     "promise-serial": ">= 0.1.5",
     "tz-lookup": ">= 6.1.25",
     "vis": ">= 4.21.0",
-    "xregexp": ">= 4.3.0 < 4.4.0"
+    "xregexp": ">= 4.4.1"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "0.13.10",
@@ -137,6 +137,6 @@
     "rxjs": "6.6.0",
     "tz-lookup": "6.1.25",
     "vis": "4.21.0",
-    "xregexp": "4.3.0"
+    "xregexp": "4.4.1"
   }
 }
