@@ -5,9 +5,10 @@
 ## 6.0.0
 - bumped up deps
 - use StaticPagesDataService instead of PDocDataService
+- moved TextEditorComponent, FormUtils and GeoParserDeterminer to commons
 
 ### new features
-- none
+- moved TextEditorComponent, FormUtils and GeoParserDeterminer to commons
 
 ### improvements
 - none

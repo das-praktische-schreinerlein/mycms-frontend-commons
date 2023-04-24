@@ -7,6 +7,7 @@ import {ShowBrowserOnOfflineComponent} from './components/show-browseronoffline/
 import {DynamicComponentHostDirective} from './components/directives/dynamic-component-host.directive';
 import {IntervalControlComponent} from './components/interval-control/interval-control.component';
 import {DurationPipe} from './pipes/duration.pipe';
+import {TextEditorComponent} from './components/text-editor/text-editor.component';
 
 @NgModule({
     declarations: [
@@ -15,7 +16,8 @@ import {DurationPipe} from './pipes/duration.pipe';
         SwitchOnOfflineComponent,
         ShowBrowserOnOfflineComponent,
         IntervalControlComponent,
-        DurationPipe
+        DurationPipe,
+        TextEditorComponent
     ],
     imports: [
         BrowserModule,
@@ -28,7 +30,8 @@ import {DurationPipe} from './pipes/duration.pipe';
         SwitchOnOfflineComponent,
         ShowBrowserOnOfflineComponent,
         IntervalControlComponent,
-        DurationPipe
+        DurationPipe,
+        TextEditorComponent
     ]
 })
 export class AngularCommonsModule {

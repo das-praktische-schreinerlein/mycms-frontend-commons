@@ -13,6 +13,7 @@ import { ShowBrowserOnOfflineComponent } from './components/show-browseronofflin
 import { DynamicComponentHostDirective } from './components/directives/dynamic-component-host.directive';
 import { IntervalControlComponent } from './components/interval-control/interval-control.component';
 import { DurationPipe } from './pipes/duration.pipe';
+import { TextEditorComponent } from './components/text-editor/text-editor.component';
 var AngularCommonsModule = /** @class */ (function () {
     function AngularCommonsModule() {
     }
@@ -24,7 +25,8 @@ var AngularCommonsModule = /** @class */ (function () {
                 SwitchOnOfflineComponent,
                 ShowBrowserOnOfflineComponent,
                 IntervalControlComponent,
-                DurationPipe
+                DurationPipe,
+                TextEditorComponent
             ],
             imports: [
                 BrowserModule,
@@ -37,7 +39,8 @@ var AngularCommonsModule = /** @class */ (function () {
                 SwitchOnOfflineComponent,
                 ShowBrowserOnOfflineComponent,
                 IntervalControlComponent,
-                DurationPipe
+                DurationPipe,
+                TextEditorComponent
             ]
         })
     ], AngularCommonsModule);
