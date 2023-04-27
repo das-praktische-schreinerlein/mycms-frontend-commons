@@ -1,0 +1,35 @@
+p {
+    width: 100%;
+    text-align: center;
+}
+div.app-section-list {
+    padding: 5px;
+}
+
+ul.sidebar-nav {
+    list-style: none;
+}
+
+a.active {
+    font-weight: bold;
+}
+
+div.prevnext-nav-prev {
+    font-size:  small;
+    text-align: center;
+}
+
+div.prevnext-nav-current {
+    font-size: medium;
+    text-align: center;
+}
+
+div.prevnext-nav-next {
+    font-weight: bold;
+    font-size: large;
+    text-align: center;
+}
+
+div.prevnext-nav {
+    padding: 10px;
+}

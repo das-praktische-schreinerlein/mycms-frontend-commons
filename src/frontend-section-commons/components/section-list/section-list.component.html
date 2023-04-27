@@ -1,0 +1,16 @@
+<div class="row card-deck" *ngIf="records != undefined && records.length > 0">
+    <ng-container [ngSwitch]="layout">
+        <ng-container *ngSwitchCase="Layout.FLAT">
+            <app-section-list-item-flat [record]="record"
+                                      [layout]="layout"
+                                      (show)="onShow($event)"
+                                      *ngFor="let record of records"></app-section-list-item-flat>
+        </ng-container>
+        <ng-container *ngSwitchDefault>
+            <app-section-list-item class="card section-list-item" [record]="record"
+                                [layout]="layout"
+                                (show)="onShow($event)"
+                                *ngFor="let record of records"></app-section-list-item>
+        </ng-container>
+    </ng-container>
+</div>

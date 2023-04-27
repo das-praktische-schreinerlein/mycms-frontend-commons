@@ -18,8 +18,17 @@ var PDocDataServiceStub = /** @class */ (function () {
     PDocDataServiceStub.defaultRecord = function () {
         return new PDocRecord({ id: '1', name: 'Test' });
     };
+    PDocDataServiceStub.prototype.cloneSanitizedSearchForm = function (values) {
+        return new PDocSearchForm(values);
+    };
+    PDocDataServiceStub.prototype.newSearchForm = function (values) {
+        return new PDocSearchForm(values);
+    };
     PDocDataServiceStub.prototype.search = function (searchForm) {
         return Promise.resolve(new PDocSearchResult(searchForm, 0, [], new Facets()));
+    };
+    PDocDataServiceStub.prototype.newSearchResult = function (tdocSearchForm, recordCount, currentRecords, facets) {
+        return new PDocSearchResult(tdocSearchForm, recordCount, currentRecords, facets);
     };
     PDocDataServiceStub.prototype.getById = function (id) {
         return Promise.resolve(new PDocRecord({ id: '1' }));

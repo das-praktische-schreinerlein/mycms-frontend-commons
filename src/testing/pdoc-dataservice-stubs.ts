@@ -15,10 +15,22 @@ export class PDocDataServiceStub {
         return new PDocRecord({id: '1', name: 'Test'});
     }
 
+    cloneSanitizedSearchForm(values: PDocSearchForm): PDocSearchForm {
+        return new PDocSearchForm(values);
+    }
+
+    newSearchForm(values: {}): PDocSearchForm {
+        return new PDocSearchForm(values);
+    }
+
     search(searchForm: PDocSearchForm): Promise<PDocSearchResult> {
         return Promise.resolve(new PDocSearchResult(searchForm, 0, [], new Facets()));
     }
 
+    newSearchResult(tdocSearchForm: PDocSearchForm, recordCount: number,
+                    currentRecords: PDocRecord[], facets: Facets): PDocSearchResult {
+        return new PDocSearchResult(tdocSearchForm, recordCount, currentRecords, facets);
+    }
     getById(id: any): Promise<PDocRecord> {
         return Promise.resolve(new PDocRecord({id: '1'}));
     }
@@ -26,4 +38,6 @@ export class PDocDataServiceStub {
     getSubDocuments(pdoc: any): PDocRecord[] {
         return [];
     }
+
 }
+
