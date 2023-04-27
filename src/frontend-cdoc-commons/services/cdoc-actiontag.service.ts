@@ -85,6 +85,8 @@ export abstract class CommonDocActionTagService <R extends CommonDocRecord, F ex
             return this.processActionTagEventTag(actionTagEvent, actionTagEventEmitter);
         } else if (actionTagEvent.config.type === 'link') {
             return this.processActionTagEventLink(actionTagEvent, actionTagEventEmitter);
+        } else if (actionTagEvent.config.type === 'noop') {
+            return this.processActionTagEventNoop(actionTagEvent, actionTagEventEmitter);
         } else {
             return this.processActionTagEventUnknown(actionTagEvent, actionTagEventEmitter);
         }
@@ -219,6 +221,8 @@ export abstract class CommonDocActionTagService <R extends CommonDocRecord, F ex
                                             actionTagEventEmitter: EventEmitter<MultiRecordActionTagEvent>): Promise<R[]> {
         if (actionTagEvent.config.key === 'm3uplaylistexport') {
             return this.processMultiRecordActionTagEventPlaylistExport(actionTagEvent, actionTagEventEmitter);
+        } else if (actionTagEvent.config.type === 'noop') {
+            return this.processActionMultiRecordTagEventNoop(actionTagEvent, actionTagEventEmitter);
         } else {
             return this.processActionMultiRecordTagEventUnknown(actionTagEvent, actionTagEventEmitter);
         }
@@ -246,4 +250,23 @@ export abstract class CommonDocActionTagService <R extends CommonDocRecord, F ex
         actionTagEventEmitter.error(actionTagEvent.error);
         return Promise.reject(actionTagEvent.error);
     }
+
+    protected processActionTagEventNoop(actionTagEvent: ActionTagEvent,
+                                        actionTagEventEmitter: EventEmitter<ActionTagEvent>): Promise<R> {
+        actionTagEvent.processed = true;
+        actionTagEvent.result = actionTagEvent.record;
+        actionTagEventEmitter.emit(actionTagEvent);
+        return Promise.resolve(<R>actionTagEvent.record);
+    }
+
+    protected processActionMultiRecordTagEventNoop(actionTagEvent: MultiRecordActionTagEvent,
+                                                   actionTagEventEmitter: EventEmitter<MultiRecordActionTagEvent>)
+        : Promise<R[]> {
+        actionTagEvent.processed = true;
+        actionTagEvent.results = actionTagEvent.records;
+        actionTagEventEmitter.emit(actionTagEvent);
+        actionTagEventEmitter.error(actionTagEvent.error);
+        return Promise.resolve(<R[]>actionTagEvent.results);
+    }
+
 }

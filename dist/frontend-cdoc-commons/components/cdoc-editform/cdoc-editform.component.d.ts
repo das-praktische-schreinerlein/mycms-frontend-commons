@@ -1,5 +1,6 @@
 import { ChangeDetectorRef, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { SchemaValidationError } from 'js-data';
 import { IMultiSelectSettings, IMultiSelectTexts } from 'angular-2-dropdown-multiselect';
@@ -40,6 +41,7 @@ export declare abstract class CommonDocEditformComponent<R extends CommonDocReco
     protected searchFormUtils: SearchFormUtils;
     protected cdocDataService: D;
     protected contentUtils: CommonDocContentUtils;
+    protected router: Router;
     protected config: {};
     suggestionConfigs: KeywordSuggestion[];
     editPrefix: string;
@@ -60,7 +62,9 @@ export declare abstract class CommonDocEditformComponent<R extends CommonDocReco
     save: EventEmitter<R>;
     saveAndSearch: EventEmitter<R>;
     saveAndForward: EventEmitter<CommonDocEditformComponentReturnType<R>>;
-    constructor(fb: FormBuilder, toastr: ToastrService, cd: ChangeDetectorRef, appService: GenericAppService, cdocSearchFormUtils: CommonDocSearchFormUtils, searchFormUtils: SearchFormUtils, cdocDataService: D, contentUtils: CommonDocContentUtils);
+    modal?: boolean;
+    cancelModal: EventEmitter<boolean>;
+    constructor(fb: FormBuilder, toastr: ToastrService, cd: ChangeDetectorRef, appService: GenericAppService, cdocSearchFormUtils: CommonDocSearchFormUtils, searchFormUtils: SearchFormUtils, cdocDataService: D, contentUtils: CommonDocContentUtils, router: Router);
     setKeyword(keyword: string): void;
     unsetKeyword(keyword: string): void;
     setValue(field: string, value: any): void;
@@ -68,6 +72,9 @@ export declare abstract class CommonDocEditformComponent<R extends CommonDocReco
     recommendName(): void;
     submitSave(event: Event, backToSearch: boolean): boolean;
     submitSaveAndForward(event: Event, returnMode: CommonDocEditformComponentForwardMode): boolean;
+    submitCancelModal(event: Event): boolean;
+    onCreateNewLink(key: string, id: string): boolean;
+    onShowEntityLink(key: string, id: string): boolean;
     protected getComponentConfig(config: {}): CommonDocEditformComponentConfig;
     protected configureComponent(config: {}): void;
     protected prepareSubmitValues(values: {}): void;

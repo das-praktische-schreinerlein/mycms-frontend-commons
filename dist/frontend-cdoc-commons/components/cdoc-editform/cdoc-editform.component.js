@@ -33,7 +33,7 @@ export var CommonDocEditformComponentForwardMode;
 })(CommonDocEditformComponentForwardMode || (CommonDocEditformComponentForwardMode = {}));
 var CommonDocEditformComponent = /** @class */ (function (_super) {
     __extends(CommonDocEditformComponent, _super);
-    function CommonDocEditformComponent(fb, toastr, cd, appService, cdocSearchFormUtils, searchFormUtils, cdocDataService, contentUtils) {
+    function CommonDocEditformComponent(fb, toastr, cd, appService, cdocSearchFormUtils, searchFormUtils, cdocDataService, contentUtils, router) {
         var _this = _super.call(this, cd) || this;
         _this.fb = fb;
         _this.toastr = toastr;
@@ -43,6 +43,7 @@ var CommonDocEditformComponent = /** @class */ (function (_super) {
         _this.searchFormUtils = searchFormUtils;
         _this.cdocDataService = cdocDataService;
         _this.contentUtils = contentUtils;
+        _this.router = router;
         _this.suggestionConfigs = [];
         _this.editPrefix = '';
         _this.defaultSelectSetting = { dynamicTitleMaxItems: 5,
@@ -78,6 +79,8 @@ var CommonDocEditformComponent = /** @class */ (function (_super) {
         _this.save = new EventEmitter();
         _this.saveAndSearch = new EventEmitter();
         _this.saveAndForward = new EventEmitter();
+        _this.modal = false;
+        _this.cancelModal = new EventEmitter();
         return _this;
     }
     CommonDocEditformComponent.prototype.setKeyword = function (keyword) {
@@ -133,6 +136,34 @@ var CommonDocEditformComponent = /** @class */ (function (_super) {
             return false;
         }
         this.saveAndForward.emit({ returnMode: returnMode, result: values });
+        return false;
+    };
+    CommonDocEditformComponent.prototype.submitCancelModal = function (event) {
+        this.cancelModal.emit(false);
+        return false;
+    };
+    CommonDocEditformComponent.prototype.onCreateNewLink = function (key, id) {
+        var me = this;
+        // open modal dialog
+        me.router.navigate([{ outlets: { 'modaledit': ['modaledit', 'create', key, id] } }]).then(function (value) {
+            // check for closing modal dialog and routechange -> update facets
+            var subscription = me.router.events.subscribe(function (val) {
+                subscription.unsubscribe();
+                me.fillFacets(me.record);
+            });
+        });
+        return false;
+    };
+    CommonDocEditformComponent.prototype.onShowEntityLink = function (key, id) {
+        var me = this;
+        // open modal dialog
+        me.router.navigate([{ outlets: { 'modalshow': ['modalshow', 'show', key, key + '_' + id] } }]).then(function (value) {
+            // check for closing modal dialog and routechange -> update facets
+            var subscription = me.router.events.subscribe(function (val) {
+                subscription.unsubscribe();
+                me.fillFacets(me.record);
+            });
+        });
         return false;
     };
     CommonDocEditformComponent.prototype.getComponentConfig = function (config) {
@@ -373,6 +404,14 @@ var CommonDocEditformComponent = /** @class */ (function (_super) {
         Output(),
         __metadata("design:type", EventEmitter)
     ], CommonDocEditformComponent.prototype, "saveAndForward", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Object)
+    ], CommonDocEditformComponent.prototype, "modal", void 0);
+    __decorate([
+        Output(),
+        __metadata("design:type", EventEmitter)
+    ], CommonDocEditformComponent.prototype, "cancelModal", void 0);
     return CommonDocEditformComponent;
 }(AbstractInlineComponent));
 export { CommonDocEditformComponent };

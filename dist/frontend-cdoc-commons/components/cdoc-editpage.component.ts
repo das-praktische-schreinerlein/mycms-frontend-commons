@@ -5,11 +5,11 @@ import {CommonDocRecord} from '@dps/mycms-commons/dist/search-commons/model/reco
 import {CommonDocSearchForm} from '@dps/mycms-commons/dist/search-commons/model/forms/cdoc-searchform';
 import {CommonDocSearchResult} from '@dps/mycms-commons/dist/search-commons/model/container/cdoc-searchresult';
 import {CommonDocDataService} from '@dps/mycms-commons/dist/search-commons/services/cdoc-data.service';
-import {AbstractPageComponent} from '../../frontend-pdoc-commons/components/pdoc-page.component';
+import {AbstractPageComponent} from '../../angular-commons/components/abstract-page.component';
 import {CommonDocContentUtils} from '../services/cdoc-contentutils.service';
 import {CommonDocRoutingService} from '../services/cdoc-routing.service';
 import {Layout, LayoutService} from '../../angular-commons/services/layout.service';
-import {CommonEnvironment} from '../../frontend-pdoc-commons/common-environment';
+import {CommonEnvironment} from '../../frontend-section-commons/common-environment';
 import {CommonDocRecordResolver} from '../resolver/cdoc-details.resolver';
 import {
     IdValidationRule,

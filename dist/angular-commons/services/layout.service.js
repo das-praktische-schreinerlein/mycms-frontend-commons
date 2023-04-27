@@ -50,6 +50,42 @@ var LayoutService = /** @class */ (function () {
             });
         }
     }
+    LayoutService.layoutToString = function (layout) {
+        if (layout === undefined) {
+            return undefined;
+        }
+        switch (layout) {
+            case Layout.THIN:
+                return 'THIN';
+            case Layout.FLAT:
+                return 'FLAT';
+            case Layout.SMALL:
+                return 'SMALL';
+            case Layout.BIG:
+                return 'BIG';
+            case Layout.PAGE:
+                return 'PAGE';
+        }
+        return undefined;
+    };
+    LayoutService.layoutFromString = function (layout) {
+        if (!layout) {
+            return undefined;
+        }
+        switch (layout) {
+            case 'THIN':
+                return Layout.THIN;
+            case 'FLAT':
+                return Layout.FLAT;
+            case 'SMALL':
+                return Layout.SMALL;
+            case 'BIG':
+                return Layout.BIG;
+            case 'PAGE':
+                return Layout.PAGE;
+        }
+        return undefined;
+    };
     LayoutService.prototype.getLayoutSizeData = function () {
         return this.layoutSizeObservable;
     };

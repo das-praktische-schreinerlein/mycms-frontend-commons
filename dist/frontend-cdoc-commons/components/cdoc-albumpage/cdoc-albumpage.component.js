@@ -18,7 +18,7 @@ import { ErrorResolver } from '../../resolver/error.resolver';
 import { GenericAppService } from '@dps/mycms-commons/dist/commons/services/generic-app.service';
 import { Facets } from '@dps/mycms-commons/dist/search-commons/model/container/facets';
 import { CommonDocAlbumResolver } from '../../resolver/cdoc-album.resolver';
-import { AbstractPageComponent } from '../../../frontend-pdoc-commons/components/pdoc-page.component';
+import { AbstractPageComponent } from '../../../angular-commons/components/abstract-page.component';
 import { AngularHtmlService } from '../../../angular-commons/services/angular-html.service';
 var CommonDocAlbumpageComponent = /** @class */ (function (_super) {
     __extends(CommonDocAlbumpageComponent, _super);

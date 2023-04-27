@@ -12,17 +12,17 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 import { Facets } from '@dps/mycms-commons/dist/search-commons/model/container/facets';
-import { Layout, LayoutSize, SearchFormLayout } from '../../angular-commons/services/layout.service';
+import { Layout, LayoutService, LayoutSize, SearchFormLayout } from '../../angular-commons/services/layout.service';
 import { ErrorResolver } from '../resolver/error.resolver';
 import { IdValidationRule } from '@dps/mycms-commons/dist/search-commons/model/forms/generic-validator.util';
 import { GenericAppService } from '@dps/mycms-commons/dist/commons/services/generic-app.service';
 import { RoutingState } from '../../angular-commons/services/common-routing.service';
 import { CommonSectionSearchFormResolver } from '../resolver/cdoc-section-searchform.resolver';
-import { AbstractPageComponent } from '../../frontend-pdoc-commons/components/pdoc-page.component';
+import { AbstractPageComponent } from '../../angular-commons/components/abstract-page.component';
 import { AngularHtmlService } from '../../angular-commons/services/angular-html.service';
 var CommonDocSearchpageComponent = /** @class */ (function (_super) {
     __extends(CommonDocSearchpageComponent, _super);
-    function CommonDocSearchpageComponent(route, commonRoutingService, errorResolver, cdocDataService, searchFormConverter, cdocRoutingService, toastr, pageUtils, cd, trackingProvider, appService, platformService, layoutService, searchFormUtils, cdocSearchFormUtils, multiActionManager, environment) {
+    function CommonDocSearchpageComponent(route, commonRoutingService, errorResolver, cdocDataService, searchFormConverter, cdocRoutingService, toastr, pageUtils, cd, trackingProvider, appService, platformService, layoutService, searchFormUtils, cdocSearchFormUtils, multiActionManager, environment, location) {
         var _this = _super.call(this, route, toastr, pageUtils, cd, trackingProvider, appService, platformService, layoutService, environment) || this;
         _this.route = route;
         _this.commonRoutingService = commonRoutingService;
@@ -41,6 +41,7 @@ var CommonDocSearchpageComponent = /** @class */ (function (_super) {
         _this.cdocSearchFormUtils = cdocSearchFormUtils;
         _this.multiActionManager = multiActionManager;
         _this.environment = environment;
+        _this.location = location;
         _this.idValidationRule = new IdValidationRule(true);
         _this.Layout = Layout;
         _this.SearchFormLayout = SearchFormLayout;
@@ -55,6 +56,7 @@ var CommonDocSearchpageComponent = /** @class */ (function (_super) {
         _this.m3uExportAvailable = false;
         _this.maxAllowedM3UExportItems = -1;
         _this.availableCreateActionTypes = [];
+        _this.defaultLayoutPerType = {};
         _this.multiActionSelectValueMap = new Map();
         _this.searchForm = cdocDataService.newSearchForm({});
         _this.searchResult = cdocDataService.newSearchResult(_this.searchForm, 0, [], new Facets());
@@ -167,6 +169,12 @@ var CommonDocSearchpageComponent = /** @class */ (function (_super) {
             // ignore changes if not initialized
             return;
         }
+        if (this.searchForm['layout'] !== layout) {
+            this.searchForm['layout'] = layout;
+            this.cdocRoutingService.setLastSearchUrl(this.searchFormConverter.searchFormToUrl(this.baseSearchUrl, this.searchForm));
+            this.location.go(this.cdocRoutingService.getLastSearchUrl());
+            return false;
+        }
         this.layout = layout;
         if (layout.toString() === Layout.PAGE.toString()) {
             this.onPerPageChange(1);
@@ -189,6 +197,12 @@ var CommonDocSearchpageComponent = /** @class */ (function (_super) {
         return false;
     };
     CommonDocSearchpageComponent.prototype.onShowFormChanged = function (showForm) {
+        if (this.searchForm['hideForm'] !== !showForm) {
+            this.searchForm['hideForm'] = !showForm;
+            this.cdocRoutingService.setLastSearchUrl(this.searchFormConverter.searchFormToUrl(this.baseSearchUrl, this.searchForm));
+            this.location.go(this.cdocRoutingService.getLastSearchUrl());
+            return false;
+        }
         this.showSearchFormElements = showForm;
         this.onResize(this.layoutSizeObservable.getValue());
         return false;
@@ -312,6 +326,18 @@ var CommonDocSearchpageComponent = /** @class */ (function (_super) {
         }
     };
     CommonDocSearchpageComponent.prototype.setPageLayoutAndStyles = function () {
+        var defaultLayout = this.searchForm.type && this.defaultLayoutPerType
+            ? LayoutService.layoutFromString(this.defaultLayoutPerType[this.searchForm.type.toUpperCase()])
+            : undefined;
+        if (defaultLayout === undefined) {
+            defaultLayout = Layout.FLAT;
+        }
+        if (this.searchForm['layout'] !== undefined) {
+            this.layout = this.searchForm['layout'];
+        }
+        else {
+            this.layout = defaultLayout;
+        }
         if (this.searchForm.perPage === 1) {
             this.layout = Layout.PAGE;
             this.pageUtils.setGlobalStyle('.hide-on-fullpage { display: none; } ' +
@@ -323,6 +349,12 @@ var CommonDocSearchpageComponent = /** @class */ (function (_super) {
         }
         else {
             this.pageUtils.setGlobalStyle('.show-on-fullpage-block { display: none; }', 'fullPageStyle');
+        }
+        if (this.searchForm['layout'] !== undefined && this.searchForm['layout'] !== this.layout) {
+            this.searchForm['layout'] = this.layout;
+        }
+        if (this.searchForm['hideForm'] !== undefined) {
+            this.onShowFormChanged(!this.searchForm['hideForm']);
         }
     };
     CommonDocSearchpageComponent.prototype.processError = function (data) {

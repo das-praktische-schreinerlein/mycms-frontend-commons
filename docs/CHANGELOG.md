@@ -6,12 +6,15 @@
 - bumped up deps
 - use StaticPagesDataService instead of PDocDataService
 - moved TextEditorComponent, FormUtils and GeoParserDeterminer to commons
+- use StaticPagesDataService instead of PDocDataService
+- renamed pdoc* to section
+- moved layout-utils, noop-action, modal-functionality to commons
 
 ### new features
 - moved TextEditorComponent, FormUtils and GeoParserDeterminer to commons
 
 ### improvements
-- none
+- moved layout-utils, noop-action, modal-functionality to commons
 
 ### bug fixes
 - none
@@ -19,6 +22,7 @@
 ### breaking changes
 - bumped up deps
 - use StaticPagesDataService instead of PDocDataService
+- renamed pdoc* to section
 
 
 ## 5.7.0 (2023-03-18)

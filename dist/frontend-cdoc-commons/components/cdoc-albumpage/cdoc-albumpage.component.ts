@@ -15,7 +15,9 @@ import {Layout, LayoutService} from '../../../angular-commons/services/layout.se
 import {CommonRoutingService, RoutingState} from '../../../angular-commons/services/common-routing.service';
 import {ErrorResolver} from '../../resolver/error.resolver';
 import {CommonDocRoutingService} from '../../services/cdoc-routing.service';
-import {GenericSearchFormSearchFormConverter} from '@dps/mycms-commons/dist/search-commons/services/generic-searchform.converter';
+import {
+    GenericSearchFormSearchFormConverter
+} from '@dps/mycms-commons/dist/search-commons/services/generic-searchform.converter';
 import {PageUtils} from '../../../angular-commons/services/page.utils';
 import {GenericTrackingService} from '../../../angular-commons/services/generic-tracking.service';
 import {CommonDocAlbumService} from '../../services/cdoc-album.service';
@@ -23,10 +25,10 @@ import {GenericAppService} from '@dps/mycms-commons/dist/commons/services/generi
 import {Facets} from '@dps/mycms-commons/dist/search-commons/model/container/facets';
 import {ResolvedData} from '../../../angular-commons/resolver/resolver.utils';
 import {CommonDocAlbumResolver} from '../../resolver/cdoc-album.resolver';
-import {AbstractPageComponent} from '../../../frontend-pdoc-commons/components/pdoc-page.component';
+import {AbstractPageComponent} from '../../../angular-commons/components/abstract-page.component';
 import {PlatformService} from '../../../angular-commons/services/platform.service';
 import {PDocRecord} from '@dps/mycms-commons/dist/pdoc-commons/model/records/pdoc-record';
-import {CommonEnvironment} from '../../../frontend-pdoc-commons/common-environment';
+import {CommonEnvironment} from '../../../frontend-section-commons/common-environment';
 import {CommonDocPlaylistService} from '@dps/mycms-commons/dist/search-commons/services/cdoc-playlist.service';
 import {AngularHtmlService} from '../../../angular-commons/services/angular-html.service';
 import {CommonDocMultiActionManager} from '../../services/cdoc-multiaction.manager';

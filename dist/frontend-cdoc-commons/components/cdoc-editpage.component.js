@@ -11,7 +11,7 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-import { AbstractPageComponent } from '../../frontend-pdoc-commons/components/pdoc-page.component';
+import { AbstractPageComponent } from '../../angular-commons/components/abstract-page.component';
 import { Layout } from '../../angular-commons/services/layout.service';
 import { CommonDocRecordResolver } from '../resolver/cdoc-details.resolver';
 import { IdValidationRule, KeywordValidationRule } from '@dps/mycms-commons/dist/search-commons/model/forms/generic-validator.util';

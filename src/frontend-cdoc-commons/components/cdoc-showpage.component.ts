@@ -1,5 +1,5 @@
 import {ChangeDetectorRef} from '@angular/core';
-import {ActivatedRoute, ParamMap} from '@angular/router';
+import {ActivatedRoute, ParamMap, Router} from '@angular/router';
 import {ToastrService} from 'ngx-toastr';
 import {CommonDocRoutingService} from '../services/cdoc-routing.service';
 import {Layout, LayoutService} from '../../angular-commons/services/layout.service';
@@ -24,8 +24,8 @@ import {CommonDocDataService} from '@dps/mycms-commons/dist/search-commons/servi
 import {CommonDocRecord} from '@dps/mycms-commons/dist/search-commons/model/records/cdoc-entity-record';
 import {CommonDocContentUtils} from '../services/cdoc-contentutils.service';
 import {CommonDocRecordResolver} from '../resolver/cdoc-details.resolver';
-import {AbstractPageComponent} from '../../frontend-pdoc-commons/components/pdoc-page.component';
-import {CommonEnvironment} from '../../frontend-pdoc-commons/common-environment';
+import {AbstractPageComponent} from '../../angular-commons/components/abstract-page.component';
+import {CommonEnvironment} from '../../frontend-section-commons/common-environment';
 import {ActionTagEvent} from './cdoc-actiontags/cdoc-actiontags.component';
 
 export interface CommonDocShowpageComponentConfig {
@@ -43,6 +43,7 @@ export abstract class CommonDocShowpageComponent<R extends CommonDocRecord, F ex
     public Layout = Layout;
     pdoc: PDocRecord;
     queryParamMap: ParamMap = undefined;
+    modal = false;
 
     constructor(protected route: ActivatedRoute, protected cdocRoutingService: CommonDocRoutingService,
                 protected toastr: ToastrService, contentUtils: CommonDocContentUtils,
@@ -51,7 +52,7 @@ export abstract class CommonDocShowpageComponent<R extends CommonDocRecord, F ex
                 protected angularHtmlService: AngularHtmlService, protected cd: ChangeDetectorRef,
                 protected trackingProvider: GenericTrackingService, protected appService: GenericAppService,
                 protected platformService: PlatformService, protected layoutService: LayoutService,
-                protected environment: CommonEnvironment) {
+                protected environment: CommonEnvironment, protected router: Router) {
         super(route, toastr, pageUtils, cd, trackingProvider, appService, platformService, layoutService, environment);
         this.contentUtils = contentUtils;
     }
@@ -122,6 +123,24 @@ export abstract class CommonDocShowpageComponent<R extends CommonDocRecord, F ex
         this.cdocRoutingService.navigateToSearchSuccessor();
         return false;
     }
+
+    submitCloseModal() {
+        this.closeModal();
+
+        return false;
+    }
+
+    protected closeModal() {
+        const me = this;
+        me.router.navigate(['', { outlets: { 'modalshow': null }, primary: '' }],
+            { relativeTo: me.route.parent // <--- PARENT activated route.
+            }
+        ).then(value => {
+            me.commonRoutingService.setRoutingState(RoutingState.DONE);
+        });
+    }
+
+
 
     getBackToSearchUrl(): string {
         return this.cdocRoutingService.getLastSearchUrl() + '#' + this.record.id;

@@ -14,6 +14,8 @@ export interface LayoutSizeData {
 export declare class LayoutService {
     private layoutSizeObservable;
     private flgPrintmode;
+    static layoutToString(layout: Layout): string;
+    static layoutFromString(layout: string): Layout;
     constructor();
     getLayoutSizeData(): BehaviorSubject<LayoutSizeData>;
     isPrintMode(): boolean;

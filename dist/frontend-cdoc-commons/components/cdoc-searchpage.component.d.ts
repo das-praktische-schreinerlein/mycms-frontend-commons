@@ -17,17 +17,19 @@ import { CommonDocSearchForm } from '@dps/mycms-commons/dist/search-commons/mode
 import { CommonDocSearchResult } from '@dps/mycms-commons/dist/search-commons/model/container/cdoc-searchresult';
 import { CommonDocDataService } from '@dps/mycms-commons/dist/search-commons/services/cdoc-data.service';
 import { GenericSearchFormSearchFormConverter } from '@dps/mycms-commons/dist/search-commons/services/generic-searchform.converter';
-import { AbstractPageComponent } from '../../frontend-pdoc-commons/components/pdoc-page.component';
-import { CommonEnvironment } from '../../frontend-pdoc-commons/common-environment';
+import { AbstractPageComponent } from '../../angular-commons/components/abstract-page.component';
+import { CommonEnvironment } from '../../frontend-section-commons/common-environment';
 import { CommonDocMultiActionManager } from '../services/cdoc-multiaction.manager';
 import { IMultiSelectOption } from 'angular-2-dropdown-multiselect';
 import { SearchFormUtils } from '../../angular-commons/services/searchform-utils.service';
 import { CommonDocSearchFormUtils } from '../services/cdoc-searchform-utils.service';
+import { Location } from '@angular/common';
 export interface CommonDocSearchpageComponentConfig {
     baseSearchUrl: string;
     baseSearchUrlDefault: string;
     maxAllowedM3UExportItems: number;
     availableCreateActionTypes: String[];
+    defaultLayoutPerType: {};
 }
 export declare abstract class CommonDocSearchpageComponent<R extends CommonDocRecord, F extends CommonDocSearchForm, S extends CommonDocSearchResult<R, F>, D extends CommonDocDataService<R, F, S>> extends AbstractPageComponent {
     protected route: ActivatedRoute;
@@ -47,6 +49,7 @@ export declare abstract class CommonDocSearchpageComponent<R extends CommonDocRe
     protected cdocSearchFormUtils: CommonDocSearchFormUtils;
     protected multiActionManager: CommonDocMultiActionManager<R, F, S, D>;
     protected environment: CommonEnvironment;
+    protected location: Location;
     idValidationRule: IdValidationRule;
     Layout: typeof Layout;
     SearchFormLayout: typeof SearchFormLayout;
@@ -66,8 +69,9 @@ export declare abstract class CommonDocSearchpageComponent<R extends CommonDocRe
     maxAllowedM3UExportItems: number;
     availableCreateActionType: String;
     availableCreateActionTypes: String[];
+    defaultLayoutPerType: {};
     multiActionSelectValueMap: Map<string, IMultiSelectOption[]>;
-    constructor(route: ActivatedRoute, commonRoutingService: CommonRoutingService, errorResolver: ErrorResolver, cdocDataService: D, searchFormConverter: GenericSearchFormSearchFormConverter<F>, cdocRoutingService: CommonDocRoutingService, toastr: ToastrService, pageUtils: PageUtils, cd: ChangeDetectorRef, trackingProvider: GenericTrackingService, appService: GenericAppService, platformService: PlatformService, layoutService: LayoutService, searchFormUtils: SearchFormUtils, cdocSearchFormUtils: CommonDocSearchFormUtils, multiActionManager: CommonDocMultiActionManager<R, F, S, D>, environment: CommonEnvironment);
+    constructor(route: ActivatedRoute, commonRoutingService: CommonRoutingService, errorResolver: ErrorResolver, cdocDataService: D, searchFormConverter: GenericSearchFormSearchFormConverter<F>, cdocRoutingService: CommonDocRoutingService, toastr: ToastrService, pageUtils: PageUtils, cd: ChangeDetectorRef, trackingProvider: GenericTrackingService, appService: GenericAppService, platformService: PlatformService, layoutService: LayoutService, searchFormUtils: SearchFormUtils, cdocSearchFormUtils: CommonDocSearchFormUtils, multiActionManager: CommonDocMultiActionManager<R, F, S, D>, environment: CommonEnvironment, location: Location);
     protected configureProcessing(): void;
     onShowDoc(cdoc: R): boolean;
     onPageChange(page: number, scroll: boolean): boolean;

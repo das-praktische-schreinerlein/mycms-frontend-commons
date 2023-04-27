@@ -1,5 +1,5 @@
 import { ChangeDetectorRef } from '@angular/core';
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { CommonDocRoutingService } from '../services/cdoc-routing.service';
 import { Layout, LayoutService } from '../../angular-commons/services/layout.service';
@@ -19,8 +19,8 @@ import { CommonDocSearchResult } from '@dps/mycms-commons/dist/search-commons/mo
 import { CommonDocDataService } from '@dps/mycms-commons/dist/search-commons/services/cdoc-data.service';
 import { CommonDocRecord } from '@dps/mycms-commons/dist/search-commons/model/records/cdoc-entity-record';
 import { CommonDocContentUtils } from '../services/cdoc-contentutils.service';
-import { AbstractPageComponent } from '../../frontend-pdoc-commons/components/pdoc-page.component';
-import { CommonEnvironment } from '../../frontend-pdoc-commons/common-environment';
+import { AbstractPageComponent } from '../../angular-commons/components/abstract-page.component';
+import { CommonEnvironment } from '../../frontend-section-commons/common-environment';
 import { ActionTagEvent } from './cdoc-actiontags/cdoc-actiontags.component';
 export interface CommonDocShowpageComponentConfig {
     baseSearchUrl: string;
@@ -41,6 +41,7 @@ export declare abstract class CommonDocShowpageComponent<R extends CommonDocReco
     protected platformService: PlatformService;
     protected layoutService: LayoutService;
     protected environment: CommonEnvironment;
+    protected router: Router;
     private flgDescRendered;
     idValidationRule: IdValidationRule;
     keywordsValidationRule: KeywordValidationRule;
@@ -49,12 +50,15 @@ export declare abstract class CommonDocShowpageComponent<R extends CommonDocReco
     Layout: typeof Layout;
     pdoc: PDocRecord;
     queryParamMap: ParamMap;
-    constructor(route: ActivatedRoute, cdocRoutingService: CommonDocRoutingService, toastr: ToastrService, contentUtils: CommonDocContentUtils, errorResolver: ErrorResolver, pageUtils: PageUtils, commonRoutingService: CommonRoutingService, angularMarkdownService: AngularMarkdownService, angularHtmlService: AngularHtmlService, cd: ChangeDetectorRef, trackingProvider: GenericTrackingService, appService: GenericAppService, platformService: PlatformService, layoutService: LayoutService, environment: CommonEnvironment);
+    modal: boolean;
+    constructor(route: ActivatedRoute, cdocRoutingService: CommonDocRoutingService, toastr: ToastrService, contentUtils: CommonDocContentUtils, errorResolver: ErrorResolver, pageUtils: PageUtils, commonRoutingService: CommonRoutingService, angularMarkdownService: AngularMarkdownService, angularHtmlService: AngularHtmlService, cd: ChangeDetectorRef, trackingProvider: GenericTrackingService, appService: GenericAppService, platformService: PlatformService, layoutService: LayoutService, environment: CommonEnvironment, router: Router);
     protected configureProcessing(): void;
     renderDesc(): string;
     submitBackToSearch(): boolean;
     submitToLastSearchPredecessor(): boolean;
     submitToLastSearchSuccessor(): boolean;
+    submitCloseModal(): boolean;
+    protected closeModal(): void;
     getBackToSearchUrl(): string;
     getLastSearchSuccessorUrl(): string;
     getLastSearchPredecessorUrl(): string;

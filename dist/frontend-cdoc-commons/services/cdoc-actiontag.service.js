@@ -65,6 +65,9 @@ var CommonDocActionTagService = /** @class */ (function () {
         else if (actionTagEvent.config.type === 'link') {
             return this.processActionTagEventLink(actionTagEvent, actionTagEventEmitter);
         }
+        else if (actionTagEvent.config.type === 'noop') {
+            return this.processActionTagEventNoop(actionTagEvent, actionTagEventEmitter);
+        }
         else {
             return this.processActionTagEventUnknown(actionTagEvent, actionTagEventEmitter);
         }
@@ -181,6 +184,9 @@ var CommonDocActionTagService = /** @class */ (function () {
         if (actionTagEvent.config.key === 'm3uplaylistexport') {
             return this.processMultiRecordActionTagEventPlaylistExport(actionTagEvent, actionTagEventEmitter);
         }
+        else if (actionTagEvent.config.type === 'noop') {
+            return this.processActionMultiRecordTagEventNoop(actionTagEvent, actionTagEventEmitter);
+        }
         else {
             return this.processActionMultiRecordTagEventUnknown(actionTagEvent, actionTagEventEmitter);
         }
@@ -199,6 +205,19 @@ var CommonDocActionTagService = /** @class */ (function () {
         actionTagEvent.results = undefined;
         actionTagEventEmitter.error(actionTagEvent.error);
         return Promise.reject(actionTagEvent.error);
+    };
+    CommonDocActionTagService.prototype.processActionTagEventNoop = function (actionTagEvent, actionTagEventEmitter) {
+        actionTagEvent.processed = true;
+        actionTagEvent.result = actionTagEvent.record;
+        actionTagEventEmitter.emit(actionTagEvent);
+        return Promise.resolve(actionTagEvent.record);
+    };
+    CommonDocActionTagService.prototype.processActionMultiRecordTagEventNoop = function (actionTagEvent, actionTagEventEmitter) {
+        actionTagEvent.processed = true;
+        actionTagEvent.results = actionTagEvent.records;
+        actionTagEventEmitter.emit(actionTagEvent);
+        actionTagEventEmitter.error(actionTagEvent.error);
+        return Promise.resolve(actionTagEvent.results);
     };
     return CommonDocActionTagService;
 }());

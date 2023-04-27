@@ -34,4 +34,6 @@ export declare abstract class CommonDocActionTagService<R extends CommonDocRecor
     processMultiRecordActionTagEvent(actionTagEvent: MultiRecordActionTagEvent, actionTagEventEmitter: EventEmitter<MultiRecordActionTagEvent>): Promise<R[]>;
     protected processMultiRecordActionTagEventPlaylistExport(actionTagEvent: MultiRecordActionTagEvent, actionTagEventEmitter: EventEmitter<MultiRecordActionTagEvent>): Promise<R[]>;
     protected processActionMultiRecordTagEventUnknown(actionTagEvent: MultiRecordActionTagEvent, actionTagEventEmitter: EventEmitter<MultiRecordActionTagEvent>): Promise<R[]>;
+    protected processActionTagEventNoop(actionTagEvent: ActionTagEvent, actionTagEventEmitter: EventEmitter<ActionTagEvent>): Promise<R>;
+    protected processActionMultiRecordTagEventNoop(actionTagEvent: MultiRecordActionTagEvent, actionTagEventEmitter: EventEmitter<MultiRecordActionTagEvent>): Promise<R[]>;
 }

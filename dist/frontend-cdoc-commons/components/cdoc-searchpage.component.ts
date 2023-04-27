@@ -23,21 +23,25 @@ import {CommonDocRecord} from '@dps/mycms-commons/dist/search-commons/model/reco
 import {CommonDocSearchForm} from '@dps/mycms-commons/dist/search-commons/model/forms/cdoc-searchform';
 import {CommonDocSearchResult} from '@dps/mycms-commons/dist/search-commons/model/container/cdoc-searchresult';
 import {CommonDocDataService} from '@dps/mycms-commons/dist/search-commons/services/cdoc-data.service';
-import {GenericSearchFormSearchFormConverter} from '@dps/mycms-commons/dist/search-commons/services/generic-searchform.converter';
+import {
+    GenericSearchFormSearchFormConverter
+} from '@dps/mycms-commons/dist/search-commons/services/generic-searchform.converter';
 import {CommonSectionSearchFormResolver} from '../resolver/cdoc-section-searchform.resolver';
-import {AbstractPageComponent} from '../../frontend-pdoc-commons/components/pdoc-page.component';
-import {CommonEnvironment} from '../../frontend-pdoc-commons/common-environment';
+import {AbstractPageComponent} from '../../angular-commons/components/abstract-page.component';
+import {CommonEnvironment} from '../../frontend-section-commons/common-environment';
 import {CommonDocMultiActionManager} from '../services/cdoc-multiaction.manager';
 import {IMultiSelectOption} from 'angular-2-dropdown-multiselect';
 import {SearchFormUtils} from '../../angular-commons/services/searchform-utils.service';
 import {AngularHtmlService} from '../../angular-commons/services/angular-html.service';
 import {CommonDocSearchFormUtils} from '../services/cdoc-searchform-utils.service';
+import {Location} from '@angular/common';
 
 export interface CommonDocSearchpageComponentConfig {
     baseSearchUrl: string;
     baseSearchUrlDefault: string;
     maxAllowedM3UExportItems: number;
     availableCreateActionTypes: String[];
+    defaultLayoutPerType: {};
 }
 
 export abstract class CommonDocSearchpageComponent<R extends CommonDocRecord, F extends CommonDocSearchForm,
@@ -62,6 +66,7 @@ export abstract class CommonDocSearchpageComponent<R extends CommonDocRecord, F 
     maxAllowedM3UExportItems = -1;
     availableCreateActionType: String;
     availableCreateActionTypes: String[] = [];
+    defaultLayoutPerType = {};
 
     multiActionSelectValueMap = new Map<string, IMultiSelectOption[]>();
 
@@ -73,7 +78,8 @@ export abstract class CommonDocSearchpageComponent<R extends CommonDocRecord, F 
                 protected trackingProvider: GenericTrackingService, protected appService: GenericAppService,
                 protected platformService: PlatformService, protected layoutService: LayoutService,
                 protected searchFormUtils: SearchFormUtils, protected cdocSearchFormUtils: CommonDocSearchFormUtils,
-                protected multiActionManager: CommonDocMultiActionManager<R, F, S, D>, protected environment: CommonEnvironment) {
+                protected multiActionManager: CommonDocMultiActionManager<R, F, S, D>,
+                protected environment: CommonEnvironment, protected location: Location) {
         super(route, toastr, pageUtils, cd, trackingProvider, appService, platformService, layoutService, environment);
         this.searchForm = cdocDataService.newSearchForm({});
         this.searchResult = cdocDataService.newSearchResult(this.searchForm, 0, [], new Facets());
@@ -209,6 +215,13 @@ export abstract class CommonDocSearchpageComponent<R extends CommonDocRecord, F 
             return;
         }
 
+        if (this.searchForm['layout'] !== layout) {
+            this.searchForm['layout'] = layout;
+            this.cdocRoutingService.setLastSearchUrl(this.searchFormConverter.searchFormToUrl(this.baseSearchUrl, this.searchForm));
+            this.location.go(this.cdocRoutingService.getLastSearchUrl());
+            return false;
+        }
+
         this.layout = layout;
         if (layout.toString() === Layout.PAGE.toString()) {
             this.onPerPageChange(1);
@@ -232,6 +245,13 @@ export abstract class CommonDocSearchpageComponent<R extends CommonDocRecord, F 
     }
 
     onShowFormChanged(showForm: boolean) {
+        if (this.searchForm['hideForm'] !== !showForm) {
+            this.searchForm['hideForm'] = !showForm;
+            this.cdocRoutingService.setLastSearchUrl(this.searchFormConverter.searchFormToUrl(this.baseSearchUrl, this.searchForm));
+            this.location.go(this.cdocRoutingService.getLastSearchUrl());
+            return false;
+        }
+
         this.showSearchFormElements = showForm;
         this.onResize(this.layoutSizeObservable.getValue());
         return false;
@@ -382,6 +402,19 @@ export abstract class CommonDocSearchpageComponent<R extends CommonDocRecord, F 
     }
 
     protected setPageLayoutAndStyles(): void {
+        let defaultLayout = this.searchForm.type && this.defaultLayoutPerType
+            ? LayoutService.layoutFromString(this.defaultLayoutPerType[this.searchForm.type.toUpperCase()])
+            : undefined;
+        if (defaultLayout === undefined) {
+            defaultLayout = Layout.FLAT;
+        }
+
+        if (this.searchForm['layout'] !== undefined) {
+            this.layout = this.searchForm['layout'];
+        } else {
+            this.layout = defaultLayout;
+        }
+
         if (this.searchForm.perPage === 1) {
             this.layout = Layout.PAGE;
             this.pageUtils.setGlobalStyle('.hide-on-fullpage { display: none; } ' +
@@ -394,6 +427,13 @@ export abstract class CommonDocSearchpageComponent<R extends CommonDocRecord, F 
             this.pageUtils.setGlobalStyle('.show-on-fullpage-block { display: none; }', 'fullPageStyle');
         }
 
+        if (this.searchForm['layout'] !== undefined && this.searchForm['layout'] !== this.layout) {
+            this.searchForm['layout'] = this.layout;
+        }
+
+        if (this.searchForm['hideForm'] !== undefined) {
+            this.onShowFormChanged(!this.searchForm['hideForm']);
+        }
     }
 
     protected processError(data: { searchForm: ResolvedData<F>, pdoc: ResolvedData<PDocRecord>,
@@ -550,7 +590,7 @@ export abstract class CommonDocSearchpageComponent<R extends CommonDocRecord, F 
                     return true;
                 }
                 if (anchor === 'redirectLast') {
-                    this.onShowDoc(cdocSearchResult.currentRecords[cdocSearchResult.currentRecords.length-1]);
+                    this.onShowDoc(cdocSearchResult.currentRecords[cdocSearchResult.currentRecords.length - 1]);
                     return true;
                 }
                 const index = cdocSearchResult.currentRecords.findIndex(value => 'redirect' + value.id === anchor);

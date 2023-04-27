@@ -18,10 +18,10 @@ import { IdValidationRule, KeywordValidationRule } from '@dps/mycms-commons/dist
 import { GenericAppService } from '@dps/mycms-commons/dist/commons/services/generic-app.service';
 import { RoutingState } from '../../angular-commons/services/common-routing.service';
 import { CommonDocRecordResolver } from '../resolver/cdoc-details.resolver';
-import { AbstractPageComponent } from '../../frontend-pdoc-commons/components/pdoc-page.component';
+import { AbstractPageComponent } from '../../angular-commons/components/abstract-page.component';
 var CommonDocShowpageComponent = /** @class */ (function (_super) {
     __extends(CommonDocShowpageComponent, _super);
-    function CommonDocShowpageComponent(route, cdocRoutingService, toastr, contentUtils, errorResolver, pageUtils, commonRoutingService, angularMarkdownService, angularHtmlService, cd, trackingProvider, appService, platformService, layoutService, environment) {
+    function CommonDocShowpageComponent(route, cdocRoutingService, toastr, contentUtils, errorResolver, pageUtils, commonRoutingService, angularMarkdownService, angularHtmlService, cd, trackingProvider, appService, platformService, layoutService, environment, router) {
         var _this = _super.call(this, route, toastr, pageUtils, cd, trackingProvider, appService, platformService, layoutService, environment) || this;
         _this.route = route;
         _this.cdocRoutingService = cdocRoutingService;
@@ -37,11 +37,13 @@ var CommonDocShowpageComponent = /** @class */ (function (_super) {
         _this.platformService = platformService;
         _this.layoutService = layoutService;
         _this.environment = environment;
+        _this.router = router;
         _this.flgDescRendered = false;
         _this.idValidationRule = new IdValidationRule(true);
         _this.keywordsValidationRule = new KeywordValidationRule(true);
         _this.Layout = Layout;
         _this.queryParamMap = undefined;
+        _this.modal = false;
         _this.contentUtils = contentUtils;
         return _this;
     }
@@ -96,6 +98,17 @@ var CommonDocShowpageComponent = /** @class */ (function (_super) {
     CommonDocShowpageComponent.prototype.submitToLastSearchSuccessor = function () {
         this.cdocRoutingService.navigateToSearchSuccessor();
         return false;
+    };
+    CommonDocShowpageComponent.prototype.submitCloseModal = function () {
+        this.closeModal();
+        return false;
+    };
+    CommonDocShowpageComponent.prototype.closeModal = function () {
+        var me = this;
+        me.router.navigate(['', { outlets: { 'modalshow': null }, primary: '' }], { relativeTo: me.route.parent // <--- PARENT activated route.
+        }).then(function (value) {
+            me.commonRoutingService.setRoutingState(RoutingState.DONE);
+        });
     };
     CommonDocShowpageComponent.prototype.getBackToSearchUrl = function () {
         return this.cdocRoutingService.getLastSearchUrl() + '#' + this.record.id;

@@ -11,7 +11,7 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-import { AbstractPageComponent } from '../../frontend-pdoc-commons/components/pdoc-page.component';
+import { AbstractPageComponent } from '../../angular-commons/components/abstract-page.component';
 import { IdValidationRule, KeywordValidationRule } from '@dps/mycms-commons/dist/search-commons/model/forms/generic-validator.util';
 import { ErrorResolver } from '../resolver/error.resolver';
 import { RoutingState } from '../../angular-commons/services/common-routing.service';
@@ -21,7 +21,7 @@ import { CommonDocRecordCreateResolver } from '../resolver/cdoc-create.resolver'
 import { CommonDocEditformComponentForwardMode } from '../components/cdoc-editform/cdoc-editform.component';
 var CommonDocCreatepageComponent = /** @class */ (function (_super) {
     __extends(CommonDocCreatepageComponent, _super);
-    function CommonDocCreatepageComponent(route, cdocRoutingService, toastr, contentUtils, errorResolver, pageUtils, commonRoutingService, angularMarkdownService, angularHtmlService, cd, trackingProvider, appService, platformService, layoutService, environment, cdocDataService) {
+    function CommonDocCreatepageComponent(route, cdocRoutingService, toastr, contentUtils, errorResolver, pageUtils, commonRoutingService, angularMarkdownService, angularHtmlService, cd, trackingProvider, appService, platformService, layoutService, environment, cdocDataService, router) {
         var _this = _super.call(this, route, toastr, pageUtils, cd, trackingProvider, appService, platformService, layoutService, environment) || this;
         _this.route = route;
         _this.cdocRoutingService = cdocRoutingService;
@@ -38,11 +38,13 @@ var CommonDocCreatepageComponent = /** @class */ (function (_super) {
         _this.layoutService = layoutService;
         _this.environment = environment;
         _this.cdocDataService = cdocDataService;
+        _this.router = router;
         _this.idValidationRule = new IdValidationRule(true);
         _this.keywordsValidationRule = new KeywordValidationRule(true);
         _this.CommonDocEditformComponentForwardMode = CommonDocEditformComponentForwardMode;
         _this.Layout = Layout;
         _this.editAllowed = false;
+        _this.modal = false;
         _this.contentUtils = contentUtils;
         return _this;
     }
@@ -119,6 +121,17 @@ var CommonDocCreatepageComponent = /** @class */ (function (_super) {
             me.toastr.error('Es gibt leider Probleme bei der Speichern - am besten noch einmal probieren :-(', 'Oje!');
         });
         return false;
+    };
+    CommonDocCreatepageComponent.prototype.submitCancelModal = function () {
+        this.closeModal();
+        return false;
+    };
+    CommonDocCreatepageComponent.prototype.closeModal = function () {
+        var me = this;
+        me.router.navigate(['', { outlets: { 'modaledit': null }, primary: '' }], { relativeTo: me.route.parent // <--- PARENT activated route.
+        }).then(function (value) {
+            me.commonRoutingService.setRoutingState(RoutingState.DONE);
+        });
     };
     CommonDocCreatepageComponent.prototype.configureComponent = function (config) {
         var componentConfig = this.getComponentConfig(config);

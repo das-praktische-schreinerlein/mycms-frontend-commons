@@ -18,10 +18,10 @@ import { GenericTrackingService } from '../../../angular-commons/services/generi
 import { CommonDocAlbumService } from '../../services/cdoc-album.service';
 import { GenericAppService } from '@dps/mycms-commons/dist/commons/services/generic-app.service';
 import { ResolvedData } from '../../../angular-commons/resolver/resolver.utils';
-import { AbstractPageComponent } from '../../../frontend-pdoc-commons/components/pdoc-page.component';
+import { AbstractPageComponent } from '../../../angular-commons/components/abstract-page.component';
 import { PlatformService } from '../../../angular-commons/services/platform.service';
 import { PDocRecord } from '@dps/mycms-commons/dist/pdoc-commons/model/records/pdoc-record';
-import { CommonEnvironment } from '../../../frontend-pdoc-commons/common-environment';
+import { CommonEnvironment } from '../../../frontend-section-commons/common-environment';
 import { CommonDocPlaylistService } from '@dps/mycms-commons/dist/search-commons/services/cdoc-playlist.service';
 import { CommonDocMultiActionManager } from '../../services/cdoc-multiaction.manager';
 import { IMultiSelectOption } from 'angular-2-dropdown-multiselect';

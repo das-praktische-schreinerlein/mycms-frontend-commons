@@ -1,11 +1,11 @@
 import {ChangeDetectorRef} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {ToastrService} from 'ngx-toastr';
 import {CommonDocRecord} from '@dps/mycms-commons/dist/search-commons/model/records/cdoc-entity-record';
 import {CommonDocSearchForm} from '@dps/mycms-commons/dist/search-commons/model/forms/cdoc-searchform';
 import {CommonDocSearchResult} from '@dps/mycms-commons/dist/search-commons/model/container/cdoc-searchresult';
 import {CommonDocDataService} from '@dps/mycms-commons/dist/search-commons/services/cdoc-data.service';
-import {AbstractPageComponent} from '../../frontend-pdoc-commons/components/pdoc-page.component';
+import {AbstractPageComponent} from '../../angular-commons/components/abstract-page.component';
 import {
     IdValidationRule,
     KeywordValidationRule
@@ -22,7 +22,7 @@ import {GenericTrackingService} from '../../angular-commons/services/generic-tra
 import {GenericAppService} from '@dps/mycms-commons/dist/commons/services/generic-app.service';
 import {PlatformService} from '../../angular-commons/services/platform.service';
 import {Layout, LayoutService} from '../../angular-commons/services/layout.service';
-import {CommonEnvironment} from '../../frontend-pdoc-commons/common-environment';
+import {CommonEnvironment} from '../../frontend-section-commons/common-environment';
 import {ResolvedData} from '../../angular-commons/resolver/resolver.utils';
 import {CommonDocRecordCreateResolver} from '../resolver/cdoc-create.resolver';
 import {
@@ -49,6 +49,7 @@ export abstract class CommonDocCreatepageComponent <R extends CommonDocRecord, F
     pdoc: PDocRecord;
     baseSearchUrl: string;
     editAllowed = false;
+    modal = false;
 
     constructor(protected route: ActivatedRoute, protected cdocRoutingService: CommonDocRoutingService,
                 protected toastr: ToastrService, contentUtils: CommonDocContentUtils,
@@ -57,7 +58,7 @@ export abstract class CommonDocCreatepageComponent <R extends CommonDocRecord, F
                 protected angularHtmlService: AngularHtmlService, protected cd: ChangeDetectorRef,
                 protected trackingProvider: GenericTrackingService, protected appService: GenericAppService,
                 protected platformService: PlatformService, protected layoutService: LayoutService,
-                protected environment: CommonEnvironment, protected cdocDataService: D) {
+                protected environment: CommonEnvironment, protected cdocDataService: D, protected router: Router) {
         super(route, toastr, pageUtils, cd, trackingProvider, appService, platformService, layoutService, environment);
         this.contentUtils = contentUtils;
     }
@@ -152,6 +153,22 @@ export abstract class CommonDocCreatepageComponent <R extends CommonDocRecord, F
             }
         );
         return false;
+    }
+
+    submitCancelModal() {
+        this.closeModal();
+
+        return false;
+    }
+
+    protected closeModal() {
+        const me = this;
+        me.router.navigate(['', { outlets: { 'modaledit': null }, primary: '' }],
+            { relativeTo: me.route.parent // <--- PARENT activated route.
+            }
+        ).then(value => {
+            me.commonRoutingService.setRoutingState(RoutingState.DONE);
+        });
     }
 
     protected abstract getComponentConfig(config: {}): CommonDocCreatepageComponentConfig;

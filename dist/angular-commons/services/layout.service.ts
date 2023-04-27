@@ -20,6 +20,48 @@ export class LayoutService {
     private layoutSizeObservable = new BehaviorSubject<LayoutSizeData>(this.calcLayoutSizeForWindow());
     private flgPrintmode = false;
 
+    public static layoutToString(layout: Layout): string {
+        if (layout === undefined) {
+            return undefined;
+        }
+
+        switch (layout) {
+            case Layout.THIN:
+                return 'THIN';
+            case Layout.FLAT:
+                return 'FLAT';
+            case Layout.SMALL:
+                return 'SMALL';
+            case Layout.BIG:
+                return 'BIG';
+            case Layout.PAGE:
+                return 'PAGE';
+        }
+
+        return undefined;
+    }
+
+    public static layoutFromString(layout: string): Layout {
+        if (!layout) {
+            return undefined;
+        }
+
+        switch (layout) {
+            case 'THIN':
+                return Layout.THIN;
+            case 'FLAT':
+                return Layout.FLAT;
+            case 'SMALL':
+                return Layout.SMALL;
+            case 'BIG':
+                return Layout.BIG;
+            case 'PAGE':
+                return Layout.PAGE;
+        }
+
+        return undefined;
+    }
+
     constructor() {
         const $resizeEvent = fromEvent(window, 'resize');
         $resizeEvent.subscribe(data => {

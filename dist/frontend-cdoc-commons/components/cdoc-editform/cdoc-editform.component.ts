@@ -1,5 +1,6 @@
 import {ChangeDetectorRef, EventEmitter, Input, Output} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
+import {Router} from '@angular/router';
 import {ToastrService} from 'ngx-toastr';
 import {SchemaValidationError} from 'js-data';
 import {IMultiSelectSettings, IMultiSelectTexts} from 'angular-2-dropdown-multiselect';
@@ -92,10 +93,17 @@ export abstract class CommonDocEditformComponent<R extends CommonDocRecord, F ex
     @Output()
     public saveAndForward: EventEmitter<CommonDocEditformComponentReturnType<R>> = new EventEmitter();
 
+    @Input()
+    public modal ? = false;
+
+    @Output()
+    public cancelModal: EventEmitter<boolean> = new EventEmitter();
+
+
     constructor(public fb: FormBuilder, protected toastr: ToastrService, protected cd: ChangeDetectorRef,
                 protected appService: GenericAppService, protected cdocSearchFormUtils: CommonDocSearchFormUtils,
                 protected searchFormUtils: SearchFormUtils, protected cdocDataService: D,
-                protected contentUtils: CommonDocContentUtils) {
+                protected contentUtils: CommonDocContentUtils, protected router: Router) {
         super(cd);
     }
 
@@ -164,6 +172,42 @@ export abstract class CommonDocEditformComponent<R extends CommonDocRecord, F ex
         }
 
         this.saveAndForward.emit({ returnMode: returnMode, result: values});
+
+        return false;
+    }
+
+    submitCancelModal(event: Event): boolean {
+        this.cancelModal.emit(false);
+
+        return false;
+    }
+
+    onCreateNewLink(key: string, id: string): boolean {
+        const me = this;
+        // open modal dialog
+        me.router.navigate([{ outlets: { 'modaledit': ['modaledit', 'create', key, id] } }]).then(value => {
+            // check for closing modal dialog and routechange -> update facets
+            const subscription = me.router.events.subscribe((val) => {
+                subscription.unsubscribe();
+                me.fillFacets(me.record)
+            });
+        });
+
+
+        return false;
+    }
+
+    onShowEntityLink(key: string, id: string): boolean {
+        const me = this;
+        // open modal dialog
+        me.router.navigate([{ outlets: { 'modalshow': ['modalshow', 'show', key, key + '_' + id] } }]).then(value => {
+            // check for closing modal dialog and routechange -> update facets
+            const subscription = me.router.events.subscribe((val) => {
+                subscription.unsubscribe();
+                me.fillFacets(me.record)
+            });
+        });
+
 
         return false;
     }
