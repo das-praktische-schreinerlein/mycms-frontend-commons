@@ -219,7 +219,6 @@ export abstract class CommonDocSearchpageComponent<R extends CommonDocRecord, F 
             this.searchForm['layout'] = layout;
             this.cdocRoutingService.setLastSearchUrl(this.searchFormConverter.searchFormToUrl(this.baseSearchUrl, this.searchForm));
             this.location.go(this.cdocRoutingService.getLastSearchUrl());
-            return false;
         }
 
         this.layout = layout;
@@ -241,6 +240,7 @@ export abstract class CommonDocSearchpageComponent<R extends CommonDocRecord, F 
         this.searchForm.pageNum = 1;
         // console.log('onSearchDoc: redirect to ', searchForm);
         this.redirectToSearch();
+
         return false;
     }
 
@@ -249,11 +249,11 @@ export abstract class CommonDocSearchpageComponent<R extends CommonDocRecord, F 
             this.searchForm['hideForm'] = !showForm;
             this.cdocRoutingService.setLastSearchUrl(this.searchFormConverter.searchFormToUrl(this.baseSearchUrl, this.searchForm));
             this.location.go(this.cdocRoutingService.getLastSearchUrl());
-            return false;
         }
 
         this.showSearchFormElements = showForm;
         this.onResize(this.layoutSizeObservable.getValue());
+
         return false;
     }
 
@@ -261,12 +261,14 @@ export abstract class CommonDocSearchpageComponent<R extends CommonDocRecord, F 
         this.searchForm.when = month;
         this.searchForm.pageNum = 1;
         this.redirectToSearch();
+
         return false;
     }
     onTypeTableColumnClicked(type: string) {
         this.searchForm.type = type;
         this.searchForm.pageNum = 1;
         this.redirectToSearch();
+
         return false;
     }
 
@@ -274,6 +276,7 @@ export abstract class CommonDocSearchpageComponent<R extends CommonDocRecord, F 
         this.searchForm.initial = initial;
         this.searchForm.pageNum = 1;
         this.redirectToSearch();
+
         return false;
     }
 

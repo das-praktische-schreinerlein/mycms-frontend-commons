@@ -173,7 +173,6 @@ var CommonDocSearchpageComponent = /** @class */ (function (_super) {
             this.searchForm['layout'] = layout;
             this.cdocRoutingService.setLastSearchUrl(this.searchFormConverter.searchFormToUrl(this.baseSearchUrl, this.searchForm));
             this.location.go(this.cdocRoutingService.getLastSearchUrl());
-            return false;
         }
         this.layout = layout;
         if (layout.toString() === Layout.PAGE.toString()) {
@@ -201,7 +200,6 @@ var CommonDocSearchpageComponent = /** @class */ (function (_super) {
             this.searchForm['hideForm'] = !showForm;
             this.cdocRoutingService.setLastSearchUrl(this.searchFormConverter.searchFormToUrl(this.baseSearchUrl, this.searchForm));
             this.location.go(this.cdocRoutingService.getLastSearchUrl());
-            return false;
         }
         this.showSearchFormElements = showForm;
         this.onResize(this.layoutSizeObservable.getValue());
