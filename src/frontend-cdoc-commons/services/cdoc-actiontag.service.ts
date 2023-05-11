@@ -75,7 +75,9 @@ export abstract class CommonDocActionTagService <R extends CommonDocRecord, F ex
 
     public processActionTagEvent(actionTagEvent: ActionTagEvent,
                                  actionTagEventEmitter: EventEmitter<ActionTagEvent>): Promise<R> {
-        if (actionTagEvent.config.key === 'edit') {
+        if (actionTagEvent.config.key === 'show') {
+            return this.processActionTagEventShow(actionTagEvent, actionTagEventEmitter);
+        } else if (actionTagEvent.config.key === 'edit') {
             return this.processActionTagEventEdit(actionTagEvent, actionTagEventEmitter);
         } else if (actionTagEvent.config.key === 'createBy') {
             return this.processActionTagEventCreate(actionTagEvent, actionTagEventEmitter);
@@ -89,6 +91,35 @@ export abstract class CommonDocActionTagService <R extends CommonDocRecord, F ex
             return this.processActionTagEventNoop(actionTagEvent, actionTagEventEmitter);
         } else {
             return this.processActionTagEventUnknown(actionTagEvent, actionTagEventEmitter);
+        }
+    }
+
+    protected processActionTagEventShow(actionTagEvent: ActionTagEvent,
+                                        actionTagEventEmitter: EventEmitter<ActionTagEvent>): Promise<R> {
+        actionTagEvent.processed = true;
+        actionTagEvent.error = undefined;
+        actionTagEventEmitter.emit(actionTagEvent);
+
+        if (actionTagEvent.config.payload && actionTagEvent.config.payload['outlet']) {
+            const outlets = {};
+            const outletName = actionTagEvent.config.payload['outlet'];
+            outlets[outletName] = [outletName, 'show', 'anonym', actionTagEvent.record.id];
+
+            return new Promise<R>((resolve, reject) => {
+                this.router.navigate([{outlets: outlets}]).then(value => {
+                    resolve(<R>actionTagEvent.result);
+                }).catch(reason => {
+                    reject(reason);
+                });
+            });
+        } else {
+            return new Promise<R>((resolve, reject) => {
+                this.router.navigate([this.baseEditPath, 'show', 'anonym', actionTagEvent.record.id]).then(value => {
+                    resolve(<R>actionTagEvent.result);
+                }).catch(reason => {
+                    reject(reason);
+                });
+            });
         }
     }
 

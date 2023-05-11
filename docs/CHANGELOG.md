@@ -9,12 +9,14 @@
 - use StaticPagesDataService instead of PDocDataService
 - renamed pdoc* to section
 - moved layout-utils, noop-action, modal-functionality to commons
+- frontend: add show-action as actiontag
 
 ### new features
 - moved TextEditorComponent, FormUtils and GeoParserDeterminer to commons
 
 ### improvements
 - moved layout-utils, noop-action, modal-functionality to commons
+- frontend: add show-action as actiontag
 
 ### bug fixes
 - none

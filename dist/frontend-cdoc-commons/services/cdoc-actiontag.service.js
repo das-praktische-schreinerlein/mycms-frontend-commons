@@ -50,7 +50,10 @@ var CommonDocActionTagService = /** @class */ (function () {
         this.baseEditPath = componentConfig.baseEditPath;
     };
     CommonDocActionTagService.prototype.processActionTagEvent = function (actionTagEvent, actionTagEventEmitter) {
-        if (actionTagEvent.config.key === 'edit') {
+        if (actionTagEvent.config.key === 'show') {
+            return this.processActionTagEventShow(actionTagEvent, actionTagEventEmitter);
+        }
+        else if (actionTagEvent.config.key === 'edit') {
             return this.processActionTagEventEdit(actionTagEvent, actionTagEventEmitter);
         }
         else if (actionTagEvent.config.key === 'createBy') {
@@ -70,6 +73,33 @@ var CommonDocActionTagService = /** @class */ (function () {
         }
         else {
             return this.processActionTagEventUnknown(actionTagEvent, actionTagEventEmitter);
+        }
+    };
+    CommonDocActionTagService.prototype.processActionTagEventShow = function (actionTagEvent, actionTagEventEmitter) {
+        var _this = this;
+        actionTagEvent.processed = true;
+        actionTagEvent.error = undefined;
+        actionTagEventEmitter.emit(actionTagEvent);
+        if (actionTagEvent.config.payload && actionTagEvent.config.payload['outlet']) {
+            var outlets_1 = {};
+            var outletName = actionTagEvent.config.payload['outlet'];
+            outlets_1[outletName] = [outletName, 'show', 'anonym', actionTagEvent.record.id];
+            return new Promise(function (resolve, reject) {
+                _this.router.navigate([{ outlets: outlets_1 }]).then(function (value) {
+                    resolve(actionTagEvent.result);
+                }).catch(function (reason) {
+                    reject(reason);
+                });
+            });
+        }
+        else {
+            return new Promise(function (resolve, reject) {
+                _this.router.navigate([_this.baseEditPath, 'show', 'anonym', actionTagEvent.record.id]).then(function (value) {
+                    resolve(actionTagEvent.result);
+                }).catch(function (reason) {
+                    reject(reason);
+                });
+            });
         }
     };
     CommonDocActionTagService.prototype.processActionTagEventEdit = function (actionTagEvent, actionTagEventEmitter) {

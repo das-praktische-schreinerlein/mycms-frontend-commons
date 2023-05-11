@@ -25,6 +25,7 @@ export declare abstract class CommonDocActionTagService<R extends CommonDocRecor
     protected getComponentConfig(config: {}): CommonDocActionTagServiceConfig;
     protected configureComponent(config: {}): void;
     processActionTagEvent(actionTagEvent: ActionTagEvent, actionTagEventEmitter: EventEmitter<ActionTagEvent>): Promise<R>;
+    protected processActionTagEventShow(actionTagEvent: ActionTagEvent, actionTagEventEmitter: EventEmitter<ActionTagEvent>): Promise<R>;
     protected processActionTagEventEdit(actionTagEvent: ActionTagEvent, actionTagEventEmitter: EventEmitter<ActionTagEvent>): Promise<R>;
     protected processActionTagEventCreate(actionTagEvent: ActionTagEvent, actionTagEventEmitter: EventEmitter<ActionTagEvent>): Promise<R>;
     protected processActionTagEventAlbumTag(actionTagEvent: ActionTagEvent, actionTagEventEmitter: EventEmitter<ActionTagEvent>): Promise<R>;
