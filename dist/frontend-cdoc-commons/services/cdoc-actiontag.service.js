@@ -80,6 +80,7 @@ var CommonDocActionTagService = /** @class */ (function () {
         actionTagEvent.processed = true;
         actionTagEvent.error = undefined;
         actionTagEventEmitter.emit(actionTagEvent);
+        actionTagEvent.result = actionTagEvent.record;
         if (actionTagEvent.config.payload && actionTagEvent.config.payload['outlet']) {
             var outlets_1 = {};
             var outletName = actionTagEvent.config.payload['outlet'];

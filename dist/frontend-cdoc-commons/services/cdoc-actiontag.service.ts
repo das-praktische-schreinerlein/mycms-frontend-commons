@@ -99,6 +99,7 @@ export abstract class CommonDocActionTagService <R extends CommonDocRecord, F ex
         actionTagEvent.processed = true;
         actionTagEvent.error = undefined;
         actionTagEventEmitter.emit(actionTagEvent);
+        actionTagEvent.result = actionTagEvent.record;
 
         if (actionTagEvent.config.payload && actionTagEvent.config.payload['outlet']) {
             const outlets = {};
