@@ -9,6 +9,11 @@ import { BehaviorSubject } from 'rxjs';
 import { PlatformService } from '../services/platform.service';
 import { PDocRecord } from '@dps/mycms-commons/dist/pdoc-commons/model/records/pdoc-record';
 import { CommonEnvironment } from '../../frontend-section-commons/common-environment';
+export interface CommonPageComponentComponentConfig {
+    baseSearchUrl: string;
+    baseSearchUrlDefault: string;
+    modalOutletName?: string;
+}
 export declare abstract class AbstractPageComponent implements OnInit, OnDestroy {
     protected route: ActivatedRoute;
     protected toastr: ToastrService;
@@ -25,6 +30,7 @@ export declare abstract class AbstractPageComponent implements OnInit, OnDestroy
     showLoadingSpinner: boolean;
     baseSearchUrl: string;
     baseSearchUrlDefault: string;
+    modalOutletName: string;
     constructor(route: ActivatedRoute, toastr: ToastrService, pageUtils: PageUtils, cd: ChangeDetectorRef, trackingProvider: GenericTrackingService, appService: GenericAppService, platformService: PlatformService, layoutService: LayoutService, environment: CommonEnvironment);
     ngOnInit(): void;
     ngOnDestroy(): void;

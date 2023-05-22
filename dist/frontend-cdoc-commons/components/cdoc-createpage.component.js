@@ -128,7 +128,9 @@ var CommonDocCreatepageComponent = /** @class */ (function (_super) {
     };
     CommonDocCreatepageComponent.prototype.closeModal = function () {
         var me = this;
-        me.router.navigate(['', { outlets: { 'modaledit': null }, primary: '' }], { relativeTo: me.route.parent // <--- PARENT activated route.
+        var outlets = {};
+        outlets[me.modalOutletName] = null;
+        me.router.navigate(['', { outlets: outlets, primary: '' }], { relativeTo: me.route.parent // <--- PARENT activated route.
         }).then(function (value) {
             me.commonRoutingService.setRoutingState(RoutingState.DONE);
         });
@@ -138,6 +140,7 @@ var CommonDocCreatepageComponent = /** @class */ (function (_super) {
         this.baseSearchUrl = componentConfig.baseSearchUrl;
         this.baseSearchUrlDefault = componentConfig.baseSearchUrlDefault;
         this.editAllowed = componentConfig.editAllowed;
+        this.modalOutletName = componentConfig.modalOutletName;
     };
     CommonDocCreatepageComponent.prototype.configureProcessingOfResolvedData = function (config, resolvedData) {
     };

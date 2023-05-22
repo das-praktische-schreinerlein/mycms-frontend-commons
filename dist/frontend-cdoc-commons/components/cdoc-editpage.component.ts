@@ -1,11 +1,14 @@
 import {ChangeDetectorRef} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {ToastrService} from 'ngx-toastr';
 import {CommonDocRecord} from '@dps/mycms-commons/dist/search-commons/model/records/cdoc-entity-record';
 import {CommonDocSearchForm} from '@dps/mycms-commons/dist/search-commons/model/forms/cdoc-searchform';
 import {CommonDocSearchResult} from '@dps/mycms-commons/dist/search-commons/model/container/cdoc-searchresult';
 import {CommonDocDataService} from '@dps/mycms-commons/dist/search-commons/services/cdoc-data.service';
-import {AbstractPageComponent} from '../../angular-commons/components/abstract-page.component';
+import {
+    AbstractPageComponent,
+    CommonPageComponentComponentConfig
+} from '../../angular-commons/components/abstract-page.component';
 import {CommonDocContentUtils} from '../services/cdoc-contentutils.service';
 import {CommonDocRoutingService} from '../services/cdoc-routing.service';
 import {Layout, LayoutService} from '../../angular-commons/services/layout.service';
@@ -27,9 +30,7 @@ import {GenericAppService} from '@dps/mycms-commons/dist/commons/services/generi
 import {ResolvedData} from '../../angular-commons/resolver/resolver.utils';
 import {ActionTagEvent} from './cdoc-actiontags/cdoc-actiontags.component';
 
-export interface CommonDocEditpageComponentConfig {
-    baseSearchUrl: string;
-    baseSearchUrlDefault: string;
+export interface CommonDocEditpageComponentConfig extends CommonPageComponentComponentConfig {
     editAllowed: boolean;
 }
 
@@ -41,7 +42,6 @@ export abstract class CommonDocEditpageComponent <R extends CommonDocRecord, F e
     public record: R;
     public Layout = Layout;
     pdoc: PDocRecord;
-    baseSearchUrl: string;
     editAllowed = false;
 
     constructor(protected route: ActivatedRoute, protected cdocRoutingService: CommonDocRoutingService,

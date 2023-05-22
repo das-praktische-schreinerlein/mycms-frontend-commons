@@ -24,13 +24,14 @@ import {CommonDocDataService} from '@dps/mycms-commons/dist/search-commons/servi
 import {CommonDocRecord} from '@dps/mycms-commons/dist/search-commons/model/records/cdoc-entity-record';
 import {CommonDocContentUtils} from '../services/cdoc-contentutils.service';
 import {CommonDocRecordResolver} from '../resolver/cdoc-details.resolver';
-import {AbstractPageComponent} from '../../angular-commons/components/abstract-page.component';
+import {
+    AbstractPageComponent,
+    CommonPageComponentComponentConfig
+} from '../../angular-commons/components/abstract-page.component';
 import {CommonEnvironment} from '../../frontend-section-commons/common-environment';
 import {ActionTagEvent} from './cdoc-actiontags/cdoc-actiontags.component';
 
-export interface CommonDocShowpageComponentConfig {
-    baseSearchUrl: string;
-    baseSearchUrlDefault: string;
+export interface CommonDocShowpageComponentConfig extends CommonPageComponentComponentConfig {
 }
 
 export abstract class CommonDocShowpageComponent<R extends CommonDocRecord, F extends CommonDocSearchForm,
@@ -132,15 +133,16 @@ export abstract class CommonDocShowpageComponent<R extends CommonDocRecord, F ex
 
     protected closeModal() {
         const me = this;
-        me.router.navigate(['', { outlets: { 'modalshow': null }, primary: '' }],
+        const outlets = {};
+        outlets[me.modalOutletName] = null;
+
+        me.router.navigate(['', { outlets: outlets, primary: '' }],
             { relativeTo: me.route.parent // <--- PARENT activated route.
             }
         ).then(value => {
             me.commonRoutingService.setRoutingState(RoutingState.DONE);
         });
     }
-
-
 
     getBackToSearchUrl(): string {
         return this.cdocRoutingService.getLastSearchUrl() + '#' + this.record.id;
@@ -170,6 +172,7 @@ export abstract class CommonDocShowpageComponent<R extends CommonDocRecord, F ex
 
         this.baseSearchUrl = componentConfig.baseSearchUrl;
         this.baseSearchUrlDefault = componentConfig.baseSearchUrlDefault;
+        this.modalOutletName = componentConfig.modalOutletName;
     }
 
     protected configureProcessingOfResolvedData(config: {}): void {

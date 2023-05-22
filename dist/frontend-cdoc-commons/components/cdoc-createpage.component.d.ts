@@ -5,7 +5,7 @@ import { CommonDocRecord } from '@dps/mycms-commons/dist/search-commons/model/re
 import { CommonDocSearchForm } from '@dps/mycms-commons/dist/search-commons/model/forms/cdoc-searchform';
 import { CommonDocSearchResult } from '@dps/mycms-commons/dist/search-commons/model/container/cdoc-searchresult';
 import { CommonDocDataService } from '@dps/mycms-commons/dist/search-commons/services/cdoc-data.service';
-import { AbstractPageComponent } from '../../angular-commons/components/abstract-page.component';
+import { AbstractPageComponent, CommonPageComponentComponentConfig } from '../../angular-commons/components/abstract-page.component';
 import { IdValidationRule, KeywordValidationRule } from '@dps/mycms-commons/dist/search-commons/model/forms/generic-validator.util';
 import { CommonDocContentUtils } from '../services/cdoc-contentutils.service';
 import { PDocRecord } from '@dps/mycms-commons/dist/pdoc-commons/model/records/pdoc-record';
@@ -22,9 +22,7 @@ import { Layout, LayoutService } from '../../angular-commons/services/layout.ser
 import { CommonEnvironment } from '../../frontend-section-commons/common-environment';
 import { ResolvedData } from '../../angular-commons/resolver/resolver.utils';
 import { CommonDocEditformComponentForwardMode, CommonDocEditformComponentReturnType } from '../components/cdoc-editform/cdoc-editform.component';
-export interface CommonDocCreatepageComponentConfig {
-    baseSearchUrl: string;
-    baseSearchUrlDefault: string;
+export interface CommonDocCreatepageComponentConfig extends CommonPageComponentComponentConfig {
     editAllowed: boolean;
 }
 export declare abstract class CommonDocCreatepageComponent<R extends CommonDocRecord, F extends CommonDocSearchForm, S extends CommonDocSearchResult<R, F>, D extends CommonDocDataService<R, F, S>> extends AbstractPageComponent {
@@ -53,7 +51,6 @@ export declare abstract class CommonDocCreatepageComponent<R extends CommonDocRe
     suggestedForwardModes: CommonDocEditformComponentForwardMode[];
     Layout: typeof Layout;
     pdoc: PDocRecord;
-    baseSearchUrl: string;
     editAllowed: boolean;
     modal: boolean;
     constructor(route: ActivatedRoute, cdocRoutingService: CommonDocRoutingService, toastr: ToastrService, contentUtils: CommonDocContentUtils, errorResolver: ErrorResolver, pageUtils: PageUtils, commonRoutingService: CommonRoutingService, angularMarkdownService: AngularMarkdownService, angularHtmlService: AngularHtmlService, cd: ChangeDetectorRef, trackingProvider: GenericTrackingService, appService: GenericAppService, platformService: PlatformService, layoutService: LayoutService, environment: CommonEnvironment, cdocDataService: D, router: Router);

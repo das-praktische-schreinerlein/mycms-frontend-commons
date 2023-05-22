@@ -31,6 +31,8 @@ export interface CommonDocEditformComponentConfig {
     optionsSelect: {};
     suggestionConfigs: KeywordSuggestion[];
     editPrefix: any;
+    modalEditOutletName: string;
+    modalShowOutletName: string;
 }
 export declare abstract class CommonDocEditformComponent<R extends CommonDocRecord, F extends CommonDocSearchForm, S extends CommonDocSearchResult<R, F>, D extends CommonDocDataService<R, F, S>> extends AbstractInlineComponent {
     fb: FormBuilder;
@@ -50,6 +52,8 @@ export declare abstract class CommonDocEditformComponent<R extends CommonDocReco
     protected stringBeanFieldConfig: {};
     protected stringArrayBeanFieldConfig: {};
     protected inputSuggestionValueConfig: {};
+    modalEditOutletName: string;
+    modalShowOutletName: string;
     optionsSelect: {};
     inputSuggestionValues: {};
     CommonDocEditformComponentForwardMode: typeof CommonDocEditformComponentForwardMode;

@@ -145,7 +145,9 @@ var CommonDocEditformComponent = /** @class */ (function (_super) {
     CommonDocEditformComponent.prototype.onCreateNewLink = function (key, id) {
         var me = this;
         // open modal dialog
-        me.router.navigate([{ outlets: { 'modaledit': ['modaledit', 'create', key, id] } }]).then(function (value) {
+        var outlets = {};
+        outlets[me.modalEditOutletName] = [me.modalEditOutletName, 'create', key, id];
+        me.router.navigate([{ outlets: outlets }]).then(function (value) {
             // check for closing modal dialog and routechange -> update facets
             var subscription = me.router.events.subscribe(function (val) {
                 subscription.unsubscribe();
@@ -157,7 +159,9 @@ var CommonDocEditformComponent = /** @class */ (function (_super) {
     CommonDocEditformComponent.prototype.onShowEntityLink = function (key, id) {
         var me = this;
         // open modal dialog
-        me.router.navigate([{ outlets: { 'modalshow': ['modalshow', 'show', key, key + '_' + id] } }]).then(function (value) {
+        var outlets = {};
+        outlets[me.modalShowOutletName] = [me.modalShowOutletName, 'show', key, key + '_' + id];
+        me.router.navigate([{ outlets: outlets }]).then(function (value) {
             // check for closing modal dialog and routechange -> update facets
             var subscription = me.router.events.subscribe(function (val) {
                 subscription.unsubscribe();
@@ -186,7 +190,9 @@ var CommonDocEditformComponent = /** @class */ (function (_super) {
             inputSuggestionValueConfig: {},
             optionsSelect: { 'playlists': [],
                 'subType': []
-            }
+            },
+            modalEditOutletName: undefined,
+            modalShowOutletName: undefined
         };
     };
     CommonDocEditformComponent.prototype.configureComponent = function (config) {
@@ -198,6 +204,8 @@ var CommonDocEditformComponent = /** @class */ (function (_super) {
         this.stringArrayBeanFieldConfig = componentConfig.stringArrayBeanFieldConfig;
         this.inputSuggestionValueConfig = componentConfig.inputSuggestionValueConfig;
         this.optionsSelect = componentConfig.optionsSelect;
+        this.modalEditOutletName = componentConfig.modalEditOutletName;
+        this.modalShowOutletName = componentConfig.modalShowOutletName;
     };
     CommonDocEditformComponent.prototype.prepareSubmitValues = function (values) {
         // delete empty key

@@ -105,7 +105,9 @@ var CommonDocShowpageComponent = /** @class */ (function (_super) {
     };
     CommonDocShowpageComponent.prototype.closeModal = function () {
         var me = this;
-        me.router.navigate(['', { outlets: { 'modalshow': null }, primary: '' }], { relativeTo: me.route.parent // <--- PARENT activated route.
+        var outlets = {};
+        outlets[me.modalOutletName] = null;
+        me.router.navigate(['', { outlets: outlets, primary: '' }], { relativeTo: me.route.parent // <--- PARENT activated route.
         }).then(function (value) {
             me.commonRoutingService.setRoutingState(RoutingState.DONE);
         });
@@ -130,6 +132,7 @@ var CommonDocShowpageComponent = /** @class */ (function (_super) {
         var componentConfig = this.getComponentConfig(config);
         this.baseSearchUrl = componentConfig.baseSearchUrl;
         this.baseSearchUrlDefault = componentConfig.baseSearchUrlDefault;
+        this.modalOutletName = componentConfig.modalOutletName;
     };
     CommonDocShowpageComponent.prototype.configureProcessingOfResolvedData = function (config) {
     };

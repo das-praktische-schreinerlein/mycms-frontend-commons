@@ -5,7 +5,7 @@ import { CommonDocRecord } from '@dps/mycms-commons/dist/search-commons/model/re
 import { CommonDocSearchForm } from '@dps/mycms-commons/dist/search-commons/model/forms/cdoc-searchform';
 import { CommonDocSearchResult } from '@dps/mycms-commons/dist/search-commons/model/container/cdoc-searchresult';
 import { CommonDocDataService } from '@dps/mycms-commons/dist/search-commons/services/cdoc-data.service';
-import { AbstractPageComponent } from '../../angular-commons/components/abstract-page.component';
+import { AbstractPageComponent, CommonPageComponentComponentConfig } from '../../angular-commons/components/abstract-page.component';
 import { CommonDocContentUtils } from '../services/cdoc-contentutils.service';
 import { CommonDocRoutingService } from '../services/cdoc-routing.service';
 import { Layout, LayoutService } from '../../angular-commons/services/layout.service';
@@ -22,9 +22,7 @@ import { PlatformService } from '../../angular-commons/services/platform.service
 import { GenericAppService } from '@dps/mycms-commons/dist/commons/services/generic-app.service';
 import { ResolvedData } from '../../angular-commons/resolver/resolver.utils';
 import { ActionTagEvent } from './cdoc-actiontags/cdoc-actiontags.component';
-export interface CommonDocEditpageComponentConfig {
-    baseSearchUrl: string;
-    baseSearchUrlDefault: string;
+export interface CommonDocEditpageComponentConfig extends CommonPageComponentComponentConfig {
     editAllowed: boolean;
 }
 export declare abstract class CommonDocEditpageComponent<R extends CommonDocRecord, F extends CommonDocSearchForm, S extends CommonDocSearchResult<R, F>, D extends CommonDocDataService<R, F, S>> extends AbstractPageComponent {
@@ -49,7 +47,6 @@ export declare abstract class CommonDocEditpageComponent<R extends CommonDocReco
     record: R;
     Layout: typeof Layout;
     pdoc: PDocRecord;
-    baseSearchUrl: string;
     editAllowed: boolean;
     constructor(route: ActivatedRoute, cdocRoutingService: CommonDocRoutingService, toastr: ToastrService, contentUtils: CommonDocContentUtils, errorResolver: ErrorResolver, pageUtils: PageUtils, commonRoutingService: CommonRoutingService, angularMarkdownService: AngularMarkdownService, angularHtmlService: AngularHtmlService, cd: ChangeDetectorRef, trackingProvider: GenericTrackingService, appService: GenericAppService, platformService: PlatformService, layoutService: LayoutService, environment: CommonEnvironment, cdocDataService: D);
     protected configureProcessing(): void;

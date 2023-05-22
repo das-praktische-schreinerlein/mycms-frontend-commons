@@ -19,12 +19,10 @@ import { CommonDocSearchResult } from '@dps/mycms-commons/dist/search-commons/mo
 import { CommonDocDataService } from '@dps/mycms-commons/dist/search-commons/services/cdoc-data.service';
 import { CommonDocRecord } from '@dps/mycms-commons/dist/search-commons/model/records/cdoc-entity-record';
 import { CommonDocContentUtils } from '../services/cdoc-contentutils.service';
-import { AbstractPageComponent } from '../../angular-commons/components/abstract-page.component';
+import { AbstractPageComponent, CommonPageComponentComponentConfig } from '../../angular-commons/components/abstract-page.component';
 import { CommonEnvironment } from '../../frontend-section-commons/common-environment';
 import { ActionTagEvent } from './cdoc-actiontags/cdoc-actiontags.component';
-export interface CommonDocShowpageComponentConfig {
-    baseSearchUrl: string;
-    baseSearchUrlDefault: string;
+export interface CommonDocShowpageComponentConfig extends CommonPageComponentComponentConfig {
 }
 export declare abstract class CommonDocShowpageComponent<R extends CommonDocRecord, F extends CommonDocSearchForm, S extends CommonDocSearchResult<R, F>, D extends CommonDocDataService<R, F, S>> extends AbstractPageComponent {
     protected route: ActivatedRoute;

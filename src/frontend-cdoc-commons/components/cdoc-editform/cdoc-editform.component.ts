@@ -33,6 +33,8 @@ export interface CommonDocEditformComponentConfig {
     optionsSelect: {};
     suggestionConfigs: KeywordSuggestion[];
     editPrefix;
+    modalEditOutletName: string;
+    modalShowOutletName: string;
 }
 
 export abstract class CommonDocEditformComponent<R extends CommonDocRecord, F extends CommonDocSearchForm,
@@ -52,6 +54,10 @@ export abstract class CommonDocEditformComponent<R extends CommonDocRecord, F ex
     protected stringBeanFieldConfig = {};
     protected stringArrayBeanFieldConfig = {};
     protected inputSuggestionValueConfig = {};
+
+    modalEditOutletName: string;
+    modalShowOutletName: string;
+
     public optionsSelect = {};
 
     public inputSuggestionValues = {};
@@ -185,7 +191,10 @@ export abstract class CommonDocEditformComponent<R extends CommonDocRecord, F ex
     onCreateNewLink(key: string, id: string): boolean {
         const me = this;
         // open modal dialog
-        me.router.navigate([{ outlets: { 'modaledit': ['modaledit', 'create', key, id] } }]).then(value => {
+        const outlets = {};
+        outlets[me.modalEditOutletName] =  [me.modalEditOutletName, 'create', key, id];
+
+        me.router.navigate([{ outlets: outlets }]).then(value => {
             // check for closing modal dialog and routechange -> update facets
             const subscription = me.router.events.subscribe((val) => {
                 subscription.unsubscribe();
@@ -200,7 +209,10 @@ export abstract class CommonDocEditformComponent<R extends CommonDocRecord, F ex
     onShowEntityLink(key: string, id: string): boolean {
         const me = this;
         // open modal dialog
-        me.router.navigate([{ outlets: { 'modalshow': ['modalshow', 'show', key, key + '_' + id] } }]).then(value => {
+        const outlets = {};
+        outlets[me.modalShowOutletName] =  [me.modalShowOutletName, 'show', key, key + '_' + id];
+
+        me.router.navigate([{ outlets: outlets }]).then(value => {
             // check for closing modal dialog and routechange -> update facets
             const subscription = me.router.events.subscribe((val) => {
                 subscription.unsubscribe();
@@ -235,7 +247,9 @@ export abstract class CommonDocEditformComponent<R extends CommonDocRecord, F ex
             },
             optionsSelect: {'playlists': [],
                 'subType': []
-            }
+            },
+            modalEditOutletName: undefined,
+            modalShowOutletName: undefined
         };
     }
 
@@ -249,6 +263,8 @@ export abstract class CommonDocEditformComponent<R extends CommonDocRecord, F ex
         this.stringArrayBeanFieldConfig = componentConfig.stringArrayBeanFieldConfig;
         this.inputSuggestionValueConfig = componentConfig.inputSuggestionValueConfig;
         this.optionsSelect = componentConfig.optionsSelect;
+        this.modalEditOutletName = componentConfig.modalEditOutletName;
+        this.modalShowOutletName = componentConfig.modalShowOutletName;
     }
 
     protected prepareSubmitValues(values: {}): void {

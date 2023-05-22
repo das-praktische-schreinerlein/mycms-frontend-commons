@@ -5,7 +5,10 @@ import {CommonDocRecord} from '@dps/mycms-commons/dist/search-commons/model/reco
 import {CommonDocSearchForm} from '@dps/mycms-commons/dist/search-commons/model/forms/cdoc-searchform';
 import {CommonDocSearchResult} from '@dps/mycms-commons/dist/search-commons/model/container/cdoc-searchresult';
 import {CommonDocDataService} from '@dps/mycms-commons/dist/search-commons/services/cdoc-data.service';
-import {AbstractPageComponent} from '../../angular-commons/components/abstract-page.component';
+import {
+    AbstractPageComponent,
+    CommonPageComponentComponentConfig
+} from '../../angular-commons/components/abstract-page.component';
 import {
     IdValidationRule,
     KeywordValidationRule
@@ -30,9 +33,7 @@ import {
     CommonDocEditformComponentReturnType
 } from '../components/cdoc-editform/cdoc-editform.component';
 
-export interface CommonDocCreatepageComponentConfig {
-    baseSearchUrl: string;
-    baseSearchUrlDefault: string;
+export interface CommonDocCreatepageComponentConfig extends CommonPageComponentComponentConfig {
     editAllowed: boolean;
 }
 
@@ -47,7 +48,6 @@ export abstract class CommonDocCreatepageComponent <R extends CommonDocRecord, F
     public suggestedForwardModes: CommonDocEditformComponentForwardMode[];
     public Layout = Layout;
     pdoc: PDocRecord;
-    baseSearchUrl: string;
     editAllowed = false;
     modal = false;
 
@@ -163,7 +163,10 @@ export abstract class CommonDocCreatepageComponent <R extends CommonDocRecord, F
 
     protected closeModal() {
         const me = this;
-        me.router.navigate(['', { outlets: { 'modaledit': null }, primary: '' }],
+        const outlets = {};
+        outlets[me.modalOutletName] = null;
+
+        me.router.navigate(['', { outlets: outlets, primary: '' }],
             { relativeTo: me.route.parent // <--- PARENT activated route.
             }
         ).then(value => {
@@ -179,6 +182,7 @@ export abstract class CommonDocCreatepageComponent <R extends CommonDocRecord, F
         this.baseSearchUrl = componentConfig.baseSearchUrl;
         this.baseSearchUrlDefault = componentConfig.baseSearchUrlDefault;
         this.editAllowed = componentConfig.editAllowed;
+        this.modalOutletName = componentConfig.modalOutletName;
     }
 
     protected configureProcessingOfResolvedData(config: {}, resolvedData: ResolvedData<R>): void {

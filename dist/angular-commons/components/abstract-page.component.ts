@@ -10,6 +10,12 @@ import {PlatformService} from '../services/platform.service';
 import {PDocRecord} from '@dps/mycms-commons/dist/pdoc-commons/model/records/pdoc-record';
 import {CommonEnvironment} from '../../frontend-section-commons/common-environment';
 
+export interface CommonPageComponentComponentConfig {
+    baseSearchUrl: string;
+    baseSearchUrlDefault: string;
+    modalOutletName?: string;
+}
+
 export abstract class AbstractPageComponent implements OnInit, OnDestroy {
     protected config;
     protected initialized = false;
@@ -18,6 +24,7 @@ export abstract class AbstractPageComponent implements OnInit, OnDestroy {
     showLoadingSpinner = false;
     baseSearchUrl: string;
     baseSearchUrlDefault: string;
+    modalOutletName: string;
 
     constructor(protected route: ActivatedRoute, protected toastr: ToastrService, protected pageUtils: PageUtils,
                 protected cd: ChangeDetectorRef, protected trackingProvider: GenericTrackingService,

@@ -27,7 +27,10 @@ import {
     GenericSearchFormSearchFormConverter
 } from '@dps/mycms-commons/dist/search-commons/services/generic-searchform.converter';
 import {CommonSectionSearchFormResolver} from '../resolver/cdoc-section-searchform.resolver';
-import {AbstractPageComponent} from '../../angular-commons/components/abstract-page.component';
+import {
+    AbstractPageComponent,
+    CommonPageComponentComponentConfig
+} from '../../angular-commons/components/abstract-page.component';
 import {CommonEnvironment} from '../../frontend-section-commons/common-environment';
 import {CommonDocMultiActionManager} from '../services/cdoc-multiaction.manager';
 import {IMultiSelectOption} from 'angular-2-dropdown-multiselect';
@@ -36,9 +39,7 @@ import {AngularHtmlService} from '../../angular-commons/services/angular-html.se
 import {CommonDocSearchFormUtils} from '../services/cdoc-searchform-utils.service';
 import {Location} from '@angular/common';
 
-export interface CommonDocSearchpageComponentConfig {
-    baseSearchUrl: string;
-    baseSearchUrlDefault: string;
+export interface CommonDocSearchpageComponentConfig extends CommonPageComponentComponentConfig {
     maxAllowedM3UExportItems: number;
     availableCreateActionTypes: String[];
     defaultLayoutPerType: {};
