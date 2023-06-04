@@ -40,6 +40,7 @@ export declare class SectionPageComponent implements OnInit {
     sectionNext: PDocRecord;
     SearchFormLayout: typeof SearchFormLayout;
     searchFormLayout: SearchFormLayout;
+    flgShowAdminArea: boolean;
     constructor(route: ActivatedRoute, pagesDataService: StaticPagesDataService, commonRoutingService: CommonRoutingService, errorResolver: ErrorResolver, toastr: ToastrService, pageUtils: PageUtils, angularMarkdownService: AngularMarkdownService, angularHtmlService: AngularHtmlService, cd: ChangeDetectorRef, trackingProvider: GenericTrackingService, platformService: PlatformService, layoutService: LayoutService, appService: GenericAppService);
     ngOnInit(): void;
     renderDesc(): string;
@@ -49,6 +50,7 @@ export declare class SectionPageComponent implements OnInit {
     protected calcSectionsNavRunner(): void;
     protected calcSubSectionsTreeList(allSections: PDocRecord[], parent: PDocRecord): void;
     protected configureProcessingOfResolvedData(config: {}): void;
+    protected doProcessPageFlags(config: {}, pdoc: PDocRecord): void;
     protected doProcessAfterResolvedData(config: {}): void;
     protected onResize(layoutSizeData: LayoutSizeData): void;
 }

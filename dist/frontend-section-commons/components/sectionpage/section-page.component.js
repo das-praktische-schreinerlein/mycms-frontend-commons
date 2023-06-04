@@ -47,6 +47,7 @@ var SectionPageComponent = /** @class */ (function () {
         this.Layout = Layout;
         this.SearchFormLayout = SearchFormLayout;
         this.searchFormLayout = SearchFormLayout.GRID;
+        this.flgShowAdminArea = false;
     }
     SectionPageComponent.prototype.ngOnInit = function () {
         var _this = this;
@@ -198,7 +199,16 @@ var SectionPageComponent = /** @class */ (function () {
     };
     SectionPageComponent.prototype.configureProcessingOfResolvedData = function (config) {
     };
+    SectionPageComponent.prototype.doProcessPageFlags = function (config, pdoc) {
+        var flags = pdoc.flags
+            ? pdoc.flags.split(',')
+                .map(function (flag) { return flag.trim(); })
+                .filter(function (flag) { return flag !== undefined && flag !== ''; })
+            : [];
+        this.flgShowAdminArea = flags.includes('flg_ShowAdminArea');
+    };
     SectionPageComponent.prototype.doProcessAfterResolvedData = function (config) {
+        this.doProcessPageFlags(config, this.pdoc);
     };
     SectionPageComponent.prototype.onResize = function (layoutSizeData) {
         if (this.platformService.isClient() && layoutSizeData.layoutSize >= LayoutSize.VERYBIG && !this.layoutService.isPrintMode()) {

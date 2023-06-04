@@ -122,18 +122,8 @@
     <app-admin-jobarea></app-admin-jobarea>
 </ng-template>
 
-<ng-template #topTenContainer>
-    <ng-container *ngIf="pdoc.flgShowTopTen">
-    </ng-container>
-</ng-template>
-
-<ng-template #dashBoardContainer>
-    <ng-container *ngIf="pdoc.flgShowDashboard">
-    </ng-container>
-</ng-template>
-
 <ng-template #adminAreaContainer>
-    <ng-container *ngIf="pdoc.flgShowAdminArea">
+    <ng-container *ngIf="flgShowAdminArea">
         <div class="container content-container sectionpage-dashBoard-container">
             <ng-container *ngTemplateOutlet="adminArea"></ng-container>
             <div (click)="onScrollToTop()" class="scroll-to-top-container hidden-print"><span></span></div>

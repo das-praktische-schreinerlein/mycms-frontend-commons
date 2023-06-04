@@ -42,6 +42,7 @@ export class SectionPageComponent implements OnInit {
     sectionNext: PDocRecord;
     SearchFormLayout = SearchFormLayout;
     searchFormLayout: SearchFormLayout = SearchFormLayout.GRID;
+    flgShowAdminArea = false;
 
     constructor(protected route: ActivatedRoute, protected pagesDataService: StaticPagesDataService,
                 protected commonRoutingService: CommonRoutingService, protected errorResolver: ErrorResolver,
@@ -227,7 +228,18 @@ export class SectionPageComponent implements OnInit {
     protected configureProcessingOfResolvedData(config: {}): void {
     }
 
+    protected doProcessPageFlags(config: {}, pdoc: PDocRecord): void {
+        const flags = pdoc.flags
+            ? pdoc.flags.split(',')
+                .map(flag => flag.trim())
+                .filter(flag => flag !== undefined && flag !== '')
+            : [];
+
+        this.flgShowAdminArea = flags.includes('flg_ShowAdminArea');
+    }
+
     protected doProcessAfterResolvedData(config: {}): void {
+        this.doProcessPageFlags(config, this.pdoc);
     }
 
     protected onResize(layoutSizeData: LayoutSizeData): void {
