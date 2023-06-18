@@ -10,6 +10,7 @@
 - renamed pdoc* to section
 - moved layout-utils, noop-action, modal-functionality to commons
 - frontend: add show-action as actiontag
+- frontend: added abstract app-component
 
 ### new features
 - moved TextEditorComponent, FormUtils and GeoParserDeterminer to commons
@@ -17,6 +18,7 @@
 ### improvements
 - moved layout-utils, noop-action, modal-functionality to commons
 - frontend: add show-action as actiontag
+- frontend: extend CommonEnvironment
 
 ### bug fixes
 - TextEditor, Page-Module: improve usage of desc_txt, desc_md...

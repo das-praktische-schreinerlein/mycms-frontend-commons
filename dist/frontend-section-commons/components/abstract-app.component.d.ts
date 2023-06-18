@@ -1,0 +1,35 @@
+import { ChangeDetectorRef } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
+import { GenericAppService } from '@dps/mycms-commons/dist/commons/services/generic-app.service';
+import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
+import { ToastrService } from 'ngx-toastr';
+import { CommonRoutingService } from '../../angular-commons/services/common-routing.service';
+import { PlatformService } from '../../angular-commons/services/platform.service';
+import { PageUtils } from '../../angular-commons/services/page.utils';
+import { LayoutService } from '../../angular-commons/services/layout.service';
+import { CommonEnvironment } from '../common-environment';
+export declare abstract class AbstractAppComponent {
+    protected appService: GenericAppService;
+    protected toastr: ToastrService;
+    protected translate: TranslateService;
+    protected router: Router;
+    protected locale: string;
+    protected http: HttpClient;
+    protected commonRoutingService: CommonRoutingService;
+    protected cd: ChangeDetectorRef;
+    protected platformService: PlatformService;
+    protected pageUtils: PageUtils;
+    protected layoutService: LayoutService;
+    protected environment: CommonEnvironment;
+    showLoadingSpinner: boolean;
+    loadingSpinnerRunning: boolean;
+    showLaw: boolean;
+    hideCopyrightFooter: boolean;
+    cookieLawSeenName: string;
+    constructor(appService: GenericAppService, toastr: ToastrService, translate: TranslateService, router: Router, locale: string, http: HttpClient, commonRoutingService: CommonRoutingService, cd: ChangeDetectorRef, platformService: PlatformService, pageUtils: PageUtils, layoutService: LayoutService, environment: CommonEnvironment);
+    private showInitState;
+    setShowLoadingSpinner(flag: boolean): void;
+    doLoadingSpinnerCheck(): void;
+    private doBrowserCheck;
+}

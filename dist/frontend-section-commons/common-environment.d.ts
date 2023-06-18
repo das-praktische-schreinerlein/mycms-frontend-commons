@@ -1,4 +1,7 @@
 export interface CommonEnvironment {
+    hideCopyrightFooter?: boolean;
+    assetsPathVersionSnippet: string;
+    assetsPathVersionSuffix: string;
     production: boolean;
     backendApiBaseUrl: string;
     defaultSearchTypes: string;
