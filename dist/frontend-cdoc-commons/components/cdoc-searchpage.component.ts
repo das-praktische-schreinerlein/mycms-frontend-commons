@@ -568,6 +568,8 @@ export abstract class CommonDocSearchpageComponent<R extends CommonDocRecord, F 
             }
 
             if (me.doCheckRedirectToShowAfterSearch(me.anchor, cdocSearchResult)) {
+                me.showLoadingSpinner = false;
+                me.cd.markForCheck();
                 return false;
             }
             me.doCheckSearchResultAfterSearch(cdocSearchResult);
