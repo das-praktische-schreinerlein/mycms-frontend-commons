@@ -167,7 +167,7 @@ export class SectionPageComponent implements OnInit {
         }
 
         if (!this.platformService.isClient()) {
-            return this.pdoc.descTxt || '';
+            return this.pdoc.descTxt || this.pdoc.descHtml || this.pdoc.descMd || '';
         }
 
         if (this.pdoc.descHtml) {

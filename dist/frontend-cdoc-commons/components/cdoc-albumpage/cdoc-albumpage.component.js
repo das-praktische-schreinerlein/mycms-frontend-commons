@@ -230,6 +230,7 @@ var CommonDocAlbumpageComponent = /** @class */ (function (_super) {
         m3uSearchForm.perPage = 99999;
         m3uSearchForm.pageNum = 1;
         this.showLoadingSpinner = true;
+        this.cd.markForCheck();
         var me = this;
         this.cdocDataService.doMultiSearch(m3uSearchForm, ids).then(function doneSearch(cdocSearchResult) {
             me.showLoadingSpinner = false;
@@ -426,11 +427,16 @@ var CommonDocAlbumpageComponent = /** @class */ (function (_super) {
         me.searchResult = this.cdocDataService.newSearchResult(me.searchForm, 0, [], undefined);
         me.listSearchResult = this.cdocDataService.newSearchResult(me.listSearchForm, 0, [], undefined);
         me.record = undefined;
-        me.cd.markForCheck();
         if (ids.length <= 0 || ids[0] === '') {
+            me.doCheckSearchResultAfterSearch(me.searchResult);
+            me.loadListResult();
+            me.loadRecord(me.curRecordNr);
+            me.showLoadingSpinner = false;
+            me.cd.markForCheck();
             return;
         }
         me.showLoadingSpinner = true;
+        me.cd.markForCheck();
         me.cdocDataService.doMultiSearch(me.searchForm, ids).then(function doneSearch(cdocSearchResult) {
             me.initialized = true;
             me.searchResult = cdocSearchResult;

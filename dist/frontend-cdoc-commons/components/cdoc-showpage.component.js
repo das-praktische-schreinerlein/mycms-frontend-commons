@@ -48,7 +48,6 @@ var CommonDocShowpageComponent = /** @class */ (function (_super) {
         return _this;
     }
     CommonDocShowpageComponent.prototype.configureProcessing = function () {
-        var _this = this;
         var me = this;
         this.route.queryParamMap.subscribe(function (value) {
             me.queryParamMap = value;
@@ -68,7 +67,7 @@ var CommonDocShowpageComponent = /** @class */ (function (_super) {
             me.pageUtils.setMetaLanguage();
             me.cd.markForCheck();
             me.pageUtils.scrollToTop();
-            _this.trackingProvider.trackPageView();
+            me.trackingProvider.trackPageView();
         });
     };
     CommonDocShowpageComponent.prototype.renderDesc = function () {

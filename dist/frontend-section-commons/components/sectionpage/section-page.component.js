@@ -150,7 +150,7 @@ var SectionPageComponent = /** @class */ (function () {
             return;
         }
         if (!this.platformService.isClient()) {
-            return this.pdoc.descTxt || '';
+            return this.pdoc.descTxt || this.pdoc.descHtml || this.pdoc.descMd || '';
         }
         if (this.pdoc.descHtml) {
             this.flgDescRendered = this.angularHtmlService.renderHtml('#desc', this.pdoc.descHtml, true);

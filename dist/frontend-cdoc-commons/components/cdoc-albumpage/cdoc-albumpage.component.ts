@@ -294,6 +294,8 @@ export abstract class CommonDocAlbumpageComponent <R extends CommonDocRecord, F 
         m3uSearchForm.pageNum = 1;
 
         this.showLoadingSpinner = true;
+        this.cd.markForCheck();
+
         const me = this;
         this.cdocDataService.doMultiSearch(m3uSearchForm, ids).then(function doneSearch(cdocSearchResult: S) {
             me.showLoadingSpinner = false;
@@ -523,12 +525,17 @@ export abstract class CommonDocAlbumpageComponent <R extends CommonDocRecord, F 
         me.searchResult = this.cdocDataService.newSearchResult(me.searchForm, 0, [], undefined);
         me.listSearchResult = this.cdocDataService.newSearchResult(me.listSearchForm, 0, [], undefined);
         me.record = undefined;
-        me.cd.markForCheck();
         if (ids.length <= 0 || ids[0] === '') {
+            me.doCheckSearchResultAfterSearch(me.searchResult);
+            me.loadListResult();
+            me.loadRecord(me.curRecordNr);
+            me.showLoadingSpinner = false;
+            me.cd.markForCheck();
             return;
         }
 
         me.showLoadingSpinner = true;
+        me.cd.markForCheck();
         me.cdocDataService.doMultiSearch(me.searchForm, ids).then(function doneSearch(cdocSearchResult: S) {
             me.initialized = true;
             me.searchResult = cdocSearchResult;

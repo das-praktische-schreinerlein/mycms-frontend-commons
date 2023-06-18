@@ -20,6 +20,7 @@
 
 ### bug fixes
 - TextEditor, Page-Module: improve usage of desc_txt, desc_md...
+- SearchPage/AlbumPage: fix spinner
 
 ### breaking changes
 - bumped up deps
