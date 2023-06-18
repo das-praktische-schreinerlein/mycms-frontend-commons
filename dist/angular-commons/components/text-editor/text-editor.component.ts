@@ -31,8 +31,8 @@ export class TextEditorComponent extends AbstractInlineComponent {
     private flgDescRendered = false;
 
     public editFormGroup: FormGroup = this.fb.group({
-        descTxt: '',
-        descTxtRecommended: '',
+        descMd: '',
+        descMdRecommended: '',
     });
 
     @Input()
@@ -43,10 +43,10 @@ export class TextEditorComponent extends AbstractInlineComponent {
 
 
     @Input()
-    public descTxt = '';
+    public descMd = '';
 
     @Input()
-    public descTxtRecommended = '';
+    public descMdRecommended = '';
 
     @Input()
     public recommendAvailable ? = false;
@@ -71,7 +71,7 @@ export class TextEditorComponent extends AbstractInlineComponent {
     }
 
     onInputChanged(value: any, field: string): boolean {
-        if (field === 'descTxt') {
+        if (field === 'descMd') {
             this.changeDesc.emit(value);
         }
 
@@ -79,11 +79,11 @@ export class TextEditorComponent extends AbstractInlineComponent {
     }
 
     useRecommendedDesc(): void {
-        const descTxtRecommended = this.editFormGroup.getRawValue()['descTxtRecommended'] || '';
-        this.setValue('descTxt', descTxtRecommended);
-        this.onInputChanged(descTxtRecommended, 'descTxt');
+        const descMdRecommended = this.editFormGroup.getRawValue()['descMdRecommended'] || '';
+        this.setValue('descMd', descMdRecommended);
+        this.onInputChanged(descMdRecommended, 'descMd');
 
-        this.setValue('descTxtRecommended', undefined);
+        this.setValue('descMdRecommended', undefined);
         this.renderDesc(true);
     }
 
@@ -92,7 +92,7 @@ export class TextEditorComponent extends AbstractInlineComponent {
             return;
         }
 
-        const textarea = <HTMLTextAreaElement> document.querySelector('#descTxt');
+        const textarea = <HTMLTextAreaElement> document.querySelector('#descMd');
         if (!textarea || textarea === undefined || textarea === null) {
             return;
         }
@@ -104,7 +104,7 @@ export class TextEditorComponent extends AbstractInlineComponent {
             + command.command
             + oldString.substring(startPos, oldString.length);
 
-        this.setValue('descTxt', newString);
+        this.setValue('descMd', newString);
         this.renderDesc(true);
 
         textarea.focus();
@@ -117,7 +117,7 @@ export class TextEditorComponent extends AbstractInlineComponent {
             return;
         }
 
-        const textarea = <HTMLTextAreaElement> document.querySelector('#descTxt');
+        const textarea = <HTMLTextAreaElement> document.querySelector('#descMd');
         if (!textarea || textarea === undefined || textarea === null) {
             return;
         }
@@ -132,7 +132,7 @@ export class TextEditorComponent extends AbstractInlineComponent {
             + command.commandEnd
             + oldString.substring(endPos, oldString.length);
 
-        this.setValue('descTxt', newString);
+        this.setValue('descMd', newString);
         this.renderDesc(true);
 
         textarea.focus();
@@ -151,7 +151,7 @@ export class TextEditorComponent extends AbstractInlineComponent {
             return;
         }
 
-        const desc = this.editFormGroup.getRawValue()['descTxt'] || '';
+        const desc = this.editFormGroup.getRawValue()['descMd'] || '';
         if (!this.platformService.isClient()) {
             return desc;
         }
@@ -162,8 +162,8 @@ export class TextEditorComponent extends AbstractInlineComponent {
     }
 
     protected updateData(): void {
-        this.setValue('descTxtRecommended', this.descTxtRecommended);
-        this.setValue('descTxt', this.descTxt);
+        this.setValue('descMdRecommended', this.descMdRecommended);
+        this.setValue('descMd', this.descMd);
     }
 
 }

@@ -24,8 +24,8 @@ export declare class TextEditorComponent extends AbstractInlineComponent {
     private flgDescRendered;
     editFormGroup: FormGroup;
     editorCommands: CommonDocEditorCommandComponentConfig;
-    descTxt: string;
-    descTxtRecommended: string;
+    descMd: string;
+    descMdRecommended: string;
     recommendAvailable?: boolean;
     recommendDesc: EventEmitter<boolean>;
     changeDesc: EventEmitter<string>;

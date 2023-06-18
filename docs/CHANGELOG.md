@@ -19,7 +19,7 @@
 - frontend: add show-action as actiontag
 
 ### bug fixes
-- none
+- TextEditor, Page-Module: improve usage of desc_txt, desc_md...
 
 ### breaking changes
 - bumped up deps

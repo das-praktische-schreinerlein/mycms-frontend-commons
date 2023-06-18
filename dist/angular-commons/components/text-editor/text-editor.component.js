@@ -36,15 +36,15 @@ var TextEditorComponent = /** @class */ (function (_super) {
         _this.platformService = platformService;
         _this.flgDescRendered = false;
         _this.editFormGroup = _this.fb.group({
-            descTxt: '',
-            descTxtRecommended: '',
+            descMd: '',
+            descMdRecommended: '',
         });
         _this.editorCommands = {
             singleCommands: [],
             rangeCommands: []
         };
-        _this.descTxt = '';
-        _this.descTxtRecommended = '';
+        _this.descMd = '';
+        _this.descMdRecommended = '';
         _this.recommendAvailable = false;
         _this.recommendDesc = new EventEmitter();
         _this.changeDesc = new EventEmitter();
@@ -55,23 +55,23 @@ var TextEditorComponent = /** @class */ (function (_super) {
         return false;
     };
     TextEditorComponent.prototype.onInputChanged = function (value, field) {
-        if (field === 'descTxt') {
+        if (field === 'descMd') {
             this.changeDesc.emit(value);
         }
         return false;
     };
     TextEditorComponent.prototype.useRecommendedDesc = function () {
-        var descTxtRecommended = this.editFormGroup.getRawValue()['descTxtRecommended'] || '';
-        this.setValue('descTxt', descTxtRecommended);
-        this.onInputChanged(descTxtRecommended, 'descTxt');
-        this.setValue('descTxtRecommended', undefined);
+        var descMdRecommended = this.editFormGroup.getRawValue()['descMdRecommended'] || '';
+        this.setValue('descMd', descMdRecommended);
+        this.onInputChanged(descMdRecommended, 'descMd');
+        this.setValue('descMdRecommended', undefined);
         this.renderDesc(true);
     };
     TextEditorComponent.prototype.addSingleCommand = function (command) {
         if (!this.platformService.isClient()) {
             return;
         }
-        var textarea = document.querySelector('#descTxt');
+        var textarea = document.querySelector('#descMd');
         if (!textarea || textarea === undefined || textarea === null) {
             return;
         }
@@ -80,7 +80,7 @@ var TextEditorComponent = /** @class */ (function (_super) {
         var newString = oldString.substring(0, startPos)
             + command.command
             + oldString.substring(startPos, oldString.length);
-        this.setValue('descTxt', newString);
+        this.setValue('descMd', newString);
         this.renderDesc(true);
         textarea.focus();
         textarea.selectionStart = startPos;
@@ -90,7 +90,7 @@ var TextEditorComponent = /** @class */ (function (_super) {
         if (!this.platformService.isClient()) {
             return;
         }
-        var textarea = document.querySelector('#descTxt');
+        var textarea = document.querySelector('#descMd');
         if (!textarea || textarea === undefined || textarea === null) {
             return;
         }
@@ -102,7 +102,7 @@ var TextEditorComponent = /** @class */ (function (_super) {
             + oldString.substring(startPos, endPos)
             + command.commandEnd
             + oldString.substring(endPos, oldString.length);
-        this.setValue('descTxt', newString);
+        this.setValue('descMd', newString);
         this.renderDesc(true);
         textarea.focus();
         textarea.selectionStart = startPos;
@@ -117,7 +117,7 @@ var TextEditorComponent = /** @class */ (function (_super) {
         if (this.flgDescRendered && !force) {
             return;
         }
-        var desc = this.editFormGroup.getRawValue()['descTxt'] || '';
+        var desc = this.editFormGroup.getRawValue()['descMd'] || '';
         if (!this.platformService.isClient()) {
             return desc;
         }
@@ -125,8 +125,8 @@ var TextEditorComponent = /** @class */ (function (_super) {
         return '';
     };
     TextEditorComponent.prototype.updateData = function () {
-        this.setValue('descTxtRecommended', this.descTxtRecommended);
-        this.setValue('descTxt', this.descTxt);
+        this.setValue('descMdRecommended', this.descMdRecommended);
+        this.setValue('descMd', this.descMd);
     };
     __decorate([
         Input(),
@@ -135,11 +135,11 @@ var TextEditorComponent = /** @class */ (function (_super) {
     __decorate([
         Input(),
         __metadata("design:type", Object)
-    ], TextEditorComponent.prototype, "descTxt", void 0);
+    ], TextEditorComponent.prototype, "descMd", void 0);
     __decorate([
         Input(),
         __metadata("design:type", Object)
-    ], TextEditorComponent.prototype, "descTxtRecommended", void 0);
+    ], TextEditorComponent.prototype, "descMdRecommended", void 0);
     __decorate([
         Input(),
         __metadata("design:type", Object)

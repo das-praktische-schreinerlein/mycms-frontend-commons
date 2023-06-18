@@ -36,7 +36,7 @@ var CommonDocRecordCreateResolver = /** @class */ (function () {
                                 result.error = new ResolverError(CommonDocRecordResolver.ERROR_UNKNOWN_DOC_ID, baseId_1, undefined);
                                 return resolve(result);
                             }
-                            var fields = ['name', 'keywords', 'descTxt', 'descMd'];
+                            var fields = ['name', 'keywords', 'descMd'];
                             me.configureDefaultFieldToSet(type_1, fields);
                             for (var _i = 0, fields_1 = fields; _i < fields_1.length; _i++) {
                                 var field = fields_1[_i];

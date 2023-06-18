@@ -49,7 +49,7 @@ export abstract class CommonDocRecordCreateResolver<R extends CommonDocRecord, F
                                     return resolve(result);
                                 }
 
-                                const fields = ['name', 'keywords', 'descTxt', 'descMd'];
+                                const fields = ['name', 'keywords', 'descMd'];
                                 me.configureDefaultFieldToSet(type, fields);
                                 for (const field of fields) {
                                     values[field] = BeanUtils.getValue(cdoc, field);

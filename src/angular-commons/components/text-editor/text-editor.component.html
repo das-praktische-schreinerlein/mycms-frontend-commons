@@ -8,20 +8,20 @@
         <ng-container *ngFor="let singleCommand of editorCommands.singleCommands">
             <span class="singleCommand" (click)="addSingleCommand(singleCommand)">{{singleCommand.label}}</span>
         </ng-container>
-        <textarea formControlName="descTxt" class="form-control desc-form" type="text"
+        <textarea formControlName="descMd" class="form-control desc-form" type="text"
                   placeholder="description"
-                  id="descTxt"
+                  id="descMd"
                   i18n-placeholder="desc placeholder|Placeholder for desc@@placeholder.form.tdoc.desc"
-                  (ngModelChange)="onInputChanged($event, 'descTxt')"></textarea>
-        <ng-container *ngIf="editFormGroup.getRawValue()['descTxtRecommended']">
+                  (ngModelChange)="onInputChanged($event, 'descMd')"></textarea>
+        <ng-container *ngIf="editFormGroup.getRawValue()['descMdRecommended']">
             <br>
             <span class="" (click)="useRecommendedDesc()">&#x27F8; Use it!!!!</span>
-            <textarea formControlName="descTxtRecommended" class="form-control recommended-desc-form" type="text"
+            <textarea formControlName="descMdRecommended" class="form-control recommended-desc-form" type="text"
                       placeholder="recommended description"
-                      id="descTxtRecommended"
+                      id="descMdRecommended"
                       disabled="disabled"
-                      i18n-placeholder="descTxtRecommended placeholder|Placeholder for descTxtParsed@@placeholder.form.tdoc.descTxtRecommended"
-                      (ngModelChange)="onInputChanged($event, 'descTxtRecommended')"></textarea>
+                      i18n-placeholder="descMdRecommended placeholder|Placeholder for descMdParsed@@placeholder.form.tdoc.descMdRecommended"
+                      (ngModelChange)="onInputChanged($event, 'descMdRecommended')"></textarea>
         </ng-container>
     </div>
     <div class="col-sm-12 form-inline input-group input-group-sm desc-preview-block">
