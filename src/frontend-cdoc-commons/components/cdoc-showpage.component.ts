@@ -86,7 +86,7 @@ export abstract class CommonDocShowpageComponent<R extends CommonDocRecord, F ex
                 me.cd.markForCheck();
                 me.pageUtils.scrollToTop();
 
-                this.trackingProvider.trackPageView();
+                me.trackingProvider.trackPageView();
             }
         );
     }
