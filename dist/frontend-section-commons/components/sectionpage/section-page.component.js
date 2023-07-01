@@ -48,6 +48,7 @@ var SectionPageComponent = /** @class */ (function () {
         this.SearchFormLayout = SearchFormLayout;
         this.searchFormLayout = SearchFormLayout.GRID;
         this.flgShowAdminArea = false;
+        this.descSelector = '#desc';
     }
     SectionPageComponent.prototype.ngOnInit = function () {
         var _this = this;
@@ -142,24 +143,37 @@ var SectionPageComponent = /** @class */ (function () {
         });
     };
     SectionPageComponent.prototype.renderDesc = function () {
-        if (this.flgDescRendered) {
-            return;
-        }
         if (!this.pdoc) {
-            this.flgDescRendered = true;
-            return;
+            if (!this.flgDescRendered) {
+                return '';
+            }
+            this.setDesc(this.descSelector, '');
+            this.flgDescRendered = false;
+            return '';
+        }
+        if (this.flgDescRendered) {
+            return '';
         }
         if (!this.platformService.isClient()) {
-            return this.pdoc.descTxt || this.pdoc.descHtml || this.pdoc.descMd || '';
+            this.setDesc(this.descSelector, this.pdoc.descHtml || this.pdoc.descTxt || this.pdoc.descMd || '');
+            this.flgDescRendered = false;
+            return '';
         }
         if (this.pdoc.descHtml) {
-            this.flgDescRendered = this.angularHtmlService.renderHtml('#desc', this.pdoc.descHtml, true);
+            this.flgDescRendered = this.angularHtmlService.renderHtml(this.descSelector, this.pdoc.descHtml, true);
         }
         else {
             var desc = this.pdoc.descMd ? this.pdoc.descMd : '';
-            this.flgDescRendered = this.angularMarkdownService.renderMarkdown('#desc', desc, true);
+            this.flgDescRendered = this.angularMarkdownService.renderMarkdown(this.descSelector, desc, true);
         }
         return '';
+    };
+    SectionPageComponent.prototype.setDesc = function (descSelector, html) {
+        var inputEl = document.querySelector(descSelector);
+        if (!inputEl || inputEl === undefined || inputEl === null) {
+            return false;
+        }
+        inputEl.innerHTML = html;
     };
     SectionPageComponent.prototype.onShow = function (record) {
         this.commonRoutingService.navigateByUrl('sections/' + record.id);

@@ -28,6 +28,7 @@
 - bumped up deps
 - use StaticPagesDataService instead of PDocDataService
 - renamed pdoc* to section
+- cdoc/pdoc: fixed rendering of maarkddown/html
 
 
 ## 5.7.0 (2023-03-18)

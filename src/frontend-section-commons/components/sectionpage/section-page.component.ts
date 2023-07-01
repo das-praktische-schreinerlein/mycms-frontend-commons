@@ -43,6 +43,7 @@ export class SectionPageComponent implements OnInit {
     SearchFormLayout = SearchFormLayout;
     searchFormLayout: SearchFormLayout = SearchFormLayout.GRID;
     flgShowAdminArea = false;
+    descSelector = '#desc';
 
     constructor(protected route: ActivatedRoute, protected pagesDataService: StaticPagesDataService,
                 protected commonRoutingService: CommonRoutingService, protected errorResolver: ErrorResolver,
@@ -157,27 +158,43 @@ export class SectionPageComponent implements OnInit {
     }
 
     renderDesc(): string {
-        if (this.flgDescRendered) {
-            return;
+        if (!this.pdoc) {
+            if (!this.flgDescRendered) {
+                return '';
+            }
+
+            this.setDesc(this.descSelector, '');
+            this.flgDescRendered = false;
+            return '';
         }
 
-        if (!this.pdoc) {
-            this.flgDescRendered = true;
-            return;
+        if (this.flgDescRendered) {
+            return '';
         }
 
         if (!this.platformService.isClient()) {
-            return this.pdoc.descTxt || this.pdoc.descHtml || this.pdoc.descMd || '';
+            this.setDesc(this.descSelector, this.pdoc.descHtml || this.pdoc.descTxt || this.pdoc.descMd || '');
+            this.flgDescRendered = false;
+            return '';
         }
 
         if (this.pdoc.descHtml) {
-            this.flgDescRendered = this.angularHtmlService.renderHtml('#desc', this.pdoc.descHtml, true);
+            this.flgDescRendered = this.angularHtmlService.renderHtml(this.descSelector, this.pdoc.descHtml, true);
         } else {
             const desc = this.pdoc.descMd ? this.pdoc.descMd : '';
-            this.flgDescRendered = this.angularMarkdownService.renderMarkdown('#desc', desc, true);
+            this.flgDescRendered = this.angularMarkdownService.renderMarkdown(this.descSelector, desc, true);
         }
 
         return '';
+    }
+
+    setDesc(descSelector: string, html: string) {
+        const inputEl = document.querySelector(descSelector);
+        if (!inputEl || inputEl === undefined || inputEl === null) {
+            return false;
+        }
+
+        inputEl.innerHTML = html;
     }
 
     onShow(record: PDocRecord) {

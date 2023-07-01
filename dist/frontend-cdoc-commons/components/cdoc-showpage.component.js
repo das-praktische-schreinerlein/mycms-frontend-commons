@@ -44,6 +44,7 @@ var CommonDocShowpageComponent = /** @class */ (function (_super) {
         _this.Layout = Layout;
         _this.queryParamMap = undefined;
         _this.modal = false;
+        _this.descSelector = '#desc';
         _this.contentUtils = contentUtils;
         return _this;
     }
@@ -71,20 +72,37 @@ var CommonDocShowpageComponent = /** @class */ (function (_super) {
         });
     };
     CommonDocShowpageComponent.prototype.renderDesc = function () {
-        if (this.flgDescRendered || !this.record) {
-            return;
+        if (!this.record) {
+            if (!this.flgDescRendered) {
+                return '';
+            }
+            this.setDesc(this.descSelector, '');
+            this.flgDescRendered = false;
+            return '';
+        }
+        if (this.flgDescRendered) {
+            return '';
         }
         if (!this.platformService.isClient()) {
-            return this.record.descTxt || '';
+            this.setDesc(this.descSelector, this.record.descHtml || this.record.descTxt || this.record.descMd || '');
+            this.flgDescRendered = false;
+            return '';
         }
         if (this.record.descHtml) {
-            this.flgDescRendered = this.angularHtmlService.renderHtml('#desc', this.record.descHtml, true);
+            this.flgDescRendered = this.angularHtmlService.renderHtml(this.descSelector, this.record.descHtml, true);
         }
         else {
             var desc = this.record.descMd ? this.record.descMd : '';
-            this.flgDescRendered = this.angularMarkdownService.renderMarkdown('#desc', desc, true);
+            this.flgDescRendered = this.angularMarkdownService.renderMarkdown(this.descSelector, desc, true);
         }
         return '';
+    };
+    CommonDocShowpageComponent.prototype.setDesc = function (descSelector, html) {
+        var inputEl = document.querySelector(descSelector);
+        if (!inputEl || inputEl === undefined || inputEl === null) {
+            return false;
+        }
+        inputEl.innerHTML = html;
     };
     CommonDocShowpageComponent.prototype.submitBackToSearch = function () {
         this.cdocRoutingService.navigateBackToSearch('#' + this.record.id);

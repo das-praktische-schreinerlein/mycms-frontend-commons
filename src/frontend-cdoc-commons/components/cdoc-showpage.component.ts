@@ -36,7 +36,7 @@ export interface CommonDocShowpageComponentConfig extends CommonPageComponentCom
 
 export abstract class CommonDocShowpageComponent<R extends CommonDocRecord, F extends CommonDocSearchForm,
     S extends CommonDocSearchResult<R, F>, D extends CommonDocDataService<R, F, S>> extends AbstractPageComponent {
-    private flgDescRendered = false;
+    protected flgDescRendered = false;
     idValidationRule = new IdValidationRule(true);
     keywordsValidationRule = new KeywordValidationRule(true);
     public contentUtils: CommonDocContentUtils;
@@ -45,6 +45,7 @@ export abstract class CommonDocShowpageComponent<R extends CommonDocRecord, F ex
     pdoc: PDocRecord;
     queryParamMap: ParamMap = undefined;
     modal = false;
+    descSelector = '#desc';
 
     constructor(protected route: ActivatedRoute, protected cdocRoutingService: CommonDocRoutingService,
                 protected toastr: ToastrService, contentUtils: CommonDocContentUtils,
@@ -92,22 +93,43 @@ export abstract class CommonDocShowpageComponent<R extends CommonDocRecord, F ex
     }
 
     renderDesc(): string {
-        if (this.flgDescRendered || !this.record) {
-            return;
+        if (!this.record) {
+            if (!this.flgDescRendered) {
+                return '';
+            }
+
+            this.setDesc(this.descSelector, '');
+            this.flgDescRendered = false;
+            return '';
+        }
+
+        if (this.flgDescRendered) {
+            return '';
         }
 
         if (!this.platformService.isClient()) {
-            return this.record.descTxt || '';
+            this.setDesc(this.descSelector, this.record.descHtml || this.record.descTxt || this.record.descMd || '');
+            this.flgDescRendered = false;
+            return '';
         }
 
         if (this.record.descHtml) {
-            this.flgDescRendered = this.angularHtmlService.renderHtml('#desc', this.record.descHtml, true);
+            this.flgDescRendered = this.angularHtmlService.renderHtml(this.descSelector, this.record.descHtml, true);
         } else {
             const desc = this.record.descMd ? this.record.descMd : '';
-            this.flgDescRendered = this.angularMarkdownService.renderMarkdown('#desc', desc, true);
+            this.flgDescRendered = this.angularMarkdownService.renderMarkdown(this.descSelector, desc, true);
         }
 
         return '';
+    }
+
+    setDesc(descSelector: string, html: string) {
+        const inputEl = document.querySelector(descSelector);
+        if (!inputEl || inputEl === undefined || inputEl === null) {
+            return false;
+        }
+
+        inputEl.innerHTML = html;
     }
 
     submitBackToSearch() {

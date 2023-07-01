@@ -40,7 +40,7 @@ export declare abstract class CommonDocShowpageComponent<R extends CommonDocReco
     protected layoutService: LayoutService;
     protected environment: CommonEnvironment;
     protected router: Router;
-    private flgDescRendered;
+    protected flgDescRendered: boolean;
     idValidationRule: IdValidationRule;
     keywordsValidationRule: KeywordValidationRule;
     contentUtils: CommonDocContentUtils;
@@ -49,9 +49,11 @@ export declare abstract class CommonDocShowpageComponent<R extends CommonDocReco
     pdoc: PDocRecord;
     queryParamMap: ParamMap;
     modal: boolean;
+    descSelector: string;
     constructor(route: ActivatedRoute, cdocRoutingService: CommonDocRoutingService, toastr: ToastrService, contentUtils: CommonDocContentUtils, errorResolver: ErrorResolver, pageUtils: PageUtils, commonRoutingService: CommonRoutingService, angularMarkdownService: AngularMarkdownService, angularHtmlService: AngularHtmlService, cd: ChangeDetectorRef, trackingProvider: GenericTrackingService, appService: GenericAppService, platformService: PlatformService, layoutService: LayoutService, environment: CommonEnvironment, router: Router);
     protected configureProcessing(): void;
     renderDesc(): string;
+    setDesc(descSelector: string, html: string): boolean;
     submitBackToSearch(): boolean;
     submitToLastSearchPredecessor(): boolean;
     submitToLastSearchSuccessor(): boolean;

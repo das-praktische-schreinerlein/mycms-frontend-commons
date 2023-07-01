@@ -41,9 +41,11 @@ export declare class SectionPageComponent implements OnInit {
     SearchFormLayout: typeof SearchFormLayout;
     searchFormLayout: SearchFormLayout;
     flgShowAdminArea: boolean;
+    descSelector: string;
     constructor(route: ActivatedRoute, pagesDataService: StaticPagesDataService, commonRoutingService: CommonRoutingService, errorResolver: ErrorResolver, toastr: ToastrService, pageUtils: PageUtils, angularMarkdownService: AngularMarkdownService, angularHtmlService: AngularHtmlService, cd: ChangeDetectorRef, trackingProvider: GenericTrackingService, platformService: PlatformService, layoutService: LayoutService, appService: GenericAppService);
     ngOnInit(): void;
     renderDesc(): string;
+    setDesc(descSelector: string, html: string): boolean;
     onShow(record: PDocRecord): boolean;
     onScrollToTop(): void;
     getSubSections(pdoc: PDocRecord): PDocRecord[];
