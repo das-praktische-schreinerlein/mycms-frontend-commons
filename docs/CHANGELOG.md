@@ -9,15 +9,17 @@
 - use StaticPagesDataService instead of PDocDataService
 - renamed pdoc* to section
 - moved layout-utils, noop-action, modal-functionality to commons
-- frontend: add show-action as actiontag
+- frontend: added show-action as actiontag
 - frontend: added abstract app-component
-
+- frontend: added page-management
+ 
 ### new features
 - moved TextEditorComponent, FormUtils and GeoParserDeterminer to commons
-
+- frontend: added page-management
+ 
 ### improvements
 - moved layout-utils, noop-action, modal-functionality to commons
-- frontend: add show-action as actiontag
+- frontend: added show-action as actiontag
 - frontend: extend CommonEnvironment
 
 ### bug fixes
@@ -28,7 +30,7 @@
 - bumped up deps
 - use StaticPagesDataService instead of PDocDataService
 - renamed pdoc* to section
-- cdoc/pdoc: fixed rendering of maarkddown/html
+- cdoc/pdoc: fixed rendering of markddown/html
 
 
 ## 5.7.0 (2023-03-18)

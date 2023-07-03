@@ -1,0 +1,36 @@
+import { ChangeDetectorRef } from '@angular/core';
+import { PDocCreatepageComponent } from './pdoc-createpage.component';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
+import { PDocContentUtils } from '../../../shared-pdoc/services/pdoc-contentutils.service';
+import { ErrorResolver } from '../../../../frontend-cdoc-commons/resolver/error.resolver';
+import { PageUtils } from '../../../../angular-commons/services/page.utils';
+import { CommonRoutingService } from '../../../../angular-commons/services/common-routing.service';
+import { AngularMarkdownService } from '../../../../angular-commons/services/angular-markdown.service';
+import { AngularHtmlService } from '../../../../angular-commons/services/angular-html.service';
+import { GenericTrackingService } from '../../../../angular-commons/services/generic-tracking.service';
+import { GenericAppService } from '@dps/mycms-commons/dist/commons/services/generic-app.service';
+import { PlatformService } from '../../../../angular-commons/services/platform.service';
+import { LayoutService } from '../../../../angular-commons/services/layout.service';
+import { PDocDataService } from '@dps/mycms-commons/dist/pdoc-commons/services/pdoc-data.service';
+import { PDocRoutingService } from '../../../shared-pdoc/services/pdoc-routing.service';
+import { CommonEnvironment } from '../../../../frontend-section-commons/common-environment';
+export declare class PDocModalCreatepageComponent extends PDocCreatepageComponent {
+    protected route: ActivatedRoute;
+    protected cdocRoutingService: PDocRoutingService;
+    protected toastr: ToastrService;
+    protected errorResolver: ErrorResolver;
+    protected pageUtils: PageUtils;
+    protected commonRoutingService: CommonRoutingService;
+    protected angularMarkdownService: AngularMarkdownService;
+    protected angularHtmlService: AngularHtmlService;
+    protected cd: ChangeDetectorRef;
+    protected trackingProvider: GenericTrackingService;
+    protected appService: GenericAppService;
+    protected platformService: PlatformService;
+    protected layoutService: LayoutService;
+    protected pdocDataService: PDocDataService;
+    protected environment: CommonEnvironment;
+    constructor(route: ActivatedRoute, cdocRoutingService: PDocRoutingService, toastr: ToastrService, contentUtils: PDocContentUtils, errorResolver: ErrorResolver, pageUtils: PageUtils, commonRoutingService: CommonRoutingService, angularMarkdownService: AngularMarkdownService, angularHtmlService: AngularHtmlService, cd: ChangeDetectorRef, trackingProvider: GenericTrackingService, appService: GenericAppService, platformService: PlatformService, layoutService: LayoutService, pdocDataService: PDocDataService, router: Router, environment: CommonEnvironment);
+    submitSave(values: {}): boolean;
+}

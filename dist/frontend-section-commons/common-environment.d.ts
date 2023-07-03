@@ -1,3 +1,4 @@
+import { InjectionToken } from '@angular/core';
 export interface CommonEnvironment {
     hideCopyrightFooter?: boolean;
     assetsPathVersionSnippet: string;
@@ -13,3 +14,4 @@ export interface CommonEnvironment {
     adminBackendApiBaseUrl?: string;
     adminWritable?: boolean;
 }
+export declare const COMMON_APP_ENVIRONMENT: InjectionToken<CommonEnvironment>;
