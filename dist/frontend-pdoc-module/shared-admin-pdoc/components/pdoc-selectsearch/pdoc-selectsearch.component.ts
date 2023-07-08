@@ -3,7 +3,6 @@ import {AbstractInlineComponent} from '../../../../angular-commons/components/in
 import {PDocRecord} from '@dps/mycms-commons/dist/pdoc-commons/model/records/pdoc-record';
 import {CommonDocMultiActionManager} from '../../../../frontend-cdoc-commons/services/cdoc-multiaction.manager';
 import {MultiActionTagConfig} from '@dps/mycms-commons/dist/commons/utils/actiontag.utils';
-import {LatLng} from 'leaflet';
 import {CommonDocRecord} from '@dps/mycms-commons/dist/search-commons/model/records/cdoc-entity-record';
 import {GenericAppService} from '@dps/mycms-commons/dist/commons/services/generic-app.service';
 import {Router} from '@angular/router';
@@ -33,12 +32,6 @@ export class PDocSelectSearchComponent extends AbstractInlineComponent {
 
     @Input()
     public nameFilterValues: string[];
-
-    @Input()
-    public basePosition: LatLng;
-
-    @Input()
-    public baseLocHierarchy: string;
 
     @Output()
     public appendSelected: EventEmitter<CommonDocRecord[]> = new EventEmitter();
@@ -107,11 +100,6 @@ export class PDocSelectSearchComponent extends AbstractInlineComponent {
         filters['type'] = this.type;
         filters['sort'] = 'distance';
 
-        const where = this.createNearByFilter();
-        if (where) {
-            filters['where'] = where;
-        }
-
         const fullText: string = [].concat(this.nameFilterValues)
             .map(value => {
                 return value && value.length > 0
@@ -134,13 +122,6 @@ export class PDocSelectSearchComponent extends AbstractInlineComponent {
         }
 
         return filters;
-    }
-
-    protected createNearByFilter(): string {
-        return this.basePosition !== undefined
-            ? 'nearby:' + [this.basePosition.lat, this.basePosition.lng, 10].join('_') +
-                '_,_nearbyAddress:' + this.baseLocHierarchy.replace(/[^-a-zA-Z0-9_.äüöÄÜÖß]+/g, '')
-            : undefined;
     }
 
     protected configureComponent(): void {

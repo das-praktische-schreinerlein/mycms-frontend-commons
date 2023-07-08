@@ -2,7 +2,6 @@ import { ChangeDetectorRef, EventEmitter } from '@angular/core';
 import { AbstractInlineComponent } from '../../../../angular-commons/components/inline.component';
 import { PDocRecord } from '@dps/mycms-commons/dist/pdoc-commons/model/records/pdoc-record';
 import { CommonDocMultiActionManager } from '../../../../frontend-cdoc-commons/services/cdoc-multiaction.manager';
-import { LatLng } from 'leaflet';
 import { CommonDocRecord } from '@dps/mycms-commons/dist/search-commons/model/records/cdoc-entity-record';
 import { GenericAppService } from '@dps/mycms-commons/dist/commons/services/generic-app.service';
 import { Router } from '@angular/router';
@@ -20,8 +19,6 @@ export declare class PDocSelectSearchComponent extends AbstractInlineComponent {
     baseId: string;
     type: string;
     nameFilterValues: string[];
-    basePosition: LatLng;
-    baseLocHierarchy: string;
     appendSelected: EventEmitter<CommonDocRecord[]>;
     constructor(cd: ChangeDetectorRef, appService: GenericAppService, actionService: PDocActionTagService, router: Router);
     onInputChanged(value: any, field: string): boolean;
@@ -30,7 +27,6 @@ export declare class PDocSelectSearchComponent extends AbstractInlineComponent {
     onChangeSelectFilter(): boolean;
     onAppendSelectedRecords(): boolean;
     getRecordFilters(): any;
-    protected createNearByFilter(): string;
     protected configureComponent(): void;
     protected updateData(): void;
 }

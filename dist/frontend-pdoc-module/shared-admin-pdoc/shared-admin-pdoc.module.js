@@ -7,7 +7,6 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { PDocEditformComponent } from './components/pdoc-editform/pdoc-editform.component';
-import { AngularMapsModule } from '../../angular-maps/angular-maps.module';
 import { AngularCommonsModule } from '../../angular-commons/angular-commons.module';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -45,7 +44,6 @@ var SharedAdminPDocModule = /** @class */ (function () {
                 ReactiveFormsModule,
                 HttpClientModule,
                 AngularCommonsModule,
-                AngularMapsModule,
                 FrontendCommonDocCommonsModule,
                 RouterModule
             ],

@@ -23,7 +23,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, Output } from '@angular/core';
 import { AbstractInlineComponent } from '../../../../angular-commons/components/inline.component';
 import { CommonDocMultiActionManager } from '../../../../frontend-cdoc-commons/services/cdoc-multiaction.manager';
-import { LatLng } from 'leaflet';
 import { GenericAppService } from '@dps/mycms-commons/dist/commons/services/generic-app.service';
 import { Router } from '@angular/router';
 import { Layout } from '../../../../angular-commons/services/layout.service';
@@ -88,10 +87,6 @@ var PDocSelectSearchComponent = /** @class */ (function (_super) {
         var filters = {};
         filters['type'] = this.type;
         filters['sort'] = 'distance';
-        var where = this.createNearByFilter();
-        if (where) {
-            filters['where'] = where;
-        }
         var fullText = [].concat(this.nameFilterValues)
             .map(function (value) {
             return value && value.length > 0
@@ -113,12 +108,6 @@ var PDocSelectSearchComponent = /** @class */ (function (_super) {
             filters['fulltext'] = fullText;
         }
         return filters;
-    };
-    PDocSelectSearchComponent.prototype.createNearByFilter = function () {
-        return this.basePosition !== undefined
-            ? 'nearby:' + [this.basePosition.lat, this.basePosition.lng, 10].join('_') +
-                '_,_nearbyAddress:' + this.baseLocHierarchy.replace(/[^-a-zA-Z0-9_.äüöÄÜÖß]+/g, '')
-            : undefined;
     };
     PDocSelectSearchComponent.prototype.configureComponent = function () {
         var actionTag = {
@@ -158,14 +147,6 @@ var PDocSelectSearchComponent = /** @class */ (function (_super) {
         Input(),
         __metadata("design:type", Array)
     ], PDocSelectSearchComponent.prototype, "nameFilterValues", void 0);
-    __decorate([
-        Input(),
-        __metadata("design:type", LatLng)
-    ], PDocSelectSearchComponent.prototype, "basePosition", void 0);
-    __decorate([
-        Input(),
-        __metadata("design:type", String)
-    ], PDocSelectSearchComponent.prototype, "baseLocHierarchy", void 0);
     __decorate([
         Output(),
         __metadata("design:type", EventEmitter)
