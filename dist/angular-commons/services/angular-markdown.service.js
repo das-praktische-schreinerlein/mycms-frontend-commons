@@ -7,18 +7,18 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-import { NgxMdService } from 'ngx-md';
 import { Injectable } from '@angular/core';
 import { AngularHtmlService } from './angular-html.service';
+import { MarkdownService } from '../../markdown-commons/markdown.service';
 var AngularMarkdownService = /** @class */ (function () {
-    function AngularMarkdownService(htmlService, markdownService) {
+    function AngularMarkdownService(htmlService) {
         this.htmlService = htmlService;
-        this.markdownService = markdownService;
+        this.markdownService = new MarkdownService();
     }
     AngularMarkdownService.prototype.renderMarkdown = function (parentSelector, markdown, routeLocalLinkWithAngularRouter) {
         var html = '';
         try {
-            html = this.markdownService.compile(markdown);
+            html = this.markdownService.renderMarkdown(markdown);
         }
         finally {
             // NOOP
@@ -27,7 +27,7 @@ var AngularMarkdownService = /** @class */ (function () {
     };
     AngularMarkdownService = __decorate([
         Injectable(),
-        __metadata("design:paramtypes", [AngularHtmlService, NgxMdService])
+        __metadata("design:paramtypes", [AngularHtmlService])
     ], AngularMarkdownService);
     return AngularMarkdownService;
 }());

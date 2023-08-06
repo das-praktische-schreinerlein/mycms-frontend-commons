@@ -10,7 +10,6 @@ import {AngularHtmlService} from '../../services/angular-html.service';
 import {CommonRoutingService} from '../../services/common-routing.service';
 import {Router} from '@angular/router';
 import {RouterStub} from '../../testing/router-stubs';
-import {NgxMdModule} from 'ngx-md';
 
 describe('TextEditorComponent', () => {
     let component: TextEditorComponent;
@@ -21,8 +20,7 @@ describe('TextEditorComponent', () => {
             declarations: [TextEditorComponent],
             imports: [
                 ReactiveFormsModule,
-                TranslateModule.forRoot(),
-                NgxMdModule.forRoot()
+                TranslateModule.forRoot()
             ],
             providers: [
                 TranslateService,

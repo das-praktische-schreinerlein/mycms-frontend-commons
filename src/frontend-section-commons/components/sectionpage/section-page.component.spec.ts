@@ -13,7 +13,6 @@ import {CommonDocRoutingService} from '../../../frontend-cdoc-commons/services/c
 import {ErrorResolver} from '../../../frontend-cdoc-commons/resolver/error.resolver';
 import {PageUtils} from '../../../angular-commons/services/page.utils';
 import {AngularMarkdownService} from '../../../angular-commons/services/angular-markdown.service';
-import {NgxMdModule, NgxMdService} from 'ngx-md';
 import {AngularHtmlService} from '../../../angular-commons/services/angular-html.service';
 import {CommonRoutingService} from '../../../angular-commons/services/common-routing.service';
 import {RouterStub} from '../../../angular-commons/testing/router-stubs';
@@ -35,8 +34,7 @@ describe('SectionPageComponent', () => {
             declarations: [SectionPageComponent],
             schemas: [NO_ERRORS_SCHEMA],
             imports: [
-                TranslateModule.forRoot(),
-                NgxMdModule.forRoot()],
+                TranslateModule.forRoot()],
             providers: [
                 { provide: ActivatedRoute, useValue: new ActivatedRouteStub() },
                 { provide: Router, useValue: new RouterStub() },
@@ -48,7 +46,6 @@ describe('SectionPageComponent', () => {
                 SearchParameterUtils,
                 { provide: ToastrService, useValue: new ToastrServiceStub() },
                 TranslateService,
-                NgxMdService,
                 AngularMarkdownService,
                 AngularHtmlService,
                 ErrorResolver,

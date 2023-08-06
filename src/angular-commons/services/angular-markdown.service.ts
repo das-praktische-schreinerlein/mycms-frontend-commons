@@ -1,16 +1,19 @@
-import {NgxMdService} from 'ngx-md';
 import {Injectable} from '@angular/core';
 import {AngularHtmlService} from './angular-html.service';
+import {MarkdownService} from '../../markdown-commons/markdown.service';
 
 @Injectable()
 export class AngularMarkdownService {
-    constructor(private htmlService: AngularHtmlService, private markdownService: NgxMdService) {
+    protected markdownService: MarkdownService
+
+    constructor(private htmlService: AngularHtmlService) {
+        this.markdownService = new MarkdownService();
     }
 
     renderMarkdown(parentSelector: string, markdown: string, routeLocalLinkWithAngularRouter: boolean): boolean {
         let html = '';
         try {
-            html = this.markdownService.compile(markdown);
+            html = this.markdownService.renderMarkdown(markdown);
         } finally {
             // NOOP
         }

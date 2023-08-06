@@ -13,7 +13,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SectionsPDocsResolver } from '../frontend-cdoc-commons/resolver/sections-pdocs.resolver';
 import { ErrorResolver } from '../frontend-cdoc-commons/resolver/error.resolver';
 import { PageUtils } from '../angular-commons/services/page.utils';
-import { NgxMdModule } from 'ngx-md';
 import { AngularMarkdownService } from '../angular-commons/services/angular-markdown.service';
 import { AngularHtmlService } from '../angular-commons/services/angular-html.service';
 import { CommonRoutingService } from '../angular-commons/services/common-routing.service';
@@ -28,7 +27,6 @@ var SectionsModule = /** @class */ (function () {
             declarations: [],
             imports: [
                 TranslateModule,
-                NgxMdModule.forRoot(),
                 BrowserModule,
                 FormsModule,
                 ReactiveFormsModule,

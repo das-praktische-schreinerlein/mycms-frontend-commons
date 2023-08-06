@@ -12,15 +12,19 @@
 - frontend: added show-action as actiontag
 - frontend: added abstract app-component
 - frontend: added page-management
- 
+- frontend: replace NgxMd with plain marked
+- frontend: add own marked-extensions
+
 ### new features
 - moved TextEditorComponent, FormUtils and GeoParserDeterminer to commons
 - frontend: added page-management
- 
+- frontend: add own marked-extensions
+
 ### improvements
 - moved layout-utils, noop-action, modal-functionality to commons
 - frontend: added show-action as actiontag
 - frontend: extend CommonEnvironment
+- frontend: replace NgxMd with plain marked
 
 ### bug fixes
 - TextEditor, Page-Module: improve usage of desc_txt, desc_md...
@@ -31,6 +35,7 @@
 - use StaticPagesDataService instead of PDocDataService
 - renamed pdoc* to section
 - cdoc/pdoc: fixed rendering of markddown/html
+- frontend: replace NgxMd with plain marked
 
 
 ## 5.7.0 (2023-03-18)

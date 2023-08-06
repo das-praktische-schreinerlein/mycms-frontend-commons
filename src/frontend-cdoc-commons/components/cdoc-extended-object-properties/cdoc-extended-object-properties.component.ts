@@ -2,7 +2,9 @@ import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit} fr
 import {AbstractInlineComponent} from '../../../angular-commons/components/inline.component';
 import {BeanUtils} from '@dps/mycms-commons/dist/commons/utils/bean.utils';
 import {AppState, GenericAppService} from '@dps/mycms-commons/dist/commons/services/generic-app.service';
-import {BaseExtendedObjectPropertyRecordType} from '@dps/mycms-commons/dist/search-commons/model/records/baseextendedobjectproperty-record';
+import {
+    BaseExtendedObjectPropertyRecordType
+} from '@dps/mycms-commons/dist/search-commons/model/records/baseextendedobjectproperty-record';
 
 export interface CommonDocExtendedObjectPropertiesComponentConfig {
     allowedExtendedObjectProperties: {[key: string]: string[]};

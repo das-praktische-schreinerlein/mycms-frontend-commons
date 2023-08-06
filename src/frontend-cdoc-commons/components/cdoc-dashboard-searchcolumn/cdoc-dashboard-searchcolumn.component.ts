@@ -3,7 +3,9 @@ import {ToastrService} from 'ngx-toastr';
 import {GenericAppService} from '@dps/mycms-commons/dist/commons/services/generic-app.service';
 import {CommonRoutingService} from '../../../angular-commons/services/common-routing.service';
 import {PageUtils} from '../../../angular-commons/services/page.utils';
-import {CommonDocInlineSearchpageComponent} from '../../../frontend-cdoc-commons/components/cdoc-inline-searchpage/cdoc-inline-searchpage.component';
+import {
+    CommonDocInlineSearchpageComponent
+} from '../../../frontend-cdoc-commons/components/cdoc-inline-searchpage/cdoc-inline-searchpage.component';
 import {CommonDocMultiActionManager} from '../../../frontend-cdoc-commons/services/cdoc-multiaction.manager';
 import {SearchFormUtils} from '../../../angular-commons/services/searchform-utils.service';
 import {CommonDocRecord} from '@dps/mycms-commons/dist/search-commons/model/records/cdoc-entity-record';
@@ -12,7 +14,9 @@ import {CommonDocSearchResult} from '@dps/mycms-commons/dist/search-commons/mode
 import {CommonDocDataService} from '@dps/mycms-commons/dist/search-commons/services/cdoc-data.service';
 import {CommonDocActionTagService} from '../../../frontend-cdoc-commons/services/cdoc-actiontag.service';
 import {CommonDocSearchFormUtils} from '../../../frontend-cdoc-commons/services/cdoc-searchform-utils.service';
-import {GenericSearchFormSearchFormConverter} from '@dps/mycms-commons/dist/search-commons/services/generic-searchform.converter';
+import {
+    GenericSearchFormSearchFormConverter
+} from '@dps/mycms-commons/dist/search-commons/services/generic-searchform.converter';
 import {CommonDocRoutingService} from '../../../frontend-cdoc-commons/services/cdoc-routing.service';
 
 export abstract class CommonDocDashboardSearchColumnComponent<R extends CommonDocRecord, F extends CommonDocSearchForm,

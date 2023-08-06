@@ -3,7 +3,6 @@ import {GeoLoader} from '../../services/geo.loader';
 import {VisJsGeoProfileMap, VisJsGeoProfileMapDataSource} from '../../services/visjs-geoprofilemap.plugin';
 import {AbstractMapComponent} from '../abstract-map.component';
 import {MinimalHttpBackendClient} from '@dps/mycms-commons/dist/commons/services/minimal-http-backend-client';
-import {AbstractGeoGpxParser} from '@dps/mycms-commons/dist/geo-commons/services/geogpx.parser';
 
 @Component({
     selector: 'app-visjs-profilemap',

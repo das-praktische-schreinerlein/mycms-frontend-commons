@@ -24,7 +24,6 @@ import {PDocDescSuggesterService} from '../../services/pdoc-desc-suggester.servi
 import {PlatformService} from '../../../../angular-commons/services/platform.service';
 import {AngularMarkdownService} from '../../../../angular-commons/services/angular-markdown.service';
 import {AngularHtmlService} from '../../../../angular-commons/services/angular-html.service';
-import {NgxMdModule} from 'ngx-md';
 import {PDocPageDescSuggesterService} from '../../services/pdoc-page-desc-suggester.service';
 import {PDocActionTagService} from '../../../shared-pdoc/services/pdoc-actiontag.service';
 
@@ -37,8 +36,7 @@ describe('PDocEditformComponent', () => {
             declarations: [PDocEditformComponent],
             imports: [
                 ReactiveFormsModule,
-                TranslateModule.forRoot(),
-                NgxMdModule.forRoot()
+                TranslateModule.forRoot()
             ],
             providers: [
                 { provide: ToastrService, useValue: new ToastrServiceStub() },

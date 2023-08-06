@@ -1,5 +1,7 @@
 import {ChangeDetectorRef, EventEmitter, Input, Output, ViewChild} from '@angular/core';
-import {DynamicComponentHostDirective} from '../../../angular-commons/components/directives/dynamic-component-host.directive';
+import {
+    DynamicComponentHostDirective
+} from '../../../angular-commons/components/directives/dynamic-component-host.directive';
 import {ActionTagEvent} from '../cdoc-actiontags/cdoc-actiontags.component';
 import {ToastrService} from 'ngx-toastr';
 import {AbstractInlineComponent} from '../../../angular-commons/components/inline.component';
