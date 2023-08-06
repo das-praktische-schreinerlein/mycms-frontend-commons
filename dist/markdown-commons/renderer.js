@@ -175,7 +175,6 @@ var Renderer = /** @class */ (function (_super) {
     };
     ;
     Renderer.prototype.initStylesClassesForTags = function (prefix) {
-        console.error("super initStylesClassesForTags");
         var renderer = this;
         var tags = [
             'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'h7', 'h8',

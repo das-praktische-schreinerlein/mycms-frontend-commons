@@ -194,7 +194,6 @@ export class Renderer extends marked.Renderer {
   };
 
   initStylesClassesForTags(prefix) {
-    console.error("super initStylesClassesForTags");
     const renderer = this;
     const tags = [
       'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'h7', 'h8',

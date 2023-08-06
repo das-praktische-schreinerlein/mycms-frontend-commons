@@ -10,10 +10,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 import { Injectable } from '@angular/core';
 import { AngularHtmlService } from './angular-html.service';
 import { MarkdownService } from '../../markdown-commons/markdown.service';
+import { MarkdownDefaultExtensions } from '../../markdown-commons/extensions/markdown.extensions';
 var AngularMarkdownService = /** @class */ (function () {
     function AngularMarkdownService(htmlService) {
         this.htmlService = htmlService;
-        this.markdownService = new MarkdownService();
+        this.markdownService = new MarkdownService(MarkdownDefaultExtensions);
     }
     AngularMarkdownService.prototype.renderMarkdown = function (parentSelector, markdown, routeLocalLinkWithAngularRouter) {
         var html = '';
