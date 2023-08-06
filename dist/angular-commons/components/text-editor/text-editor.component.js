@@ -25,7 +25,6 @@ import { AbstractInlineComponent } from '../inline.component';
 import { FormBuilder } from '@angular/forms';
 import { AngularMarkdownService } from '../../services/angular-markdown.service';
 import { PlatformService } from '../../services/platform.service';
-// TODO move to commons
 var TextEditorComponent = /** @class */ (function (_super) {
     __extends(TextEditorComponent, _super);
     function TextEditorComponent(cd, fb, angularMarkdownService, platformService) {

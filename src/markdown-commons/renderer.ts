@@ -1,5 +1,4 @@
 import {marked} from 'marked/marked.min.js';
-//import {cleanUrl, escape} from 'marked/src/helpers.js';
 import {MarkedOptions} from './options';
 
 /**
@@ -15,9 +14,8 @@ export class Renderer extends marked.Renderer {
     this.allTagStyles = {};
   }
 
-//  code(code, infostring, escaped) {
-//    const lang = (infostring || '').match(/\S*/)[0];
-  /**
+  code(code, infostring, escaped) {
+    const lang = (infostring || '').match(/\S*/)[0];
     if (this.options.highlight) {
       const out = this.options.highlight(code, lang);
       if (out != null && out !== code) {
@@ -30,15 +28,15 @@ export class Renderer extends marked.Renderer {
 
     if (!lang) {
       return '<pre><code>'
-          + (escaped ? code : escape(code, true))
+          + (escaped ? code : marked.escape(code, true))
           + '</code></pre>\n';
     }
 
     return '<pre><code class="'
         + this.options.langPrefix
-        + escape(lang)
+        + marked.escape(lang)
         + '">'
-        + (escaped ? code : escape(code, true))
+        + (escaped ? code : marked.escape(code, true))
         + '</code></pre>\n';
   }
 
@@ -52,7 +50,7 @@ export class Renderer extends marked.Renderer {
   }
 
   heading(text, level, raw, slugger) {
-    const styleClass = this.genStyleClassAttrForTag('h');
+    const styleClass = this.genStyleClassAttrForTag('h' + level);
     if (this.options.headerIds) {
       const id = this.options.headerPrefix + slugger.slug(raw);
       return `<h${level} id="${id}"${styleClass}>${text}</h${level}>\n`;
@@ -64,14 +62,14 @@ export class Renderer extends marked.Renderer {
 
   hr() {
     const styleClass = this.genStyleClassAttrForTag('hr');
-    return this.options.xhtml ? '<hr${styleClass}/>\n' : '<hr${styleClass}>\n';
+    return this.options.xhtml ? `<hr${styleClass}/>\n` : `<hr${styleClass}>\n`;
   }
 
   list(body, ordered, start) {
     const type = ordered ? 'ol' : 'ul',
         startatt = (ordered && start !== 1) ? (' start="' + start + '"') : '';
     const styleClass = this.genStyleClassAttrForTag(type);
-    return '<' + type + startatt + '${styleClass}>\n' + body + '</' + type + '>\n';
+    return '<' + type + startatt + `${styleClass}>\n` + body + '</' + type + '>\n';
   }
 
   listitem(text) {
@@ -100,8 +98,8 @@ export class Renderer extends marked.Renderer {
 
     const tablestyleClass = this.genStyleClassAttrForTag('table');
     const theadstyleClass = this.genStyleClassAttrForTag('thead');
-    return '<table${tablestyleClass}>\n'
-        + '<thead${theadstyleClass}>\n'
+    return `<table${tablestyleClass}>\n`
+        + `<thead${theadstyleClass}>\n`
         + header
         + '</thead>\n'
         + body
@@ -148,7 +146,7 @@ export class Renderer extends marked.Renderer {
   }
 
   link(href, title, text) {
-    href = cleanUrl(this.options.sanitize, this.options.baseUrl, href);
+    href = marked.cleanUrl(this.options.sanitize, this.options.baseUrl, href);
     if (href === null) {
       return text;
     }
@@ -161,7 +159,7 @@ export class Renderer extends marked.Renderer {
   }
 
   image(href, title, text) {
-    href = cleanUrl(this.options.sanitize, this.options.baseUrl, href);
+    href = marked.cleanUrl(this.options.sanitize, this.options.baseUrl, href);
     if (href === null) {
       return text;
     }
@@ -177,8 +175,6 @@ export class Renderer extends marked.Renderer {
   text(text) {
     return text;
   }
-
-**/
 
   genStyleClassesForTag(tag) {
     const styles = this.allTagStyles[tag];
@@ -202,7 +198,12 @@ export class Renderer extends marked.Renderer {
     const renderer = this;
     const tags = [
       'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'h7', 'h8',
-      'img', 'a', 'p', 'table', 'tr', 'td', 'th', 'tbody', 'thead', 'br', 'li', 'ul', 'ol',
+      'img', 'a', 'p',
+      'table', 'tr', 'td', 'th', 'tbody', 'thead',
+      'br',
+      'strong', 'em',
+      'dl', 'dt', 'dd',
+      'li', 'ul', 'ol',
       'container',
       'box', 'box-ue', 'box-container',
       'infobox', 'infobox-ue', 'infobox-container',
@@ -304,6 +305,7 @@ export class Renderer extends marked.Renderer {
           styles = params[1].split(' ');
         }
       }
+
       // reset styles for all tags
       const allTagStyles = renderer.allTagStyles;
       tags.map(function (tag) {
@@ -315,6 +317,7 @@ export class Renderer extends marked.Renderer {
         });
       });
     }
+
     return res;
   };
 
@@ -371,6 +374,7 @@ export class Renderer extends marked.Renderer {
           styles = filter[1].split(' ');
         }
       }
+
       tags.map(function (tag) {
         styles.map(function (style) {
           res = '<script>' + appBaseVarName + '.get(\'UIToggler\').appendTogglerForElements("' +

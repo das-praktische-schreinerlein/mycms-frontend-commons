@@ -33,39 +33,39 @@ A Description List2:
 
 `;
 
-        const rendered = `<h1 id="markdown">Markdown</h1>
-<ul>
-<li>li1</li>
-<li>li2</li>
+        const rendered = `<h1 id="markdown" class="md-h1">Markdown</h1>
+<ul class="md-ul">
+<li class="md-li">li1</li>
+<li class="md-li">li2</li>
 </ul>
-<table>
-<thead>
-<tr>
-<th><em>bla</em></th>
-<th><em>bla</em></th>
+<table class="md-table">
+<thead class="md-thead">
+<tr class="md-tr">
+<th class="md-th"><em class="md-em">bla</em></th>
+<th class="md-th"><em class="md-em">bla</em></th>
 </tr>
 </thead>
-<tbody><tr>
-<td>bla</td>
-<td>bla</td>
+<tbody class="md-tbody"><tr class="md-tr">
+<td class="md-td">bla</td>
+<td class="md-td">bla</td>
 </tr>
-<tr>
-<td>bla</td>
-<td>bla</td>
+<tr class="md-tr">
+<td class="md-td">bla</td>
+<td class="md-td">bla</td>
 </tr>
 </tbody></table>
-<p>A Description List:</p>
+<p class="md-p">A Description List:</p>
 <dl>
 <dt>Topic 1</dt><dd>Description 1</dd>
-<dt><strong>Topic 2</strong></dt><dd><em>Description 2</em></dd>
-</dl><div class="md-infobox"><div class="md-infobox-ue">blimblam</div><div class="md-infobox-container"><ul>
-<li>li3</li>
-<li>li4</li>
+<dt><strong class="md-strong">Topic 2</strong></dt><dd><em class="md-em">Description 2</em></dd>
+</dl><div class="md-infobox"><div class="md-infobox-ue">blimblam</div><div class="md-infobox-container"><ul class="md-ul">
+<li class="md-li">li3</li>
+<li class="md-li">li4</li>
 </ul>
-</div></div><p>A Description List2:</p>
+</div></div><p class="md-p">A Description List2:</p>
 <dl>
 <dt>Topic 2</dt><dd>Description 2</dd>
-<dt><strong>Topic 3</strong></dt><dd><em>Description 3</em></dd>
+<dt><strong class="md-strong">Topic 3</strong></dt><dd><em class="md-em">Description 3</em></dd>
 </dl>`;
         expect(service.renderMarkdown(src)).toBe(rendered);
         done();

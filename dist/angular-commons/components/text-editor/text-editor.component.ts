@@ -20,7 +20,6 @@ export interface CommonDocEditorCommandComponentConfig {
     rangeCommands: RangeEditorCommand[];
 }
 
-// TODO move to commons
 @Component({
     selector: 'app-text-editor',
     templateUrl: './text-editor.component.html',
