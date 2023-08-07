@@ -34,16 +34,17 @@ var Renderer = /** @class */ (function (_super) {
         }
         code = code.replace(/\n$/, '') + '\n';
         if (!lang) {
-            return '<pre><code>'
+            return '<pre' + this.genStyleClassAttrForTag('pre') + '><code' + this.genStyleClassAttrForTag('code') + '>'
                 + (escaped ? code : marked.escape(code, true))
-                + '</code></pre>\n';
+                + '\n</code></pre>\n';
         }
-        return '<pre><code class="'
+        return '<pre' + this.genStyleClassAttrForTag('pre') + '><code class="'
             + this.options.langPrefix
-            + marked.escape(lang)
+            + marked.escape(lang, true)
+            + ' ' + this.genStyleClassesForTag('code')
             + '">'
             + (escaped ? code : marked.escape(code, true))
-            + '</code></pre>\n';
+            + '\n</code></pre>\n';
     };
     Renderer.prototype.blockquote = function (quote) {
         var styleClass = this.genStyleClassAttrForTag('blockquote');
@@ -77,6 +78,7 @@ var Renderer = /** @class */ (function (_super) {
     Renderer.prototype.checkbox = function (checked) {
         return '<input '
             + (checked ? 'checked="" ' : '')
+            + this.genStyleClassAttrForTag('checkbox')
             + 'disabled="" type="checkbox"'
             + (this.options.xhtml ? ' /' : '')
             + '> ';
