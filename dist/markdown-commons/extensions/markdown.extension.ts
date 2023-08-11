@@ -66,24 +66,4 @@ export abstract class AbstractMarkdownExtension {
 }
 
 export abstract class AbstractHtmlMarkdownExtension extends AbstractMarkdownExtension {
-    public toMarkDownExtension(): MarkdownExtension {
-        const me = this;
-        return {
-            name: this.name,
-            childTokens: this.childTokens,
-            level: this.level,
-            start(src: string): number | void {
-                const index = me.start(this, src)
-                if (index !== undefined) {
-                }
-                return me.start(this, src);
-            },
-            tokenizer(src: string, tokens: Token[]): Token {
-                return me.tokenizer(this, src, tokens);
-            },
-            renderer(token: Token): string {
-                return me.renderer(this, token);
-            }
-        }
-    }
 }

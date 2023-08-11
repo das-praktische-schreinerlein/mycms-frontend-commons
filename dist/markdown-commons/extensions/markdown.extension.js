@@ -59,26 +59,6 @@ var AbstractHtmlMarkdownExtension = /** @class */ (function (_super) {
     function AbstractHtmlMarkdownExtension() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
-    AbstractHtmlMarkdownExtension.prototype.toMarkDownExtension = function () {
-        var me = this;
-        return {
-            name: this.name,
-            childTokens: this.childTokens,
-            level: this.level,
-            start: function (src) {
-                var index = me.start(this, src);
-                if (index !== undefined) {
-                }
-                return me.start(this, src);
-            },
-            tokenizer: function (src, tokens) {
-                return me.tokenizer(this, src, tokens);
-            },
-            renderer: function (token) {
-                return me.renderer(this, token);
-            }
-        };
-    };
     return AbstractHtmlMarkdownExtension;
 }(AbstractMarkdownExtension));
 export { AbstractHtmlMarkdownExtension };

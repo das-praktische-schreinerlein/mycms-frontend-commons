@@ -24,5 +24,4 @@ export declare abstract class AbstractMarkdownExtension {
     toMarkDownExtension(): MarkdownExtension;
 }
 export declare abstract class AbstractHtmlMarkdownExtension extends AbstractMarkdownExtension {
-    toMarkDownExtension(): MarkdownExtension;
 }
