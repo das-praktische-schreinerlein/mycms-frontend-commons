@@ -17,12 +17,20 @@ export class MarkdownService {
                 marked.use({ extensions: [extension] });
             })
         }
+        const walkTokens = (token) => {
+           //console.error("token", token);
+        };
+
+        marked.use({ walkTokens });
     }
 
     renderMarkdown(markdown: string): string {
         let html = '';
         try {
             html = marked.parse(markdown);
+
+            const tokens = marked.lexer(markdown);
+            //console.error(tokens);
         } finally {
             // NOOP
         }

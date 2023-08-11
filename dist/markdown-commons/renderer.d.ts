@@ -30,11 +30,11 @@ export declare class Renderer extends marked.Renderer {
     genStyleClassesForTag(tag: any): string;
     genStyleClassAttrForTag(tag: any): string;
     initStylesClassesForTags(prefix: any): void;
-    _renderExtendedMarkdownBoxhtmlStart(type: any, param: any): string;
-    _renderExtendedMarkdownBoxStart(type: any, param: any): string;
-    _renderExtendedMarkdownBoxEnd(type: any, param: any): string;
-    _renderExtendedMarkdownToggler(type: any, attr: any): string;
-    _renderExtendedMarkdownTogglerAppend(type: any, attr: any): string;
-    _renderExtendedMarkdownTOC(type: any, attr: any): string;
-    _renderExtendedMarkdownSplitter(type: any, attr: any, first: any, second: any): string;
+    renderExtendedMarkdownBoxhtmlStart(type: any, param: any): string;
+    renderExtendedMarkdownBoxStart(type: any, param: any): string;
+    renderExtendedMarkdownBoxEnd(type: any, param: any): string;
+    renderExtendedMarkdownToggler(type: any, attr: any): string;
+    renderExtendedMarkdownTogglerAppend(type: any, attr: any): string;
+    renderExtendedMarkdownTOC(type: any, attr: any): string;
+    renderExtendedMarkdownSplitter(type: any, attr: any, first: any, second: any): string;
 }

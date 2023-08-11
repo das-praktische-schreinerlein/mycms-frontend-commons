@@ -206,14 +206,14 @@ var Renderer = /** @class */ (function (_super) {
         renderer.allTagStyles = allTagStyles;
     };
     ;
-    Renderer.prototype._renderExtendedMarkdownBoxhtmlStart = function (type, param) {
+    Renderer.prototype.renderExtendedMarkdownBoxhtmlStart = function (type, param) {
         var renderer = this;
         return '<div class="' + renderer.genStyleClassesForTag(type + 'box') + '">' +
             '<div class="' + renderer.genStyleClassesForTag(type + 'box-ue') + '">' + param + '</div>' +
             '<div class="' + renderer.genStyleClassesForTag(type + 'box-container') + '">';
     };
     ;
-    Renderer.prototype._renderExtendedMarkdownBoxStart = function (type, param) {
+    Renderer.prototype.renderExtendedMarkdownBoxStart = function (type, param) {
         var renderer = this;
         var res = '';
         if (type.toLowerCase() === 'box') {
@@ -223,13 +223,13 @@ var Renderer = /** @class */ (function (_super) {
             res = '<div class="' + renderer.genStyleClassesForTag('container') + ' md-container-' + param + '" id="md-container-' + param + '">';
         }
         else if (type.toLowerCase() === 'box.info') {
-            res = renderer._renderExtendedMarkdownBoxhtmlStart('info', param);
+            res = renderer.renderExtendedMarkdownBoxhtmlStart('info', param);
         }
         else if (type.toLowerCase() === 'box.warn') {
-            res = renderer._renderExtendedMarkdownBoxhtmlStart('warn', param);
+            res = renderer.renderExtendedMarkdownBoxhtmlStart('warn', param);
         }
         else if (type.toLowerCase() === 'box.alert') {
-            res = renderer._renderExtendedMarkdownBoxhtmlStart('alert', param);
+            res = renderer.renderExtendedMarkdownBoxhtmlStart('alert', param);
         }
         else if (type.toLowerCase() === 'style' && param) {
             // do set style for next elements
@@ -259,7 +259,7 @@ var Renderer = /** @class */ (function (_super) {
         return res;
     };
     ;
-    Renderer.prototype._renderExtendedMarkdownBoxEnd = function (type, param) {
+    Renderer.prototype.renderExtendedMarkdownBoxEnd = function (type, param) {
         var renderer = this;
         var res = '';
         if (type.toLowerCase() === 'box') {
@@ -298,7 +298,7 @@ var Renderer = /** @class */ (function (_super) {
         return res;
     };
     ;
-    Renderer.prototype._renderExtendedMarkdownToggler = function (type, attr) {
+    Renderer.prototype.renderExtendedMarkdownToggler = function (type, attr) {
         var renderer = this;
         var appBaseVarName = this.options.appBaseVarName;
         if (!appBaseVarName) {
@@ -322,7 +322,7 @@ var Renderer = /** @class */ (function (_super) {
         return res;
     };
     ;
-    Renderer.prototype._renderExtendedMarkdownTogglerAppend = function (type, attr) {
+    Renderer.prototype.renderExtendedMarkdownTogglerAppend = function (type, attr) {
         var renderer = this;
         var appBaseVarName = this.options.appBaseVarName;
         if (!appBaseVarName) {
@@ -354,21 +354,13 @@ var Renderer = /** @class */ (function (_super) {
         return res;
     };
     ;
-    Renderer.prototype._renderExtendedMarkdownTOC = function (type, attr) {
+    Renderer.prototype.renderExtendedMarkdownTOC = function (type, attr) {
         var renderer = this;
         var appBaseVarName = this.options.appBaseVarName;
         if (!appBaseVarName) {
             appBaseVarName = 'jshAppBase';
         }
         var res = '';
-        var params = (attr || '').split(',');
-        var togglerType = 'icon', id;
-        if (params.length > 0) {
-            id = params[0].replace(' ');
-            if (params.length > 1) {
-                togglerType = params[1];
-            }
-        }
         if (marked.nextTocId === undefined) {
             marked.nextTocId = 1;
         }
@@ -382,7 +374,7 @@ var Renderer = /** @class */ (function (_super) {
         return res;
     };
     ;
-    Renderer.prototype._renderExtendedMarkdownSplitter = function (type, attr, first, second) {
+    Renderer.prototype.renderExtendedMarkdownSplitter = function (type, attr, first, second) {
         var renderer = this;
         return '<label class="' + renderer.genStyleClassesForTag('splitter1') + '">' + first + '</label>' +
             '<span class="' + renderer.genStyleClassesForTag('splitter2') + '">' + second + '</span>';

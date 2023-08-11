@@ -9,9 +9,7 @@ export interface MarkdownExtension {
     name: string;
     level: 'block' | 'inline';
     childTokens?: string[];
-    start(src: string): number | void;
-    tokenizer(src: string, tokens: Token[]): Token;
-    renderer(token: Token): string;
+    [index: string]: any;
 }
 export declare abstract class AbstractMarkdownExtension {
     name: string;
@@ -23,5 +21,8 @@ export declare abstract class AbstractMarkdownExtension {
     start(marked: any, src: string): number | void;
     tokenizer(marked: any, src: string, tokens: Token[]): Token;
     renderer(marked: any, token: Token): string;
+    toMarkDownExtension(): MarkdownExtension;
+}
+export declare abstract class AbstractHtmlMarkdownExtension extends AbstractMarkdownExtension {
     toMarkDownExtension(): MarkdownExtension;
 }

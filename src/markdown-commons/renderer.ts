@@ -227,14 +227,14 @@ export class Renderer extends marked.Renderer {
     renderer.allTagStyles = allTagStyles;
   };
 
-  _renderExtendedMarkdownBoxhtmlStart(type, param) {
+  renderExtendedMarkdownBoxhtmlStart(type, param) {
     const renderer = this;
     return '<div class="' + renderer.genStyleClassesForTag(type + 'box') + '">' +
         '<div class="' + renderer.genStyleClassesForTag(type + 'box-ue') + '">' + param + '</div>' +
         '<div class="' + renderer.genStyleClassesForTag(type + 'box-container') + '">';
   };
 
-  _renderExtendedMarkdownBoxStart(type, param) {
+  renderExtendedMarkdownBoxStart(type, param) {
     const renderer = this;
     let res = '';
 
@@ -243,11 +243,11 @@ export class Renderer extends marked.Renderer {
     } else if (type.toLowerCase() === 'container') {
       res = '<div class="' + renderer.genStyleClassesForTag('container') + ' md-container-' + param + '" id="md-container-' + param + '">';
     } else if (type.toLowerCase() === 'box.info') {
-      res = renderer._renderExtendedMarkdownBoxhtmlStart('info', param);
+      res = renderer.renderExtendedMarkdownBoxhtmlStart('info', param);
     } else if (type.toLowerCase() === 'box.warn') {
-      res = renderer._renderExtendedMarkdownBoxhtmlStart('warn', param);
+      res = renderer.renderExtendedMarkdownBoxhtmlStart('warn', param);
     } else if (type.toLowerCase() === 'box.alert') {
-      res = renderer._renderExtendedMarkdownBoxhtmlStart('alert', param);
+      res = renderer.renderExtendedMarkdownBoxhtmlStart('alert', param);
     } else if (type.toLowerCase() === 'style' && param) {
       // do set style for next elements
 
@@ -282,7 +282,7 @@ export class Renderer extends marked.Renderer {
     return res;
   };
 
-  _renderExtendedMarkdownBoxEnd(type, param) {
+  renderExtendedMarkdownBoxEnd(type, param) {
     const renderer = this;
     let res = '';
 
@@ -322,7 +322,7 @@ export class Renderer extends marked.Renderer {
     return res;
   };
 
-  _renderExtendedMarkdownToggler(type, attr) {
+  renderExtendedMarkdownToggler(type, attr) {
     const renderer = this;
     let appBaseVarName = this.options.appBaseVarName;
     if (!appBaseVarName) {
@@ -346,10 +346,11 @@ export class Renderer extends marked.Renderer {
           appBaseVarName + '.get(\'UIToggler\').appendToggler(".md-togglerparent-' + id + '", ".md-container-' + id + '", "' + togglerType + '");' +
           '</script>';
     }
+
     return res;
   };
 
-  _renderExtendedMarkdownTogglerAppend(type, attr) {
+  renderExtendedMarkdownTogglerAppend(type, attr) {
     const renderer = this;
     let appBaseVarName = this.options.appBaseVarName;
     if (!appBaseVarName) {
@@ -387,7 +388,7 @@ export class Renderer extends marked.Renderer {
     return res;
   };
 
-  _renderExtendedMarkdownTOC(type, attr) {
+  renderExtendedMarkdownTOC(type, attr) {
     const renderer = this;
     let appBaseVarName = this.options.appBaseVarName;
     if (!appBaseVarName) {
@@ -395,16 +396,6 @@ export class Renderer extends marked.Renderer {
     }
 
     let res = '';
-    const params = (attr || '').split(',');
-    let togglerType = 'icon',
-        id;
-    if (params.length > 0) {
-      id = params[0].replace(' ');
-      if (params.length > 1) {
-        togglerType = params[1];
-      }
-    }
-
     if (marked.nextTocId === undefined) {
       marked.nextTocId = 1;
     }
@@ -418,11 +409,13 @@ export class Renderer extends marked.Renderer {
           '<script>' + appBaseVarName + '.get(\'Renderer\').addTOCForBlock(' +
           tocElement + ', ' + srcElement + ', ' + settings + ');</script>';
     }
+
     marked.nextTocId++;
+
     return res;
   };
 
-  _renderExtendedMarkdownSplitter(type, attr, first, second) {
+  renderExtendedMarkdownSplitter(type, attr, first, second) {
     const renderer = this;
     return '<label class="' + renderer.genStyleClassesForTag('splitter1') + '">' + first + '</label>' +
         '<span class="' + renderer.genStyleClassesForTag('splitter2') + '">' + second + '</span>';

@@ -1,3 +1,16 @@
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 var AbstractMarkdownExtension = /** @class */ (function () {
     function AbstractMarkdownExtension(name, level, childTokens, startRegExp, tokenizerRegExp) {
         this.name = name;
@@ -27,6 +40,7 @@ var AbstractMarkdownExtension = /** @class */ (function () {
             childTokens: this.childTokens,
             level: this.level,
             start: function (src) {
+                var index = me.start(this, src);
                 return me.start(this, src);
             },
             tokenizer: function (src, tokens) {
@@ -40,4 +54,32 @@ var AbstractMarkdownExtension = /** @class */ (function () {
     return AbstractMarkdownExtension;
 }());
 export { AbstractMarkdownExtension };
+var AbstractHtmlMarkdownExtension = /** @class */ (function (_super) {
+    __extends(AbstractHtmlMarkdownExtension, _super);
+    function AbstractHtmlMarkdownExtension() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    AbstractHtmlMarkdownExtension.prototype.toMarkDownExtension = function () {
+        var me = this;
+        return {
+            name: this.name,
+            childTokens: this.childTokens,
+            level: this.level,
+            start: function (src) {
+                var index = me.start(this, src);
+                if (index !== undefined) {
+                }
+                return me.start(this, src);
+            },
+            tokenizer: function (src, tokens) {
+                return me.tokenizer(this, src, tokens);
+            },
+            renderer: function (token) {
+                return me.renderer(this, token);
+            }
+        };
+    };
+    return AbstractHtmlMarkdownExtension;
+}(AbstractMarkdownExtension));
+export { AbstractHtmlMarkdownExtension };
 //# sourceMappingURL=markdown.extension.js.map

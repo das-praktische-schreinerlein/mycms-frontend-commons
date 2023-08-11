@@ -11,10 +11,10 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-import { AbstractMarkdownExtension } from './markdown.extension';
-var extenedBlockRules = {
-    ruleBoxStart: /^ *(<|&lt;)\!---(BOX\.INFO|BOX\.WARN|BOX\.ALERT|BOX|CONTAINER|STYLE?) *([#-_a-zA-Z,;0-9\.: ]*?) *---(>|&gt;)/,
-    ruleBoxEnd: /^ *(<|&lt;)\!---\/(BOX\.INFO|BOX\.WARN|BOX\.ALERT|BOX|CONTAINER|STYLE?) *([#-_a-zA-Z,;0-9\.: ]*?) *---(>|&gt;)/
+import { AbstractHtmlMarkdownExtension } from './markdown.extension';
+var extendedBlockRules = {
+    ruleBoxStart: /^(\s*)(<|&lt;)\!---(BOX\.INFO|BOX\.WARN|BOX\.ALERT|BOX|CONTAINER|STYLE?) *([#-_a-zA-Z,;0-9\.: ]*?) *---(>|&gt;)(\s*)/,
+    ruleBoxEnd: /^(\s*)(<|&lt;)\!---\/(BOX\.INFO|BOX\.WARN|BOX\.ALERT|BOX|CONTAINER|STYLE?) *([#-_a-zA-Z,;0-9\.: ]*?) *---(>|&gt;)(\s*)/
 };
 var RuleBoxExtension = /** @class */ (function (_super) {
     __extends(RuleBoxExtension, _super);
@@ -24,42 +24,42 @@ var RuleBoxExtension = /** @class */ (function (_super) {
     RuleBoxExtension.prototype.tokenizer = function (marked, src, tokens) {
         var rule = this.tokenizerRegExp; // Regex for the complete token, anchor to string start
         var match = rule.exec(src);
-        if (match) {
+        if (match && match.length === 7) {
             var token = {
                 type: this.name,
                 raw: match[0],
-                boxtype: match[2],
-                attr: match[3],
+                boxtype: match[3],
+                attr: match[4],
                 tokens: [] // Array where child inline tokens will be generated
             };
             return token;
         }
     };
     return RuleBoxExtension;
-}(AbstractMarkdownExtension));
+}(AbstractHtmlMarkdownExtension));
 var RuleBoxStartExtension = /** @class */ (function (_super) {
     __extends(RuleBoxStartExtension, _super);
     function RuleBoxStartExtension() {
-        return _super.call(this, 'ruleBoxStart', 'block', [], extenedBlockRules.ruleBoxStart, extenedBlockRules.ruleBoxStart) || this;
+        return _super.call(this, 'ruleBoxStart', 'block', [], extendedBlockRules.ruleBoxStart, extendedBlockRules.ruleBoxStart) || this;
     }
     RuleBoxStartExtension.prototype.renderer = function (marked, token) {
         var renderer = marked.parser.renderer;
         var type = token.boxtype;
         var param = token.attr;
-        return renderer._renderExtendedMarkdownBoxStart(type, param);
+        return renderer.renderExtendedMarkdownBoxStart(type, param);
     };
     return RuleBoxStartExtension;
 }(RuleBoxExtension));
 var RuleBoxEndExtension = /** @class */ (function (_super) {
     __extends(RuleBoxEndExtension, _super);
     function RuleBoxEndExtension() {
-        return _super.call(this, 'ruleBoxEnd', 'block', [], extenedBlockRules.ruleBoxEnd, extenedBlockRules.ruleBoxEnd) || this;
+        return _super.call(this, 'ruleBoxEnd', 'block', [], extendedBlockRules.ruleBoxEnd, extendedBlockRules.ruleBoxEnd) || this;
     }
     RuleBoxEndExtension.prototype.renderer = function (marked, token) {
         var renderer = marked.parser.renderer;
         var type = token.boxtype;
         var param = token.attr;
-        return renderer._renderExtendedMarkdownBoxEnd(type, param);
+        return renderer.renderExtendedMarkdownBoxEnd(type, param);
     };
     return RuleBoxEndExtension;
 }(RuleBoxExtension));

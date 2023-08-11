@@ -13,11 +13,17 @@ var MarkdownService = /** @class */ (function () {
                 marked.use({ extensions: [extension] });
             });
         }
+        var walkTokens = function (token) {
+            //console.error("token", token);
+        };
+        marked.use({ walkTokens: walkTokens });
     }
     MarkdownService.prototype.renderMarkdown = function (markdown) {
         var html = '';
         try {
             html = marked.parse(markdown);
+            var tokens = marked.lexer(markdown);
+            //console.error(tokens);
         }
         finally {
             // NOOP
