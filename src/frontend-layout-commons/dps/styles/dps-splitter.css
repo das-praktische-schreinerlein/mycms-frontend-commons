@@ -1,0 +1,40 @@
+/*****************************************
+ * splitter
+ *****************************************/
+li label.dps-md-splitter1, p label.dps-md-splitter1 {
+    display: inline-block;
+    font-weight: bold;
+    width: 29%;
+    vertical-align: top;
+}
+
+li span.dps-md-splitter2, p span.dps-md-splitter2 {
+    display: inline-block;
+    width: 69%;
+    vertical-align: top;
+}
+
+li label.dps-md-hide-label, p label.dps-md-hide-label, p.dps-md-p-hide-label label.dps-md-splitter1 {
+    display: none;
+}
+
+li span.dps-md-hide-label, p span.dps-md-hide-label, p.dps-md-p-hide-label span.dps-md-splitter2 {
+    display: inline-block;
+    width: 99%;
+    vertical-align: top;
+}
+
+li label.dps-md-list-horiz {
+    text-align: center;
+    display: inline-block;
+    width: 99%;
+    vertical-align: top;
+}
+
+li span.dps-md-list-horiz {
+    text-align: center;
+    display: inline-block;
+    width: 99%;
+    vertical-align: top;
+}
+

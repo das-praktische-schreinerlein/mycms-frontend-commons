@@ -1,0 +1,89 @@
+/*****************************************
+ * toggler
+ *****************************************/
+div.dps-block-toggler  {
+    float: right;
+    vertical-align: middle;
+}
+
+div.dps-block-toggler-inline  {
+    display: inline-block;
+}
+
+div.dps-block-toggler-block  {
+    display: block;
+    clear: both;
+}
+
+span.dps-text-toggler {
+    font-size: 10px;
+}
+
+div.dps-block-toggler.dps-toggler-hidden a.dps-toggler-on {
+    display: inline-block;
+}
+
+div.dps-block-toggler.dps-toggler-hidden a.dps-toggler-off {
+    display: none;
+}
+
+div.dps-block-toggler.dps-toggler-show a.dps-toggler-on {
+    display: none;
+}
+
+div.dps-block-toggler.dps-toggler-show a.dps-toggler-off {
+    display: inline-block;
+}
+
+/*****************************************
+ * toggler
+ *****************************************/
+div.dps-md-togglerparent {
+    display: inline-block;
+    float: right;
+}
+
+/*****************************************
+ *****************************************
+ * Common icon definitions
+ *****************************************
+ *****************************************/
+.dps-icon-toggler {
+    display: inline-block;
+    font-size: 24px;
+}
+
+.dps-icon-toggler-on:after {
+    content: "⇑";
+}
+
+.dps-icon-toggler-off:after {
+    content: "⇓";
+}
+
+a.dps-toggler-show,
+a.dps-toggler-hidden {
+    width: 16px;
+    height: 16px;
+    display: inline-block;
+    vertical-align: top;
+    background-repeat: no-repeat;
+/**    background-image: url("../../dist/vendors/fancytree/skin-lion/icons.gif");**/
+    background-position: 0 0;
+}
+
+a.dps-toggler-show,
+a.dps-toggler-hidden {
+    margin-top: 1px;
+}
+
+a.dps-toggler-show {
+    margin-left: 3px;
+    background-position: -32px -32px;
+}
+
+a.dps-toggler-hidden {
+    margin-left: 3px;
+    background-position: -64px -32px;
+}
+

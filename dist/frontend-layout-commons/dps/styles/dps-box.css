@@ -1,0 +1,77 @@
+/*****************************************
+ * boxes
+ *****************************************/
+.dps-md-container {
+    clear: both;
+}
+
+.dps-md-box, .dps-md-infobox, .dps-md-warnbox, .dps-md-alertbox {
+    background-color: white;
+    border: 2px solid #8cacd3;
+    border-radius: 10px;
+    clear: both;
+    float: left;
+    margin-top: 3px;
+    padding: 5px;
+    text-align: left;
+    width: 100%;
+}
+
+.dps-md-infobox-ue, .dps-md-warnbox-ue, .dps-md-alertbox-ue {
+    border: 2px solid transparent;
+    margin-top: -5px;
+    float: left;
+}
+
+.dps-md-infobox-container, .dps-md-warnbox-container, .dps-md-alertbox-container {
+    width: 100%;
+    float: left;
+}
+
+.dps-md-box {
+    background-color: white;
+    border-color: #8cacd3;
+}
+
+.dps-md-alertbox {
+    border-color: #ff6347;
+}
+
+.dps-md-warnbox {
+    border-color: #ffd700;
+}
+
+.dps-md-infobox {
+    border-color: #428bca;
+}
+
+.dps-md-alertbox-ue {
+    background-color: Salmon;
+}
+
+.dps-md-warnbox-ue {
+    background-color: #FCEBBF;
+}
+
+.dps-md-infobox-ue {
+    background-color: #cbe8f6;
+}
+
+.dps-md-boxlayout-smallcard {
+    clear: none;
+    width: 300px;
+}
+
+.dps-md-boxlayout-mediumcard {
+    clear: none;
+    width: 500px;
+}
+
+div.dps-md-box img:not([class]) {
+    max-width: 100%;
+    width: auto;
+    height: auto;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}

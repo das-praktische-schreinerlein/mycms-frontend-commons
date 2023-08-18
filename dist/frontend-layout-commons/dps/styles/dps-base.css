@@ -1,0 +1,26 @@
+/*****************************************
+ * base
+ *****************************************/
+.dps-container {
+    clear: both;
+}
+
+.dps-box {
+    background-color: white;
+    border: 2px solid #8cacd3;
+    border-radius: 10px;
+    clear: both;
+    float: left;
+    margin-top: 3px;
+    padding: 5px;
+    text-align: left;
+    width: 100%;
+}
+
+.dps-select, .dps-textarea, .dps-input .dps-button {
+    vertical-align: top;
+    border: 1px solid #8CACD3;
+    border-radius: 4px;
+    margin-bottom: 2px;
+}
+

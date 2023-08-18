@@ -1,0 +1,42 @@
+/*****************************************
+ * checklist-states
+ *****************************************/
+.dps-md-checklist-state-OPEN {
+    background-color: #adff2f;
+}
+
+.dps-md-checklist-state-RUNNING {
+    background-color: #adff2f;
+}
+
+.dps-md-checklist-state-LATE {
+    background-color: #ffd700;
+    font-weight: bold;
+}
+
+.dps-md-checklist-state-BLOCKED {
+    background-color: #F3F940;
+    font-weight: bold;
+}
+
+.dps-md-checklist-state-WARNING {
+    background-color: #ff6347;
+    font-weight: bold;
+}
+
+.dps-md-checklist-state-DONE {
+    font-style: italic;
+}
+
+.dps-md-checklist-test-TESTOPEN {
+    background-color: #F3F940;
+}
+
+.dps-md-checklist-test-PASSED {
+    font-style: italic;
+}
+
+.dps-md-checklist-test-FAILED {
+    background-color: #ff6347;
+    font-weight: bold;
+}
