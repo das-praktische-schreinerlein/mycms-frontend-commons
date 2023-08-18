@@ -2,9 +2,7 @@ import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input} from '@ang
 import {CommonRoutingService} from '../../../angular-commons/services/common-routing.service';
 import {AbstractInlineComponent} from '../../../angular-commons/components/inline.component';
 import {StringUtils} from '@dps/mycms-commons/dist/commons/utils/string.utils';
-import {
-    BaseNavigationObjectRecordType
-} from '@dps/mycms-commons/dist/search-commons/model/records/basenavigationobject-record';
+import {BaseNavigationObjectRecordType} from '@dps/mycms-commons/dist/search-commons/model/records/basenavigationobject-record';
 
 @Component({
     selector: 'app-cdoc-object-navigation',

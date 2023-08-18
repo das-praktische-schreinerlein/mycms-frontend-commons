@@ -17,16 +17,10 @@ import {Subject} from 'rxjs';
 import {PDocReplaceFormComponent} from '../components/pdoc-replaceform/pdoc-replaceform.component';
 import {ToastrService} from 'ngx-toastr';
 import * as Promise_serial from 'promise-serial';
-import {
-    CommonDocAssignFormComponentResultType
-} from '../../../frontend-cdoc-commons/components/cdoc-assignform/cdoc-assignform.component';
+import {CommonDocAssignFormComponentResultType} from '../../../frontend-cdoc-commons/components/cdoc-assignform/cdoc-assignform.component';
 import {PDocAssignFormComponent} from '../components/pdoc-assignform/pdoc-assignform.component';
-import {
-    CommonDocReplaceFormComponentResultType
-} from '../../../frontend-cdoc-commons/components/cdoc-replaceform/cdoc-replaceform.component';
-import {
-    CommonDocAssignJoinFormComponentResultType
-} from '../../../frontend-cdoc-commons/components/cdoc-assignjoinform/cdoc-assignjoinform.component';
+import {CommonDocReplaceFormComponentResultType} from '../../../frontend-cdoc-commons/components/cdoc-replaceform/cdoc-replaceform.component';
+import {CommonDocAssignJoinFormComponentResultType} from '../../../frontend-cdoc-commons/components/cdoc-assignjoinform/cdoc-assignjoinform.component';
 import {PDocAssignJoinFormComponent} from '../components/pdoc-assignjoinform/pdoc-assignjoinform.component';
 import {PDocActionTagService} from '../../shared-pdoc/services/pdoc-actiontag.service';
 import {PDocAlbumService} from '../../shared-pdoc/services/pdoc-album.service';

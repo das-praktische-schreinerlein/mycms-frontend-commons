@@ -20,9 +20,7 @@ import {DOCUMENT} from '@angular/common';
 import {PDocNameSuggesterService} from '../../services/pdoc-name-suggester.service';
 import {Router} from '@angular/router';
 import {Layout} from '../../../../angular-commons/services/layout.service';
-import {
-    CommonDocEditorCommandComponentConfig
-} from '../../../../angular-commons/components/text-editor/text-editor.component';
+import {CommonDocEditorCommandComponentConfig} from '../../../../angular-commons/components/text-editor/text-editor.component';
 import {PDocDescSuggesterService} from '../../services/pdoc-desc-suggester.service';
 import {PDocSearchFormUtils} from '../../../shared-pdoc/services/pdoc-searchform-utils.service';
 import {ObjectUtils} from '@dps/mycms-commons/dist/commons/utils/object.utils';
@@ -95,7 +93,8 @@ export class PDocEditformComponent extends CommonDocEditformComponent<PDocRecord
 
     editorCommands: CommonDocEditorCommandComponentConfig = {
         singleCommands: [],
-        rangeCommands: []
+        rangeCommands: [],
+        commandBlocks: []
     };
 
     descMdRecommended  = '';
@@ -157,13 +156,17 @@ export class PDocEditformComponent extends CommonDocEditformComponent<PDocRecord
 
         const editorCommands: CommonDocEditorCommandComponentConfig = {
             rangeCommands: [],
-            singleCommands: []
+            singleCommands: [],
+            commandBlocks: []
         };
         if (BeanUtils.getValue(config, 'components.pdoc-editor-commands.singleCommands')) {
             editorCommands.singleCommands = BeanUtils.getValue(config, 'components.pdoc-editor-commands.singleCommands');
         }
         if (BeanUtils.getValue(config, 'components.pdoc-editor-commands.rangeCommands')) {
             editorCommands.rangeCommands = BeanUtils.getValue(config, 'components.pdoc-editor-commands.rangeCommands');
+        }
+        if (BeanUtils.getValue(config, 'components.pdoc-editor-commands.commandBlocks')) {
+            editorCommands.commandBlocks = BeanUtils.getValue(config, 'components.pdoc-editor-commands.commandBlocks');
         }
 
         const defaultConfig: PageDocEditformComponentConfig = {

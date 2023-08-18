@@ -4,12 +4,14 @@ import {TextEditorComponent} from './text-editor.component';
 import {NO_ERRORS_SCHEMA} from '@angular/core';
 import {ReactiveFormsModule} from '@angular/forms';
 import {TranslateModule, TranslateService} from '@ngx-translate/core';
-import {AngularMarkdownService} from '../../services/angular-markdown.service';
 import {PlatformService} from '../../services/platform.service';
 import {AngularHtmlService} from '../../services/angular-html.service';
 import {CommonRoutingService} from '../../services/common-routing.service';
 import {Router} from '@angular/router';
 import {RouterStub} from '../../testing/router-stubs';
+import {SimpleAngularMarkdownService} from '../../services/simple-angular-markdown.service';
+import {AngularMarkdownService} from '../../services/angular-markdown.service';
+import {SimpleAngularHtmlService} from '../../services/simple-angular-html.service';
 
 describe('TextEditorComponent', () => {
     let component: TextEditorComponent;
@@ -24,8 +26,8 @@ describe('TextEditorComponent', () => {
             ],
             providers: [
                 TranslateService,
-                AngularMarkdownService,
-                AngularHtmlService,
+                {provide: AngularMarkdownService, useClass: SimpleAngularMarkdownService},
+                {provide: AngularHtmlService, useClass: SimpleAngularHtmlService},
                 CommonRoutingService,
                 { provide: Router, useValue: new RouterStub() },
                 PlatformService

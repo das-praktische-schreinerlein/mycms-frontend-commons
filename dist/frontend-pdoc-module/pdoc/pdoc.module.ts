@@ -9,8 +9,6 @@ import {AngularCommonsModule} from '../../angular-commons/angular-commons.module
 import {TranslateModule, TranslateService} from '@ngx-translate/core';
 import {ErrorResolver} from '../../frontend-cdoc-commons/resolver/error.resolver';
 import {PageUtils} from '../../angular-commons/services/page.utils';
-import {AngularHtmlService} from '../../angular-commons/services/angular-html.service';
-import {AngularMarkdownService} from '../../angular-commons/services/angular-markdown.service';
 import {CommonRoutingService} from '../../angular-commons/services/common-routing.service';
 import {CommonDocSearchFormUtils} from '../../frontend-cdoc-commons/services/cdoc-searchform-utils.service';
 import {FrontendCommonDocCommonsModule} from '../../frontend-cdoc-commons/frontend-cdoc-commons.module';
@@ -62,8 +60,6 @@ import {PDocRoutingModule} from './pdoc-routing.module';
         PDocRecordResolver,
         ErrorResolver,
         PageUtils,
-        AngularHtmlService,
-        AngularMarkdownService,
         LayoutService
     ],
     exports: [
@@ -72,4 +68,5 @@ import {PDocRoutingModule} from './pdoc-routing.module';
         PDocSearchPageComponent
     ]
 })
-export class PDocModule {}
+export class PDocModule {
+}

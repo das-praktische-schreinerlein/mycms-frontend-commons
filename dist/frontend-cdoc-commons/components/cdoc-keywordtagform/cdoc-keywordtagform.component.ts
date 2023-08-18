@@ -6,9 +6,7 @@ import {Subject} from 'rxjs';
 import {ComponentUtils} from '../../../angular-commons/services/component.utils';
 import {ToastrService} from 'ngx-toastr';
 import {CommonDocRecord} from '@dps/mycms-commons/dist/search-commons/model/records/cdoc-entity-record';
-import {
-    ActionTagFormResultType
-} from '../../../frontend-cdoc-commons/components/cdoc-actiontags/cdoc-actiontags.component';
+import {ActionTagFormResultType} from '../../../frontend-cdoc-commons/components/cdoc-actiontags/cdoc-actiontags.component';
 import {BeanUtils} from '@dps/mycms-commons/dist/commons/utils/bean.utils';
 
 export interface CommonDocKeywordTagFormComponentResultType extends ActionTagFormResultType {

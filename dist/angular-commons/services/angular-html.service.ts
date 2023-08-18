@@ -1,8 +1,6 @@
-import {Injectable} from '@angular/core';
-import {CommonRoutingService} from './common-routing.service';
+import {AbstractHtmlRender} from '../htmlrenderer/html.renderer';
 
-@Injectable()
-export class AngularHtmlService {
+export abstract class AngularHtmlService {
     public static browserSaveBlobAsFile(blob: Blob, fileName: string, mimeType: string) {
         if (window.navigator && window.navigator.msSaveOrOpenBlob) {
             window.navigator.msSaveOrOpenBlob(blob, fileName);
@@ -22,7 +20,7 @@ export class AngularHtmlService {
         AngularHtmlService.browserSaveBlobAsFile(blob, fileName, mimeType);
     }
 
-    constructor(private commonRoutingService: CommonRoutingService) {
+    protected constructor(protected renderers: AbstractHtmlRender[]) {
     }
 
     renderHtml(parentSelector: string, html: string, routeLocalLinkWithAngularRouter: boolean): boolean {
@@ -33,27 +31,19 @@ export class AngularHtmlService {
 
         inputEl.innerHTML = html;
 
-        if (!routeLocalLinkWithAngularRouter) {
-            return true;
-        }
-
-        const links = document.querySelectorAll(parentSelector + ' a');
-        const me = this;
-        for (let i = 0; i < links.length; i++) {
-            const link = links[i];
-            const url = link.getAttribute('href');
-            if (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('mailto://')) {
-                continue;
-            }
-            // TODO link.removeEventListener('click');
-            link.addEventListener('click', function (event) {
-                event.preventDefault();
-                me.commonRoutingService.navigateByUrl(url);
-                return false;
-            });
-        }
+        this.postRender(parentSelector, routeLocalLinkWithAngularRouter);
 
         return true;
+    }
+
+    protected postRender(parentSelector: string, routeLocalLinkWithAngularRouter: boolean): void {
+        const args = {
+            routeLocalLinkWithAngularRouter: routeLocalLinkWithAngularRouter
+        };
+
+        for (const renderer of this.renderers) {
+            renderer.postProcessHtml(parentSelector, args);
+        }
     }
 
 }

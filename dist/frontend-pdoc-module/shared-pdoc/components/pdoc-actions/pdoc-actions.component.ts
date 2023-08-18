@@ -3,9 +3,7 @@ import {PDocRecord} from '@dps/mycms-commons/dist/pdoc-commons/model/records/pdo
 import {PDocDynamicComponentService} from '../../services/pdoc-dynamic-components.service';
 import {PDocDataService} from '@dps/mycms-commons/dist/pdoc-commons/services/pdoc-data.service';
 import {ToastrService} from 'ngx-toastr';
-import {
-    CommonDocActionsComponent
-} from '../../../../frontend-cdoc-commons/components/cdoc-actions/cdoc-actions.component';
+import {CommonDocActionsComponent} from '../../../../frontend-cdoc-commons/components/cdoc-actions/cdoc-actions.component';
 import {PDocSearchForm} from '@dps/mycms-commons/dist/pdoc-commons/model/forms/pdoc-searchform';
 import {PDocSearchResult} from '@dps/mycms-commons/dist/pdoc-commons/model/container/pdoc-searchresult';
 import {GenericAppService} from '@dps/mycms-commons/dist/commons/services/generic-app.service';

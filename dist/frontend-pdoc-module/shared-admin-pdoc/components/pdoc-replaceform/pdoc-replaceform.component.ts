@@ -7,9 +7,7 @@ import {FormBuilder} from '@angular/forms';
 import {PDocDataService} from '@dps/mycms-commons/dist/pdoc-commons/services/pdoc-data.service';
 import {ToastrService} from 'ngx-toastr';
 import {PDocAdapterResponseMapper} from '@dps/mycms-commons/dist/pdoc-commons/services/pdoc-adapter-response.mapper';
-import {
-    CommonDocReplaceFormComponent
-} from '../../../../frontend-cdoc-commons/components/cdoc-replaceform/cdoc-replaceform.component';
+import {CommonDocReplaceFormComponent} from '../../../../frontend-cdoc-commons/components/cdoc-replaceform/cdoc-replaceform.component';
 import {PDocSearchForm} from '@dps/mycms-commons/dist/pdoc-commons/model/forms/pdoc-searchform';
 import {PDocSearchResult} from '@dps/mycms-commons/dist/pdoc-commons/model/container/pdoc-searchresult';
 

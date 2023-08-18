@@ -10,9 +10,7 @@ import {CommonDocSearchForm} from '@dps/mycms-commons/dist/search-commons/model/
 import {CommonDocDataService} from '@dps/mycms-commons/dist/search-commons/services/cdoc-data.service';
 import {CommonDocRecord} from '@dps/mycms-commons/dist/search-commons/model/records/cdoc-entity-record';
 import {CommonDocSearchResult} from '@dps/mycms-commons/dist/search-commons/model/container/cdoc-searchresult';
-import {
-    GenericSearchFormSearchFormConverter
-} from '@dps/mycms-commons/dist/search-commons/services/generic-searchform.converter';
+import {GenericSearchFormSearchFormConverter} from '@dps/mycms-commons/dist/search-commons/services/generic-searchform.converter';
 import {AbstractInlineComponent} from '../../../angular-commons/components/inline.component';
 import {Subscription} from 'rxjs';
 import {IMultiSelectOption} from 'angular-2-dropdown-multiselect';

@@ -1,8 +1,9 @@
-import { CommonRoutingService } from './common-routing.service';
-export declare class AngularHtmlService {
-    private commonRoutingService;
+import { AbstractHtmlRender } from '../htmlrenderer/html.renderer';
+export declare abstract class AngularHtmlService {
+    protected renderers: AbstractHtmlRender[];
     static browserSaveBlobAsFile(blob: Blob, fileName: string, mimeType: string): void;
     static browserSaveTextAsFile(text: string, fileName: string, mimeType: string): void;
-    constructor(commonRoutingService: CommonRoutingService);
+    protected constructor(renderers: AbstractHtmlRender[]);
     renderHtml(parentSelector: string, html: string, routeLocalLinkWithAngularRouter: boolean): boolean;
+    protected postRender(parentSelector: string, routeLocalLinkWithAngularRouter: boolean): void;
 }

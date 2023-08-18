@@ -8,9 +8,7 @@ import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {SearchFormUtils} from '../../../../angular-commons/services/searchform-utils.service';
 import {ToastrService} from 'ngx-toastr';
 import {IMultiSelectOption} from 'angular-2-dropdown-multiselect';
-import {
-    CommonDocAssignJoinFormComponent
-} from '../../../../frontend-cdoc-commons/components/cdoc-assignjoinform/cdoc-assignjoinform.component';
+import {CommonDocAssignJoinFormComponent} from '../../../../frontend-cdoc-commons/components/cdoc-assignjoinform/cdoc-assignjoinform.component';
 
 @Component({
     selector: 'app-pdoc-assignjoinform',

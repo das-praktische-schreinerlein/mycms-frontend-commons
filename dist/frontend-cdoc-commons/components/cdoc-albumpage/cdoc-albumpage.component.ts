@@ -15,9 +15,7 @@ import {Layout, LayoutService} from '../../../angular-commons/services/layout.se
 import {CommonRoutingService, RoutingState} from '../../../angular-commons/services/common-routing.service';
 import {ErrorResolver} from '../../resolver/error.resolver';
 import {CommonDocRoutingService} from '../../services/cdoc-routing.service';
-import {
-    GenericSearchFormSearchFormConverter
-} from '@dps/mycms-commons/dist/search-commons/services/generic-searchform.converter';
+import {GenericSearchFormSearchFormConverter} from '@dps/mycms-commons/dist/search-commons/services/generic-searchform.converter';
 import {PageUtils} from '../../../angular-commons/services/page.utils';
 import {GenericTrackingService} from '../../../angular-commons/services/generic-tracking.service';
 import {CommonDocAlbumService} from '../../services/cdoc-album.service';

@@ -13,12 +13,12 @@
 - frontend: added abstract app-component
 - frontend: added page-management
 - frontend: replace NgxMd with plain marked
-- frontend: add own marked-extensions
+- frontend: introduced fully featured markdown-support with extensions
 
 ### new features
 - moved TextEditorComponent, FormUtils and GeoParserDeterminer to commons
 - frontend: added page-management
-- frontend: add own marked-extensions
+- frontend: introduced fully featured markdown-support with extensions
 
 ### improvements
 - moved layout-utils, noop-action, modal-functionality to commons

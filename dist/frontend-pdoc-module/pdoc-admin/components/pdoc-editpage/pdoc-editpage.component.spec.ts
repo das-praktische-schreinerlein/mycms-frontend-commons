@@ -11,7 +11,6 @@ import {AppServiceStub} from '../../../../angular-commons/testing/appservice-stu
 import {GenericAppService} from '@dps/mycms-commons/dist/commons/services/generic-app.service';
 import {ErrorResolver} from '../../../../frontend-cdoc-commons/resolver/error.resolver';
 import {PageUtils} from '../../../../angular-commons/services/page.utils';
-import {AngularMarkdownService} from '../../../../angular-commons/services/angular-markdown.service';
 import {AngularHtmlService} from '../../../../angular-commons/services/angular-html.service';
 import {CommonRoutingService} from '../../../../angular-commons/services/common-routing.service';
 import {RouterStub} from '../../../../angular-commons/testing/router-stubs';
@@ -28,6 +27,9 @@ import {LayoutService} from '../../../../angular-commons/services/layout.service
 import {ToastrServiceStub} from '../../../../testing/toasts-stubs';
 import {PDocRoutingService} from '../../../shared-pdoc/services/pdoc-routing.service';
 import {COMMON_APP_ENVIRONMENT} from '../../../../frontend-section-commons/common-environment';
+import {SimpleAngularMarkdownService} from '../../../../angular-commons/services/simple-angular-markdown.service';
+import {AngularMarkdownService} from '../../../../angular-commons/services/angular-markdown.service';
+import {SimpleAngularHtmlService} from '../../../../angular-commons/services/simple-angular-html.service';
 
 describe('PDocEditpageComponent', () => {
     let component: PDocEditpageComponent;
@@ -54,8 +56,8 @@ describe('PDocEditpageComponent', () => {
                 PDocRoutingService,
                 { provide: ToastrService, useValue: new ToastrServiceStub() },
                 TranslateService,
-                AngularMarkdownService,
-                AngularHtmlService,
+                {provide: AngularMarkdownService, useClass: SimpleAngularMarkdownService},
+                {provide: AngularHtmlService, useClass: SimpleAngularHtmlService},
                 ErrorResolver,
                 PageUtils,
                 GenericTrackingService,

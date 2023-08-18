@@ -10,9 +10,7 @@ import {ToastrService} from 'ngx-toastr';
 import {PDocDataCacheService} from '../../services/pdoc-datacache.service';
 import {SearchFormUtils} from '../../../../angular-commons/services/searchform-utils.service';
 import {PDocSearchFormConverter} from '../../services/pdoc-searchform-converter.service';
-import {
-    CommonDocSearchformComponent
-} from '../../../../frontend-cdoc-commons/components/cdoc-searchform/cdoc-searchform.component';
+import {CommonDocSearchformComponent} from '../../../../frontend-cdoc-commons/components/cdoc-searchform/cdoc-searchform.component';
 import {PDocRecord} from '@dps/mycms-commons/dist/pdoc-commons/model/records/pdoc-record';
 import {PDocDataService} from '@dps/mycms-commons/dist/pdoc-commons/services/pdoc-data.service';
 

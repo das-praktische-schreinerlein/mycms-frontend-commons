@@ -23,9 +23,7 @@ import {CommonDocRecord} from '@dps/mycms-commons/dist/search-commons/model/reco
 import {CommonDocSearchForm} from '@dps/mycms-commons/dist/search-commons/model/forms/cdoc-searchform';
 import {CommonDocSearchResult} from '@dps/mycms-commons/dist/search-commons/model/container/cdoc-searchresult';
 import {CommonDocDataService} from '@dps/mycms-commons/dist/search-commons/services/cdoc-data.service';
-import {
-    GenericSearchFormSearchFormConverter
-} from '@dps/mycms-commons/dist/search-commons/services/generic-searchform.converter';
+import {GenericSearchFormSearchFormConverter} from '@dps/mycms-commons/dist/search-commons/services/generic-searchform.converter';
 import {CommonSectionSearchFormResolver} from '../resolver/cdoc-section-searchform.resolver';
 import {
     AbstractPageComponent,

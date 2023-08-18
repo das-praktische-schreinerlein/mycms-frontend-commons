@@ -22,10 +22,12 @@ import {ToastrServiceStub} from '../../../../testing/toasts-stubs';
 import {PDocNameSuggesterService} from '../../services/pdoc-name-suggester.service';
 import {PDocDescSuggesterService} from '../../services/pdoc-desc-suggester.service';
 import {PlatformService} from '../../../../angular-commons/services/platform.service';
-import {AngularMarkdownService} from '../../../../angular-commons/services/angular-markdown.service';
 import {AngularHtmlService} from '../../../../angular-commons/services/angular-html.service';
 import {PDocPageDescSuggesterService} from '../../services/pdoc-page-desc-suggester.service';
 import {PDocActionTagService} from '../../../shared-pdoc/services/pdoc-actiontag.service';
+import {SimpleAngularMarkdownService} from '../../../../angular-commons/services/simple-angular-markdown.service';
+import {AngularMarkdownService} from '../../../../angular-commons/services/angular-markdown.service';
+import {SimpleAngularHtmlService} from '../../../../angular-commons/services/simple-angular-html.service';
 
 describe('PDocEditformComponent', () => {
     let component: PDocEditformComponent;
@@ -54,8 +56,8 @@ describe('PDocEditformComponent', () => {
                 PDocDescSuggesterService,
                 PDocPageDescSuggesterService,
                 PlatformService,
-                AngularMarkdownService,
-                AngularHtmlService,
+                {provide: AngularMarkdownService, useClass: SimpleAngularMarkdownService},
+                {provide: AngularHtmlService, useClass: SimpleAngularHtmlService},
                 { provide: GenericAppService, useValue: new AppServiceStub() },
                 PDocActionTagService
             ],

@@ -1,14 +1,10 @@
-import {Injectable} from '@angular/core';
 import {AngularHtmlService} from './angular-html.service';
-import {MarkdownService} from '../../markdown-commons/markdown.service';
-import {MarkdownDefaultExtensions} from '../../markdown-commons/extensions/markdown.extensions';
+import {MarkdownService} from '@dps/mycms-commons/dist/markdown-commons/markdown.service';
 
-@Injectable()
-export class AngularMarkdownService {
-    protected markdownService: MarkdownService
+export abstract class AngularMarkdownService {
+    protected markdownService: MarkdownService;
 
-    constructor(private htmlService: AngularHtmlService) {
-        this.markdownService = new MarkdownService(MarkdownDefaultExtensions);
+    protected constructor(protected htmlService: AngularHtmlService) {
     }
 
     renderMarkdown(parentSelector: string, markdown: string, routeLocalLinkWithAngularRouter: boolean): boolean {

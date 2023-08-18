@@ -40,7 +40,8 @@ var TextEditorComponent = /** @class */ (function (_super) {
         });
         _this.editorCommands = {
             singleCommands: [],
-            rangeCommands: []
+            rangeCommands: [],
+            commandBlocks: []
         };
         _this.descMd = '';
         _this.descMdRecommended = '';

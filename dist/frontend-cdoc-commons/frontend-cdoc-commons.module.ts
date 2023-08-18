@@ -21,14 +21,10 @@ import {CommonDocAudioplayerComponent} from './components/cdoc-audioplayer/cdoc-
 import {CommonDocActionTagsComponent} from './components/cdoc-actiontags/cdoc-actiontags.component';
 import {FileDropModule} from 'ngx-file-drop';
 import {CommonDocInitialtableComponent} from './components/cdoc-initialtable/cdoc-initialtable.component';
-import {
-    CommonDocODObjectRectanglesComponent
-} from './components/cdoc-odobjectrectangles/cdoc-odobjectrectangles.component';
+import {CommonDocODObjectRectanglesComponent} from './components/cdoc-odobjectrectangles/cdoc-odobjectrectangles.component';
 import {CommonDocODObjectDetailsComponent} from './components/cdoc-odobjectdetails/cdoc-odobjectdetails.component';
 import {CommonDocObjectNavigationComponent} from './components/cdoc-object-navigation/cdoc-object-navigation.component';
-import {
-    CommonDocExtendedObjectPropertiesComponent
-} from './components/cdoc-extended-object-properties/cdoc-extended-object-properties.component';
+import {CommonDocExtendedObjectPropertiesComponent} from './components/cdoc-extended-object-properties/cdoc-extended-object-properties.component';
 import {CommonDocMediaMetaComponent} from './components/cdoc-mediameta/cdoc-mediameta.component';
 
 @NgModule({

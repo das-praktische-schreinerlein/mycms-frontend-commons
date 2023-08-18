@@ -4,20 +4,29 @@ import {FormBuilder, FormGroup} from '@angular/forms';
 import {AngularMarkdownService} from '../../services/angular-markdown.service';
 import {PlatformService} from '../../services/platform.service';
 
-export interface SingleEditorCommand {
+export interface EditorCommand {
     label: string,
+    type ?: string
+}
+
+export interface SingleEditorCommand extends EditorCommand {
     command: string
 }
 
-export interface RangeEditorCommand {
-    label: string,
+export interface RangeEditorCommand extends EditorCommand {
     commandStart: string,
     commandEnd: string
 }
 
+export interface EditorCommandBlock {
+    label: string
+    commands: EditorCommand[];
+}
+
 export interface CommonDocEditorCommandComponentConfig {
-    singleCommands: SingleEditorCommand[];
-    rangeCommands: RangeEditorCommand[];
+    singleCommands ?: SingleEditorCommand[];
+    rangeCommands ?: RangeEditorCommand[];
+    commandBlocks ?: EditorCommandBlock[];
 }
 
 @Component({
@@ -37,7 +46,8 @@ export class TextEditorComponent extends AbstractInlineComponent {
     @Input()
     public editorCommands: CommonDocEditorCommandComponentConfig = {
         singleCommands: [],
-        rangeCommands: []
+        rangeCommands: [],
+        commandBlocks: []
     };
 
 

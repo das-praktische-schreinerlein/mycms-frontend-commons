@@ -1,7 +1,5 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input} from '@angular/core';
-import {
-    CommonDocSimpleSearchNavigationComponent
-} from '../../../../frontend-cdoc-commons/components/cdoc-simple-search-navigation/cdoc-simple-search-navigation.component';
+import {CommonDocSimpleSearchNavigationComponent} from '../../../../frontend-cdoc-commons/components/cdoc-simple-search-navigation/cdoc-simple-search-navigation.component';
 import {PDocRoutingService} from '../../services/pdoc-routing.service';
 
 @Component({

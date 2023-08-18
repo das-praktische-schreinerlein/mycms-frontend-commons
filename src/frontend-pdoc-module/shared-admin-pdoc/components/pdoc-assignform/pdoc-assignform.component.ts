@@ -3,9 +3,7 @@ import {PDocRecord} from '@dps/mycms-commons/dist/pdoc-commons/model/records/pdo
 import {PDocSearchForm} from '@dps/mycms-commons/dist/pdoc-commons/model/forms/pdoc-searchform';
 import {PDocSearchResult} from '@dps/mycms-commons/dist/pdoc-commons/model/container/pdoc-searchresult';
 import {PDocDataService} from '@dps/mycms-commons/dist/pdoc-commons/services/pdoc-data.service';
-import {
-    CommonDocAssignFormComponent
-} from '../../../../frontend-cdoc-commons/components/cdoc-assignform/cdoc-assignform.component';
+import {CommonDocAssignFormComponent} from '../../../../frontend-cdoc-commons/components/cdoc-assignform/cdoc-assignform.component';
 import {FormBuilder} from '@angular/forms';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {SearchFormUtils} from '../../../../angular-commons/services/searchform-utils.service';

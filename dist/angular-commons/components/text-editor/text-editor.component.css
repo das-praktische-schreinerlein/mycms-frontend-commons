@@ -34,7 +34,20 @@ textarea.nowrap {
     max-width: 1000px;
 }
 
+div.commandBlock {
+    display: inline-block;
+    border: 1px solid lightgray;
+}
+
+span.commandBlockName {
+    padding: 2px;
+}
+
 span.singleCommand {
+    padding: 2px;
+}
+
+span.commandBlockLabel {
     padding: 2px;
 }
 

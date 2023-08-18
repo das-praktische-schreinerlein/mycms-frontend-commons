@@ -110,7 +110,8 @@ var PDocEditformComponent = /** @class */ (function (_super) {
             allSelected: 'alles' };
         _this.editorCommands = {
             singleCommands: [],
-            rangeCommands: []
+            rangeCommands: [],
+            commandBlocks: []
         };
         _this.descMdRecommended = '';
         return _this;
@@ -153,13 +154,17 @@ var PDocEditformComponent = /** @class */ (function (_super) {
         }
         var editorCommands = {
             rangeCommands: [],
-            singleCommands: []
+            singleCommands: [],
+            commandBlocks: []
         };
         if (BeanUtils.getValue(config, 'components.pdoc-editor-commands.singleCommands')) {
             editorCommands.singleCommands = BeanUtils.getValue(config, 'components.pdoc-editor-commands.singleCommands');
         }
         if (BeanUtils.getValue(config, 'components.pdoc-editor-commands.rangeCommands')) {
             editorCommands.rangeCommands = BeanUtils.getValue(config, 'components.pdoc-editor-commands.rangeCommands');
+        }
+        if (BeanUtils.getValue(config, 'components.pdoc-editor-commands.commandBlocks')) {
+            editorCommands.commandBlocks = BeanUtils.getValue(config, 'components.pdoc-editor-commands.commandBlocks');
         }
         var defaultConfig = {
             editorCommands: editorCommands,

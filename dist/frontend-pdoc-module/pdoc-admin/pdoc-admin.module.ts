@@ -9,8 +9,6 @@ import {AngularCommonsModule} from '../../angular-commons/angular-commons.module
 import {TranslateModule, TranslateService} from '@ngx-translate/core';
 import {ErrorResolver} from '../../frontend-cdoc-commons/resolver/error.resolver';
 import {PageUtils} from '../../angular-commons/services/page.utils';
-import {AngularHtmlService} from '../../angular-commons/services/angular-html.service';
-import {AngularMarkdownService} from '../../angular-commons/services/angular-markdown.service';
 import {CommonRoutingService} from '../../angular-commons/services/common-routing.service';
 import {PDocEditpageComponent} from './components/pdoc-editpage/pdoc-editpage.component';
 import {PDocAdminRoutingModule} from './pdoc-admin-routing.module';
@@ -68,8 +66,6 @@ import {PDocModule} from '../pdoc/pdoc.module';
         PDocRecordCreateResolver,
         ErrorResolver,
         PageUtils,
-        AngularHtmlService,
-        AngularMarkdownService,
         LayoutService
     ],
     exports: [
