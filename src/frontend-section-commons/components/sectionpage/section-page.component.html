@@ -97,7 +97,7 @@
 </ng-template>
 
 <ng-template #sectionPrevNextNavigationContainer>
-    <div class="container content-container sectionpage-prevnext-nav-container hidden-print">
+    <div class="container content-container sectionpage-prevnext-nav-container">
         <div class="prevnext-nav row">
             <div class="col-sm-4 prevnext-nav-prev">
                 <ng-container *ngIf="sectionPrev">
@@ -124,7 +124,7 @@
 
 <ng-template #adminAreaContainer>
     <ng-container *ngIf="flgShowAdminArea">
-        <div class="container content-container sectionpage-dashBoard-container">
+        <div class="container content-container sectionpage-adminarea-container">
             <ng-container *ngTemplateOutlet="adminArea"></ng-container>
             <div (click)="onScrollToTop()" class="scroll-to-top-container hidden-print"><span></span></div>
         </div>

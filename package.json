@@ -5,7 +5,7 @@
   "angular-cli": {},
   "scripts": {
     "build": "npm run prepare-test && npm run prepare-build && tsc -p tsconfig.json && npm run build-copy && npm run build-prune",
-    "build-copy": "cpx \"src/**/*.{html,css,ts}\" dist",
+    "build-copy": "cpx \"src/**/*.{html,css,scss,ts}\" dist",
     "build-prune": "del-cli \"dist/testing/**/*.ts\" \"!dist/testing/**/*.d.ts\" && del-cli \"dist/angular-commons/testing/**/*.ts\" \"!dist/angular-commons/testing/**/*.d.ts\" &&  del-cli \"dist/**/cdoc-routing.service.ts\" && del-cli \"dist/**/common-routing.service.ts\" && del-cli \"dist/test.ts\" && del-cli \"dist/polyfills.ts\" && del-cli \"dist/main.spec.ts\"",
     "prepare": "patch-package",
     "prepare-build": "cross-os prepare-build-os",
@@ -28,7 +28,6 @@
   "main": "dist/",
   "types": "dist/",
   "private": true,
-  "dependencies": {},
   "peerDependencies": {
     "@angular/animations": ">= 7.2.16",
     "@angular/common": ">= 7.2.16",
@@ -50,6 +49,7 @@
     "jquery": ">= 3.6.3",
     "js-data": ">= 3.0.8",
     "js-data-http": ">= 3.0.1",
+    "jspdf": ">= 2.3.1 < 2.4.0",
     "leaflet": ">= 1.9.3",
     "leaflet-editable-polyline": ">= 1.0.8",
     "leaflet.markercluster": ">= 1.5.3",
@@ -127,6 +127,7 @@
     "jquery": "3.6.3",
     "js-data": "3.0.8",
     "js-data-http": "3.0.1",
+    "jspdf": "2.3.1",
     "leaflet": "1.9.3",
     "leaflet-editable-polyline": "1.0.8",
     "leaflet.markercluster": "1.5.3",

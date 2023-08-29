@@ -1,0 +1,81 @@
+body {
+    background: white;
+}
+
+.container {
+    width: 100%;
+    display: block;
+}
+
+.sectionpage-stacked-sidebar-container {
+    display: none;
+}
+
+.sectionpage-stacked-left-content-container {
+    page-break-before: avoid;
+    page-break-inside: auto;
+    display: block !important;
+}
+
+.sectionpage-dashBoard-container, .sectionpage-dashboard-container {
+    display: none;
+}
+
+.sectionpage-adminarea-container {
+    display: none;
+}
+
+.sectionpage-prevnext-nav-container {
+    display: none;
+}
+
+
+.toast-container {
+    display: none;
+}
+
+.btn, .btn-primary {
+    display: none !important;
+}
+
+div.navbar-collapse, #navbarContent {
+    display: none !important;
+}
+
+ul.pagination {
+    display: none !important;
+}
+
+div.tagContainer {
+    display: none !important;
+}
+
+.card-header {
+    display: none !important;
+}
+
+.hidden-print {
+    display: none !important;
+}
+
+div.layout-big {
+    display: block;
+}
+div.layout-small {
+    display: block;
+}
+div.layout-verysmall {
+    display: block;
+}
+
+.leaflet-map-container, .map-container {
+    page-break-before: auto;
+    page-break-after: auto;
+    page-break-inside: avoid;
+}
+
+img {
+    page-break-before: auto;
+    page-break-after: auto;
+    page-break-inside: avoid;
+}

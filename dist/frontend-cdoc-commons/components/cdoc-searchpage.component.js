@@ -340,8 +340,8 @@ var CommonDocSearchpageComponent = /** @class */ (function (_super) {
             this.layout = Layout.PAGE;
             this.pageUtils.setGlobalStyle('.hide-on-fullpage { display: none; } ' +
                 '.show-on-fullpage-block { display: block; } ' +
-                '.content-container, .list-container, .card-deck, .card { background: #130b0b !IMPORTANT; border: none !IMPORTANT;} ' +
-                '.other-content-container, .map-container { background: white !IMPORTANT; border: 2px !IMPORTANT;} ' +
+                '.content-container, .list-container, .card-deck, .card { background: #130b0b !important; border: none !important;} ' +
+                '.other-content-container, .map-container { background: white !important; border: 2px !important;} ' +
                 '.list-header-container { background: #dadada; opacity: 0.1; } ' +
                 'div:hover { opacity: 1 }', 'fullPageStyle');
         }

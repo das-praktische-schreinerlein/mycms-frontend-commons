@@ -28,7 +28,7 @@ var ComponentUtils = /** @class */ (function () {
                     if (from.length !== to.length) {
                         return true;
                     }
-                    for (var i = 0; i <= from.length; i++) {
+                    for (var i = 0; i < from.length; i++) {
                         if (from[i] !== undefined && from[i] !== null &&
                             to[i] !== undefined && to[i] !== null &&
                             from[i].id !== to[i].id) {

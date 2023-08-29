@@ -30,7 +30,7 @@ export class ComponentUtils {
                         return true;
                     }
 
-                    for (let i = 0; i <= from.length; i++) {
+                    for (let i = 0; i < from.length; i++) {
                         if (from[i] !== undefined && from[i] !== null &&
                             to[i] !== undefined && to[i] !== null &&
                             from[i].id !== to[i].id) {

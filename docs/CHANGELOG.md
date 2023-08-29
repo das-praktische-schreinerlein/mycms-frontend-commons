@@ -14,11 +14,13 @@
 - frontend: added page-management
 - frontend: replace NgxMd with plain marked
 - frontend: introduced fully featured markdown-support with extensions
+- frontend: introduced print/pdf-support
 
 ### new features
 - moved TextEditorComponent, FormUtils and GeoParserDeterminer to commons
 - frontend: added page-management
 - frontend: introduced fully featured markdown-support with extensions
+- frontend: introduced print/pdf-support
 
 ### improvements
 - moved layout-utils, noop-action, modal-functionality to commons
@@ -36,6 +38,7 @@
 - renamed pdoc* to section
 - cdoc/pdoc: fixed rendering of markddown/html
 - frontend: replace NgxMd with plain marked
+- frontend: rearranged print.css
 
 
 ## 5.7.0 (2023-03-18)

@@ -370,7 +370,7 @@ var CommonDocAlbumpageComponent = /** @class */ (function (_super) {
         this.pageUtils.setGlobalStyle('.hide-on-fullpage { display: none; } ' +
             '.show-on-fullpage-block { display: block; } ' +
             'body { background: #130b0b; } ' +
-            '.image-content-container {background: #130b0b !IMPORTANT; border: none !IMPORTANT;} ', 'fullPageStyle');
+            '.image-content-container {background: #130b0b !important; border: none !important;} ', 'fullPageStyle');
     };
     CommonDocAlbumpageComponent.prototype.setEditPageLayoutAndStyles = function () {
         this.pageUtils.setGlobalStyle('', 'fullPageStyle');

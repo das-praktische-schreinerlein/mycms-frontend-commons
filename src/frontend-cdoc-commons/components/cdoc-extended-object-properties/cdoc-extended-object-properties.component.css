@@ -1,5 +1,5 @@
 div.short-entry {
-    display: inline-block !IMPORTANT;
+    display: inline-block !important;
 }
 
 div.short-entry, div.techvaluetable .entry .label, div.techvaluetable .entry .value {
