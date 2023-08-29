@@ -72,21 +72,16 @@ export class LayoutService {
         if (this.isDesktop() && typeof window !== 'undefined' && window.matchMedia) {
             const mediaQueryListPrint = window.matchMedia('print');
             mediaQueryListPrint.addListener(function(mql) {
-                if (mql.matches) {
-                    me.flgPrintmode = true;
-                } else {
-                    me.flgPrintmode = false;
-                }
-                me.layoutSizeObservable.next(me.calcLayoutSizeForWindow());
+                const printmode = mql.matches;
+
+                me.setPrintMode(printmode);
             });
+
             const mediaQueryListScreen = window.matchMedia('screen');
             mediaQueryListScreen.addListener(function(mql) {
-                if (mql.matches) {
-                    me.flgPrintmode = false;
-                } else {
-                    me.flgPrintmode = true;
-                }
-                me.layoutSizeObservable.next(me.calcLayoutSizeForWindow());
+                const printmode = !mql.matches;
+
+                me.setPrintMode(printmode);
             });
         }
     }
@@ -97,6 +92,11 @@ export class LayoutService {
 
     public isPrintMode(): boolean {
         return this.flgPrintmode;
+    }
+
+    public setPrintMode(printMode: boolean): void {
+        this.flgPrintmode = printMode;
+        this.layoutSizeObservable.next(this.calcLayoutSizeForWindow());
     }
 
     public getBrowser(): BrowserInfo | BotInfo | NodeInfo  {

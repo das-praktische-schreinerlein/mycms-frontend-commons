@@ -30,23 +30,13 @@ var LayoutService = /** @class */ (function () {
         if (this.isDesktop() && typeof window !== 'undefined' && window.matchMedia) {
             var mediaQueryListPrint = window.matchMedia('print');
             mediaQueryListPrint.addListener(function (mql) {
-                if (mql.matches) {
-                    me.flgPrintmode = true;
-                }
-                else {
-                    me.flgPrintmode = false;
-                }
-                me.layoutSizeObservable.next(me.calcLayoutSizeForWindow());
+                var printmode = mql.matches;
+                me.setPrintMode(printmode);
             });
             var mediaQueryListScreen = window.matchMedia('screen');
             mediaQueryListScreen.addListener(function (mql) {
-                if (mql.matches) {
-                    me.flgPrintmode = false;
-                }
-                else {
-                    me.flgPrintmode = true;
-                }
-                me.layoutSizeObservable.next(me.calcLayoutSizeForWindow());
+                var printmode = !mql.matches;
+                me.setPrintMode(printmode);
             });
         }
     }
@@ -91,6 +81,10 @@ var LayoutService = /** @class */ (function () {
     };
     LayoutService.prototype.isPrintMode = function () {
         return this.flgPrintmode;
+    };
+    LayoutService.prototype.setPrintMode = function (printMode) {
+        this.flgPrintmode = printMode;
+        this.layoutSizeObservable.next(this.calcLayoutSizeForWindow());
     };
     LayoutService.prototype.getBrowser = function () {
         return detect();

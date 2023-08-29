@@ -79,3 +79,7 @@ img {
     page-break-after: auto;
     page-break-inside: avoid;
 }
+
+.visible-print-block {
+    display: block !important;
+}

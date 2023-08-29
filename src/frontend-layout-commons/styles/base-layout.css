@@ -213,3 +213,25 @@ div.scroll-to-top-container span {
 div.scroll-to-top-container span::after {
     content: 'Top \290A';
 }
+
+div.print-command-container, div.pdf-command-container {
+    display: inline-block;
+    text-align: right;
+}
+
+div.print-command-container span, div.pdf-command-container span {
+    font-size: 12px;
+    border: 1px lightgray solid;
+    border-radius: 5px;
+    background: lightgray;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+div.print-command-container span::after {
+    content: 'Print 🖶';
+}
+
+div.pdf-command-container span::after {
+    content: 'PDF 🗎';
+}

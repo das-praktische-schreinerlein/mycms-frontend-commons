@@ -19,6 +19,7 @@ export declare class LayoutService {
     constructor();
     getLayoutSizeData(): BehaviorSubject<LayoutSizeData>;
     isPrintMode(): boolean;
+    setPrintMode(printMode: boolean): void;
     getBrowser(): BrowserInfo | BotInfo | NodeInfo;
     isMobile(): boolean;
     isSpider(): boolean;
