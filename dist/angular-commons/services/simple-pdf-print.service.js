@@ -65,7 +65,6 @@ var SimplePdfPrintService = /** @class */ (function (_super) {
         });
     };
     SimplePdfPrintService.prototype.preparePrintPreviewDocumentForPrint = function (printWindow, printDocument, previewContainer, printElement, options) {
-        LayoutUtils.setDisplayNoneStyleOnElementHiddenCssStyles(printDocument);
         var style = previewContainer.getAttribute('style') || '';
         if (style) {
             style = style + '; ';

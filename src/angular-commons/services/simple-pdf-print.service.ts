@@ -49,8 +49,6 @@ export class SimplePdfPrintService extends PdfPrintService {
 
     protected preparePrintPreviewDocumentForPrint(printWindow: Window, printDocument: Document,
                                                   previewContainer: Element, printElement: Element, options: PdfPrintOptions) {
-        LayoutUtils.setDisplayNoneStyleOnElementHiddenCssStyles(printDocument);
-
         let style = previewContainer.getAttribute('style') || '';
         if (style) {
             style = style + '; ';

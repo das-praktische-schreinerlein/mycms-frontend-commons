@@ -1,11 +1,14 @@
 import {Injectable} from '@angular/core';
 import {jsPDF} from 'jspdf';
 import {PdfGenerator, PdfPrintOptions} from './pdf-print.service';
+import {LayoutUtils} from './layout.utils';
 
 @Injectable()
 export class JsPdfGenerator extends PdfGenerator {
 
     public generatePdf(printWindow: Window, printElement: Element, options: PdfPrintOptions): Promise<any> {
+        this.preparePrintWindow(printWindow, printElement, options);
+
         const fileName = options.fileName;
         const pdf = new jsPDF(
             {
@@ -30,5 +33,10 @@ export class JsPdfGenerator extends PdfGenerator {
 
                 return Promise.resolve();
             });
+    }
+
+    protected preparePrintWindow(printWindow: Window, printElement: Element, options: PdfPrintOptions): void {
+        // TODO check why jspdf cant hide css with display:none
+        LayoutUtils.setDisplayNoneStyleOnElementHiddenCssStyles(printWindow.document);
     }
 }

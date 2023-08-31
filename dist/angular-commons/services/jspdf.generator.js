@@ -20,12 +20,14 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 import { Injectable } from '@angular/core';
 import { jsPDF } from 'jspdf';
 import { PdfGenerator } from './pdf-print.service';
+import { LayoutUtils } from './layout.utils';
 var JsPdfGenerator = /** @class */ (function (_super) {
     __extends(JsPdfGenerator, _super);
     function JsPdfGenerator() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     JsPdfGenerator.prototype.generatePdf = function (printWindow, printElement, options) {
+        this.preparePrintWindow(printWindow, printElement, options);
         var fileName = options.fileName;
         var pdf = new jsPDF({
             orientation: options.pdfOptions.orientation,
@@ -46,6 +48,10 @@ var JsPdfGenerator = /** @class */ (function (_super) {
             pdf.save(fileName);
             return Promise.resolve();
         });
+    };
+    JsPdfGenerator.prototype.preparePrintWindow = function (printWindow, printElement, options) {
+        // TODO check why jspdf cant hide css with display:none
+        LayoutUtils.setDisplayNoneStyleOnElementHiddenCssStyles(printWindow.document);
     };
     JsPdfGenerator = __decorate([
         Injectable()
