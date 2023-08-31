@@ -26,10 +26,6 @@ var JsPdfGenerator = /** @class */ (function (_super) {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     JsPdfGenerator.prototype.generatePdf = function (printWindow, printElement, options) {
-        // TODO add safe2Pdf, print-Button on html of Print-page
-        // TODO add jsPDF minified as external js
-        // TODO inline-jspdf so that is is only loaded in prntpage
-        // TODO add codesnippet into exteernal js only loaded on printpage
         var fileName = options.fileName;
         var pdf = new jsPDF({
             orientation: options.pdfOptions.orientation,
@@ -37,7 +33,7 @@ var JsPdfGenerator = /** @class */ (function (_super) {
             format: options.pdfOptions.format,
             precision: 16 // or "smart", default is 16
         });
-        var srcWidth = printElement.scrollWidth;
+        var srcWidth = printElement.scrollWidth || printElement['offsetWidth'];
         return pdf.html(printElement, {
             html2canvas: {
                 scale: 595.26 / srcWidth,
