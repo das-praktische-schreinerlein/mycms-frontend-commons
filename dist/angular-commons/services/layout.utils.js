@@ -3,8 +3,7 @@ var LayoutUtils = /** @class */ (function () {
     }
     LayoutUtils.setDisplayNoneStyleOnElementHiddenCssStyles = function (printDocument) {
         var rulesDisplayNone = ['print-hidden'].concat(LayoutUtils.getCssSelectorsForStyleSheetList(printDocument.styleSheets));
-        var elements = LayoutUtils.setDisplayNoneStyleOnElementForCssRules(printDocument, rulesDisplayNone);
-        return elements;
+        return LayoutUtils.setDisplayNoneStyleOnElementForCssRules(printDocument, rulesDisplayNone);
     };
     LayoutUtils.setDisplayNoneStyleOnElementForCssRules = function (printDocument, rulesDisplayNone) {
         var elements = [];
@@ -21,9 +20,9 @@ var LayoutUtils = /** @class */ (function () {
         return elements;
     };
     LayoutUtils.setDisplayNoneStyleOnElements = function (elements) {
-        for (var i = 0; i < elements.length; i++) {
-            var doc = elements[i];
-            LayoutUtils.setDisplayNoneStyleOnElement(doc);
+        for (var _i = 0, elements_1 = elements; _i < elements_1.length; _i++) {
+            var element = elements_1[_i];
+            LayoutUtils.setDisplayNoneStyleOnElement(element);
         }
         return elements;
     };
@@ -36,32 +35,36 @@ var LayoutUtils = /** @class */ (function () {
         element.setAttribute('style', style);
         return element;
     };
-    LayoutUtils.extractElementForFilter = function (document, idRefFilter, classNameFilter, tagNameFilter) {
+    LayoutUtils.extractElementForFilter = function (document, filterType, filter) {
+        if (!filter) {
+            console.error('cant find element no filter supplied');
+            return undefined;
+        }
         var doc;
-        if (idRefFilter) {
-            console.log('find element with idRefFilter', idRefFilter);
-            doc = document.getElementById(idRefFilter);
+        if (filterType === 'ID') {
+            console.log('find element with idRefFilter', filter);
+            doc = document.getElementById(filter);
             if (!doc) {
-                console.error('cant find element with idRefFilter', idRefFilter);
+                console.error('cant find element with idRefFilter', filter);
                 return;
             }
             return doc;
         }
-        else if (classNameFilter) {
-            console.log('find element with classNameFilter', classNameFilter);
-            var docs = document.getElementsByClassName(classNameFilter);
+        else if (filterType === 'CLASS') {
+            console.log('find element with classNameFilter', filter);
+            var docs = document.getElementsByClassName(filter);
             if (docs.length <= 0) {
-                console.error('cant find element with classNameFilter', classNameFilter);
+                console.error('cant find element with classNameFilter', filter);
                 return;
             }
             doc = docs.item(0);
             return doc;
         }
-        else if (tagNameFilter) {
-            console.log('find element with tagNameFilter', tagNameFilter);
-            var docs = document.getElementsByTagName(tagNameFilter);
+        else if (filterType === 'TAG') {
+            console.log('find element with tagNameFilter', filter);
+            var docs = document.getElementsByTagName(filter);
             if (docs.length <= 0) {
-                console.error('cant find element with tag tagNameFilter', tagNameFilter);
+                console.error('cant find element with tag tagNameFilter', filter);
                 return;
             }
             doc = docs.item(0);
@@ -84,8 +87,9 @@ var LayoutUtils = /** @class */ (function () {
     };
     LayoutUtils.getCssSelectorsForCssRules = function (rules) {
         var rulesDisplayNone = [];
-        for (var j = 0; j < rules.length; j++) {
-            var rule = rules[j];
+        for (var _i = 0, rules_1 = rules; _i < rules_1.length; _i++) {
+            var element = rules_1[_i];
+            var rule = element;
             if (rule['selectorText']) {
                 rulesDisplayNone = rulesDisplayNone.concat(this.getCssSelectorsForCssRule(rule));
             }
@@ -99,9 +103,10 @@ var LayoutUtils = /** @class */ (function () {
         var rulesDisplayNone = [];
         if (rule.selectorText) {
             var selectors = rule.selectorText.split(',');
-            for (var k = 0; k < selectors.length; k++) {
+            for (var _i = 0, selectors_1 = selectors; _i < selectors_1.length; _i++) {
+                var element = selectors_1[_i];
                 if (rule.style.display && rule.style.display.startsWith('none')) {
-                    rulesDisplayNone.push(selectors[k].trim().replace(/\./, ''));
+                    rulesDisplayNone.push(element.trim().replace(/\./, ''));
                 }
             }
         }

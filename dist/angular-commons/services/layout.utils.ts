@@ -1,9 +1,10 @@
+export type ElementFilterType = 'ID' | 'CLASS' | 'TAG';
+
 export class LayoutUtils {
     public static setDisplayNoneStyleOnElementHiddenCssStyles(printDocument: Document): Element[] {
         const rulesDisplayNone = ['print-hidden'].concat(LayoutUtils.getCssSelectorsForStyleSheetList(printDocument.styleSheets));
-        const elements = LayoutUtils.setDisplayNoneStyleOnElementForCssRules(printDocument, rulesDisplayNone)
 
-        return elements;
+        return LayoutUtils.setDisplayNoneStyleOnElementForCssRules(printDocument, rulesDisplayNone);
     }
 
     public static setDisplayNoneStyleOnElementForCssRules(printDocument: Document, rulesDisplayNone: string[]): Element[] {
@@ -23,9 +24,8 @@ export class LayoutUtils {
     }
 
     public static setDisplayNoneStyleOnElements(elements: Element[]): Element[] {
-        for (let i = 0; i < elements.length; i++) {
-            const doc = elements[i];
-            LayoutUtils.setDisplayNoneStyleOnElement(doc);
+        for (const element of elements) {
+            LayoutUtils.setDisplayNoneStyleOnElement(element);
         }
 
         return elements;
@@ -44,35 +44,38 @@ export class LayoutUtils {
         return element;
     }
 
-    public static extractElementForFilter(document: Document, idRefFilter: string, classNameFilter ?: string,
-                                          tagNameFilter ?: string): Element {
-        let doc: Element;
+    public static extractElementForFilter(document: Document, filterType: ElementFilterType, filter: string): Element {
+        if (! filter) {
+            console.error('cant find element no filter supplied');
+            return undefined;
+        }
 
-        if (idRefFilter) {
-            console.log('find element with idRefFilter', idRefFilter);
-            doc = document.getElementById(idRefFilter);
+        let doc: Element;
+        if (filterType === 'ID') {
+            console.log('find element with idRefFilter', filter);
+            doc = document.getElementById(filter);
             if (!doc) {
-                console.error('cant find element with idRefFilter', idRefFilter);
+                console.error('cant find element with idRefFilter', filter);
                 return;
             }
 
             return doc;
-        } else if (classNameFilter) {
-            console.log('find element with classNameFilter', classNameFilter);
-            const docs = document.getElementsByClassName(classNameFilter);
+        } else if (filterType === 'CLASS') {
+            console.log('find element with classNameFilter', filter);
+            const docs = document.getElementsByClassName(filter);
             if (docs.length <= 0) {
-                console.error('cant find element with classNameFilter', classNameFilter);
+                console.error('cant find element with classNameFilter', filter);
                 return;
             }
 
             doc = docs.item(0);
 
             return doc;
-        } else if (tagNameFilter) {
-            console.log('find element with tagNameFilter', tagNameFilter);
-            const docs = document.getElementsByTagName(tagNameFilter);
+        } else if (filterType === 'TAG') {
+            console.log('find element with tagNameFilter', filter);
+            const docs = document.getElementsByTagName(filter);
             if (docs.length <= 0) {
-                console.error('cant find element with tag tagNameFilter', tagNameFilter);
+                console.error('cant find element with tag tagNameFilter', filter);
                 return;
             }
 
@@ -100,8 +103,8 @@ export class LayoutUtils {
 
     public static getCssSelectorsForCssRules(rules: CSSRule[]): string[] {
         let rulesDisplayNone = [];
-        for (let j = 0; j < rules.length; j++) {
-            const rule = rules[j];
+        for (const element of rules) {
+            const rule = element;
             if (rule['selectorText']) {
                 rulesDisplayNone = rulesDisplayNone.concat(this.getCssSelectorsForCssRule(<CSSPageRule>rule));
             } else if (rule['cssRules']) {
@@ -116,9 +119,9 @@ export class LayoutUtils {
         const rulesDisplayNone = [];
         if (rule.selectorText) {
             const selectors = rule.selectorText.split(',');
-            for (let k = 0; k < selectors.length; k++) {
+            for (const element of selectors) {
                 if (rule.style.display && rule.style.display.startsWith('none')) {
-                    rulesDisplayNone.push(selectors[k].trim().replace(/\./, ''));
+                    rulesDisplayNone.push(element.trim().replace(/\./, ''));
                 }
             }
         }

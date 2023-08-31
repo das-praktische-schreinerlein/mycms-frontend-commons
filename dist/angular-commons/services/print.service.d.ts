@@ -1,6 +1,15 @@
-export declare class PrintService {
-    printPreview(idRefFilter: string, classNameFilter?: string, tagNameFilter?: string, width?: number, height?: number, printCssIdRegExp?: string): Window;
-    protected preparePrintPreviewDocumentForPrint(printWindow: Window, printDocument: Document, previewContainer: Element, printElement: Element, width: number): boolean;
-    protected openPrintPreviewWindow(width: number, height: number, target: string): Window;
-    protected copyContentToPrintPreviewDocument(printDocument: Document, doc: Element, printCssIdRegExp: string, printId: string): void;
+import { ElementFilterType } from './layout.utils';
+export interface PrintOptions {
+    printElementFilter: {
+        type: ElementFilterType;
+        value: string;
+    };
+    previewWindow?: {
+        width: number;
+        height?: number;
+    };
+    printStyleIdFilter?: RegExp;
+}
+export declare abstract class PrintService {
+    abstract openPrintPreview(options: PrintOptions): Window;
 }
