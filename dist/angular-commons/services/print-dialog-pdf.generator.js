@@ -19,21 +19,21 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 import { PdfGenerator } from './pdf-print.service';
 import { Injectable } from '@angular/core';
-var NoopPdfGenerator = /** @class */ (function (_super) {
-    __extends(NoopPdfGenerator, _super);
-    function NoopPdfGenerator() {
+var PrintDialogPdfGenerator = /** @class */ (function (_super) {
+    __extends(PrintDialogPdfGenerator, _super);
+    function PrintDialogPdfGenerator() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
-    NoopPdfGenerator.prototype.generatePdf = function (printWindow, printElement, options) {
+    PrintDialogPdfGenerator.prototype.generatePdf = function (printWindow, printElement, options) {
         return new Promise(function (resolve) {
             printWindow.print();
             resolve();
         });
     };
-    NoopPdfGenerator = __decorate([
+    PrintDialogPdfGenerator = __decorate([
         Injectable()
-    ], NoopPdfGenerator);
-    return NoopPdfGenerator;
+    ], PrintDialogPdfGenerator);
+    return PrintDialogPdfGenerator;
 }(PdfGenerator));
-export { NoopPdfGenerator };
-//# sourceMappingURL=noop-pdf.generator.js.map
+export { PrintDialogPdfGenerator };
+//# sourceMappingURL=print-dialog-pdf.generator.js.map
