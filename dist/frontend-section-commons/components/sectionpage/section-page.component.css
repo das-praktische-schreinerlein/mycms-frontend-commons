@@ -33,3 +33,12 @@ div.prevnext-nav-next {
 div.prevnext-nav {
     padding: 10px;
 }
+
+.sectionpage-stacked-left-content-container {
+    width: 73%;
+    display: inline-block;
+}
+.sectionpage-stacked-sidebar-container {
+    width: 25%;
+    float: right
+}
