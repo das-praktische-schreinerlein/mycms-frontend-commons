@@ -43,7 +43,9 @@
             <div class="card-action-buttons align-bottom" role="group" aria-label="Actions">
                 <app-pdoc-simple-search-navigation [record]="record"></app-pdoc-simple-search-navigation>
             </div>
-            <div (click)="onScrollToTop()" class="scroll-to-top-container hidden-print"><span></span></div>
+            <div class="command-container hidden-print">
+                <div (click)="onScrollToTop()" class="command-icon command-icon-scroll-to-top"><span></span></div>
+            </div>
         </div>
     </div>
 </div>

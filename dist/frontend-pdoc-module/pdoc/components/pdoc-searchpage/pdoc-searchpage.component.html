@@ -106,7 +106,9 @@
                    i18n="link text playlistexport|linktext for playlistexport@@link.searchresult.playlistexport">Playlist-Export</a>
             </div>
         </div>
-        <div (click)="onScrollToTop()" class="scroll-to-top-container hidden-print"><span></span></div>
+        <div class="command-container hidden-print">
+            <div (click)="onScrollToTop()" class="command-icon command-icon-scroll-to-top"><span></span></div>
+        </div>
     </div>
 
 </ng-template>

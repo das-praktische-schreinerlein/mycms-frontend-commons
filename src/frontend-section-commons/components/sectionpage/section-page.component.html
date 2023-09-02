@@ -126,7 +126,9 @@
     <ng-container *ngIf="flgShowAdminArea">
         <div class="container content-container sectionpage-adminarea-container">
             <ng-container *ngTemplateOutlet="adminArea"></ng-container>
-            <div (click)="onScrollToTop()" class="scroll-to-top-container hidden-print"><span></span></div>
+            <div class="command-container hidden-print">
+                <div (click)="onScrollToTop()" class="command-icon command-icon-scroll-to-top"><span></span></div>
+            </div>
         </div>
     </ng-container>
 </ng-template>
