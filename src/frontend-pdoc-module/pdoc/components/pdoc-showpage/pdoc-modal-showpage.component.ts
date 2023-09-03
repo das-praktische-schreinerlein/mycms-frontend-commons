@@ -15,6 +15,8 @@ import {PlatformService} from '../../../../angular-commons/services/platform.ser
 import {PDocSearchFormConverter} from '../../../shared-pdoc/services/pdoc-searchform-converter.service';
 import {LayoutService} from '../../../../angular-commons/services/layout.service';
 import {COMMON_APP_ENVIRONMENT, CommonEnvironment} from '../../../../frontend-section-commons/common-environment';
+import {PrintService} from '../../../../angular-commons/services/print.service';
+import {PdfPrintService} from '../../../../angular-commons/services/pdf-print.service';
 
 @Component({
     selector: 'app-pdoc-modal-showpage',
@@ -30,10 +32,11 @@ export class PDocModalShowpageComponent extends PDocShowPageComponent {
                 cd: ChangeDetectorRef, trackingProvider: GenericTrackingService, appService: GenericAppService,
                 platformService: PlatformService, protected searchFormConverter: PDocSearchFormConverter,
                 layoutService: LayoutService, protected elRef: ElementRef, protected router: Router,
-                @Inject(COMMON_APP_ENVIRONMENT) protected environment: CommonEnvironment) {
+                @Inject(COMMON_APP_ENVIRONMENT) protected environment: CommonEnvironment,
+                protected printService: PrintService, protected pdfPrintService: PdfPrintService) {
         super(route, cdocRoutingService, toastr, contentUtils, errorResolver, pageUtils, commonRoutingService,
             angularMarkdownService, angularHtmlService, cd, trackingProvider, appService, platformService,
-            searchFormConverter, layoutService, elRef, router, environment);
+            searchFormConverter, layoutService, elRef, router, environment, printService, pdfPrintService);
         this.modal = true;
     }
 

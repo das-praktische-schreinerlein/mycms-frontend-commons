@@ -20,10 +20,15 @@ import {DOCUMENT} from '@angular/common';
 import {PDocNameSuggesterService} from '../../services/pdoc-name-suggester.service';
 import {Router} from '@angular/router';
 import {Layout} from '../../../../angular-commons/services/layout.service';
-import {CommonDocEditorCommandComponentConfig} from '../../../../angular-commons/components/text-editor/text-editor.component';
+import {
+    CommonDocEditorCommandComponentConfig
+} from '../../../../angular-commons/components/text-editor/text-editor.component';
 import {PDocDescSuggesterService} from '../../services/pdoc-desc-suggester.service';
 import {PDocSearchFormUtils} from '../../../shared-pdoc/services/pdoc-searchform-utils.service';
 import {ObjectUtils} from '@dps/mycms-commons/dist/commons/utils/object.utils';
+import {ElementFilterType} from '../../../../angular-commons/services/layout.utils';
+import {PrintOptions, PrintService} from '../../../../angular-commons/services/print.service';
+import {PdfPrintOptions, PdfPrintService} from '../../../../angular-commons/services/pdf-print.service';
 
 export interface PageDocEditformComponentConfig extends CommonDocEditformComponentConfig {
     editorCommands: CommonDocEditorCommandComponentConfig;
@@ -105,7 +110,7 @@ export class PDocEditformComponent extends CommonDocEditformComponent<PDocRecord
                 public contentUtils: PDocContentUtils, @Inject(DOCUMENT) private document,
                 protected pdocNameSuggesterService: PDocNameSuggesterService,
                 protected pdocDescSuggesterService: PDocDescSuggesterService,
-                router: Router) {
+                router: Router, protected printService: PrintService, protected pdfPrintService: PdfPrintService) {
         super(fb, toastr, cd, appService, pdocSearchFormUtils, searchFormUtils, pdocDataService, contentUtils, router);
     }
 
@@ -134,6 +139,48 @@ export class PDocEditformComponent extends CommonDocEditformComponent<PDocRecord
             this.descMdRecommended = undefined;
             this.cd.markForCheck();
         });
+    }
+
+    onOpenPrintPreview(elementFilterType: ElementFilterType, filter: string, width?: number, height?: number,
+                              printCssIdRegExp?: string) {
+        const options: PrintOptions = {
+            printElementFilter: {
+                type: elementFilterType,
+                value: filter
+            },
+            previewWindow: {
+                width: width,
+                height: height
+            },
+            printStyleIdFilter: new RegExp(printCssIdRegExp)
+        };
+        this.printService.openPrintPreview(options);
+
+        return false;
+    }
+
+    onPrintPdf(elementFilterType: ElementFilterType, filter: string, width?: number, height?: number,
+                      printCssIdRegExp?: string) {
+        const options: PdfPrintOptions = {
+            printElementFilter: {
+                type: elementFilterType,
+                value: filter
+            },
+            previewWindow: {
+                width: width,
+                height: height
+            },
+            printStyleIdFilter: new RegExp(printCssIdRegExp),
+            fileName: 'filename.pdf',
+            pdfOptions: {
+                orientation: 'portrait',
+                format: 'a4'
+            },
+            waitForRenderingMs: 1000
+        };
+        this.pdfPrintService.printPdf(options);
+
+        return false;
     }
 
     protected validateSchema(record: PDocRecord): SchemaValidationError[] {

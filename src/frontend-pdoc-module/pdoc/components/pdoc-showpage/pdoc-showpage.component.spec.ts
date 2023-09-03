@@ -32,6 +32,11 @@ import {COMMON_APP_ENVIRONMENT} from '../../../../frontend-section-commons/commo
 import {SimpleAngularMarkdownService} from '../../../../angular-commons/services/simple-angular-markdown.service';
 import {AngularMarkdownService} from '../../../../angular-commons/services/angular-markdown.service';
 import {SimpleAngularHtmlService} from '../../../../angular-commons/services/simple-angular-html.service';
+import {SimplePdfPrintService} from '../../../../angular-commons/services/simple-pdf-print.service';
+import {PdfGenerator, PdfPrintService} from '../../../../angular-commons/services/pdf-print.service';
+import {PrintDialogPdfGenerator} from '../../../../angular-commons/services/print-dialog-pdf.generator';
+import {SimplePrintService} from '../../../../angular-commons/services/simple-print.service';
+import {PrintService} from '../../../../angular-commons/services/print.service';
 
 describe('PDocShowPageComponent', () => {
     let component: PDocShowPageComponent;
@@ -65,8 +70,12 @@ describe('PDocShowPageComponent', () => {
                 PDocSearchFormConverter,
                 SearchFormUtils,
                 SearchParameterUtils,
-                { provide: COMMON_APP_ENVIRONMENT, useValue: {}}
-        ],
+                { provide: COMMON_APP_ENVIRONMENT, useValue: {}},
+                {provide: PrintService, useClass: SimplePrintService},
+                {provide: PdfGenerator, useClass: PrintDialogPdfGenerator},
+                {provide: PdfPrintService, useClass: SimplePdfPrintService}
+
+            ],
             schemas: [NO_ERRORS_SCHEMA]
         })
             .compileComponents();

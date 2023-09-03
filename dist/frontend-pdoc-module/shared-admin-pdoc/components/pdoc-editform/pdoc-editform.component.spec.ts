@@ -28,6 +28,11 @@ import {PDocActionTagService} from '../../../shared-pdoc/services/pdoc-actiontag
 import {SimpleAngularMarkdownService} from '../../../../angular-commons/services/simple-angular-markdown.service';
 import {AngularMarkdownService} from '../../../../angular-commons/services/angular-markdown.service';
 import {SimpleAngularHtmlService} from '../../../../angular-commons/services/simple-angular-html.service';
+import {SimplePdfPrintService} from '../../../../angular-commons/services/simple-pdf-print.service';
+import {PdfGenerator, PdfPrintService} from '../../../../angular-commons/services/pdf-print.service';
+import {PrintDialogPdfGenerator} from '../../../../angular-commons/services/print-dialog-pdf.generator';
+import {SimplePrintService} from '../../../../angular-commons/services/simple-print.service';
+import {PrintService} from '../../../../angular-commons/services/print.service';
 
 describe('PDocEditformComponent', () => {
     let component: PDocEditformComponent;
@@ -59,7 +64,10 @@ describe('PDocEditformComponent', () => {
                 {provide: AngularMarkdownService, useClass: SimpleAngularMarkdownService},
                 {provide: AngularHtmlService, useClass: SimpleAngularHtmlService},
                 { provide: GenericAppService, useValue: new AppServiceStub() },
-                PDocActionTagService
+                PDocActionTagService,
+                {provide: PrintService, useClass: SimplePrintService},
+                {provide: PdfGenerator, useClass: PrintDialogPdfGenerator},
+                {provide: PdfPrintService, useClass: SimplePdfPrintService}
             ],
             schemas: [NO_ERRORS_SCHEMA]
         })

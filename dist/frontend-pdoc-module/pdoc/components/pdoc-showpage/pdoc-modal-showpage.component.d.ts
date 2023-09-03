@@ -15,11 +15,15 @@ import { PlatformService } from '../../../../angular-commons/services/platform.s
 import { PDocSearchFormConverter } from '../../../shared-pdoc/services/pdoc-searchform-converter.service';
 import { LayoutService } from '../../../../angular-commons/services/layout.service';
 import { CommonEnvironment } from '../../../../frontend-section-commons/common-environment';
+import { PrintService } from '../../../../angular-commons/services/print.service';
+import { PdfPrintService } from '../../../../angular-commons/services/pdf-print.service';
 export declare class PDocModalShowpageComponent extends PDocShowPageComponent {
     protected searchFormConverter: PDocSearchFormConverter;
     protected elRef: ElementRef;
     protected router: Router;
     protected environment: CommonEnvironment;
-    constructor(route: ActivatedRoute, cdocRoutingService: PDocRoutingService, toastr: ToastrService, contentUtils: PDocContentUtils, errorResolver: ErrorResolver, pageUtils: PageUtils, commonRoutingService: CommonRoutingService, angularMarkdownService: AngularMarkdownService, angularHtmlService: AngularHtmlService, cd: ChangeDetectorRef, trackingProvider: GenericTrackingService, appService: GenericAppService, platformService: PlatformService, searchFormConverter: PDocSearchFormConverter, layoutService: LayoutService, elRef: ElementRef, router: Router, environment: CommonEnvironment);
+    protected printService: PrintService;
+    protected pdfPrintService: PdfPrintService;
+    constructor(route: ActivatedRoute, cdocRoutingService: PDocRoutingService, toastr: ToastrService, contentUtils: PDocContentUtils, errorResolver: ErrorResolver, pageUtils: PageUtils, commonRoutingService: CommonRoutingService, angularMarkdownService: AngularMarkdownService, angularHtmlService: AngularHtmlService, cd: ChangeDetectorRef, trackingProvider: GenericTrackingService, appService: GenericAppService, platformService: PlatformService, searchFormConverter: PDocSearchFormConverter, layoutService: LayoutService, elRef: ElementRef, router: Router, environment: CommonEnvironment, printService: PrintService, pdfPrintService: PdfPrintService);
     protected configureProcessingOfResolvedData(): void;
 }

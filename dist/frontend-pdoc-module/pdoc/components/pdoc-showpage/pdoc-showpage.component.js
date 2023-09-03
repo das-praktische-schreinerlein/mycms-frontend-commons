@@ -45,13 +45,17 @@ import { PDocRoutingService } from '../../../shared-pdoc/services/pdoc-routing.s
 import { PDocContentUtils } from '../../../shared-pdoc/services/pdoc-contentutils.service';
 import { PDocSearchFormConverter } from '../../../shared-pdoc/services/pdoc-searchform-converter.service';
 import { COMMON_APP_ENVIRONMENT } from '../../../../frontend-section-commons/common-environment';
+import { PrintService } from '../../../../angular-commons/services/print.service';
+import { PdfPrintService } from '../../../../angular-commons/services/pdf-print.service';
 var PDocShowPageComponent = /** @class */ (function (_super) {
     __extends(PDocShowPageComponent, _super);
-    function PDocShowPageComponent(route, cdocRoutingService, toastr, contentUtils, errorResolver, pageUtils, commonRoutingService, angularMarkdownService, angularHtmlService, cd, trackingProvider, appService, platformService, searchFormConverter, layoutService, elRef, router, environment) {
+    function PDocShowPageComponent(route, cdocRoutingService, toastr, contentUtils, errorResolver, pageUtils, commonRoutingService, angularMarkdownService, angularHtmlService, cd, trackingProvider, appService, platformService, searchFormConverter, layoutService, elRef, router, environment, printService, pdfPrintService) {
         var _this = _super.call(this, route, cdocRoutingService, toastr, contentUtils, errorResolver, pageUtils, commonRoutingService, angularMarkdownService, angularHtmlService, cd, trackingProvider, appService, platformService, layoutService, environment, router) || this;
         _this.searchFormConverter = searchFormConverter;
         _this.elRef = elRef;
         _this.environment = environment;
+        _this.printService = printService;
+        _this.pdfPrintService = pdfPrintService;
         _this.tagcloudSearchResult = new PDocSearchResult(new PDocSearchForm({}), 0, undefined, new Facets());
         _this.showResultListTrigger = {
             ALL_ENTRIES: true,
@@ -76,6 +80,42 @@ var PDocShowPageComponent = /** @class */ (function (_super) {
             return '';
         }
         return _super.prototype.renderDesc.call(this);
+    };
+    PDocShowPageComponent.prototype.onOpenPrintPreview = function (elementFilterType, filter, width, height, printCssIdRegExp) {
+        var options = {
+            printElementFilter: {
+                type: elementFilterType,
+                value: filter
+            },
+            previewWindow: {
+                width: width,
+                height: height
+            },
+            printStyleIdFilter: new RegExp(printCssIdRegExp)
+        };
+        this.printService.openPrintPreview(options);
+        return false;
+    };
+    PDocShowPageComponent.prototype.onPrintPdf = function (elementFilterType, filter, width, height, printCssIdRegExp) {
+        var options = {
+            printElementFilter: {
+                type: elementFilterType,
+                value: filter
+            },
+            previewWindow: {
+                width: width,
+                height: height
+            },
+            printStyleIdFilter: new RegExp(printCssIdRegExp),
+            fileName: 'filename.pdf',
+            pdfOptions: {
+                orientation: 'portrait',
+                format: 'a4'
+            },
+            waitForRenderingMs: 1000
+        };
+        this.pdfPrintService.printPdf(options);
+        return false;
     };
     PDocShowPageComponent.prototype.onResize = function (layoutSizeData) {
         _super.prototype.onResize.call(this, layoutSizeData);
@@ -145,7 +185,7 @@ var PDocShowPageComponent = /** @class */ (function (_super) {
             AngularMarkdownService, AngularHtmlService,
             ChangeDetectorRef, GenericTrackingService, GenericAppService,
             PlatformService, PDocSearchFormConverter,
-            LayoutService, ElementRef, Router, Object])
+            LayoutService, ElementRef, Router, Object, PrintService, PdfPrintService])
     ], PDocShowPageComponent);
     return PDocShowPageComponent;
 }(CommonDocShowpageComponent));

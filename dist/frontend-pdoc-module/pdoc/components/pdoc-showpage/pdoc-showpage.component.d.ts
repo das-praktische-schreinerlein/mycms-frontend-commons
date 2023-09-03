@@ -19,6 +19,9 @@ import { PDocRoutingService } from '../../../shared-pdoc/services/pdoc-routing.s
 import { PDocContentUtils } from '../../../shared-pdoc/services/pdoc-contentutils.service';
 import { PDocSearchFormConverter } from '../../../shared-pdoc/services/pdoc-searchform-converter.service';
 import { CommonEnvironment } from '../../../../frontend-section-commons/common-environment';
+import { ElementFilterType } from '../../../../angular-commons/services/layout.utils';
+import { PrintService } from '../../../../angular-commons/services/print.service';
+import { PdfPrintService } from '../../../../angular-commons/services/pdf-print.service';
 export interface PDocShowpageComponentAvailableTabs {
     ALL_ENTRIES?: boolean;
     PAGE?: boolean;
@@ -28,6 +31,8 @@ export declare class PDocShowPageComponent extends CommonDocShowpageComponent<PD
     protected searchFormConverter: PDocSearchFormConverter;
     protected elRef: ElementRef;
     protected environment: CommonEnvironment;
+    protected printService: PrintService;
+    protected pdfPrintService: PdfPrintService;
     tagcloudSearchResult: PDocSearchResult;
     showResultListTrigger: {
         ALL_ENTRIES?: boolean | number;
@@ -35,9 +40,11 @@ export declare class PDocShowPageComponent extends CommonDocShowpageComponent<PD
     };
     availableTabs: PDocShowpageComponentAvailableTabs;
     private layoutSize;
-    constructor(route: ActivatedRoute, cdocRoutingService: PDocRoutingService, toastr: ToastrService, contentUtils: PDocContentUtils, errorResolver: ErrorResolver, pageUtils: PageUtils, commonRoutingService: CommonRoutingService, angularMarkdownService: AngularMarkdownService, angularHtmlService: AngularHtmlService, cd: ChangeDetectorRef, trackingProvider: GenericTrackingService, appService: GenericAppService, platformService: PlatformService, searchFormConverter: PDocSearchFormConverter, layoutService: LayoutService, elRef: ElementRef, router: Router, environment: CommonEnvironment);
+    constructor(route: ActivatedRoute, cdocRoutingService: PDocRoutingService, toastr: ToastrService, contentUtils: PDocContentUtils, errorResolver: ErrorResolver, pageUtils: PageUtils, commonRoutingService: CommonRoutingService, angularMarkdownService: AngularMarkdownService, angularHtmlService: AngularHtmlService, cd: ChangeDetectorRef, trackingProvider: GenericTrackingService, appService: GenericAppService, platformService: PlatformService, searchFormConverter: PDocSearchFormConverter, layoutService: LayoutService, elRef: ElementRef, router: Router, environment: CommonEnvironment, printService: PrintService, pdfPrintService: PdfPrintService);
     getFiltersForType(record: PDocRecord, type: string): any;
     renderDesc(): string;
+    onOpenPrintPreview(elementFilterType: ElementFilterType, filter: string, width?: number, height?: number, printCssIdRegExp?: string): boolean;
+    onPrintPdf(elementFilterType: ElementFilterType, filter: string, width?: number, height?: number, printCssIdRegExp?: string): boolean;
     protected onResize(layoutSizeData: LayoutSizeData): void;
     protected getComponentConfig(config: {}): CommonDocShowpageComponentConfig;
     protected configureProcessingOfResolvedData(): void;

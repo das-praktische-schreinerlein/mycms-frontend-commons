@@ -28,6 +28,14 @@
                                  [type]="'actionTagsBig'"
                                  (actionTagEvent)="onActionTagEvent($event)"></app-pdoc-action>
                 <app-pdoc-simple-search-navigation [record]="record"></app-pdoc-simple-search-navigation>
+                <ul class="nav command-container justify-content-end">
+                    <li class="command-link">
+                        <div (click)="onOpenPrintPreview('ID', 'desc', 800, 200, 'print\.css')" class="command-icon command-icon-print"><span></span></div>
+                    </li>
+                    <li class="command-link">
+                        <div (click)="onPrintPdf('ID', 'desc', 800, 200, 'print\.css')" class="command-icon command-icon-pdf"><span></span></div>
+                    </li>
+                </ul>
             </div>
         </div>
     </div>

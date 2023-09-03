@@ -17,6 +17,9 @@ import { Layout } from '../../../../angular-commons/services/layout.service';
 import { CommonDocEditorCommandComponentConfig } from '../../../../angular-commons/components/text-editor/text-editor.component';
 import { PDocDescSuggesterService } from '../../services/pdoc-desc-suggester.service';
 import { PDocSearchFormUtils } from '../../../shared-pdoc/services/pdoc-searchform-utils.service';
+import { ElementFilterType } from '../../../../angular-commons/services/layout.utils';
+import { PrintService } from '../../../../angular-commons/services/print.service';
+import { PdfPrintService } from '../../../../angular-commons/services/pdf-print.service';
 export interface PageDocEditformComponentConfig extends CommonDocEditformComponentConfig {
     editorCommands: CommonDocEditorCommandComponentConfig;
 }
@@ -32,6 +35,8 @@ export declare class PDocEditformComponent extends CommonDocEditformComponent<PD
     private document;
     protected pdocNameSuggesterService: PDocNameSuggesterService;
     protected pdocDescSuggesterService: PDocDescSuggesterService;
+    protected printService: PrintService;
+    protected pdfPrintService: PdfPrintService;
     Layout: typeof Layout;
     optionsSelect: {
         'pageId': IMultiSelectOption[];
@@ -54,10 +59,12 @@ export declare class PDocEditformComponent extends CommonDocEditformComponent<PD
     textsSelectSubSectionIds: IMultiSelectTexts;
     editorCommands: CommonDocEditorCommandComponentConfig;
     descMdRecommended: string;
-    constructor(fb: FormBuilder, toastr: ToastrService, cd: ChangeDetectorRef, appService: GenericAppService, pdocSearchFormUtils: PDocSearchFormUtils, searchFormUtils: SearchFormUtils, pdocDataService: PDocDataService, contentUtils: PDocContentUtils, document: any, pdocNameSuggesterService: PDocNameSuggesterService, pdocDescSuggesterService: PDocDescSuggesterService, router: Router);
+    constructor(fb: FormBuilder, toastr: ToastrService, cd: ChangeDetectorRef, appService: GenericAppService, pdocSearchFormUtils: PDocSearchFormUtils, searchFormUtils: SearchFormUtils, pdocDataService: PDocDataService, contentUtils: PDocContentUtils, document: any, pdocNameSuggesterService: PDocNameSuggesterService, pdocDescSuggesterService: PDocDescSuggesterService, router: Router, printService: PrintService, pdfPrintService: PdfPrintService);
     onInputChanged(value: any, field: string): boolean;
     recommendName(): void;
     recommendDesc(): void;
+    onOpenPrintPreview(elementFilterType: ElementFilterType, filter: string, width?: number, height?: number, printCssIdRegExp?: string): boolean;
+    onPrintPdf(elementFilterType: ElementFilterType, filter: string, width?: number, height?: number, printCssIdRegExp?: string): boolean;
     protected validateSchema(record: PDocRecord): SchemaValidationError[];
     protected validateValues(record: PDocRecord): string[];
     protected getComponentConfig(config: {}): PageDocEditformComponentConfig;

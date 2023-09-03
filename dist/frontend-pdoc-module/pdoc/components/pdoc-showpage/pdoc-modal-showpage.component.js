@@ -40,14 +40,18 @@ import { PlatformService } from '../../../../angular-commons/services/platform.s
 import { PDocSearchFormConverter } from '../../../shared-pdoc/services/pdoc-searchform-converter.service';
 import { LayoutService } from '../../../../angular-commons/services/layout.service';
 import { COMMON_APP_ENVIRONMENT } from '../../../../frontend-section-commons/common-environment';
+import { PrintService } from '../../../../angular-commons/services/print.service';
+import { PdfPrintService } from '../../../../angular-commons/services/pdf-print.service';
 var PDocModalShowpageComponent = /** @class */ (function (_super) {
     __extends(PDocModalShowpageComponent, _super);
-    function PDocModalShowpageComponent(route, cdocRoutingService, toastr, contentUtils, errorResolver, pageUtils, commonRoutingService, angularMarkdownService, angularHtmlService, cd, trackingProvider, appService, platformService, searchFormConverter, layoutService, elRef, router, environment) {
-        var _this = _super.call(this, route, cdocRoutingService, toastr, contentUtils, errorResolver, pageUtils, commonRoutingService, angularMarkdownService, angularHtmlService, cd, trackingProvider, appService, platformService, searchFormConverter, layoutService, elRef, router, environment) || this;
+    function PDocModalShowpageComponent(route, cdocRoutingService, toastr, contentUtils, errorResolver, pageUtils, commonRoutingService, angularMarkdownService, angularHtmlService, cd, trackingProvider, appService, platformService, searchFormConverter, layoutService, elRef, router, environment, printService, pdfPrintService) {
+        var _this = _super.call(this, route, cdocRoutingService, toastr, contentUtils, errorResolver, pageUtils, commonRoutingService, angularMarkdownService, angularHtmlService, cd, trackingProvider, appService, platformService, searchFormConverter, layoutService, elRef, router, environment, printService, pdfPrintService) || this;
         _this.searchFormConverter = searchFormConverter;
         _this.elRef = elRef;
         _this.router = router;
         _this.environment = environment;
+        _this.printService = printService;
+        _this.pdfPrintService = pdfPrintService;
         _this.modal = true;
         return _this;
     }
@@ -70,7 +74,7 @@ var PDocModalShowpageComponent = /** @class */ (function (_super) {
             AngularMarkdownService, AngularHtmlService,
             ChangeDetectorRef, GenericTrackingService, GenericAppService,
             PlatformService, PDocSearchFormConverter,
-            LayoutService, ElementRef, Router, Object])
+            LayoutService, ElementRef, Router, Object, PrintService, PdfPrintService])
     ], PDocModalShowpageComponent);
     return PDocModalShowpageComponent;
 }(PDocShowPageComponent));

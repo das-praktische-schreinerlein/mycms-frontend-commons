@@ -52,9 +52,11 @@ import { Layout } from '../../../../angular-commons/services/layout.service';
 import { PDocDescSuggesterService } from '../../services/pdoc-desc-suggester.service';
 import { PDocSearchFormUtils } from '../../../shared-pdoc/services/pdoc-searchform-utils.service';
 import { ObjectUtils } from '@dps/mycms-commons/dist/commons/utils/object.utils';
+import { PrintService } from '../../../../angular-commons/services/print.service';
+import { PdfPrintService } from '../../../../angular-commons/services/pdf-print.service';
 var PDocEditformComponent = /** @class */ (function (_super) {
     __extends(PDocEditformComponent, _super);
-    function PDocEditformComponent(fb, toastr, cd, appService, pdocSearchFormUtils, searchFormUtils, pdocDataService, contentUtils, document, pdocNameSuggesterService, pdocDescSuggesterService, router) {
+    function PDocEditformComponent(fb, toastr, cd, appService, pdocSearchFormUtils, searchFormUtils, pdocDataService, contentUtils, document, pdocNameSuggesterService, pdocDescSuggesterService, router, printService, pdfPrintService) {
         var _this = _super.call(this, fb, toastr, cd, appService, pdocSearchFormUtils, searchFormUtils, pdocDataService, contentUtils, router) || this;
         _this.fb = fb;
         _this.toastr = toastr;
@@ -67,6 +69,8 @@ var PDocEditformComponent = /** @class */ (function (_super) {
         _this.document = document;
         _this.pdocNameSuggesterService = pdocNameSuggesterService;
         _this.pdocDescSuggesterService = pdocDescSuggesterService;
+        _this.printService = printService;
+        _this.pdfPrintService = pdfPrintService;
         _this.Layout = Layout;
         _this.settingsSelectPageType = _this.defaultSelectSetting;
         _this.settingsSelectFlags = __assign({}, _this.defaultSelectSetting, { selectionLimit: 9999 });
@@ -137,6 +141,42 @@ var PDocEditformComponent = /** @class */ (function (_super) {
             _this.descMdRecommended = undefined;
             _this.cd.markForCheck();
         });
+    };
+    PDocEditformComponent.prototype.onOpenPrintPreview = function (elementFilterType, filter, width, height, printCssIdRegExp) {
+        var options = {
+            printElementFilter: {
+                type: elementFilterType,
+                value: filter
+            },
+            previewWindow: {
+                width: width,
+                height: height
+            },
+            printStyleIdFilter: new RegExp(printCssIdRegExp)
+        };
+        this.printService.openPrintPreview(options);
+        return false;
+    };
+    PDocEditformComponent.prototype.onPrintPdf = function (elementFilterType, filter, width, height, printCssIdRegExp) {
+        var options = {
+            printElementFilter: {
+                type: elementFilterType,
+                value: filter
+            },
+            previewWindow: {
+                width: width,
+                height: height
+            },
+            printStyleIdFilter: new RegExp(printCssIdRegExp),
+            fileName: 'filename.pdf',
+            pdfOptions: {
+                orientation: 'portrait',
+                format: 'a4'
+            },
+            waitForRenderingMs: 1000
+        };
+        this.pdfPrintService.printPdf(options);
+        return false;
     };
     PDocEditformComponent.prototype.validateSchema = function (record) {
         return PDocRecordSchema.validate(record);
@@ -283,7 +323,7 @@ var PDocEditformComponent = /** @class */ (function (_super) {
             SearchFormUtils, PDocDataService,
             PDocContentUtils, Object, PDocNameSuggesterService,
             PDocDescSuggesterService,
-            Router])
+            Router, PrintService, PdfPrintService])
     ], PDocEditformComponent);
     return PDocEditformComponent;
 }(CommonDocEditformComponent));

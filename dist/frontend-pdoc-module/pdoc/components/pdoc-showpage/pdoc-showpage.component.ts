@@ -25,6 +25,9 @@ import {PDocRoutingService} from '../../../shared-pdoc/services/pdoc-routing.ser
 import {PDocContentUtils} from '../../../shared-pdoc/services/pdoc-contentutils.service';
 import {PDocSearchFormConverter} from '../../../shared-pdoc/services/pdoc-searchform-converter.service';
 import {COMMON_APP_ENVIRONMENT, CommonEnvironment} from '../../../../frontend-section-commons/common-environment';
+import {ElementFilterType} from '../../../../angular-commons/services/layout.utils';
+import {PrintOptions, PrintService} from '../../../../angular-commons/services/print.service';
+import {PdfPrintOptions, PdfPrintService} from '../../../../angular-commons/services/pdf-print.service';
 
 export interface PDocShowpageComponentAvailableTabs {
     ALL_ENTRIES?: boolean;
@@ -61,7 +64,8 @@ export class PDocShowPageComponent extends CommonDocShowpageComponent<PDocRecord
                 cd: ChangeDetectorRef, trackingProvider: GenericTrackingService, appService: GenericAppService,
                 platformService: PlatformService, protected searchFormConverter: PDocSearchFormConverter,
                 layoutService: LayoutService, protected elRef: ElementRef, router: Router,
-                @Inject(COMMON_APP_ENVIRONMENT) protected environment: CommonEnvironment) {
+                @Inject(COMMON_APP_ENVIRONMENT) protected environment: CommonEnvironment,
+                protected printService: PrintService, protected pdfPrintService: PdfPrintService) {
         super(route, cdocRoutingService, toastr, contentUtils, errorResolver, pageUtils, commonRoutingService,
             angularMarkdownService, angularHtmlService, cd, trackingProvider, appService, platformService, layoutService,
             environment, router);
@@ -84,6 +88,48 @@ export class PDocShowPageComponent extends CommonDocShowpageComponent<PDocRecord
         }
 
         return super.renderDesc();
+    }
+
+    onOpenPrintPreview(elementFilterType: ElementFilterType, filter: string, width?: number, height?: number,
+                       printCssIdRegExp?: string) {
+        const options: PrintOptions = {
+            printElementFilter: {
+                type: elementFilterType,
+                value: filter
+            },
+            previewWindow: {
+                width: width,
+                height: height
+            },
+            printStyleIdFilter: new RegExp(printCssIdRegExp)
+        };
+        this.printService.openPrintPreview(options);
+
+        return false;
+    }
+
+    onPrintPdf(elementFilterType: ElementFilterType, filter: string, width?: number, height?: number,
+               printCssIdRegExp?: string) {
+        const options: PdfPrintOptions = {
+            printElementFilter: {
+                type: elementFilterType,
+                value: filter
+            },
+            previewWindow: {
+                width: width,
+                height: height
+            },
+            printStyleIdFilter: new RegExp(printCssIdRegExp),
+            fileName: 'filename.pdf',
+            pdfOptions: {
+                orientation: 'portrait',
+                format: 'a4'
+            },
+            waitForRenderingMs: 1000
+        };
+        this.pdfPrintService.printPdf(options);
+
+        return false;
     }
 
     protected onResize(layoutSizeData: LayoutSizeData): void {

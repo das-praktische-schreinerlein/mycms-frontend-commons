@@ -96,3 +96,12 @@ img {
 .visible-print-block {
     display: block !important;
 }
+
+.nav {
+    display: none;
+}
+
+.dps-md-pagebreak-before, .md-pagebreak-before {
+    page-break-before: always !important;
+    float: none;
+}
