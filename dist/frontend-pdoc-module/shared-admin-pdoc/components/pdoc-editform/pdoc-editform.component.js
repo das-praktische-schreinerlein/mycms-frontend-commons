@@ -235,7 +235,7 @@ var PDocEditformComponent = /** @class */ (function (_super) {
                 },
                 'profiles': {
                     labelPrefix: '',
-                    values: ['profile_dev', 'profile_import', 'profile_beta', 'profile_prod', 'profile_viewer', 'profile_handout']
+                    values: ['profile_dev', 'profile_import', 'profile_beta', 'profile_prod', 'profile_viewer', 'profile_handout', 'profile_static']
                 },
                 'subSectionIds': {
                     labelPrefix: '',
