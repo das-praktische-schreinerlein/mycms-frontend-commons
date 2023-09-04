@@ -105,3 +105,7 @@ img {
     page-break-before: always !important;
     float: none;
 }
+
+.dps-block-toggler {
+    display: none !important;
+}

@@ -20,7 +20,9 @@ import {DOCUMENT} from '@angular/common';
 import {PDocNameSuggesterService} from '../../services/pdoc-name-suggester.service';
 import {Router} from '@angular/router';
 import {Layout} from '../../../../angular-commons/services/layout.service';
-import {CommonDocEditorCommandComponentConfig} from '../../../../angular-commons/components/text-editor/text-editor.component';
+import {
+    CommonDocEditorCommandComponentConfig
+} from '../../../../angular-commons/components/text-editor/text-editor.component';
 import {PDocDescSuggesterService} from '../../services/pdoc-desc-suggester.service';
 import {PDocSearchFormUtils} from '../../../shared-pdoc/services/pdoc-searchform-utils.service';
 import {ObjectUtils} from '@dps/mycms-commons/dist/commons/utils/object.utils';
@@ -244,7 +246,7 @@ export class PDocEditformComponent extends CommonDocEditformComponent<PDocRecord
                 },
                 'profiles': {
                     labelPrefix: '',
-                    values: ['profile_dev', 'profile_import', 'profile_beta', 'profile_prod', 'profile_viewer']
+                    values: ['profile_dev', 'profile_import', 'profile_beta', 'profile_prod', 'profile_viewer', 'profile_handout']
                 },
                 'subSectionIds': {
                     labelPrefix: '',
