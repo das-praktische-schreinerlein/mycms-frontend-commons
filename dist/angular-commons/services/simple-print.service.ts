@@ -69,7 +69,7 @@ export class SimplePrintService extends PrintService {
         printDocument.write('<!DOCTYPE html>' +
             '<html>' +
             '<head>' +
-            '<base href="/" />' +
+            '<base href="' + document.baseURI + '" />' +
             '</head>' +
             '<body>' +
             '<div id="' + printId + '" class="container-print-preview">' +

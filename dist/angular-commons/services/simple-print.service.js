@@ -70,7 +70,7 @@ var SimplePrintService = /** @class */ (function (_super) {
         printDocument.write('<!DOCTYPE html>' +
             '<html>' +
             '<head>' +
-            '<base href="/" />' +
+            '<base href="' + document.baseURI + '" />' +
             '</head>' +
             '<body>' +
             '<div id="' + printId + '" class="container-print-preview">' +
