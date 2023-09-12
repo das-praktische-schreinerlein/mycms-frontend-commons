@@ -276,7 +276,7 @@ export abstract class CommonDocEditformComponent<R extends CommonDocRecord, F ex
         }
 
         for (const key in this.numBeanFieldConfig) {
-            const formKey = key.replace('.', '_');
+            const formKey = key.replace(/\./g, '_');
             if (!values[formKey]) {
                 continue;
             }
@@ -289,7 +289,7 @@ export abstract class CommonDocEditformComponent<R extends CommonDocRecord, F ex
         }
 
         for (const key in this.stringBeanFieldConfig) {
-            const formKey = key.replace('.', '_');
+            const formKey = key.replace(/\./g, '_');
             if (!values[formKey]) {
                 continue;
             }
@@ -301,7 +301,7 @@ export abstract class CommonDocEditformComponent<R extends CommonDocRecord, F ex
         }
 
         for (const key in this.stringArrayBeanFieldConfig) {
-            const formKey = key.replace('.', '_');
+            const formKey = key.replace(/\./g, '_');
             if (!values[formKey]) {
                 continue;
             }
@@ -436,7 +436,7 @@ export abstract class CommonDocEditformComponent<R extends CommonDocRecord, F ex
                 }
             }
 
-            this.inputSuggestionValues[suggestionName.replace('.', '_')] = values;
+            this.inputSuggestionValues[suggestionName.replace(/\./g, '_')] = values;
         }
 
         return true;
@@ -464,7 +464,7 @@ export abstract class CommonDocEditformComponent<R extends CommonDocRecord, F ex
             } else {
                 value = value + '';
             }
-            values[key.replace('.', '_')] = [[value]];
+            values[key.replace(/\./g, '_')] = [[value]];
             const options = [];
             if (definition['values']) {
                 for (const optionValue of definition['values']) {

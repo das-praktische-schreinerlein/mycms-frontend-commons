@@ -215,7 +215,7 @@ var CommonDocEditformComponent = /** @class */ (function (_super) {
             }
         }
         for (var key in this.numBeanFieldConfig) {
-            var formKey = key.replace('.', '_');
+            var formKey = key.replace(/\./g, '_');
             if (!values[formKey]) {
                 continue;
             }
@@ -227,7 +227,7 @@ var CommonDocEditformComponent = /** @class */ (function (_super) {
             }
         }
         for (var key in this.stringBeanFieldConfig) {
-            var formKey = key.replace('.', '_');
+            var formKey = key.replace(/\./g, '_');
             if (!values[formKey]) {
                 continue;
             }
@@ -239,7 +239,7 @@ var CommonDocEditformComponent = /** @class */ (function (_super) {
             }
         }
         for (var key in this.stringArrayBeanFieldConfig) {
-            var formKey = key.replace('.', '_');
+            var formKey = key.replace(/\./g, '_');
             if (!values[formKey]) {
                 continue;
             }
@@ -351,7 +351,7 @@ var CommonDocEditformComponent = /** @class */ (function (_super) {
                     }
                 }
             }
-            this.inputSuggestionValues[suggestionName.replace('.', '_')] = values;
+            this.inputSuggestionValues[suggestionName.replace(/\./g, '_')] = values;
         }
         return true;
     };
@@ -376,7 +376,7 @@ var CommonDocEditformComponent = /** @class */ (function (_super) {
             else {
                 value = value + '';
             }
-            values[key.replace('.', '_')] = [[value]];
+            values[key.replace(/\./g, '_')] = [[value]];
             var options = [];
             if (definition['values']) {
                 for (var _i = 0, _a = definition['values']; _i < _a.length; _i++) {

@@ -132,16 +132,16 @@ export abstract class HtmlTogglerRenderer extends AbstractHtmlRender {
     };
 
     protected generateTogglerId (containerId) {
-        const containerClass = containerId.replace('.', '')
-            .replace('#', '');
+        const containerClass = containerId.replace(/\./g, '')
+            .replace(/#/g, '');
 
         return '.block4Toggler' + containerClass;
     };
 
     protected createTogglerElement(containerId, type, additionalClass) {
         const togglerId = this.generateTogglerId(containerId);
-        const togglerClass = togglerId.replace('.', '')
-            .replace('#', '');
+        const togglerClass = togglerId.replace(/\./g, '')
+            .replace(/#/g, '');
 
         let html;
         if (type === 'text') {
@@ -169,7 +169,7 @@ export abstract class HtmlTogglerRenderer extends AbstractHtmlRender {
             return null;
         }
 
-        const togglerBaseClass = toggler.replace('.', '');
+        const togglerBaseClass = toggler.replace(/\./g, '');
         let html = '<a href="#"' +
             ' class="dps-toggler dps-toggler-on ' + togglerBaseClass + '_On ' + addStyleOn + '"' +
             ' id="' + togglerBaseClass + '_On">' + htmlOn + '</a>';

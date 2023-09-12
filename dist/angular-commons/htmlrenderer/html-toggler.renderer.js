@@ -129,15 +129,15 @@ var HtmlTogglerRenderer = /** @class */ (function (_super) {
     };
     ;
     HtmlTogglerRenderer.prototype.generateTogglerId = function (containerId) {
-        var containerClass = containerId.replace('.', '')
-            .replace('#', '');
+        var containerClass = containerId.replace(/\./g, '')
+            .replace(/#/g, '');
         return '.block4Toggler' + containerClass;
     };
     ;
     HtmlTogglerRenderer.prototype.createTogglerElement = function (containerId, type, additionalClass) {
         var togglerId = this.generateTogglerId(containerId);
-        var togglerClass = togglerId.replace('.', '')
-            .replace('#', '');
+        var togglerClass = togglerId.replace(/\./g, '')
+            .replace(/#/g, '');
         var html;
         if (type === 'text') {
             html = this.createTogglerLinks(containerId, togglerId, '<span class="dps-text-toggler dps-text-toggler-on">[Bitte mehr Details... ]</span>', '<span class="dps-text-toggler dps-text-toggler-off">[OK reicht. Bitte weniger Details.]</span>', '', '');
@@ -157,7 +157,7 @@ var HtmlTogglerRenderer = /** @class */ (function (_super) {
         if (!toggleContainer) {
             return null;
         }
-        var togglerBaseClass = toggler.replace('.', '');
+        var togglerBaseClass = toggler.replace(/\./g, '');
         var html = '<a href="#"' +
             ' class="dps-toggler dps-toggler-on ' + togglerBaseClass + '_On ' + addStyleOn + '"' +
             ' id="' + togglerBaseClass + '_On">' + htmlOn + '</a>';
