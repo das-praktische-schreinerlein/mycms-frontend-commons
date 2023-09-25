@@ -216,6 +216,7 @@ var PDocEditformComponent = /** @class */ (function (_super) {
                 'heading': {},
                 'image': {},
                 'key': {},
+                'sortkey': {},
                 'subtype': {},
                 'subTypePageType': {
                     labelPrefix: '',

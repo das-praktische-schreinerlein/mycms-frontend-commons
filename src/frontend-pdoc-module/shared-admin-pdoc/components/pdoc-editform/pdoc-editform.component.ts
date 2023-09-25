@@ -227,6 +227,7 @@ export class PDocEditformComponent extends CommonDocEditformComponent<PDocRecord
                 'heading': {},
                 'image': {},
                 'key': {},
+                'sortkey': {},
                 'subtype': {},
                 'subTypePageType': {
                     labelPrefix: '',

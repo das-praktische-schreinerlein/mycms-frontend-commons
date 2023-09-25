@@ -16,6 +16,10 @@
 
             <div class="row">
                 <ng-container *ngTemplateOutlet="inputText;context:{key: 'pdoc.key', formControlName: 'key'}"></ng-container>
+                <ng-container *ngTemplateOutlet="inputText;context:{key: 'pdoc.sortkey', formControlName: 'sortkey'}"></ng-container>
+            </div>
+
+            <div class="row">
                 <ng-container *ngTemplateOutlet="inputSubSectionIds"></ng-container>
             </div>
 
@@ -153,7 +157,7 @@
     </ng-template>
 
     <ng-template #inputSubSectionIds>
-        <div class="col-sm-4 input-group input-group-sm">
+        <div class="col-sm-12 input-group input-group-sm">
             <label class="col-xs-4 col-form-label mr-2" i18n="SubSectionIds label|Label for filter: SubSectionIds@@label.searchform.pdoc.SubSectionIds">Unterseiten:</label>
             <ss-multiselect-dropdown [options]="optionsSelect['subSectionIds']"
                                      [settings]="settingsSelectSubSectionIds"
