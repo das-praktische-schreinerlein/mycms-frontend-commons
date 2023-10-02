@@ -1,0 +1,36 @@
+import { ChangeDetectorRef, EventEmitter } from '@angular/core';
+import { MapElement } from '../../services/leaflet-geo.plugin';
+import { PlatformService } from '../../../angular-commons/services/platform.service';
+import { AbstractInlineComponent } from '../../../angular-commons/components/inline.component';
+import { LatLng } from 'leaflet';
+import { MapContentUtils } from '../../services/map-contentutils.service';
+import { TrackColors } from '@dps/mycms-commons/dist/geo-commons/model/track-colors';
+import { MapDocRecord } from '@dps/mycms-commons/dist/geo-commons/model/map-element.types';
+export declare class MapDocMapComponent extends AbstractInlineComponent {
+    private contentUtils;
+    protected cd: ChangeDetectorRef;
+    private platformService;
+    showLoadingSpinner: boolean;
+    mapElements: MapElement[];
+    centerOnMapElements: MapElement[];
+    mapElementsReverseMap: Map<MapElement, MapDocRecord>;
+    mapId: string;
+    height: string;
+    docRecords: MapDocRecord[];
+    currentDocId?: string;
+    mapCenterPos: LatLng;
+    mapZoom: number;
+    showImageTrackAndGeoPos?: boolean;
+    trackColors?: TrackColors;
+    editable?: boolean;
+    mapCreated: EventEmitter<L.Map>;
+    centerChanged: EventEmitter<LatLng>;
+    docClicked: EventEmitter<MapDocRecord>;
+    mapElementsFound: EventEmitter<MapElement[]>;
+    constructor(contentUtils: MapContentUtils, cd: ChangeDetectorRef, platformService: PlatformService);
+    onTrackClicked(mapElement: MapElement): void;
+    onMapElementsLoaded(mapElements: MapElement[]): void;
+    onMapCreated(map: L.Map): void;
+    renderMap(): void;
+    protected updateData(): void;
+}

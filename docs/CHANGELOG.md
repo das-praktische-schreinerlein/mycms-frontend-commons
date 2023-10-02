@@ -15,12 +15,14 @@
 - frontend: replace NgxMd with plain marked
 - frontend: introduced fully featured markdown-support with extensions
 - frontend: introduced print/pdf-support
+- frontend: make map-components generic
 
 ### new features
 - moved TextEditorComponent, FormUtils and GeoParserDeterminer to commons
 - frontend: added page-management
 - frontend: introduced fully featured markdown-support with extensions
 - frontend: introduced print/pdf-support
+- frontend: make map-components generic
 
 ### improvements
 - moved layout-utils, noop-action, modal-functionality to commons
