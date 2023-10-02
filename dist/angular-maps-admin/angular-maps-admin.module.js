@@ -11,7 +11,7 @@ import { GpxEditAreaComponent } from './compontents/gpx-editarea/gpx-editarea.co
 import { GpxEditLocComponent } from './compontents/gpx-editloc/gpx-editloc.component';
 import { AngularMapsModule } from '../angular-maps/angular-maps.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { AngularCommonsModule } from "../angular-commons/angular-commons.module";
+import { AngularCommonsModule } from '../angular-commons/angular-commons.module';
 import { MultiselectDropdownModule } from 'angular-2-dropdown-multiselect';
 import { TranslateModule } from '@ngx-translate/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';

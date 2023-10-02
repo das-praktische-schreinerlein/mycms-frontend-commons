@@ -32,6 +32,7 @@ import { CommonDocODObjectDetailsComponent } from './components/cdoc-odobjectdet
 import { CommonDocObjectNavigationComponent } from './components/cdoc-object-navigation/cdoc-object-navigation.component';
 import { CommonDocExtendedObjectPropertiesComponent } from './components/cdoc-extended-object-properties/cdoc-extended-object-properties.component';
 import { CommonDocMediaMetaComponent } from './components/cdoc-mediameta/cdoc-mediameta.component';
+import { OdImageEditorComponent } from './components/odimage-editor/odimage-editor.component';
 var FrontendCommonDocCommonsModule = /** @class */ (function () {
     function FrontendCommonDocCommonsModule() {
     }
@@ -57,7 +58,8 @@ var FrontendCommonDocCommonsModule = /** @class */ (function () {
                 CommonDocODObjectDetailsComponent,
                 CommonDocObjectNavigationComponent,
                 CommonDocExtendedObjectPropertiesComponent,
-                CommonDocMediaMetaComponent
+                CommonDocMediaMetaComponent,
+                OdImageEditorComponent
             ],
             imports: [
                 NgbPaginationModule, NgbTooltipModule,
@@ -90,7 +92,8 @@ var FrontendCommonDocCommonsModule = /** @class */ (function () {
                 CommonDocODObjectDetailsComponent,
                 CommonDocObjectNavigationComponent,
                 CommonDocExtendedObjectPropertiesComponent,
-                CommonDocMediaMetaComponent
+                CommonDocMediaMetaComponent,
+                OdImageEditorComponent
             ]
         })
     ], FrontendCommonDocCommonsModule);

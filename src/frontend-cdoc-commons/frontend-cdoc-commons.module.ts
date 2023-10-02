@@ -26,6 +26,7 @@ import {CommonDocODObjectDetailsComponent} from './components/cdoc-odobjectdetai
 import {CommonDocObjectNavigationComponent} from './components/cdoc-object-navigation/cdoc-object-navigation.component';
 import {CommonDocExtendedObjectPropertiesComponent} from './components/cdoc-extended-object-properties/cdoc-extended-object-properties.component';
 import {CommonDocMediaMetaComponent} from './components/cdoc-mediameta/cdoc-mediameta.component';
+import {OdImageEditorComponent} from './components/odimage-editor/odimage-editor.component';
 
 @NgModule({
     declarations: [
@@ -48,7 +49,8 @@ import {CommonDocMediaMetaComponent} from './components/cdoc-mediameta/cdoc-medi
         CommonDocODObjectDetailsComponent,
         CommonDocObjectNavigationComponent,
         CommonDocExtendedObjectPropertiesComponent,
-        CommonDocMediaMetaComponent
+        CommonDocMediaMetaComponent,
+        OdImageEditorComponent
     ],
     imports: [
         NgbPaginationModule, NgbTooltipModule,
@@ -81,7 +83,8 @@ import {CommonDocMediaMetaComponent} from './components/cdoc-mediameta/cdoc-medi
         CommonDocODObjectDetailsComponent,
         CommonDocObjectNavigationComponent,
         CommonDocExtendedObjectPropertiesComponent,
-        CommonDocMediaMetaComponent
+        CommonDocMediaMetaComponent,
+        OdImageEditorComponent
     ]
 })
 export class FrontendCommonDocCommonsModule {

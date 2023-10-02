@@ -1,0 +1,32 @@
+import { ChangeDetectorRef, ElementRef, EventEmitter } from '@angular/core';
+import { AbstractInlineComponent } from '../../../angular-commons/components/inline.component';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { ObjectDetectionDetectedObjectType } from '@dps/mycms-commons/dist/commons/model/objectdetection-model';
+import { SafeUrl } from '@angular/platform-browser';
+export declare class OdImageEditorComponent extends AbstractInlineComponent {
+    protected cd: ChangeDetectorRef;
+    fb: FormBuilder;
+    static EDITABLE_FIELDS: string[];
+    editFormGroup: FormGroup;
+    mainImage: ElementRef;
+    mainImageCanvas: ElementRef;
+    imageWidth: number;
+    private rect;
+    private drag;
+    private ctx;
+    mainImageUrl: SafeUrl;
+    mainImageObject: ObjectDetectionDetectedObjectType;
+    changeValue: EventEmitter<ObjectDetectionDetectedObjectType>;
+    constructor(cd: ChangeDetectorRef, fb: FormBuilder);
+    onInputChanged(value: any, field: string): boolean;
+    onLoadMainImage(): boolean;
+    onResizeMainImage(): boolean;
+    updateImageObject(): boolean;
+    setValue(field: string, value: any): void;
+    onMouseDown(event: MouseEvent): boolean;
+    onMouseUp(event: MouseEvent): boolean;
+    onMouseMove(event: MouseEvent): boolean;
+    protected draw(): void;
+    protected updateData(): void;
+    protected submitChangedValues(): void;
+}
