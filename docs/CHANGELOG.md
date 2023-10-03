@@ -17,6 +17,7 @@
 - frontend: introduced print/pdf-support
 - frontend: make map-components generic
 - frontend: make imageobject-components generic
+- frontend: improved tag- and keywords-components
 
 ### new features
 - moved TextEditorComponent, FormUtils and GeoParserDeterminer to commons
@@ -31,6 +32,7 @@
 - frontend: added show-action as actiontag
 - frontend: extend CommonEnvironment
 - frontend: replace NgxMd with plain marked
+- frontend: improved tag- and keywords-components
 
 ### bug fixes
 - TextEditor, Page-Module: improve usage of desc_txt, desc_md...

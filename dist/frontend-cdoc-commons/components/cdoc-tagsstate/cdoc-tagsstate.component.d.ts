@@ -9,6 +9,7 @@ export declare class CommonDocTagsStateComponent extends AbstractInlineComponent
     tags: string;
     suggestions?: string[];
     tagsConfig: StructuredKeyword[];
+    tagsEnvironment?: {};
     possiblePrefixes: any[];
     prefix: string;
     unsetTag: EventEmitter<string>;

@@ -18,6 +18,7 @@ export declare class CommonDocKeywordsStateComponent extends AbstractInlineCompo
     unsetKeyword: EventEmitter<string>;
     setKeyword: EventEmitter<string>;
     tagsFound: EventEmitter<StructuredKeywordState[]>;
+    tagsEnvironment?: {};
     constructor(appService: GenericAppService, cd: ChangeDetectorRef);
     ngOnInit(): void;
     doSetKeyword(keyword: string): void;

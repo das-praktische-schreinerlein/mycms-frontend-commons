@@ -37,6 +37,7 @@ var CommonDocKeywordsStateComponent = /** @class */ (function (_super) {
         _this.unsetKeyword = new EventEmitter();
         _this.setKeyword = new EventEmitter();
         _this.tagsFound = new EventEmitter();
+        _this.tagsEnvironment = {};
         return _this;
     }
     CommonDocKeywordsStateComponent.prototype.ngOnInit = function () {
@@ -101,6 +102,10 @@ var CommonDocKeywordsStateComponent = /** @class */ (function (_super) {
         Output(),
         __metadata("design:type", EventEmitter)
     ], CommonDocKeywordsStateComponent.prototype, "tagsFound", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Object)
+    ], CommonDocKeywordsStateComponent.prototype, "tagsEnvironment", void 0);
     CommonDocKeywordsStateComponent = __decorate([
         Component({
             selector: 'app-cdoc-keywordsstate',

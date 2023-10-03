@@ -14,6 +14,7 @@ export enum KeywordsState {
 
 export interface StructuredKeyword {
     name: string;
+    filters?: SimpleFilter[];
     keywords: string[];
 }
 
@@ -232,7 +233,8 @@ export class CommonDocContentUtils {
         return keywordKats;
     }
 
-    getStructuredKeywordsState(config: StructuredKeyword[], keywords: string[], suggested: string[], possiblePrefixes: string[]):
+    getStructuredKeywordsState(config: StructuredKeyword[], keywords: string[], suggested: string[],
+                               possiblePrefixes: string[], tagsEnvironment ?: {}):
         StructuredKeywordState[] {
         const keywordKats: StructuredKeywordState[] = [];
         if (keywords === undefined || keywords.length < 1) {
@@ -240,6 +242,12 @@ export class CommonDocContentUtils {
         }
 
         for (const keywordKat of config) {
+            if (keywordKat.filters) {
+                if (!FilterUtils.checkFilters(keywordKat.filters, tagsEnvironment)) {
+                    continue;
+                }
+            }
+
             const keywordFound = [];
             for (const keyword of keywordKat.keywords) {
                 let found = false;

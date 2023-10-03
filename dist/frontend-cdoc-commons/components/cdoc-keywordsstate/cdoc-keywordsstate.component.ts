@@ -44,6 +44,9 @@ export class CommonDocKeywordsStateComponent extends AbstractInlineComponent imp
     @Output()
     public tagsFound: EventEmitter<StructuredKeywordState[]> = new EventEmitter();
 
+    @Input()
+    public tagsEnvironment?: {} = {};
+
     constructor(protected appService: GenericAppService, protected cd: ChangeDetectorRef) {
         super(cd);
     }

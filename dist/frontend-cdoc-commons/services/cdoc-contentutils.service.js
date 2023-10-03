@@ -177,13 +177,18 @@ var CommonDocContentUtils = /** @class */ (function () {
         }
         return keywordKats;
     };
-    CommonDocContentUtils.prototype.getStructuredKeywordsState = function (config, keywords, suggested, possiblePrefixes) {
+    CommonDocContentUtils.prototype.getStructuredKeywordsState = function (config, keywords, suggested, possiblePrefixes, tagsEnvironment) {
         var keywordKats = [];
         if (keywords === undefined || keywords.length < 1) {
             keywords = [];
         }
         for (var _i = 0, config_2 = config; _i < config_2.length; _i++) {
             var keywordKat = config_2[_i];
+            if (keywordKat.filters) {
+                if (!FilterUtils.checkFilters(keywordKat.filters, tagsEnvironment)) {
+                    continue;
+                }
+            }
             var keywordFound = [];
             for (var _a = 0, _b = keywordKat.keywords; _a < _b.length; _a++) {
                 var keyword = _b[_a];

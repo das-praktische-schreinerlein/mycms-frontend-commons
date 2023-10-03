@@ -13,6 +13,7 @@ export declare enum KeywordsState {
 }
 export interface StructuredKeyword {
     name: string;
+    filters?: SimpleFilter[];
     keywords: string[];
 }
 export interface StructuredKeywordState {
@@ -77,7 +78,7 @@ export declare class CommonDocContentUtils {
     getAudioUrl(audio: BaseAudioRecord, resolution: string, suffix?: string): string;
     getSuggestedKeywords(suggestionConfigs: KeywordSuggestion[], prefix: string, values: any): string[];
     getStructuredKeywords(config: StructuredKeyword[], keywords: string[], blacklist: string[], possiblePrefixes: string[]): StructuredKeyword[];
-    getStructuredKeywordsState(config: StructuredKeyword[], keywords: string[], suggested: string[], possiblePrefixes: string[]): StructuredKeywordState[];
+    getStructuredKeywordsState(config: StructuredKeyword[], keywords: string[], suggested: string[], possiblePrefixes: string[], tagsEnvironment?: {}): StructuredKeywordState[];
     getShowUrl(record: CommonDocRecord): SafeUrl;
     updateItemData(itemData: CommonItemData, record: CommonDocRecord, layout: string): boolean;
     protected getServiceConfig(): CommonDocContentUtilsConfig;

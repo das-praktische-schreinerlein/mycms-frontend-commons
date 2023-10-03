@@ -32,6 +32,7 @@ var CommonDocTagsStateComponent = /** @class */ (function (_super) {
         _this.tagsKats = [];
         _this.KeywordState = KeywordsState;
         _this.suggestions = [];
+        _this.tagsEnvironment = {};
         _this.possiblePrefixes = [];
         _this.prefix = '';
         _this.unsetTag = new EventEmitter();
@@ -46,7 +47,7 @@ var CommonDocTagsStateComponent = /** @class */ (function (_super) {
         this.unsetTag.emit(this.prefix + keyword);
     };
     CommonDocTagsStateComponent.prototype.updateData = function () {
-        this.tagsKats = this.contentUtils.getStructuredKeywordsState(this.tagsConfig, this.tags === undefined || this.tags === null ? [] : this.tags.split(', '), this.suggestions ? this.suggestions : [], this.possiblePrefixes);
+        this.tagsKats = this.contentUtils.getStructuredKeywordsState(this.tagsConfig, this.tags === undefined || this.tags === null ? [] : this.tags.split(', '), this.suggestions ? this.suggestions : [], this.possiblePrefixes, this.tagsEnvironment);
         this.tagsFound.emit(this.tagsKats);
     };
     __decorate([
@@ -61,6 +62,10 @@ var CommonDocTagsStateComponent = /** @class */ (function (_super) {
         Input(),
         __metadata("design:type", Array)
     ], CommonDocTagsStateComponent.prototype, "tagsConfig", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Object)
+    ], CommonDocTagsStateComponent.prototype, "tagsEnvironment", void 0);
     __decorate([
         Input(),
         __metadata("design:type", Object)

@@ -4,9 +4,9 @@
             <div class='label'>{{tag.name}}:</div>
             <div class='value'>
                 <ng-container *ngFor="let keyword of tag.keywords">
-                    <span class="{{keyword.state}}" (click)="doUnsetTag(keyword.keyword)" *ngIf="keyword.state === KeywordState.SET" style="color: green; font-weight: bold; font-size: 120%">{{keyword.keyword}}</span>
+                    <span class="{{keyword.state}}" (click)="doUnsetTag(keyword.keyword)" *ngIf="keyword.state === KeywordState.SET" style="color: lightgreen; font-weight: bold; font-size: 120%">{{keyword.keyword}}</span>
                     <span class="{{keyword.state}}" (click)="doSetTag(keyword.keyword)" *ngIf="keyword.state === KeywordState.NOTSET">{{keyword.keyword}}</span>
-                    <span class="{{keyword.state}}" (click)="doSetTag(keyword.keyword)" *ngIf="keyword.state === KeywordState.SUGGESTED"  style="color: #bb260d; font-weight: bold; font-size: 150%">{{keyword.keyword}}</span>
+                    <span class="{{keyword.state}}" (click)="doSetTag(keyword.keyword)" *ngIf="keyword.state === KeywordState.SUGGESTED"  style="color: #f5b0a4; font-weight: bold; font-size: 150%">{{keyword.keyword}}</span>
                 </ng-container>
             </div>
         </div>

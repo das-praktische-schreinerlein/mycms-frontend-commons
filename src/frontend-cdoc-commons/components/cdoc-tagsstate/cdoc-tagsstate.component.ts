@@ -27,6 +27,9 @@ export class CommonDocTagsStateComponent extends AbstractInlineComponent {
     public tagsConfig: StructuredKeyword[];
 
     @Input()
+    public tagsEnvironment?: {} = {};
+
+    @Input()
     public possiblePrefixes = [];
 
     @Input()
@@ -58,7 +61,7 @@ export class CommonDocTagsStateComponent extends AbstractInlineComponent {
             this.tagsConfig,
             this.tags === undefined || this.tags === null ? [] : this.tags.split(', '),
             this.suggestions ? this.suggestions : [],
-            this.possiblePrefixes);
+            this.possiblePrefixes, this.tagsEnvironment);
         this.tagsFound.emit(this.tagsKats);
     }
 }
