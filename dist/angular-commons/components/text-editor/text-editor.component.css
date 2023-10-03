@@ -32,11 +32,10 @@ textarea.nowrap {
 }
 
 #renderedDesc {
-    border: 1px solid lightgray;
+    border: 2px solid grey;
     border-radius: 5px;
     width: 100%;
     max-width: 1000px;
-    background: lightgray;
 }
 
 div.commandBlock {
