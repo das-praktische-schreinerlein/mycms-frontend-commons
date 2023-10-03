@@ -15,7 +15,7 @@
             </div>
 
             <div class="row">
-                <ng-container *ngTemplateOutlet="inputText;context:{key: 'pdoc.key', formControlName: 'key'}"></ng-container>
+                <ng-container *ngTemplateOutlet="inputText;context:{key: 'pdoc.key', formControlName: 'key', required: true}"></ng-container>
                 <ng-container *ngTemplateOutlet="inputText;context:{key: 'pdoc.sortkey', formControlName: 'sortkey'}"></ng-container>
             </div>
 
@@ -36,8 +36,8 @@
             </div>
             
             <div class="row">
-                <ng-container *ngTemplateOutlet="inputText;context:{key: 'pdoc.heading', formControlName: 'heading'}"></ng-container>
-                <ng-container *ngTemplateOutlet="inputTextArea;context:{key: 'pdoc.teaser', formControlName: 'teaser'}"></ng-container>
+                <ng-container *ngTemplateOutlet="inputText;context:{key: 'pdoc.heading', formControlName: 'heading', required: true}"></ng-container>
+                <ng-container *ngTemplateOutlet="inputTextArea;context:{key: 'pdoc.teaser', formControlName: 'teaser', required: true}"></ng-container>
             </div>
 
             <div class="row">
@@ -52,20 +52,22 @@
         </fieldset>
 
         <ng-container *ngTemplateOutlet="submitRow"></ng-container>
-        <div class="row">
-            <ng-container *ngTemplateOutlet="inputDesc;context:{recommend: true}"></ng-container>
-            <div class="col-md-12">
-                <ul class="nav command-container justify-content-end">
-                    <li class="command-link">
-                        <div (click)="onOpenPrintPreview('ID', 'renderedDesc', 800, 200, 'print\.css')" class="command-icon command-icon-print"><span></span></div>
-                    </li>
-                    <li class="command-link">
-                        <div (click)="onPrintPdf('ID', 'renderedDesc', 800, 200, 'print\.css')" class="command-icon command-icon-pdf"><span></span></div>
-                    </li>
-                </ul>
+        <fieldset>
+            <legend i18n="dataDesc label|Label for fieldset: dataDesc@@label.editform.pdoc.legend.dataDesc">&#x231a; Seiteninhalt</legend>
+            <div class="row">
+                <ng-container *ngTemplateOutlet="inputDesc;context:{recommend: true}"></ng-container>
+                <div class="col-md-12">
+                    <ul class="nav command-container justify-content-end">
+                        <li class="command-link">
+                            <div (click)="onOpenPrintPreview('ID', 'renderedDesc', 800, 200, 'print\.css')" class="command-icon command-icon-print"><span></span></div>
+                        </li>
+                        <li class="command-link">
+                            <div (click)="onPrintPdf('ID', 'renderedDesc', 800, 200, 'print\.css')" class="command-icon command-icon-pdf"><span></span></div>
+                        </li>
+                    </ul>
+                </div>
             </div>
-
-        </div>
+        </fieldset>
         <ng-container *ngTemplateOutlet="submitRow"></ng-container>
     </ng-template>
 
@@ -87,7 +89,7 @@
     </ng-template>
 
     <ng-template #inputName>
-        <div class="col-sm-6 form-inline input-group input-group-sm">
+        <div class="col-sm-6 form-inline input-group input-group-sm dps-form-required">
             <label class="col-xs-3 col-form-label mr-2" i18n="name label|Label for field: name@@label.editform.pdoc.name">Name:</label>
             <input formControlName="name"
                    required="required"
@@ -101,7 +103,7 @@
     </ng-template>
 
     <ng-template #inputPagetype>
-        <div class="col-sm-4 input-group input-group-sm">
+        <div class="col-sm-4 input-group input-group-sm dps-form-required">
             <label class="col-xs-4 col-form-label mr-2" i18n="pagetype label|Label for filter: pagetype@@label.searchform.pdoc.pagetype">Seitentyp:</label>
             <ss-multiselect-dropdown [options]="optionsSelect['subTypePageType']"
                                      [settings]="settingsSelectPageType"
@@ -115,7 +117,7 @@
     </ng-template>
 
     <ng-template #inputFlags>
-        <div class="col-sm-4 input-group input-group-sm">
+        <div class="col-sm-12 input-group input-group-sm">
             <label class="col-xs-4 col-form-label mr-2" i18n="Flags label|Label for filter: Flags@@label.searchform.pdoc.Flags">Flags:</label>
             <ss-multiselect-dropdown [options]="optionsSelect['flags']"
                                      [settings]="settingsSelectFlags"
@@ -129,7 +131,7 @@
     </ng-template>
 
     <ng-template #inputLangkeys>
-        <div class="col-sm-4 input-group input-group-sm">
+        <div class="col-sm-9 input-group input-group-sm dps-form-required">
             <label class="col-xs-4 col-form-label mr-2" i18n="Langkeys label|Label for filter: Langkeys@@label.searchform.pdoc.Langkeys">Sprachen:</label>
             <ss-multiselect-dropdown [options]="optionsSelect['langkeys']"
                                      [settings]="settingsSelectLangkeys"
@@ -143,7 +145,7 @@
     </ng-template>
 
     <ng-template #inputProfiles>
-        <div class="col-sm-4 input-group input-group-sm">
+        <div class="col-sm-9 input-group input-group-sm dps-form-required">
             <label class="col-xs-4 col-form-label mr-2" i18n="Profiles label|Label for filter: Profiles@@label.searchform.pdoc.Profiles">Profile:</label>
             <ss-multiselect-dropdown [options]="optionsSelect['profiles']"
                                      [settings]="settingsSelectProfiles"
@@ -180,8 +182,15 @@
             (changeDesc)="setValue('descMd', $event)"></app-text-editor>
     </ng-template>
 
-    <ng-template #inputNumber let-key="key" let-formControlName="formControlName" let-recommend="recommend" let-step="step" let-min="min" let-max="max">
-        <div class="col-sm-3 form-inline input-group input-group-sm">
+    <ng-template #inputNumber let-key="key" let-formControlName="formControlName"
+                 let-recommend="recommend"
+                 let-step="step"
+                 let-min="min"
+                 let-max="max"
+                 let-width="width"
+                 let-required="required">
+        <div class="form-inline input-group input-group-sm"
+             [ngClass]="width ? width : 'col-sm-4' + (required ? ' dps-form-required': '')">
             <label class="col-xs-3 col-form-label mr-2">{{ 'label.' + key | translate}}</label>
             <input formControlName="{{formControlName}}"
                    class="form-control"
@@ -191,13 +200,16 @@
                    max="{{max ? max : ''}}"
                    placeholder="{{key}}"
                    (ngModelChange)="onInputChanged($event, formControlName)">
-            <span class="" *ngIf="recommend && editFormGroup.get(formControlName).value != recommend"
+            <span class="dps-recommend" *ngIf="recommend && editFormGroup.get(formControlName).value != recommend"
                   (click)="setValue(formControlName, recommend)">&#x27F8; {{recommend}} GPX</span>
         </div>
     </ng-template>
 
-    <ng-template #inputTextTech let-key="key" let-formControlName="formControlName">
-        <div class="col-sm-3 form-inline input-group input-group-sm">
+    <ng-template #inputTextTech let-key="key" let-formControlName="formControlName"
+                 let-width="width"
+                 let-required="required">
+        <div class="form-inline input-group input-group-sm"
+             [ngClass]="width ? width : 'col-sm-3' + (required ? ' dps-form-required': '')">
             <label class="col-xs-3 col-form-label mr-2">{{ 'label.' + key | translate}}</label>
             <input formControlName="{{formControlName}}"
                    class="form-control"
@@ -210,8 +222,11 @@
         </div>
     </ng-template>
 
-    <ng-template #inputText let-key="key" let-formControlName="formControlName">
-        <div class="col-sm-6 form-inline input-group input-group-sm">
+    <ng-template #inputText let-key="key" let-formControlName="formControlName"
+                 let-width="width"
+                 let-required="required">
+        <div class="form-inline input-group input-group-sm"
+             [ngClass]="(width ? width : 'col-sm-6') + (required ? ' dps-form-required': '')">
             <label class="col-xs-3 col-form-label mr-2">{{ 'label.' + key | translate}}</label>
             <input formControlName="{{formControlName}}"
                    class="form-control"
@@ -225,8 +240,9 @@
         </div>
     </ng-template>
 
-    <ng-template #showText let-key="key" let-formControlName="formControlName">
-        <div class="col-sm-6 form-inline input-group input-group-sm">
+    <ng-template #showText let-key="key" let-formControlName="formControlName"
+                 let-width="width">
+        <div class="form-inline input-group input-group-sm" [ngClass]="width ? width : 'col-sm-6'">
             <label class="col-xs-3 col-form-label mr-2">{{ 'label.' + key | translate}}</label>
             <input class="form-control"
                    type="text"
@@ -235,8 +251,11 @@
         </div>
     </ng-template>
 
-    <ng-template #inputTextArea let-key="key" let-formControlName="formControlName">
-        <div class="col-sm-6 form-inline input-group input-group-sm">
+    <ng-template #inputTextArea let-key="key" let-formControlName="formControlName"
+                 let-width="width"
+                 let-required="required">
+        <div class="form-inline input-group input-group-sm"
+             [ngClass]="(width ? width : 'col-sm-6') + (required ? ' dps-form-required': '')">
             <label class="col-xs-3 col-form-label mr-2">{{ 'label.' + key | translate}}</label>
             <textarea formControlName="{{formControlName}}"
                    class="form-control"

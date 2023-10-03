@@ -17,26 +17,32 @@ textarea.nowrap {
     align-items: first baseline;
 }
 
-
 .desc-preview-block {
     align-items: first baseline;
 }
-
 
 .desc-form, .recommended-desc-form {
     width: 100%;
     max-width: 1000px;
 }
 
+#descMd {
+    border: 2px solid grey;
+    border-radius: 5px;
+}
+
 #renderedDesc {
     border: 1px solid lightgray;
+    border-radius: 5px;
     width: 100%;
     max-width: 1000px;
+    background: lightgray;
 }
 
 div.commandBlock {
     display: inline-block;
     border: 1px solid lightgray;
+    background: lightyellow;
 }
 
 span.commandBlockName {
@@ -45,6 +51,7 @@ span.commandBlockName {
 
 span.singleCommand {
     padding: 2px;
+    border-left: 1px lightgray solid;
 }
 
 span.commandBlockLabel {
@@ -53,4 +60,5 @@ span.commandBlockLabel {
 
 span.rangeCommand {
     padding: 2px;
+    border-left: 1px lightgray solid;
 }

@@ -1,6 +1,6 @@
 <ng-container [formGroup]="editFormGroup">
     <div class="col-sm-12 form-inline input-group input-group-sm desc-form-block">
-        <label class="col-xs-3 col-form-label mr-2" i18n="descMd label|Label for field: descMd@@label.editform.tdoc.descMd">Beschreibung Markdown:</label>
+        <label class="col-xs-3 col-form-label mr-2" i18n="descMd label|Label for field: descMd@@label.editform.tdoc.descMd">Eingabe im Markdown-Format:</label>
 
         <div class="commandBlocks">
             <div class="commandBlock commandBlockRecommend" *ngIf="recommendAvailable === true">
@@ -54,7 +54,7 @@
     </div>
     <div class="col-sm-12 form-inline input-group input-group-sm desc-preview-block">
         <label class="col-xs-3 col-form-label mr-2"
-               i18n="descMd label|Label for field: descMd@@label.editform.tdoc.descMd">Beschreibung Vorschau:</label>
+               i18n="descMd label|Label for field: descMd@@label.editform.tdoc.descMd">Vorschau:</label>
         <span class="" (click)="renderDesc(true)">&#x27F8; Update</span>
         <div id="renderedDesc">{{renderDesc(false)}}</div>
     </div>
