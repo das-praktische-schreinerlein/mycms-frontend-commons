@@ -15,7 +15,6 @@ import {RouterStub} from '../../../angular-commons/testing/router-stubs';
 import {CommonRoutingService} from '../../../angular-commons/services/common-routing.service';
 import {Router} from '@angular/router';
 import {ToastrServiceStub} from '../../../testing/toasts-stubs';
-import {GeoLocationService} from '@dps/mycms-commons/dist/commons/services/geolocation.service';
 
 describe('GpxEditLocComponent', () => {
     let component: GpxEditLocComponent;
@@ -32,7 +31,6 @@ describe('GpxEditLocComponent', () => {
                 { provide: ToastrService, useValue: new ToastrServiceStub() },
                 TranslateService,
                 { provide: Router, useValue: new RouterStub() },
-                { provide: GeoLocationService, useValue: {}},
                 CommonRoutingService,
                 CommonDocRoutingService,
                 SearchFormUtils,
