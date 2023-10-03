@@ -56,6 +56,8 @@
         <label class="col-xs-3 col-form-label mr-2"
                i18n="descMd label|Label for field: descMd@@label.editform.tdoc.descMd">Vorschau:</label>
         <span class="" (click)="renderDesc(true)">&#x27F8; Update</span>
-        <div id="renderedDesc">{{renderDesc(false)}}</div>
+        <div id="renderedDescContainer">
+            <div id="renderedDesc">{{renderDesc(false)}}</div>
+        </div>
     </div>
 </ng-container>

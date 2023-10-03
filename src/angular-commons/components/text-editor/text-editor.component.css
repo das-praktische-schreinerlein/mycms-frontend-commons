@@ -32,6 +32,11 @@ textarea.nowrap {
 }
 
 #renderedDesc {
+    width: 100%;
+    max-width: 1000px;
+}
+
+#renderedDescContainer {
     border: 2px solid grey;
     border-radius: 5px;
     width: 100%;
