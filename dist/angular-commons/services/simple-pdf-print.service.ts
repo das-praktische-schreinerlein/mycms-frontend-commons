@@ -9,6 +9,7 @@ export class SimplePdfPrintService extends PdfPrintService {
     constructor(protected printService: PrintService, protected pdfGenerator: PdfGenerator) {
         super();
     }
+
     public printPdf(options: PdfPrintOptions): Promise<Window> {
         const printWindow = this.printService.openPrintPreview(options);
         if (!printWindow) {
@@ -60,4 +61,7 @@ export class SimplePdfPrintService extends PdfPrintService {
         return true;
     }
 
+    public isPrintPdfAvailable(): boolean {
+        return this.pdfGenerator.isPrintPdfAvailable();
+    }
 }

@@ -9,6 +9,9 @@ import { PlatformService } from '../../angular-commons/services/platform.service
 import { PageUtils } from '../../angular-commons/services/page.utils';
 import { LayoutService } from '../../angular-commons/services/layout.service';
 import { CommonEnvironment } from '../common-environment';
+import { PdfPrintService } from '../../angular-commons/services/pdf-print.service';
+import { PrintService } from '../../angular-commons/services/print.service';
+import { ElementFilterType } from '../../angular-commons/services/layout.utils';
 export declare abstract class AbstractAppComponent {
     protected appService: GenericAppService;
     protected toastr: ToastrService;
@@ -22,13 +25,20 @@ export declare abstract class AbstractAppComponent {
     protected pageUtils: PageUtils;
     protected layoutService: LayoutService;
     protected environment: CommonEnvironment;
+    protected printService: PrintService;
+    protected pdfPrintService: PdfPrintService;
     showLoadingSpinner: boolean;
     loadingSpinnerRunning: boolean;
     showLaw: boolean;
     hideCopyrightFooter: boolean;
     cookieLawSeenName: string;
-    constructor(appService: GenericAppService, toastr: ToastrService, translate: TranslateService, router: Router, locale: string, http: HttpClient, commonRoutingService: CommonRoutingService, cd: ChangeDetectorRef, platformService: PlatformService, pageUtils: PageUtils, layoutService: LayoutService, environment: CommonEnvironment);
-    private showInitState;
+    constructor(appService: GenericAppService, toastr: ToastrService, translate: TranslateService, router: Router, locale: string, http: HttpClient, commonRoutingService: CommonRoutingService, cd: ChangeDetectorRef, platformService: PlatformService, pageUtils: PageUtils, layoutService: LayoutService, environment: CommonEnvironment, printService: PrintService, pdfPrintService: PdfPrintService);
+    isPdfPrintAvailable(): boolean;
+    isPrintAvailable(): boolean;
+    onOpenPrintPreview(elementFilterType: ElementFilterType, filter: string, width?: number, height?: number, printCssIdRegExp?: string): boolean;
+    onPrintPdf(elementFilterType: ElementFilterType, filter: string, width?: number, height?: number, printCssIdRegExp?: string): boolean;
+    onScrollToTop(): void;
+    showInitState(): void;
     setShowLoadingSpinner(flag: boolean): void;
     doLoadingSpinnerCheck(): void;
     private doBrowserCheck;

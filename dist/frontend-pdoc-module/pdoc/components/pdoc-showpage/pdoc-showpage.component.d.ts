@@ -43,6 +43,8 @@ export declare class PDocShowPageComponent extends CommonDocShowpageComponent<PD
     constructor(route: ActivatedRoute, cdocRoutingService: PDocRoutingService, toastr: ToastrService, contentUtils: PDocContentUtils, errorResolver: ErrorResolver, pageUtils: PageUtils, commonRoutingService: CommonRoutingService, angularMarkdownService: AngularMarkdownService, angularHtmlService: AngularHtmlService, cd: ChangeDetectorRef, trackingProvider: GenericTrackingService, appService: GenericAppService, platformService: PlatformService, searchFormConverter: PDocSearchFormConverter, layoutService: LayoutService, elRef: ElementRef, router: Router, environment: CommonEnvironment, printService: PrintService, pdfPrintService: PdfPrintService);
     getFiltersForType(record: PDocRecord, type: string): any;
     renderDesc(): string;
+    isPdfPrintAvailable(): boolean;
+    isPrintAvailable(): boolean;
     onOpenPrintPreview(elementFilterType: ElementFilterType, filter: string, width?: number, height?: number, printCssIdRegExp?: string): boolean;
     onPrintPdf(elementFilterType: ElementFilterType, filter: string, width?: number, height?: number, printCssIdRegExp?: string): boolean;
     protected onResize(layoutSizeData: LayoutSizeData): void;

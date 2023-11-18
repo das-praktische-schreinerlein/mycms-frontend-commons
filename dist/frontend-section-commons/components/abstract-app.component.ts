@@ -11,6 +11,9 @@ import {PageUtils} from '../../angular-commons/services/page.utils';
 import {LogUtils} from '@dps/mycms-commons/dist/commons/utils/log.utils';
 import {LayoutService} from '../../angular-commons/services/layout.service';
 import {CommonEnvironment} from '../common-environment';
+import {PdfPrintOptions, PdfPrintService} from '../../angular-commons/services/pdf-print.service';
+import {PrintOptions, PrintService} from '../../angular-commons/services/print.service';
+import {ElementFilterType} from '../../angular-commons/services/layout.utils';
 
 export abstract class AbstractAppComponent {
     showLoadingSpinner = true;
@@ -24,7 +27,8 @@ export abstract class AbstractAppComponent {
                 protected http: HttpClient, protected commonRoutingService: CommonRoutingService,
                 protected cd: ChangeDetectorRef, protected platformService: PlatformService,
                 protected pageUtils: PageUtils, protected layoutService: LayoutService,
-                protected environment: CommonEnvironment) {
+                protected environment: CommonEnvironment,
+                protected printService: PrintService, protected pdfPrintService: PdfPrintService) {
         this.hideCopyrightFooter = environment.hideCopyrightFooter;
         this.cookieLawSeenName = environment.cookieLawSeenName;
 
@@ -58,7 +62,61 @@ export abstract class AbstractAppComponent {
         this.doBrowserCheck();
     }
 
-    private showInitState() {
+    isPdfPrintAvailable(): boolean {
+        return this.pdfPrintService.isPrintPdfAvailable();
+    }
+
+    isPrintAvailable(): boolean {
+        return this.printService.isPrintAvailable();
+    }
+
+    onOpenPrintPreview(elementFilterType: ElementFilterType, filter: string, width?: number, height?: number,
+                       printCssIdRegExp?: string) {
+        const options: PrintOptions = {
+            printElementFilter: {
+                type: elementFilterType,
+                value: filter
+            },
+            previewWindow: {
+                width: width,
+                height: height
+            },
+            printStyleIdFilter: new RegExp(printCssIdRegExp)
+        };
+        this.printService.openPrintPreview(options);
+
+        return false;
+    }
+
+    onPrintPdf(elementFilterType: ElementFilterType, filter: string, width?: number, height?: number,
+               printCssIdRegExp?: string) {
+        const options: PdfPrintOptions = {
+            printElementFilter: {
+                type: elementFilterType,
+                value: filter
+            },
+            previewWindow: {
+                width: width,
+                height: height
+            },
+            printStyleIdFilter: new RegExp(printCssIdRegExp),
+            fileName: 'filename.pdf',
+            pdfOptions: {
+                orientation: 'portrait',
+                format: 'a4'
+            },
+            waitForRenderingMs: 1000
+        };
+        this.pdfPrintService.printPdf(options);
+
+        return false;
+    }
+
+    onScrollToTop() {
+        this.pageUtils.scrollToTop();
+    }
+
+    showInitState() {
         this.appService.getAppState().subscribe(
             appState => {
                 if (appState === AppState.Ready && this.platformService.isClient()) {

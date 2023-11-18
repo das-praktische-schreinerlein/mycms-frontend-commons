@@ -63,6 +63,8 @@ export declare class PDocEditformComponent extends CommonDocEditformComponent<PD
     onInputChanged(value: any, field: string): boolean;
     recommendName(): void;
     recommendDesc(): void;
+    isPdfPrintAvailable(): boolean;
+    isPrintAvailable(): boolean;
     onOpenPrintPreview(elementFilterType: ElementFilterType, filter: string, width?: number, height?: number, printCssIdRegExp?: string): boolean;
     onPrintPdf(elementFilterType: ElementFilterType, filter: string, width?: number, height?: number, printCssIdRegExp?: string): boolean;
     protected validateSchema(record: PDocRecord): SchemaValidationError[];

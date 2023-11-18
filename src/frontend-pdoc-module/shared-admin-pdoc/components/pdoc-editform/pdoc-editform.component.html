@@ -56,12 +56,12 @@
             <legend i18n="dataDesc label|Label for fieldset: dataDesc@@label.editform.pdoc.legend.dataDesc">&#x231a; Seiteninhalt</legend>
             <div class="row">
                 <ng-container *ngTemplateOutlet="inputDesc;context:{recommend: true}"></ng-container>
-                <div class="col-md-12">
+                <div class="col-md-12" *ngIf="isPrintAvailable() || isPdfPrintAvailable()">
                     <ul class="nav command-container justify-content-end">
-                        <li class="command-link">
+                        <li class="command-link" *ngIf="isPrintAvailable()">
                             <div (click)="onOpenPrintPreview('ID', 'renderedDesc', 800, 200, 'print\.css')" class="command-icon command-icon-print"><span></span></div>
                         </li>
-                        <li class="command-link">
+                        <li class="command-link" *ngIf="isPdfPrintAvailable()">
                             <div (click)="onPrintPdf('ID', 'renderedDesc', 800, 200, 'print\.css')" class="command-icon command-icon-pdf"><span></span></div>
                         </li>
                     </ul>

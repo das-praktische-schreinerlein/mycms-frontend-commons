@@ -12,4 +12,5 @@ export interface PrintOptions {
 }
 export declare abstract class PrintService {
     abstract openPrintPreview(options: PrintOptions): Window;
+    isPrintAvailable(): boolean;
 }

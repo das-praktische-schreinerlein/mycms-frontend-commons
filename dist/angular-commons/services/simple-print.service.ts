@@ -1,9 +1,14 @@
 import {Injectable} from '@angular/core';
 import {LayoutUtils} from './layout.utils';
 import {PrintOptions, PrintService} from './print.service';
+import {LayoutService} from './layout.service';
 
 @Injectable()
 export class SimplePrintService extends PrintService {
+
+    public constructor(protected layoutService: LayoutService) {
+        super();
+    }
     public openPrintPreview(options: PrintOptions): Window {
         if (!options || !options.printElementFilter) {
             console.error('cant find printElement for print-preview - no printElementFilter applied', options);
@@ -97,6 +102,10 @@ export class SimplePrintService extends PrintService {
                 printCss.setAttribute('media', 'all');
             }
         }
+    }
+
+    public isPrintAvailable(): boolean {
+        return this.layoutService.isDesktop() && window.print !== undefined;
     }
 
 }

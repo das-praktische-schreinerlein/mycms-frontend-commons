@@ -33,6 +33,7 @@ import {PdfGenerator, PdfPrintService} from '../../../../angular-commons/service
 import {PrintDialogPdfGenerator} from '../../../../angular-commons/services/print-dialog-pdf.generator';
 import {SimplePrintService} from '../../../../angular-commons/services/simple-print.service';
 import {PrintService} from '../../../../angular-commons/services/print.service';
+import {LayoutService} from '../../../../angular-commons/services/layout.service';
 
 describe('PDocEditformComponent', () => {
     let component: PDocEditformComponent;
@@ -61,6 +62,7 @@ describe('PDocEditformComponent', () => {
                 PDocDescSuggesterService,
                 PDocPageDescSuggesterService,
                 PlatformService,
+                LayoutService,
                 {provide: AngularMarkdownService, useClass: SimpleAngularMarkdownService},
                 {provide: AngularHtmlService, useClass: SimpleAngularHtmlService},
                 { provide: GenericAppService, useValue: new AppServiceStub() },

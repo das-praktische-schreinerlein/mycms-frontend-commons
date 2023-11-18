@@ -90,6 +90,14 @@ export class PDocShowPageComponent extends CommonDocShowpageComponent<PDocRecord
         return super.renderDesc();
     }
 
+    isPdfPrintAvailable(): boolean {
+        return this.pdfPrintService.isPrintPdfAvailable();
+    }
+
+    isPrintAvailable(): boolean {
+        return this.printService.isPrintAvailable();
+    }
+
     onOpenPrintPreview(elementFilterType: ElementFilterType, filter: string, width?: number, height?: number,
                        printCssIdRegExp?: string) {
         const options: PrintOptions = {

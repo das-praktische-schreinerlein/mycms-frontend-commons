@@ -39,4 +39,8 @@ export class JsPdfGenerator extends PdfGenerator {
         // TODO check why jspdf cant hide css with display:none
         LayoutUtils.setDisplayNoneStyleOnElementHiddenCssStyles(printWindow.document);
     }
+
+    public isPrintPdfAvailable(): boolean {
+        return true;
+    }
 }

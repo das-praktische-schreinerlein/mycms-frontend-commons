@@ -81,6 +81,12 @@ var PDocShowPageComponent = /** @class */ (function (_super) {
         }
         return _super.prototype.renderDesc.call(this);
     };
+    PDocShowPageComponent.prototype.isPdfPrintAvailable = function () {
+        return this.pdfPrintService.isPrintPdfAvailable();
+    };
+    PDocShowPageComponent.prototype.isPrintAvailable = function () {
+        return this.printService.isPrintAvailable();
+    };
     PDocShowPageComponent.prototype.onOpenPrintPreview = function (elementFilterType, filter, width, height, printCssIdRegExp) {
         var options = {
             printElementFilter: {

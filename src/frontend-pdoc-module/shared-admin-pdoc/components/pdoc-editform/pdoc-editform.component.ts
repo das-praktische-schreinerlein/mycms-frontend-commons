@@ -141,6 +141,14 @@ export class PDocEditformComponent extends CommonDocEditformComponent<PDocRecord
         });
     }
 
+    isPdfPrintAvailable(): boolean {
+        return this.pdfPrintService.isPrintPdfAvailable();
+    }
+
+    isPrintAvailable(): boolean {
+        return this.printService.isPrintAvailable();
+    }
+
     onOpenPrintPreview(elementFilterType: ElementFilterType, filter: string, width?: number, height?: number,
                               printCssIdRegExp?: string) {
         const options: PrintOptions = {

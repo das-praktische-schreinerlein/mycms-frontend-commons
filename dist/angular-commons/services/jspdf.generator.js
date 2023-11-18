@@ -53,6 +53,9 @@ var JsPdfGenerator = /** @class */ (function (_super) {
         // TODO check why jspdf cant hide css with display:none
         LayoutUtils.setDisplayNoneStyleOnElementHiddenCssStyles(printWindow.document);
     };
+    JsPdfGenerator.prototype.isPrintPdfAvailable = function () {
+        return true;
+    };
     JsPdfGenerator = __decorate([
         Injectable()
     ], JsPdfGenerator);

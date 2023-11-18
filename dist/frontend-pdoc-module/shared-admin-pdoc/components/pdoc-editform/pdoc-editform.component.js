@@ -142,6 +142,12 @@ var PDocEditformComponent = /** @class */ (function (_super) {
             _this.cd.markForCheck();
         });
     };
+    PDocEditformComponent.prototype.isPdfPrintAvailable = function () {
+        return this.pdfPrintService.isPrintPdfAvailable();
+    };
+    PDocEditformComponent.prototype.isPrintAvailable = function () {
+        return this.printService.isPrintAvailable();
+    };
     PDocEditformComponent.prototype.onOpenPrintPreview = function (elementFilterType, filter, width, height, printCssIdRegExp) {
         var options = {
             printElementFilter: {

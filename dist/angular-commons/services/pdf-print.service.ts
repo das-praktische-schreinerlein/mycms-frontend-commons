@@ -11,8 +11,16 @@ export interface PdfPrintOptions extends PrintOptions {
 
 export abstract class PdfGenerator {
     public abstract generatePdf(printWindow: Window, printElement: Element, options: PdfPrintOptions): Promise<any>;
+
+    public isPrintPdfAvailable(): boolean {
+        return false;
+    }
 }
 
 export abstract class PdfPrintService {
     public abstract printPdf(options: PdfPrintOptions): Promise<Window>;
+
+    public isPrintPdfAvailable(): boolean {
+        return false;
+    }
 }

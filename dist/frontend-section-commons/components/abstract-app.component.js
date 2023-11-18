@@ -3,7 +3,7 @@ import { BeanUtils } from '@dps/mycms-commons/dist/commons/utils/bean.utils';
 import { RoutingState } from '../../angular-commons/services/common-routing.service';
 import { LogUtils } from '@dps/mycms-commons/dist/commons/utils/log.utils';
 var AbstractAppComponent = /** @class */ (function () {
-    function AbstractAppComponent(appService, toastr, translate, router, locale, http, commonRoutingService, cd, platformService, pageUtils, layoutService, environment) {
+    function AbstractAppComponent(appService, toastr, translate, router, locale, http, commonRoutingService, cd, platformService, pageUtils, layoutService, environment, printService, pdfPrintService) {
         this.appService = appService;
         this.toastr = toastr;
         this.translate = translate;
@@ -16,6 +16,8 @@ var AbstractAppComponent = /** @class */ (function () {
         this.pageUtils = pageUtils;
         this.layoutService = layoutService;
         this.environment = environment;
+        this.printService = printService;
+        this.pdfPrintService = pdfPrintService;
         this.showLoadingSpinner = true;
         this.loadingSpinnerRunning = false;
         this.showLaw = false;
@@ -45,6 +47,51 @@ var AbstractAppComponent = /** @class */ (function () {
         });
         this.doBrowserCheck();
     }
+    AbstractAppComponent.prototype.isPdfPrintAvailable = function () {
+        return this.pdfPrintService.isPrintPdfAvailable();
+    };
+    AbstractAppComponent.prototype.isPrintAvailable = function () {
+        return this.printService.isPrintAvailable();
+    };
+    AbstractAppComponent.prototype.onOpenPrintPreview = function (elementFilterType, filter, width, height, printCssIdRegExp) {
+        var options = {
+            printElementFilter: {
+                type: elementFilterType,
+                value: filter
+            },
+            previewWindow: {
+                width: width,
+                height: height
+            },
+            printStyleIdFilter: new RegExp(printCssIdRegExp)
+        };
+        this.printService.openPrintPreview(options);
+        return false;
+    };
+    AbstractAppComponent.prototype.onPrintPdf = function (elementFilterType, filter, width, height, printCssIdRegExp) {
+        var options = {
+            printElementFilter: {
+                type: elementFilterType,
+                value: filter
+            },
+            previewWindow: {
+                width: width,
+                height: height
+            },
+            printStyleIdFilter: new RegExp(printCssIdRegExp),
+            fileName: 'filename.pdf',
+            pdfOptions: {
+                orientation: 'portrait',
+                format: 'a4'
+            },
+            waitForRenderingMs: 1000
+        };
+        this.pdfPrintService.printPdf(options);
+        return false;
+    };
+    AbstractAppComponent.prototype.onScrollToTop = function () {
+        this.pageUtils.scrollToTop();
+    };
     AbstractAppComponent.prototype.showInitState = function () {
         var _this = this;
         this.appService.getAppState().subscribe(function (appState) {

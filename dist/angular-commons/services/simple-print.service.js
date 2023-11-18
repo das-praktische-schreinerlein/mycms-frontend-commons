@@ -17,13 +17,19 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
 import { Injectable } from '@angular/core';
 import { LayoutUtils } from './layout.utils';
 import { PrintService } from './print.service';
+import { LayoutService } from './layout.service';
 var SimplePrintService = /** @class */ (function (_super) {
     __extends(SimplePrintService, _super);
-    function SimplePrintService() {
-        return _super !== null && _super.apply(this, arguments) || this;
+    function SimplePrintService(layoutService) {
+        var _this = _super.call(this) || this;
+        _this.layoutService = layoutService;
+        return _this;
     }
     SimplePrintService.prototype.openPrintPreview = function (options) {
         if (!options || !options.printElementFilter) {
@@ -97,8 +103,12 @@ var SimplePrintService = /** @class */ (function (_super) {
             }
         }
     };
+    SimplePrintService.prototype.isPrintAvailable = function () {
+        return this.layoutService.isDesktop() && window.print !== undefined;
+    };
     SimplePrintService = __decorate([
-        Injectable()
+        Injectable(),
+        __metadata("design:paramtypes", [LayoutService])
     ], SimplePrintService);
     return SimplePrintService;
 }(PrintService));

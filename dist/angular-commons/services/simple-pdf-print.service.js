@@ -73,6 +73,9 @@ var SimplePdfPrintService = /** @class */ (function (_super) {
         previewContainer.setAttribute('style', style);
         return true;
     };
+    SimplePdfPrintService.prototype.isPrintPdfAvailable = function () {
+        return this.pdfGenerator.isPrintPdfAvailable();
+    };
     SimplePdfPrintService = __decorate([
         Injectable(),
         __metadata("design:paramtypes", [PrintService, PdfGenerator])

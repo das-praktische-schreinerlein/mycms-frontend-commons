@@ -106,12 +106,32 @@ export class LayoutService {
     public isMobile(): boolean {
         const browser = this.getBrowser();
         switch (browser && browser.os) {
-            case 'Amazon OS':
+            case 'iOS':
             case 'Android OS':
             case 'BlackBerry OS':
-            case 'Chrome OS':
-            case 'iOS':
             case 'Windows Mobile':
+            case 'Amazon OS':
+            // case 'Windows 3.11':
+            // case 'Windows 95':
+            // case 'Windows 98':
+            // case 'Windows 2000':
+            // case 'Windows XP':
+            // case 'Windows Server 2003':
+            // case 'Windows Vista':
+            // case 'Windows 7':
+            // case 'Windows 8':
+            // case 'Windows 8.1':
+            // case 'Windows 10':
+            // case 'Windows ME':
+            // case 'Open BSD':
+            // case 'Sun OS':
+            // case 'Linux':
+            // case 'Mac OS':
+            // case 'QNX':
+            // case 'BeOS':
+            // case 'OS/2':
+            case 'Chrome OS':
+            // case 'Search Bot':
                 return true;
             default:
         }
@@ -121,7 +141,7 @@ export class LayoutService {
 
     public isSpider(): boolean {
         const browser = this.getBrowser();
-        return browser && browser.name === 'bot';
+        return browser && (browser.name === 'bot' || browser.os === 'Search Bot');
     }
 
     public isServer(): boolean {
