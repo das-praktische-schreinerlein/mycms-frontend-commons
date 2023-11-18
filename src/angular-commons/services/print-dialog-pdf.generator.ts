@@ -16,7 +16,7 @@ export class PrintDialogPdfGenerator extends PdfGenerator {
         });
     }
 
-    public isPrintAvailable(): boolean {
+    public isPrintPdfAvailable(): boolean {
         return this.layoutService.isDesktop() && window.print !== undefined;
     }
 

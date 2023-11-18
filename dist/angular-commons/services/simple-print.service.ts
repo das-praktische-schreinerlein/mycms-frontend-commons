@@ -9,6 +9,7 @@ export class SimplePrintService extends PrintService {
     public constructor(protected layoutService: LayoutService) {
         super();
     }
+
     public openPrintPreview(options: PrintOptions): Window {
         if (!options || !options.printElementFilter) {
             console.error('cant find printElement for print-preview - no printElementFilter applied', options);

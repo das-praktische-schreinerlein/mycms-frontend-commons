@@ -36,7 +36,7 @@ var PrintDialogPdfGenerator = /** @class */ (function (_super) {
             resolve();
         });
     };
-    PrintDialogPdfGenerator.prototype.isPrintAvailable = function () {
+    PrintDialogPdfGenerator.prototype.isPrintPdfAvailable = function () {
         return this.layoutService.isDesktop() && window.print !== undefined;
     };
     PrintDialogPdfGenerator = __decorate([
