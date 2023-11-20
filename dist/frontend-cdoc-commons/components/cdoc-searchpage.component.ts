@@ -23,7 +23,7 @@ import {CommonDocRecord} from '@dps/mycms-commons/dist/search-commons/model/reco
 import {CommonDocSearchForm} from '@dps/mycms-commons/dist/search-commons/model/forms/cdoc-searchform';
 import {CommonDocSearchResult} from '@dps/mycms-commons/dist/search-commons/model/container/cdoc-searchresult';
 import {CommonDocDataService} from '@dps/mycms-commons/dist/search-commons/services/cdoc-data.service';
-import {GenericSearchFormSearchFormConverter} from '@dps/mycms-commons/dist/search-commons/services/generic-searchform.converter';
+import {GenericSearchFormConverter} from '@dps/mycms-commons/dist/search-commons/services/generic-searchform.converter';
 import {CommonSectionSearchFormResolver} from '../resolver/cdoc-section-searchform.resolver';
 import {
     AbstractPageComponent,
@@ -71,7 +71,7 @@ export abstract class CommonDocSearchpageComponent<R extends CommonDocRecord, F 
 
     constructor(protected route: ActivatedRoute, protected commonRoutingService: CommonRoutingService,
                 protected errorResolver: ErrorResolver, protected cdocDataService: D,
-                protected searchFormConverter: GenericSearchFormSearchFormConverter<F>,
+                protected searchFormConverter: GenericSearchFormConverter<F>,
                 protected cdocRoutingService: CommonDocRoutingService, protected toastr: ToastrService,
                 protected pageUtils: PageUtils, protected cd: ChangeDetectorRef,
                 protected trackingProvider: GenericTrackingService, protected appService: GenericAppService,

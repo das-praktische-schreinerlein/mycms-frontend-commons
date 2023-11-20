@@ -1,10 +1,10 @@
 import { PDocSearchForm } from '@dps/mycms-commons/dist/pdoc-commons/model/forms/pdoc-searchform';
-import { GenericSearchFormSearchFormConverter, HumanReadableFilter } from '@dps/mycms-commons/dist/search-commons/services/generic-searchform.converter';
+import { GenericSearchFormConverter, HumanReadableFilter } from '@dps/mycms-commons/dist/search-commons/services/generic-searchform.converter';
 import { SearchParameterUtils } from '@dps/mycms-commons/dist/search-commons/services/searchparameter.utils';
 import { TranslateService } from '@ngx-translate/core';
 import { SearchFormUtils } from '../../../angular-commons/services/searchform-utils.service';
 import { Layout } from '../../../angular-commons/services/layout.service';
-export declare class PDocSearchFormConverter implements GenericSearchFormSearchFormConverter<PDocSearchForm> {
+export declare class PDocSearchFormConverter implements GenericSearchFormConverter<PDocSearchForm> {
     private searchParameterUtils;
     private translateService;
     private searchFormUtils;

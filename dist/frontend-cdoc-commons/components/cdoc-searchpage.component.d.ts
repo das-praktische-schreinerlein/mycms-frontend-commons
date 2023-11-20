@@ -16,7 +16,7 @@ import { CommonDocRecord } from '@dps/mycms-commons/dist/search-commons/model/re
 import { CommonDocSearchForm } from '@dps/mycms-commons/dist/search-commons/model/forms/cdoc-searchform';
 import { CommonDocSearchResult } from '@dps/mycms-commons/dist/search-commons/model/container/cdoc-searchresult';
 import { CommonDocDataService } from '@dps/mycms-commons/dist/search-commons/services/cdoc-data.service';
-import { GenericSearchFormSearchFormConverter } from '@dps/mycms-commons/dist/search-commons/services/generic-searchform.converter';
+import { GenericSearchFormConverter } from '@dps/mycms-commons/dist/search-commons/services/generic-searchform.converter';
 import { AbstractPageComponent, CommonPageComponentComponentConfig } from '../../angular-commons/components/abstract-page.component';
 import { CommonEnvironment } from '../../frontend-section-commons/common-environment';
 import { CommonDocMultiActionManager } from '../services/cdoc-multiaction.manager';
@@ -34,7 +34,7 @@ export declare abstract class CommonDocSearchpageComponent<R extends CommonDocRe
     protected commonRoutingService: CommonRoutingService;
     protected errorResolver: ErrorResolver;
     protected cdocDataService: D;
-    protected searchFormConverter: GenericSearchFormSearchFormConverter<F>;
+    protected searchFormConverter: GenericSearchFormConverter<F>;
     protected cdocRoutingService: CommonDocRoutingService;
     protected toastr: ToastrService;
     protected pageUtils: PageUtils;
@@ -69,7 +69,7 @@ export declare abstract class CommonDocSearchpageComponent<R extends CommonDocRe
     availableCreateActionTypes: String[];
     defaultLayoutPerType: {};
     multiActionSelectValueMap: Map<string, IMultiSelectOption[]>;
-    constructor(route: ActivatedRoute, commonRoutingService: CommonRoutingService, errorResolver: ErrorResolver, cdocDataService: D, searchFormConverter: GenericSearchFormSearchFormConverter<F>, cdocRoutingService: CommonDocRoutingService, toastr: ToastrService, pageUtils: PageUtils, cd: ChangeDetectorRef, trackingProvider: GenericTrackingService, appService: GenericAppService, platformService: PlatformService, layoutService: LayoutService, searchFormUtils: SearchFormUtils, cdocSearchFormUtils: CommonDocSearchFormUtils, multiActionManager: CommonDocMultiActionManager<R, F, S, D>, environment: CommonEnvironment, location: Location);
+    constructor(route: ActivatedRoute, commonRoutingService: CommonRoutingService, errorResolver: ErrorResolver, cdocDataService: D, searchFormConverter: GenericSearchFormConverter<F>, cdocRoutingService: CommonDocRoutingService, toastr: ToastrService, pageUtils: PageUtils, cd: ChangeDetectorRef, trackingProvider: GenericTrackingService, appService: GenericAppService, platformService: PlatformService, layoutService: LayoutService, searchFormUtils: SearchFormUtils, cdocSearchFormUtils: CommonDocSearchFormUtils, multiActionManager: CommonDocMultiActionManager<R, F, S, D>, environment: CommonEnvironment, location: Location);
     protected configureProcessing(): void;
     onShowDoc(cdoc: R): boolean;
     onPageChange(page: number, scroll: boolean): boolean;

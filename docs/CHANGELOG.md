@@ -48,6 +48,7 @@
 - cdoc/pdoc: fixed rendering of markddown/html
 - frontend: replace NgxMd with plain marked
 - frontend: rearranged print.css
+- frontend: renamed GenericSearchFormSearchFormConverter -> GenericSearchFormConverter
 
 
 ## 5.7.0 (2023-03-18)

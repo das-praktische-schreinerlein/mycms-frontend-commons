@@ -9,7 +9,7 @@ import { CommonDocSearchForm } from '@dps/mycms-commons/dist/search-commons/mode
 import { CommonDocDataService } from '@dps/mycms-commons/dist/search-commons/services/cdoc-data.service';
 import { CommonDocRecord } from '@dps/mycms-commons/dist/search-commons/model/records/cdoc-entity-record';
 import { CommonDocSearchResult } from '@dps/mycms-commons/dist/search-commons/model/container/cdoc-searchresult';
-import { GenericSearchFormSearchFormConverter } from '@dps/mycms-commons/dist/search-commons/services/generic-searchform.converter';
+import { GenericSearchFormConverter } from '@dps/mycms-commons/dist/search-commons/services/generic-searchform.converter';
 import { AbstractInlineComponent } from '../../../angular-commons/components/inline.component';
 import { Subscription } from 'rxjs';
 import { IMultiSelectOption } from 'angular-2-dropdown-multiselect';
@@ -23,7 +23,7 @@ export declare class CommonDocInlineSearchpageComponent<R extends CommonDocRecor
     protected appService: GenericAppService;
     protected commonRoutingService: CommonRoutingService;
     protected cdocDataService: D;
-    protected searchFormConverter: GenericSearchFormSearchFormConverter<F>;
+    protected searchFormConverter: GenericSearchFormConverter<F>;
     protected cdocRoutingService: CommonDocRoutingService;
     protected toastr: ToastrService;
     protected cd: ChangeDetectorRef;
@@ -63,7 +63,7 @@ export declare class CommonDocInlineSearchpageComponent<R extends CommonDocRecor
     perPageOnToSearchPage?: number;
     show: EventEmitter<R>;
     searchResultFound: EventEmitter<S>;
-    constructor(appService: GenericAppService, commonRoutingService: CommonRoutingService, cdocDataService: D, searchFormConverter: GenericSearchFormSearchFormConverter<F>, cdocRoutingService: CommonDocRoutingService, toastr: ToastrService, cd: ChangeDetectorRef, elRef: ElementRef, pageUtils: PageUtils, searchFormUtils: SearchFormUtils, cdocSearchFormUtils: CommonDocSearchFormUtils, multiActionManager: CommonDocMultiActionManager<R, F, S, D>);
+    constructor(appService: GenericAppService, commonRoutingService: CommonRoutingService, cdocDataService: D, searchFormConverter: GenericSearchFormConverter<F>, cdocRoutingService: CommonDocRoutingService, toastr: ToastrService, cd: ChangeDetectorRef, elRef: ElementRef, pageUtils: PageUtils, searchFormUtils: SearchFormUtils, cdocSearchFormUtils: CommonDocSearchFormUtils, multiActionManager: CommonDocMultiActionManager<R, F, S, D>);
     ngOnInit(): void;
     ngOnDestroy(): void;
     onShowDoc(cdoc: R): boolean;
@@ -83,7 +83,7 @@ export declare class CommonDocInlineSearchpageComponent<R extends CommonDocRecor
     protected configureComponent(config: {}): void;
     protected updateData(): void;
     protected doSearchWithParams(params: any): void;
-    protected doSearch(): void;
+    protected doSearch(): boolean;
     protected generateMultiActionSelectValueMapFromSearchResult(searchResult: S, valueMap: Map<string, IMultiSelectOption[]>): void;
     protected doCheckSearchResultAfterSearch(searchResult: S): void;
 }

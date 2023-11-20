@@ -212,6 +212,8 @@ var CommonDocInlineSearchpageComponent = /** @class */ (function (_super) {
         this.doSearch();
     };
     CommonDocInlineSearchpageComponent.prototype.doSearch = function () {
+        // prepare searchform for consistency
+        this.searchFormConverter.paramsToSearchForm(this.searchFormConverter.searchFormToValueMap(this.searchForm), {}, this.searchForm, {});
         // console.log('doSearch form:', this.searchForm);
         var me = this;
         me.showLoadingSpinner = true;
@@ -243,6 +245,7 @@ var CommonDocInlineSearchpageComponent = /** @class */ (function (_super) {
             me.searchResultFound.emit(me.searchResult);
             me.cd.markForCheck();
         });
+        return false;
     };
     CommonDocInlineSearchpageComponent.prototype.generateMultiActionSelectValueMapFromSearchResult = function (searchResult, valueMap) {
         if (searchResult !== undefined) {

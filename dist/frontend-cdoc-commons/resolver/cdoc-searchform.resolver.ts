@@ -2,12 +2,12 @@ import {ActivatedRouteSnapshot, Resolve, RouterStateSnapshot} from '@angular/rou
 import {AppState, GenericAppService} from '@dps/mycms-commons/dist/commons/services/generic-app.service';
 import {ResolvedData, ResolverError} from '../../angular-commons/resolver/resolver.utils';
 import {CommonDocSearchForm} from '@dps/mycms-commons/dist/search-commons/model/forms/cdoc-searchform';
-import {GenericSearchFormSearchFormConverter} from '@dps/mycms-commons/dist/search-commons/services/generic-searchform.converter';
+import {GenericSearchFormConverter} from '@dps/mycms-commons/dist/search-commons/services/generic-searchform.converter';
 
 export abstract class CommonDocSearchFormResolver<F extends CommonDocSearchForm> implements Resolve<ResolvedData<F>> {
     static ERROR_INVALID_SEARCHFORM = 'ERROR_INVALID_SEARCHFORM';
 
-    constructor(private appService: GenericAppService, private searchFormConverter: GenericSearchFormSearchFormConverter<F>) {}
+    constructor(private appService: GenericAppService, private searchFormConverter: GenericSearchFormConverter<F>) {}
 
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<ResolvedData<F>> {
         const result: ResolvedData<F> = {

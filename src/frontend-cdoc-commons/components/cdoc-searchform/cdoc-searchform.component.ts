@@ -7,7 +7,7 @@ import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
 import {ToastrService} from 'ngx-toastr';
 import {SearchFormUtils} from '../../../angular-commons/services/searchform-utils.service';
 import {
-    GenericSearchFormSearchFormConverter,
+    GenericSearchFormConverter,
     HumanReadableFilter
 } from '@dps/mycms-commons/dist/search-commons/services/generic-searchform.converter';
 import {SearchFormLayout} from '../../../angular-commons/services/layout.service';
@@ -120,7 +120,7 @@ export abstract class CommonDocSearchformComponent <R extends CommonDocRecord, F
 
     constructor(protected sanitizer: DomSanitizer, public fb: FormBuilder, protected searchFormUtils: SearchFormUtils,
                 protected cdocSearchFormUtils: CommonDocSearchFormUtils,
-                protected searchFormConverter: GenericSearchFormSearchFormConverter<F>,
+                protected searchFormConverter: GenericSearchFormConverter<F>,
                 protected cdocDataCacheService: CommonDocDataCacheService<R, F, S, D>, protected toastr: ToastrService,
                 protected cd: ChangeDetectorRef) {
         this._searchResult = new BehaviorSubject<S>(this.createDefaultSearchResult());

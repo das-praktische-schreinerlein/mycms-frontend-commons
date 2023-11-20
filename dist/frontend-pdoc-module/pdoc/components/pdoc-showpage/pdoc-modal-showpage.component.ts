@@ -21,7 +21,7 @@ import {PdfPrintService} from '../../../../angular-commons/services/pdf-print.se
 @Component({
     selector: 'app-pdoc-modal-showpage',
     templateUrl: './pdoc-showpage.component.html',
-    styleUrls: ['./pdoc-showpage.component.css', './pdoc-modal-showpage.component.css'],
+    styleUrls: ['./pdoc-showpage.component.css', '../../../../frontend-cdoc-commons/styles/cdoc-modal-showpage.component.css'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PDocModalShowpageComponent extends PDocShowPageComponent {

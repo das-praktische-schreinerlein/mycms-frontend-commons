@@ -10,7 +10,7 @@ import {CommonDocSearchForm} from '@dps/mycms-commons/dist/search-commons/model/
 import {CommonDocDataService} from '@dps/mycms-commons/dist/search-commons/services/cdoc-data.service';
 import {CommonDocRecord} from '@dps/mycms-commons/dist/search-commons/model/records/cdoc-entity-record';
 import {CommonDocSearchResult} from '@dps/mycms-commons/dist/search-commons/model/container/cdoc-searchresult';
-import {GenericSearchFormSearchFormConverter} from '@dps/mycms-commons/dist/search-commons/services/generic-searchform.converter';
+import {GenericSearchFormConverter} from '@dps/mycms-commons/dist/search-commons/services/generic-searchform.converter';
 import {AbstractInlineComponent} from '../../../angular-commons/components/inline.component';
 import {Subscription} from 'rxjs';
 import {IMultiSelectOption} from 'angular-2-dropdown-multiselect';
@@ -101,7 +101,7 @@ export class CommonDocInlineSearchpageComponent <R extends CommonDocRecord, F ex
     public searchResultFound: EventEmitter<S> = new EventEmitter();
 
     constructor(protected appService: GenericAppService, protected commonRoutingService: CommonRoutingService,
-                protected cdocDataService: D, protected searchFormConverter: GenericSearchFormSearchFormConverter<F>,
+                protected cdocDataService: D, protected searchFormConverter: GenericSearchFormConverter<F>,
                 protected cdocRoutingService: CommonDocRoutingService, protected toastr: ToastrService,
                 protected cd: ChangeDetectorRef, protected elRef: ElementRef, protected pageUtils: PageUtils,
                 protected searchFormUtils: SearchFormUtils, protected cdocSearchFormUtils: CommonDocSearchFormUtils,
@@ -286,7 +286,14 @@ export class CommonDocInlineSearchpageComponent <R extends CommonDocRecord, F ex
         this.doSearch();
     }
 
-    protected doSearch() {
+    protected doSearch(): boolean {
+        // prepare searchform for consistency
+        this.searchFormConverter.paramsToSearchForm(
+            this.searchFormConverter.searchFormToValueMap(this.searchForm),
+            {},
+            this.searchForm,
+            {});
+
         // console.log('doSearch form:', this.searchForm);
         const me = this;
         me.showLoadingSpinner = true;
@@ -320,6 +327,8 @@ export class CommonDocInlineSearchpageComponent <R extends CommonDocRecord, F ex
             me.searchResultFound.emit(me.searchResult);
             me.cd.markForCheck();
         });
+
+        return false;
     }
 
     protected generateMultiActionSelectValueMapFromSearchResult(searchResult: S, valueMap: Map<string, IMultiSelectOption[]>): void {

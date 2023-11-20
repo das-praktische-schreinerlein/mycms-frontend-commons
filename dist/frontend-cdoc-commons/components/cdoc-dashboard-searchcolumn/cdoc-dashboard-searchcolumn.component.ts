@@ -12,7 +12,7 @@ import {CommonDocSearchResult} from '@dps/mycms-commons/dist/search-commons/mode
 import {CommonDocDataService} from '@dps/mycms-commons/dist/search-commons/services/cdoc-data.service';
 import {CommonDocActionTagService} from '../../../frontend-cdoc-commons/services/cdoc-actiontag.service';
 import {CommonDocSearchFormUtils} from '../../../frontend-cdoc-commons/services/cdoc-searchform-utils.service';
-import {GenericSearchFormSearchFormConverter} from '@dps/mycms-commons/dist/search-commons/services/generic-searchform.converter';
+import {GenericSearchFormConverter} from '@dps/mycms-commons/dist/search-commons/services/generic-searchform.converter';
 import {CommonDocRoutingService} from '../../../frontend-cdoc-commons/services/cdoc-routing.service';
 
 export abstract class CommonDocDashboardSearchColumnComponent<R extends CommonDocRecord, F extends CommonDocSearchForm,
@@ -23,7 +23,7 @@ export abstract class CommonDocDashboardSearchColumnComponent<R extends CommonDo
     public baseSearchUrl? = 'cdoc/';
 
     constructor(appService: GenericAppService, commonRoutingService: CommonRoutingService,
-                cdocDataService: D, searchFormConverter: GenericSearchFormSearchFormConverter<F>,
+                cdocDataService: D, searchFormConverter: GenericSearchFormConverter<F>,
                 cdocRoutingService: CommonDocRoutingService, toastr: ToastrService,
                 cd: ChangeDetectorRef, elRef: ElementRef, pageUtils: PageUtils, searchFormUtils: SearchFormUtils,
                 cdocSearchFormUtils: CommonDocSearchFormUtils, protected actionService: CommonDocActionTagService<R, F, S, D>) {

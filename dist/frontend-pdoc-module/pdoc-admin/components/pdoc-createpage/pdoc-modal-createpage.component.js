@@ -76,7 +76,7 @@ var PDocModalCreatepageComponent = /** @class */ (function (_super) {
         Component({
             selector: 'app-pdoc-modal-createpage',
             templateUrl: './pdoc-modal-createpage.component.html',
-            styleUrls: ['./pdoc-createpage.component.css', './pdoc-modal-createpage.component.css'],
+            styleUrls: ['./pdoc-createpage.component.css', '../../../../frontend-cdoc-commons/styles/cdoc-modal-createpage.component.css'],
             changeDetection: ChangeDetectionStrategy.OnPush
         }),
         __param(16, Inject(COMMON_APP_ENVIRONMENT)),

@@ -64,7 +64,7 @@ var PDocModalShowpageComponent = /** @class */ (function (_super) {
         Component({
             selector: 'app-pdoc-modal-showpage',
             templateUrl: './pdoc-showpage.component.html',
-            styleUrls: ['./pdoc-showpage.component.css', './pdoc-modal-showpage.component.css'],
+            styleUrls: ['./pdoc-showpage.component.css', '../../../../frontend-cdoc-commons/styles/cdoc-modal-showpage.component.css'],
             changeDetection: ChangeDetectionStrategy.OnPush
         }),
         __param(17, Inject(COMMON_APP_ENVIRONMENT)),

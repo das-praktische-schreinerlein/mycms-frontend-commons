@@ -5,7 +5,7 @@ import { IMultiSelectOption, IMultiSelectSettings, IMultiSelectTexts } from 'ang
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { ToastrService } from 'ngx-toastr';
 import { SearchFormUtils } from '../../../angular-commons/services/searchform-utils.service';
-import { GenericSearchFormSearchFormConverter } from '@dps/mycms-commons/dist/search-commons/services/generic-searchform.converter';
+import { GenericSearchFormConverter } from '@dps/mycms-commons/dist/search-commons/services/generic-searchform.converter';
 import { SearchFormLayout } from '../../../angular-commons/services/layout.service';
 import { CommonDocSearchForm } from '@dps/mycms-commons/dist/search-commons/model/forms/cdoc-searchform';
 import { CommonDocDataService } from '@dps/mycms-commons/dist/search-commons/services/cdoc-data.service';
@@ -18,7 +18,7 @@ export declare abstract class CommonDocSearchformComponent<R extends CommonDocRe
     fb: FormBuilder;
     protected searchFormUtils: SearchFormUtils;
     protected cdocSearchFormUtils: CommonDocSearchFormUtils;
-    protected searchFormConverter: GenericSearchFormSearchFormConverter<F>;
+    protected searchFormConverter: GenericSearchFormConverter<F>;
     protected cdocDataCacheService: CommonDocDataCacheService<R, F, S, D>;
     protected toastr: ToastrService;
     protected cd: ChangeDetectorRef;
@@ -53,7 +53,7 @@ export declare abstract class CommonDocSearchformComponent<R extends CommonDocRe
     search: EventEmitter<F>;
     changedShowForm: EventEmitter<boolean>;
     searchFormGroup: any;
-    constructor(sanitizer: DomSanitizer, fb: FormBuilder, searchFormUtils: SearchFormUtils, cdocSearchFormUtils: CommonDocSearchFormUtils, searchFormConverter: GenericSearchFormSearchFormConverter<F>, cdocDataCacheService: CommonDocDataCacheService<R, F, S, D>, toastr: ToastrService, cd: ChangeDetectorRef);
+    constructor(sanitizer: DomSanitizer, fb: FormBuilder, searchFormUtils: SearchFormUtils, cdocSearchFormUtils: CommonDocSearchFormUtils, searchFormConverter: GenericSearchFormConverter<F>, cdocDataCacheService: CommonDocDataCacheService<R, F, S, D>, toastr: ToastrService, cd: ChangeDetectorRef);
     ngOnInit(): void;
     onSubmitSearch(event?: any): boolean;
     onChangeSelect(event?: any): boolean;

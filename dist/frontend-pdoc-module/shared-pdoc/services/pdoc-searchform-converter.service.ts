@@ -4,7 +4,7 @@ import {
     PDocSearchFormValidator
 } from '@dps/mycms-commons/dist/pdoc-commons/model/forms/pdoc-searchform';
 import {
-    GenericSearchFormSearchFormConverter,
+    GenericSearchFormConverter,
     HumanReadableFilter
 } from '@dps/mycms-commons/dist/search-commons/services/generic-searchform.converter';
 import {SearchParameterUtils} from '@dps/mycms-commons/dist/search-commons/services/searchparameter.utils';
@@ -13,7 +13,7 @@ import {SearchFormUtils} from '../../../angular-commons/services/searchform-util
 import {Layout, LayoutService} from '../../../angular-commons/services/layout.service';
 
 @Injectable()
-export class PDocSearchFormConverter implements GenericSearchFormSearchFormConverter<PDocSearchForm> {
+export class PDocSearchFormConverter implements GenericSearchFormConverter<PDocSearchForm> {
     public readonly splitter = '_,_';
     public HRD_IDS = {
         pageid_i: 'PAGE',
