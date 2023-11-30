@@ -12,4 +12,5 @@ export declare class PDocSearchFormUtils extends CommonDocSearchFormUtils {
     getLangkeysValues(searchResult: PDocSearchResult): any[];
     getProfilesValues(searchResult: PDocSearchResult): any[];
     getThemeValues(searchResult: PDocSearchResult): any[];
+    getSortkeyValues(searchResult: PDocSearchResult): any[];
 }

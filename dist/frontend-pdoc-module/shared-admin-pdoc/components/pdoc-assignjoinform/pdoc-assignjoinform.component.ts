@@ -26,9 +26,8 @@ export class PDocAssignJoinFormComponent
 
     protected getReferenceNamesForRecordType(type: string): string[] {
         switch (type) {
-            case 'ROUTE':
-            case 'LOCATION':
-                return ['info_id_is'];
+            case 'PAGE':
+                return ['page_id_is'];
             default:
                 return undefined;
         }

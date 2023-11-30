@@ -43,11 +43,13 @@ var PDocSearchformComponent = /** @class */ (function (_super) {
         _this.optionsSelectProfiles = [];
         _this.optionsSelectSubType = [];
         _this.optionsSelectTheme = [];
+        _this.optionsSelectSortkey = [];
         _this.settingsSelectFlags = _this.defaultSeLectSettings;
         _this.settingsSelectLangkeys = _this.defaultSeLectSettings;
         _this.settingsSelectProfiles = _this.defaultSeLectSettings;
         _this.settingsSelectSubType = _this.defaultSeLectSettings;
         _this.settingsSelectTheme = _this.defaultSeLectSettings;
+        _this.settingsSelectSortkey = _this.defaultSeLectSettings;
         _this.textsSelectFlags = { checkAll: 'Alle auswählen',
             uncheckAll: 'Alle abwählen',
             checked: 'Flags ausgewählt',
@@ -83,6 +85,13 @@ var PDocSearchformComponent = /** @class */ (function (_super) {
             searchPlaceholder: 'Find',
             defaultTitle: '',
             allSelected: 'alles' };
+        _this.textsSelectSortkey = { checkAll: 'Alle auswählen',
+            uncheckAll: 'Alle abwählen',
+            checked: 'Gliederung ausgewählt',
+            checkedPlural: 'Gliederung ausgewählt',
+            searchPlaceholder: 'Find',
+            defaultTitle: '',
+            allSelected: 'alles' };
         _this.defaultSeLectSettings.dynamicTitleMaxItems = 2;
         return _this;
     }
@@ -100,6 +109,7 @@ var PDocSearchformComponent = /** @class */ (function (_super) {
             key: [],
             langkeys: [],
             profiles: [],
+            sortkey: [],
             theme: [],
             sort: '',
             perPage: 10,
@@ -118,6 +128,7 @@ var PDocSearchformComponent = /** @class */ (function (_super) {
             key: [(values.key ? values.key.split(/,/) : [])],
             langkeys: [(values.langkeys ? values.langkeys.split(/,/) : [])],
             profiles: [(values.profiles ? values.profiles.split(/,/) : [])],
+            sortkey: [(values.sortkey ? values.sortkey.split(/,/) : [])],
             theme: [(values.theme ? values.theme.split(/,/) : [])],
         });
     };
@@ -140,6 +151,7 @@ var PDocSearchformComponent = /** @class */ (function (_super) {
             return a.name.localeCompare(b.name);
         }), rawValues['subtype']);
         this.optionsSelectTheme = this.searchFormUtils.moveSelectedToTop(this.searchFormUtils.getIMultiSelectOptionsFromExtractedFacetValuesList(this.pdocSearchFormUtils.getThemeValues(pdocSearchSearchResult), true, [], true), rawValues['theme']);
+        this.optionsSelectSortkey = this.searchFormUtils.moveSelectedToTop(this.searchFormUtils.getIMultiSelectOptionsFromExtractedFacetValuesList(this.pdocSearchFormUtils.getSortkeyValues(pdocSearchSearchResult), true, [], true), rawValues['sortkey']);
     };
     PDocSearchformComponent.prototype.updateAvailabilityFlags = function (pdocSearchSearchResult) {
     };

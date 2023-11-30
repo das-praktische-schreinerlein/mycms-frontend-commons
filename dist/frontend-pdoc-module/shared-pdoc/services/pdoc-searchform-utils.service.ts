@@ -34,4 +34,8 @@ export class PDocSearchFormUtils extends CommonDocSearchFormUtils {
     getThemeValues(searchResult: PDocSearchResult): any[] {
         return this.searchFormUtils.getFacetValues(searchResult, 'theme_ss', '', '');
     }
+
+    getSortkeyValues(searchResult: PDocSearchResult): any[] {
+        return this.searchFormUtils.getFacetValues(searchResult, 'sortkey_ss', '', '');
+    }
 }

@@ -22,13 +22,13 @@ var CommonDocSearchFormUtils = /** @class */ (function () {
         return this.searchFormUtils.getFacetValues(searchResult, 'keywords_txt', '', '');
     };
     CommonDocSearchFormUtils.prototype.getTypeValues = function (searchResult) {
-        return this.searchFormUtils.getFacetValues(searchResult, 'type_txt', '', '');
+        return this.searchFormUtils.getFacetValues(searchResult, 'type_ss', '', '');
     };
     CommonDocSearchFormUtils.prototype.getTypeLimit = function (searchResult) {
         if (searchResult === undefined || searchResult.facets === undefined || searchResult.facets.facets.size === 0) {
             return 0;
         }
-        return this.searchParameterUtils.extractFacetSelectLimit(searchResult.facets, 'type_txt');
+        return this.searchParameterUtils.extractFacetSelectLimit(searchResult.facets, 'type_ss');
     };
     CommonDocSearchFormUtils.prototype.getPlaylistValues = function (searchResult) {
         return this.searchFormUtils.getFacetValues(searchResult, 'playlists_txt', '', '');

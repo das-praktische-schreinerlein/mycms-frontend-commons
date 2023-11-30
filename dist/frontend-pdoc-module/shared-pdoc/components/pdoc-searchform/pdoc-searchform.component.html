@@ -208,6 +208,19 @@
                                                  (onRemoved)="onChangeSelect()"></ss-multiselect-dropdown>
                     </ng-container>
                 </div>
+                <div [class]="(width4 + ' input-group input-group-sm')" *ngIf="optionsSelectSortkey && optionsSelectSortkey.length > 0">
+                    <label [class]="'col-xs-4 col-form-label mr-2 ' + (searchFormGroup.get('sortkey').value.length > 0 ? 'label-active' : 'label-inactive')" i18n="sortkey label|Label for filter: sortkey@@label.searchform.pdoc.sortkey">Gliederung:</label>
+                    <ng-container *ngIf="optionsSelectSortkey.length > 0; else noFilterValues">
+                        <ss-multiselect-dropdown [options]="optionsSelectSortkey"
+                                                 [settings]="settingsSelectSortkey"
+                                                 [texts]="textsSelectSortkey"
+                                                 formControlName="sortkey"
+                                                 ngDefaultControl
+                                                 class="ss-multiselect-dropdown ss-multiselect-dropdown-fullwidth"
+                                                 (onAdded)="onChangeSelect()"
+                                                 (onRemoved)="onChangeSelect()"></ss-multiselect-dropdown>
+                    </ng-container>
+                </div>
                 <div [class]="(width4 + ' input-group input-group-sm justify-content-end')">
                     <button class="btn btn-configure btn-sm" (click)="showDetails = false; updateFormState();">
                         <span i18n="button hide Detailsform|Buttontext to hide Detailsform@@button.searchform.hide.Detailsform">ausblenden</span>

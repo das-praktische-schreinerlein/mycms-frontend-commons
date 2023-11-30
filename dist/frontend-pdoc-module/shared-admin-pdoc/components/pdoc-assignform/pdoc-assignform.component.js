@@ -38,18 +38,8 @@ var PDocAssignFormComponent = /** @class */ (function (_super) {
     }
     PDocAssignFormComponent.prototype.getReferenceNamesForRecordType = function (type) {
         switch (type) {
-            case 'IMAGE':
-            case 'VIDEO':
-            case 'ROUTE':
-                return ['track_id_is', 'loc_lochirarchie_txt'];
-            case 'TRACK':
-                return ['route_id_is', 'loc_lochirarchie_txt', 'trip_id_is'];
-            case 'LOCATION':
-                return ['loc_lochirarchie_txt'];
-            case 'POI':
-                return ['loc_lochirarchie_txt'];
-            case 'NEWS':
-                return [];
+            case 'PAGE':
+                return ['page_id_is'];
             default:
                 return undefined;
         }

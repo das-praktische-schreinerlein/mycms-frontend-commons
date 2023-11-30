@@ -23,7 +23,7 @@ export class CommonDocSearchFormUtils {
     }
 
     getTypeValues(searchResult: CommonDocSearchResult<CommonDocRecord, CommonDocSearchForm>): any[] {
-         return this.searchFormUtils.getFacetValues(searchResult, 'type_txt', '', '');
+         return this.searchFormUtils.getFacetValues(searchResult, 'type_ss', '', '');
     }
 
     getTypeLimit(searchResult: CommonDocSearchResult<CommonDocRecord, CommonDocSearchForm>): number {
@@ -31,7 +31,7 @@ export class CommonDocSearchFormUtils {
             return 0;
         }
 
-        return this.searchParameterUtils.extractFacetSelectLimit(searchResult.facets, 'type_txt');
+        return this.searchParameterUtils.extractFacetSelectLimit(searchResult.facets, 'type_ss');
     }
 
     getPlaylistValues(searchResult: CommonDocSearchResult<CommonDocRecord, CommonDocSearchForm>): any[] {

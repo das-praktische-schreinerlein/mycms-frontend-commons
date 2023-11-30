@@ -38,9 +38,8 @@ var PDocAssignJoinFormComponent = /** @class */ (function (_super) {
     }
     PDocAssignJoinFormComponent.prototype.getReferenceNamesForRecordType = function (type) {
         switch (type) {
-            case 'ROUTE':
-            case 'LOCATION':
-                return ['info_id_is'];
+            case 'PAGE':
+                return ['page_id_is'];
             default:
                 return undefined;
         }

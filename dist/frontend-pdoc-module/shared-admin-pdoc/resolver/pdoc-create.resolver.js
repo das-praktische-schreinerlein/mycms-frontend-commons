@@ -50,7 +50,7 @@ var PDocRecordCreateResolver = /** @class */ (function (_super) {
     PDocRecordCreateResolver.prototype.configureDefaultFieldToSet = function (type, fields) {
         switch (type.toLowerCase()) {
             case 'page':
-                fields.push('css', 'flags', 'langkeys', 'profiles', 'subtype', 'subSectionIds', 'theme');
+                fields.push('css', 'flags', 'langkeys', 'profiles', 'sortkey', 'subtype', 'subSectionIds', 'theme');
                 break;
         }
     };

@@ -19,6 +19,7 @@
 - frontend: make imageobject-components generic
 - frontend: improved tag- and keywords-components
 - frontend: improved form-layout
+- frontend: fixed naming of attributes/filter: type_s)
 
 ### new features
 - moved TextEditorComponent, FormUtils and GeoParserDeterminer to commons
@@ -49,6 +50,7 @@
 - frontend: replace NgxMd with plain marked
 - frontend: rearranged print.css
 - frontend: renamed GenericSearchFormSearchFormConverter -> GenericSearchFormConverter
+- frontend: fixed naming of attributes/filter: type_s)
 
 
 ## 5.7.0 (2023-03-18)

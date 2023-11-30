@@ -59,6 +59,7 @@ var PDocSearchFormConverter = /** @class */ (function () {
         whatMap.set('flags', searchForm.flags);
         whatMap.set('langkeys', searchForm.langkeys);
         whatMap.set('profiles', searchForm.profiles);
+        whatMap.set('sortkey', searchForm.sortkey);
         whatMap.set('theme', searchForm.theme);
         whatMap.set('initial', searchForm.initial);
         return this.searchParameterUtils.joinParamsToOneRouteParameter(whatMap, this.splitter);
@@ -114,7 +115,7 @@ var PDocSearchFormConverter = /** @class */ (function () {
             moreFilter += ',' + this.searchParameterUtils.joinValuesAndReplacePrefix(moreFilterValues.get('unknown'), '', ',');
         }
         moreFilter = moreFilter.replace(/[,]+/g, ',').replace(/(^,)|(,$)/g, '');
-        var whatFilterValues = this.searchParameterUtils.splitValuesByPrefixes(params.what, this.splitter, ['subtype:', 'initial:', 'flags:', 'key:', 'langkeys:', 'profiles:', 'theme:']);
+        var whatFilterValues = this.searchParameterUtils.splitValuesByPrefixes(params.what, this.splitter, ['subtype:', 'initial:', 'flags:', 'key:', 'langkeys:', 'profiles:', 'sortkey:', 'theme:']);
         var subtype = (whatFilterValues.has('subtype:') ?
             this.searchParameterUtils.joinValuesAndReplacePrefix(whatFilterValues.get('subtype:'), 'subtype:', ',') : '');
         var initial = (whatFilterValues.has('initial:') ?
@@ -127,6 +128,8 @@ var PDocSearchFormConverter = /** @class */ (function () {
             this.searchParameterUtils.joinValuesAndReplacePrefix(whatFilterValues.get('langkeys:'), 'langkeys:', ',') : '');
         var profiles = (whatFilterValues.has('profiles:') ?
             this.searchParameterUtils.joinValuesAndReplacePrefix(whatFilterValues.get('profiles:'), 'profiles:', ',') : '');
+        var sortkey = (whatFilterValues.has('sortkey:') ?
+            this.searchParameterUtils.joinValuesAndReplacePrefix(whatFilterValues.get('sortkey:'), 'sortkey:', ',') : '');
         var theme = (whatFilterValues.has('theme:') ?
             this.searchParameterUtils.joinValuesAndReplacePrefix(whatFilterValues.get('theme:'), 'theme:', ',') : '');
         searchForm.subtype = this.searchParameterUtils.joinAndUseValueDefaultOrFallback(this.searchParameterUtils.replacePlaceHolder(subtype, /^alles$/, ''), defaults['subtype'], '');
@@ -135,6 +138,7 @@ var PDocSearchFormConverter = /** @class */ (function () {
         searchForm.key = this.searchParameterUtils.joinAndUseValueDefaultOrFallback(this.searchParameterUtils.replacePlaceHolder(key, /^alles$/, ''), defaults['key'], '');
         searchForm.langkeys = this.searchParameterUtils.joinAndUseValueDefaultOrFallback(this.searchParameterUtils.replacePlaceHolder(langkeys, /^alles$/, ''), defaults['langkeys'], '');
         searchForm.profiles = this.searchParameterUtils.joinAndUseValueDefaultOrFallback(this.searchParameterUtils.replacePlaceHolder(profiles, /^alles$/, ''), defaults['profiles'], '');
+        searchForm.sortkey = this.searchParameterUtils.joinAndUseValueDefaultOrFallback(this.searchParameterUtils.replacePlaceHolder(sortkey, /^alles$/, ''), defaults['sortkey'], '');
         searchForm.theme = this.searchParameterUtils.joinAndUseValueDefaultOrFallback(this.searchParameterUtils.replacePlaceHolder(theme, /^alles$/, ''), defaults['theme'], '');
         searchForm.fulltext = this.searchParameterUtils.joinAndUseValueDefaultOrFallback(this.searchParameterUtils.replacePlaceHolder(params['fulltext'], /^egal$/, ''), defaults['fulltext'], '');
         searchForm.moreFilter = this.searchParameterUtils.joinAndUseValueDefaultOrFallback(this.searchParameterUtils.replacePlaceHolder(moreFilter, /^ungefiltert$/, ''), defaults['moreFilter'], '');

@@ -50,6 +50,9 @@ var PDocSearchFormUtils = /** @class */ (function (_super) {
     PDocSearchFormUtils.prototype.getThemeValues = function (searchResult) {
         return this.searchFormUtils.getFacetValues(searchResult, 'theme_ss', '', '');
     };
+    PDocSearchFormUtils.prototype.getSortkeyValues = function (searchResult) {
+        return this.searchFormUtils.getFacetValues(searchResult, 'sortkey_ss', '', '');
+    };
     PDocSearchFormUtils = __decorate([
         Injectable(),
         __metadata("design:paramtypes", [SearchFormUtils, SearchParameterUtils])

@@ -63,6 +63,7 @@ export class PDocSearchFormConverter implements GenericSearchFormConverter<PDocS
         whatMap.set('flags', searchForm.flags);
         whatMap.set('langkeys', searchForm.langkeys);
         whatMap.set('profiles', searchForm.profiles);
+        whatMap.set('sortkey', searchForm.sortkey);
         whatMap.set('theme', searchForm.theme);
         whatMap.set('initial', searchForm.initial);
         return this.searchParameterUtils.joinParamsToOneRouteParameter(whatMap, this.splitter);
@@ -134,7 +135,7 @@ export class PDocSearchFormConverter implements GenericSearchFormConverter<PDocS
         moreFilter = moreFilter.replace(/[,]+/g, ',').replace(/(^,)|(,$)/g, '');
 
         const whatFilterValues = this.searchParameterUtils.splitValuesByPrefixes(params.what, this.splitter,
-            ['subtype:', 'initial:',  'flags:', 'key:', 'langkeys:', 'profiles:', 'theme:']);
+            ['subtype:', 'initial:',  'flags:', 'key:', 'langkeys:', 'profiles:', 'sortkey:', 'theme:']);
         const subtype: string = (whatFilterValues.has('subtype:') ?
             this.searchParameterUtils.joinValuesAndReplacePrefix(whatFilterValues.get('subtype:'), 'subtype:', ',') : '');
         const initial: string = (whatFilterValues.has('initial:') ?
@@ -147,6 +148,8 @@ export class PDocSearchFormConverter implements GenericSearchFormConverter<PDocS
             this.searchParameterUtils.joinValuesAndReplacePrefix(whatFilterValues.get('langkeys:'), 'langkeys:', ',') : '');
         const profiles: string = (whatFilterValues.has('profiles:') ?
             this.searchParameterUtils.joinValuesAndReplacePrefix(whatFilterValues.get('profiles:'), 'profiles:', ',') : '');
+        const sortkey: string = (whatFilterValues.has('sortkey:') ?
+            this.searchParameterUtils.joinValuesAndReplacePrefix(whatFilterValues.get('sortkey:'), 'sortkey:', ',') : '');
         const theme: string = (whatFilterValues.has('theme:') ?
             this.searchParameterUtils.joinValuesAndReplacePrefix(whatFilterValues.get('theme:'), 'theme:', ',') : '');
 
@@ -168,6 +171,9 @@ export class PDocSearchFormConverter implements GenericSearchFormConverter<PDocS
         searchForm.profiles = this.searchParameterUtils.joinAndUseValueDefaultOrFallback(
             this.searchParameterUtils.replacePlaceHolder(profiles, /^alles$/, ''),
             defaults['profiles'], '');
+        searchForm.sortkey = this.searchParameterUtils.joinAndUseValueDefaultOrFallback(
+            this.searchParameterUtils.replacePlaceHolder(sortkey, /^alles$/, ''),
+            defaults['sortkey'], '');
         searchForm.theme = this.searchParameterUtils.joinAndUseValueDefaultOrFallback(
             this.searchParameterUtils.replacePlaceHolder(theme, /^alles$/, ''),
             defaults['theme'], '');

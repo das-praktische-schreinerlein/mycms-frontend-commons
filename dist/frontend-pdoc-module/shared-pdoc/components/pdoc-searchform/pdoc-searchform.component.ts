@@ -28,12 +28,14 @@ export class PDocSearchformComponent
     public optionsSelectProfiles: IMultiSelectOption[] = [];
     public optionsSelectSubType: IMultiSelectOption[] = [];
     public optionsSelectTheme: IMultiSelectOption[] = [];
+    public optionsSelectSortkey: IMultiSelectOption[] = [];
 
     public settingsSelectFlags = this.defaultSeLectSettings;
     public settingsSelectLangkeys = this.defaultSeLectSettings;
     public settingsSelectProfiles = this.defaultSeLectSettings;
     public settingsSelectSubType = this.defaultSeLectSettings;
     public settingsSelectTheme = this.defaultSeLectSettings;
+    public settingsSelectSortkey = this.defaultSeLectSettings;
 
     public textsSelectFlags: IMultiSelectTexts = { checkAll: 'Alle auswählen',
         uncheckAll: 'Alle abwählen',
@@ -70,6 +72,13 @@ export class PDocSearchformComponent
         searchPlaceholder: 'Find',
         defaultTitle: '',
         allSelected: 'alles'};
+    public textsSelectSortkey: IMultiSelectTexts = { checkAll: 'Alle auswählen',
+        uncheckAll: 'Alle abwählen',
+        checked: 'Gliederung ausgewählt',
+        checkedPlural: 'Gliederung ausgewählt',
+        searchPlaceholder: 'Find',
+        defaultTitle: '',
+        allSelected: 'alles'};
 
     constructor(sanitizer: DomSanitizer, fb: FormBuilder, searchFormUtils: SearchFormUtils,
                 private pdocSearchFormUtils: PDocSearchFormUtils, searchFormConverter: PDocSearchFormConverter,
@@ -94,6 +103,7 @@ export class PDocSearchformComponent
             key: [],
             langkeys: [],
             profiles: [],
+            sortkey: [],
             theme: [],
 
             sort: '',
@@ -116,6 +126,7 @@ export class PDocSearchformComponent
             key: [(values.key ? values.key.split(/,/) : [])],
             langkeys: [(values.langkeys ? values.langkeys.split(/,/) : [])],
             profiles: [(values.profiles ? values.profiles.split(/,/) : [])],
+            sortkey: [(values.sortkey ? values.sortkey.split(/,/) : [])],
             theme: [(values.theme ? values.theme.split(/,/) : [])],
         });
     }
@@ -158,6 +169,10 @@ export class PDocSearchformComponent
             this.searchFormUtils.getIMultiSelectOptionsFromExtractedFacetValuesList(
                 this.pdocSearchFormUtils.getThemeValues(pdocSearchSearchResult), true, [], true),
             rawValues['theme']);
+        this.optionsSelectSortkey = this.searchFormUtils.moveSelectedToTop(
+            this.searchFormUtils.getIMultiSelectOptionsFromExtractedFacetValuesList(
+                this.pdocSearchFormUtils.getSortkeyValues(pdocSearchSearchResult), true, [], true),
+            rawValues['sortkey']);
     }
 
     protected updateAvailabilityFlags(pdocSearchSearchResult: PDocSearchResult) {
