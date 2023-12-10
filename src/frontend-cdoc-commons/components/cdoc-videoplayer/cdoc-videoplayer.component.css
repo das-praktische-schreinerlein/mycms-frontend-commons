@@ -55,3 +55,8 @@ div.video-controls a.btn {
     display: inline-block;
     margin: 2px;
 }
+
+video {
+    object-fit: fill; /*to add black content at top and bottom*/
+    object-position: 0 -14px; /* to center our image*/
+}

@@ -6,7 +6,14 @@
                     <span i18n="link listitemaction close video|Linktext to listitemaction:close video@@link.listitemaction.video.close">Schließen</span>
                     &#x2612;</span>
                 <br/>
-                <video [style.max-width]="maxFullWidth + 'px'" [style.max-height]="maxFullHeight + 'px'" controls="controls" class="picture-big" title="{{listItem.video.name}}" preload="metadata" autoplay="autoplay">
+                <video [style.max-width]="maxFullWidth + 'px'"
+                       [style.max-height]="maxFullHeight + 'px'"
+                       controls="controls"
+                       class="picture-big"
+                       title="{{listItem.video.name}}"
+                       preload="metadata"
+                       autoplay="autoplay"
+                       [poster]="listItem.thumbnailUrl">
                     <source [src]="listItem.fullUrl" />
                     <object [data]="listItem.fullUrl" [width]="maxFullWidth">
                         <embed [src]="listItem.fullUrl" [width]="maxFullWidth">
@@ -20,7 +27,13 @@
 
     <div *ngIf="listItem.video && showPreview" class="video-player-container">
         <div [class]="styleClass + ' video-player'">
-            <video #videoPlayer [attr.width]="forceWidth !== undefined ? forceWidth : null" [style.max-width]="maxWidth + 'px'" [style.max-height]="maxHeight + 'px'" [class]="styleClass" title="{{listItem.video.name}}" preload="metadata">
+            <video #videoPlayer [attr.width]="forceWidth !== undefined ? forceWidth : null"
+                   [style.max-width]="maxWidth + 'px'"
+                   [style.max-height]="maxHeight + 'px'"
+                   [class]="styleClass"
+                   title="{{listItem.video.name}}"
+                   preload="metadata"
+                   [poster]="listItem.thumbnailUrl">
                 <source [src]="listItem.previewUrl" />
                 <object [data]="listItem.previewUrl" [width]="width">
                     <embed [src]="listItem.previewUrl" [width]="width">
@@ -41,7 +54,14 @@
 
     <div *ngIf="listItem.video && !showPreview" class="video-player-container">
         <div [class]="styleClass + ' video-player'">
-            <video #videoPlayer2 [attr.width]="forceWidth !== undefined ? forceWidth : null" [style.max-width]="maxWidth + 'px'" [style.max-height]="maxHeight + 'px'" controls="controls" [class]="styleClass" title="{{listItem.video.name}}" preload="metadata">
+            <video #videoPlayer2 [attr.width]="forceWidth !== undefined ? forceWidth : null"
+                   [style.max-width]="maxWidth + 'px'"
+                   [style.max-height]="maxHeight + 'px'"
+                   controls="controls"
+                   [class]="styleClass"
+                   title="{{listItem.video.name}}"
+                   preload="metadata"
+                   [poster]="listItem.thumbnailUrl">
                 <source [src]="listItem.fullUrl" />
                 <object [data]="listItem.fullUrl" [width]="maxWidth">
                     <embed [src]="listItem.fullUrl" [width]="maxWidth">
