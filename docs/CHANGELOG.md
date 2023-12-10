@@ -36,6 +36,7 @@
 - frontend: replace NgxMd with plain marked
 - frontend: improved tag- and keywords-components
 - frontend: improved form-layout
+- frontend: improved video-player
 
 ### bug fixes
 - TextEditor, Page-Module: improve usage of desc_txt, desc_md...
