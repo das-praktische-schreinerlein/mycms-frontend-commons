@@ -2,7 +2,7 @@
  
 # Versions
 
-## 6.0.0
+## 6.0.0 (2023-12-22)
 - bumped up deps
 - use StaticPagesDataService instead of PDocDataService
 - moved TextEditorComponent, FormUtils and GeoParserDeterminer to commons
