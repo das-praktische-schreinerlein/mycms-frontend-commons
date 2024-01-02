@@ -1,4 +1,5 @@
 <ng-container [formGroup]="editFormGroup">
+    <a id="textEditorTop" #textEditorTop></a>
     <ng-container [ngSwitch]="currentLayoutMode">
         <ng-container *ngSwitchCase="TextEditorLayout.TOPDOWN">
             <ng-container *ngTemplateOutlet="editorTopDown"></ng-container>
@@ -22,6 +23,8 @@
             <ng-container *ngTemplateOutlet="commandBlocks"></ng-container>
 
             <textarea formControlName="descMd" class="form-control desc-form" type="text"
+                      [style.height]="descContainerTopDownOptions.height"
+                      #descMdTopDown
                       placeholder="description"
                       id="descMdTopDown"
                       i18n-placeholder="desc placeholder|Placeholder for desc@@placeholder.form.tdoc.desc"
@@ -41,7 +44,9 @@
             <label class="col-xs-3 col-form-label mr-2"
                    i18n="descMd label|Label for field: descMd@@label.editform.tdoc.descMd">Vorschau:</label>
             <span class="" (click)="renderDesc(true)">&#x27F8; Update</span>
-            <div id="renderedDescContainerTopDown" class="renderedDescContainer">
+            <div id="renderedDescContainerTopDown" class="renderedDescContainer"
+                 #renderedDescContainerTopDown
+                 [style.height]="renderedDescContainerTopDownOptions.height">
                 <div id="renderedDescTopDown" class="renderedDesc">{{renderDesc(false)}}</div>
             </div>
         </div>
@@ -58,7 +63,9 @@
                 <label class="col-xs-3 col-form-label mr-2" i18n="descMd label|Label for field: descMd@@label.editform.tdoc.descMd">Eingabe im Markdown-Format:</label>
 
                 <textarea formControlName="descMd" class="form-control desc-form" type="text"
+                          [style.height]="descContainerLeftRightOptions.height"
                           placeholder="description"
+                          #descMdLeftRight
                           id="descMdLeftRight"
                           i18n-placeholder="desc placeholder|Placeholder for desc@@placeholder.form.tdoc.desc"
                           (ngModelChange)="onInputChanged($event, 'descMd')"></textarea>
@@ -77,7 +84,9 @@
                 <label class="col-xs-3 col-form-label mr-2"
                        i18n="descMd label|Label for field: descMd@@label.editform.tdoc.descMd">Vorschau:</label>
                 <span class="" (click)="renderDesc(true)">&#x27F8; Update</span>
-                <div id="renderedDescContainerLeftRight" class="renderedDescContainer">
+                <div id="renderedDescContainerLeftRight" class="renderedDescContainer"
+                     #renderedDescContainerLeftRight
+                     [style.height]="renderedDescContainerLeftRightOptions.height">
                     <div id="renderedDescLeftRight" class="renderedDesc">{{renderDesc(false)}}</div>
                 </div>
             </div>

@@ -20,11 +20,12 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, Output, ViewChild, ElementRef } from '@angular/core';
 import { AbstractInlineComponent } from '../inline.component';
 import { FormBuilder } from '@angular/forms';
 import { AngularMarkdownService } from '../../services/angular-markdown.service';
 import { PlatformService } from '../../services/platform.service';
+import { LayoutService } from '../../services/layout.service';
 export var TextEditorLayout;
 (function (TextEditorLayout) {
     TextEditorLayout[TextEditorLayout["TOPDOWN"] = 0] = "TOPDOWN";
@@ -34,14 +35,19 @@ export var TextEditorLayout;
 })(TextEditorLayout || (TextEditorLayout = {}));
 var TextEditorComponent = /** @class */ (function (_super) {
     __extends(TextEditorComponent, _super);
-    function TextEditorComponent(cd, fb, angularMarkdownService, platformService) {
+    function TextEditorComponent(cd, fb, angularMarkdownService, platformService, layoutService) {
         var _this = _super.call(this, cd) || this;
         _this.cd = cd;
         _this.fb = fb;
         _this.angularMarkdownService = angularMarkdownService;
         _this.platformService = platformService;
+        _this.layoutService = layoutService;
         _this.TextEditorLayout = TextEditorLayout;
         _this.currentLayoutMode = TextEditorLayout.LEFTRIGHT;
+        _this.descContainerLeftRightOptions = { height: '700px' };
+        _this.descContainerTopDownOptions = { height: '700px' };
+        _this.renderedDescContainerLeftRightOptions = { height: '1000px' };
+        _this.renderedDescContainerTopDownOptions = { height: '1000px' };
         _this.flgDescRendered = false;
         _this.renderingRunning = false;
         _this.renderTimer = undefined;
@@ -67,10 +73,19 @@ var TextEditorComponent = /** @class */ (function (_super) {
         _this.recommendDesc = new EventEmitter();
         _this.changeDesc = new EventEmitter();
         _this.changeRenderedDescId = new EventEmitter();
-        _this.onLayoutChanged(_this.startLayoutMode || TextEditorLayout.LEFTRIGHT);
-        _this.updateRenderInterval();
         return _this;
     }
+    TextEditorComponent.prototype.ngOnInit = function () {
+        // Subscribe to route params
+        var me = this;
+        this.layoutSizeObservable = this.layoutService.getLayoutSizeData();
+        this.layoutSizeObservable.subscribe(function (layoutSizeData) {
+            me.onResize(layoutSizeData);
+        });
+        me.onResize(this.layoutSizeObservable.value);
+        this.onLayoutChanged(this.startLayoutMode || TextEditorLayout.LEFTRIGHT);
+        this.updateRenderInterval();
+    };
     TextEditorComponent.prototype.onCallRecommendDesc = function () {
         this.recommendDesc.emit(true);
         return false;
@@ -158,11 +173,12 @@ var TextEditorComponent = /** @class */ (function (_super) {
             this.renderingRunning = false;
             return desc;
         }
-        this.flgDescRendered = this.angularMarkdownService.renderMarkdown('#renderedDescTopDown', desc, true);
-        this.flgDescRendered = this.angularMarkdownService.renderMarkdown('#renderedDescLeftRight', desc, true) || this.flgDescRendered;
+        var renderedDescId = this.getCurrentRenderedDescId();
+        this.flgDescRendered = this.angularMarkdownService.renderMarkdown('#' + renderedDescId, desc, true);
         this.renderingRunning = false;
         this.lastRenderUpdate = curTime;
-        this.changeRenderedDescId.emit(this.getCurrentRenderedDescId());
+        this.changeRenderedDescId.emit(renderedDescId);
+        this.onResize(this.layoutSizeObservable.value);
         return '';
     };
     TextEditorComponent.prototype.updateData = function () {
@@ -196,6 +212,56 @@ var TextEditorComponent = /** @class */ (function (_super) {
     TextEditorComponent.prototype.isTopDownLayout = function (layout) {
         return layout !== undefined && (TextEditorLayout.TOPDOWN === layout || TextEditorLayout.TOPDOWNFULLSCREEN === layout);
     };
+    TextEditorComponent.prototype.onResize = function (layoutSizeData) {
+        var maxHeight = 1200;
+        if (layoutSizeData.height < maxHeight + 50) {
+            maxHeight = layoutSizeData.height - 50;
+        }
+        // leftRight
+        this.descContainerLeftRightOptions = {
+            height: this.calcContainerHeight(maxHeight, this.textEditorTop, this.descMdLeftRight) + 'px'
+        };
+        this.renderedDescContainerLeftRightOptions = {
+            height: this.calcContainerHeight(maxHeight, this.textEditorTop, this.renderedDescContainerLeftRight) + 'px'
+        };
+        // topDown
+        var offset = 0;
+        if (this.descMdTopDown !== undefined && this.renderedDescContainerTopDown !== undefined) {
+            offset = this.renderedDescContainerTopDown.nativeElement.getBoundingClientRect().y
+                - this.textEditorTop.nativeElement.getBoundingClientRect().y
+                - this.descMdTopDown.nativeElement.getBoundingClientRect().height;
+        }
+        var topDownHeight = ((maxHeight - offset) / 2) + 'px';
+        this.descContainerTopDownOptions = { height: topDownHeight };
+        this.renderedDescContainerTopDownOptions = { height: topDownHeight };
+        this.cd.markForCheck();
+    };
+    TextEditorComponent.prototype.calcContainerHeight = function (maxHeight, anchor, container) {
+        if (anchor === undefined || container === undefined) {
+            return maxHeight;
+        }
+        return maxHeight - (container.nativeElement.getBoundingClientRect().y - anchor.nativeElement.getBoundingClientRect().y);
+    };
+    __decorate([
+        ViewChild('textEditorTop'),
+        __metadata("design:type", ElementRef)
+    ], TextEditorComponent.prototype, "textEditorTop", void 0);
+    __decorate([
+        ViewChild('descMdLeftRight'),
+        __metadata("design:type", ElementRef)
+    ], TextEditorComponent.prototype, "descMdLeftRight", void 0);
+    __decorate([
+        ViewChild('renderedDescContainerLeftRight'),
+        __metadata("design:type", ElementRef)
+    ], TextEditorComponent.prototype, "renderedDescContainerLeftRight", void 0);
+    __decorate([
+        ViewChild('descMdTopDown'),
+        __metadata("design:type", ElementRef)
+    ], TextEditorComponent.prototype, "descMdTopDown", void 0);
+    __decorate([
+        ViewChild('renderedDescContainerTopDown'),
+        __metadata("design:type", ElementRef)
+    ], TextEditorComponent.prototype, "renderedDescContainerTopDown", void 0);
     __decorate([
         Input(),
         __metadata("design:type", Object)
@@ -246,7 +312,7 @@ var TextEditorComponent = /** @class */ (function (_super) {
         __metadata("design:paramtypes", [ChangeDetectorRef,
             FormBuilder,
             AngularMarkdownService,
-            PlatformService])
+            PlatformService, LayoutService])
     ], TextEditorComponent);
     return TextEditorComponent;
 }(AbstractInlineComponent));

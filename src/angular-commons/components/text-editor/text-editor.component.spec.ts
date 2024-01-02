@@ -12,6 +12,7 @@ import {RouterStub} from '../../testing/router-stubs';
 import {SimpleAngularMarkdownService} from '../../services/simple-angular-markdown.service';
 import {AngularMarkdownService} from '../../services/angular-markdown.service';
 import {SimpleAngularHtmlService} from '../../services/simple-angular-html.service';
+import {LayoutService} from '../../services/layout.service';
 
 describe('TextEditorComponent', () => {
     let component: TextEditorComponent;
@@ -30,6 +31,7 @@ describe('TextEditorComponent', () => {
                 {provide: AngularHtmlService, useClass: SimpleAngularHtmlService},
                 CommonRoutingService,
                 { provide: Router, useValue: new RouterStub() },
+                LayoutService,
                 PlatformService
             ],
             schemas: [NO_ERRORS_SCHEMA]

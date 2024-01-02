@@ -1,8 +1,20 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, Output} from '@angular/core';
+import {
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    EventEmitter,
+    Input,
+    OnInit,
+    Output,
+    ViewChild,
+    ElementRef
+} from '@angular/core';
 import {AbstractInlineComponent} from '../inline.component';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {AngularMarkdownService} from '../../services/angular-markdown.service';
 import {PlatformService} from '../../services/platform.service';
+import {LayoutService, LayoutSizeData} from '../../services/layout.service';
+import {BehaviorSubject} from 'rxjs';
 
 
 export enum TextEditorLayout {
@@ -34,26 +46,51 @@ export interface CommonDocEditorCommandComponentConfig {
     commandBlocks ?: EditorCommandBlock[];
 }
 
+export interface DescContainerOptions {
+    height: string;
+}
+
 @Component({
     selector: 'app-text-editor',
     templateUrl: './text-editor.component.html',
     styleUrls: ['./text-editor.component.css'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TextEditorComponent extends AbstractInlineComponent {
+export class TextEditorComponent extends AbstractInlineComponent implements OnInit {
     readonly TextEditorLayout = TextEditorLayout;
 
     currentLayoutMode = TextEditorLayout.LEFTRIGHT;
+    descContainerLeftRightOptions: DescContainerOptions = { height: '700px'};
+    descContainerTopDownOptions: DescContainerOptions = { height: '700px'};
+    renderedDescContainerLeftRightOptions: DescContainerOptions = { height: '1000px'};
+    renderedDescContainerTopDownOptions: DescContainerOptions = { height: '1000px'};
 
     private flgDescRendered = false;
     private renderingRunning = false;
     private renderTimer = undefined;
     private lastRenderUpdate: number = undefined;
 
+    protected layoutSizeObservable: BehaviorSubject<LayoutSizeData>;
+
     public editFormGroup: FormGroup = this.fb.group({
         descMd: '',
         descMdRecommended: '',
     });
+
+    @ViewChild('textEditorTop')
+    textEditorTop: ElementRef;
+
+    @ViewChild('descMdLeftRight')
+    descMdLeftRight: ElementRef;
+
+    @ViewChild('renderedDescContainerLeftRight')
+    renderedDescContainerLeftRight: ElementRef;
+
+    @ViewChild('descMdTopDown')
+    descMdTopDown: ElementRef;
+
+    @ViewChild('renderedDescContainerTopDown')
+    renderedDescContainerTopDown: ElementRef;
 
     @Input()
     public editorCommands: CommonDocEditorCommandComponentConfig = {
@@ -96,9 +133,22 @@ export class TextEditorComponent extends AbstractInlineComponent {
     constructor(protected cd: ChangeDetectorRef,
                 public fb: FormBuilder,
                 protected angularMarkdownService: AngularMarkdownService,
-                protected platformService: PlatformService,
+                protected platformService: PlatformService, protected layoutService: LayoutService
     ) {
         super(cd);
+    }
+
+    ngOnInit() {
+        // Subscribe to route params
+        const me = this;
+
+        this.layoutSizeObservable = this.layoutService.getLayoutSizeData();
+        this.layoutSizeObservable.subscribe(layoutSizeData => {
+            me.onResize(layoutSizeData);
+        });
+
+        me.onResize(this.layoutSizeObservable.value);
+
         this.onLayoutChanged(this.startLayoutMode || TextEditorLayout.LEFTRIGHT);
         this.updateRenderInterval();
     }
@@ -215,12 +265,14 @@ export class TextEditorComponent extends AbstractInlineComponent {
             return desc;
         }
 
-        this.flgDescRendered = this.angularMarkdownService.renderMarkdown('#renderedDescTopDown', desc, true)
-        this.flgDescRendered = this.angularMarkdownService.renderMarkdown('#renderedDescLeftRight', desc, true) || this.flgDescRendered;
+        const renderedDescId =  this.getCurrentRenderedDescId();
+        this.flgDescRendered = this.angularMarkdownService.renderMarkdown('#' + renderedDescId, desc, true);
         this.renderingRunning = false;
         this.lastRenderUpdate = curTime;
 
-        this.changeRenderedDescId.emit(this.getCurrentRenderedDescId());
+        this.changeRenderedDescId.emit(renderedDescId);
+
+        this.onResize(this.layoutSizeObservable.value);
 
         return '';
     }
@@ -265,4 +317,40 @@ export class TextEditorComponent extends AbstractInlineComponent {
         return layout !== undefined && (TextEditorLayout.TOPDOWN === layout || TextEditorLayout.TOPDOWNFULLSCREEN === layout);
     }
 
+    protected onResize(layoutSizeData: LayoutSizeData): void {
+        let maxHeight = 1200;
+        if (layoutSizeData.height < maxHeight + 50) {
+            maxHeight = layoutSizeData.height - 50;
+        }
+
+        // leftRight
+        this.descContainerLeftRightOptions = {
+            height: this.calcContainerHeight(maxHeight, this.textEditorTop, this.descMdLeftRight) + 'px'
+        };
+        this.renderedDescContainerLeftRightOptions = {
+            height: this.calcContainerHeight(maxHeight, this.textEditorTop, this.renderedDescContainerLeftRight) + 'px'
+        };
+
+        // topDown
+        let offset = 0;
+        if (this.descMdTopDown !== undefined && this.renderedDescContainerTopDown !== undefined) {
+            offset = this.renderedDescContainerTopDown.nativeElement.getBoundingClientRect().y
+                - this.textEditorTop.nativeElement.getBoundingClientRect().y
+                - this.descMdTopDown.nativeElement.getBoundingClientRect().height;
+        }
+
+        const topDownHeight = ((maxHeight - offset) / 2) + 'px';
+        this.descContainerTopDownOptions = { height: topDownHeight};
+        this.renderedDescContainerTopDownOptions = { height: topDownHeight};
+
+        this.cd.markForCheck();
+    }
+
+    protected calcContainerHeight(maxHeight: number, anchor: ElementRef, container: ElementRef): number {
+        if (anchor === undefined || container === undefined) {
+            return maxHeight;
+        }
+
+        return maxHeight - (container.nativeElement.getBoundingClientRect().y - anchor.nativeElement.getBoundingClientRect().y);
+    }
 }
