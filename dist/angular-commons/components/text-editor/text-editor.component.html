@@ -1,7 +1,90 @@
 <ng-container [formGroup]="editFormGroup">
-    <div class="col-sm-12 form-inline input-group input-group-sm desc-form-block">
-        <label class="col-xs-3 col-form-label mr-2" i18n="descMd label|Label for field: descMd@@label.editform.tdoc.descMd">Eingabe im Markdown-Format:</label>
+    <ng-container [ngSwitch]="currentLayoutMode">
+        <ng-container *ngSwitchCase="TextEditorLayout.TOPDOWN">
+            <ng-container *ngTemplateOutlet="editorTopDown"></ng-container>
+        </ng-container>
+        <ng-container *ngSwitchCase="TextEditorLayout.TOPDOWNFULLSCREEN">
+            <ng-container *ngTemplateOutlet="editorTopDown"></ng-container>
+        </ng-container>
+        <ng-container *ngSwitchCase="TextEditorLayout.LEFTRIGHT">
+            <ng-container *ngTemplateOutlet="editorLeftRight"></ng-container>
+        </ng-container>
+        <ng-container *ngSwitchCase="TextEditorLayout.LEFTRIGHTFULLSCREEN">
+            <ng-container *ngTemplateOutlet="editorLeftRight"></ng-container>
+        </ng-container>
+    </ng-container>
 
+    <ng-template #editorTopDown>
+        <ng-container *ngTemplateOutlet="layoutSwitch"></ng-container>
+        <div class="col-sm-12 form-inline input-group input-group-sm desc-form-block">
+            <label class="col-xs-3 col-form-label mr-2" i18n="descMd label|Label for field: descMd@@label.editform.tdoc.descMd">Eingabe im Markdown-Format:</label>
+
+            <ng-container *ngTemplateOutlet="commandBlocks"></ng-container>
+
+            <textarea formControlName="descMd" class="form-control desc-form" type="text"
+                      placeholder="description"
+                      id="descMdTopDown"
+                      i18n-placeholder="desc placeholder|Placeholder for desc@@placeholder.form.tdoc.desc"
+                      (ngModelChange)="onInputChanged($event, 'descMd')"></textarea>
+            <ng-container *ngIf="editFormGroup.getRawValue()['descMdRecommended']">
+                <br>
+                <span class="" (click)="useRecommendedDesc()">&#x27F8; Use it!!!!</span>
+                <textarea formControlName="descMdRecommended" class="form-control recommended-desc-form" type="text"
+                          placeholder="recommended description"
+                          id="descMdRecommendedTopDown"
+                          disabled="disabled"
+                          i18n-placeholder="descMdRecommended placeholder|Placeholder for descMdParsed@@placeholder.form.tdoc.descMdRecommended"
+                          (ngModelChange)="onInputChanged($event, 'descMdRecommended')"></textarea>
+            </ng-container>
+        </div>
+        <div class="col-sm-12 form-inline input-group input-group-sm desc-preview-block">
+            <label class="col-xs-3 col-form-label mr-2"
+                   i18n="descMd label|Label for field: descMd@@label.editform.tdoc.descMd">Vorschau:</label>
+            <span class="" (click)="renderDesc(true)">&#x27F8; Update</span>
+            <div id="renderedDescContainerTopDown" class="renderedDescContainer">
+                <div id="renderedDescTopDown" class="renderedDesc">{{renderDesc(false)}}</div>
+            </div>
+        </div>
+    </ng-template>
+
+    <ng-template #editorLeftRight>
+        <div class="col-sm-12">
+            <ng-container *ngTemplateOutlet="layoutSwitch"></ng-container>
+            <div class="col-sm-12 form-inline input-group input-group-sm desc-form-block">
+                <ng-container *ngTemplateOutlet="commandBlocks"></ng-container>
+            </div>
+
+            <div class="col-sm-6 form-inline input-group input-group-sm desc-form-block" style="float:left">
+                <label class="col-xs-3 col-form-label mr-2" i18n="descMd label|Label for field: descMd@@label.editform.tdoc.descMd">Eingabe im Markdown-Format:</label>
+
+                <textarea formControlName="descMd" class="form-control desc-form" type="text"
+                          placeholder="description"
+                          id="descMdLeftRight"
+                          i18n-placeholder="desc placeholder|Placeholder for desc@@placeholder.form.tdoc.desc"
+                          (ngModelChange)="onInputChanged($event, 'descMd')"></textarea>
+                <ng-container *ngIf="editFormGroup.getRawValue()['descMdRecommended']">
+                    <br>
+                    <span class="" (click)="useRecommendedDesc()">&#x27F8; Use it!!!!</span>
+                    <textarea formControlName="descMdRecommended" class="form-control recommended-desc-form" type="text"
+                              placeholder="recommended description"
+                              id="descMdRecommendedLeftRight"
+                              disabled="disabled"
+                              i18n-placeholder="descMdRecommended placeholder|Placeholder for descMdParsed@@placeholder.form.tdoc.descMdRecommended"
+                              (ngModelChange)="onInputChanged($event, 'descMdRecommended')"></textarea>
+                </ng-container>
+            </div>
+            <div class="col-sm-6 form-inline input-group input-group-sm desc-preview-block">
+                <label class="col-xs-3 col-form-label mr-2"
+                       i18n="descMd label|Label for field: descMd@@label.editform.tdoc.descMd">Vorschau:</label>
+                <span class="" (click)="renderDesc(true)">&#x27F8; Update</span>
+                <div id="renderedDescContainerLeftRight" class="renderedDescContainer">
+                    <div id="renderedDescLeftRight" class="renderedDesc">{{renderDesc(false)}}</div>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+
+    <ng-template #commandBlocks>
         <div class="commandBlocks">
             <div class="commandBlock commandBlockRecommend" *ngIf="recommendAvailable === true">
                 <span class="commandBlockLabel" (click)="onCallRecommendDesc()">&#x27F8; Generate</span>
@@ -35,29 +118,15 @@
                 </div>
             </ng-container>
         </div>
+    </ng-template>
 
-        <textarea formControlName="descMd" class="form-control desc-form" type="text"
-                  placeholder="description"
-                  id="descMd"
-                  i18n-placeholder="desc placeholder|Placeholder for desc@@placeholder.form.tdoc.desc"
-                  (ngModelChange)="onInputChanged($event, 'descMd')"></textarea>
-        <ng-container *ngIf="editFormGroup.getRawValue()['descMdRecommended']">
-            <br>
-            <span class="" (click)="useRecommendedDesc()">&#x27F8; Use it!!!!</span>
-            <textarea formControlName="descMdRecommended" class="form-control recommended-desc-form" type="text"
-                      placeholder="recommended description"
-                      id="descMdRecommended"
-                      disabled="disabled"
-                      i18n-placeholder="descMdRecommended placeholder|Placeholder for descMdParsed@@placeholder.form.tdoc.descMdRecommended"
-                      (ngModelChange)="onInputChanged($event, 'descMdRecommended')"></textarea>
-        </ng-container>
-    </div>
-    <div class="col-sm-12 form-inline input-group input-group-sm desc-preview-block">
-        <label class="col-xs-3 col-form-label mr-2"
-               i18n="descMd label|Label for field: descMd@@label.editform.tdoc.descMd">Vorschau:</label>
-        <span class="" (click)="renderDesc(true)">&#x27F8; Update</span>
-        <div id="renderedDescContainer">
-            <div id="renderedDesc">{{renderDesc(false)}}</div>
+    <ng-template #layoutSwitch>
+        <div class="col-sm-12 form-inline input-group input-group-sm desc-form-block" *ngIf="availableLayoutModes.length > 1">
+            <label class="col-xs-3 col-form-label mr-2" i18n="editorLayout label|Label for field: editorLayout@@label.editform.tdoc.editorLayout">Editor-Layout:</label>
+            <span *ngFor="let mode of availableLayoutModes" (click)="onLayoutChanged(mode)"
+                  [ngClass]="'option-link ' + (mode === currentLayoutMode ? 'option-link-active' : 'option-link-inactive')"
+                  [innerHTML]="'textEditorLayout_' + mode | translate" [title]="'textEditorLayout_' + mode | translate"></span>
         </div>
-    </div>
+    </ng-template>
+
 </ng-container>

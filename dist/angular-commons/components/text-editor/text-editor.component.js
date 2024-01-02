@@ -25,6 +25,13 @@ import { AbstractInlineComponent } from '../inline.component';
 import { FormBuilder } from '@angular/forms';
 import { AngularMarkdownService } from '../../services/angular-markdown.service';
 import { PlatformService } from '../../services/platform.service';
+export var TextEditorLayout;
+(function (TextEditorLayout) {
+    TextEditorLayout[TextEditorLayout["TOPDOWN"] = 0] = "TOPDOWN";
+    TextEditorLayout[TextEditorLayout["TOPDOWNFULLSCREEN"] = 1] = "TOPDOWNFULLSCREEN";
+    TextEditorLayout[TextEditorLayout["LEFTRIGHT"] = 2] = "LEFTRIGHT";
+    TextEditorLayout[TextEditorLayout["LEFTRIGHTFULLSCREEN"] = 3] = "LEFTRIGHTFULLSCREEN";
+})(TextEditorLayout || (TextEditorLayout = {}));
 var TextEditorComponent = /** @class */ (function (_super) {
     __extends(TextEditorComponent, _super);
     function TextEditorComponent(cd, fb, angularMarkdownService, platformService) {
@@ -33,7 +40,12 @@ var TextEditorComponent = /** @class */ (function (_super) {
         _this.fb = fb;
         _this.angularMarkdownService = angularMarkdownService;
         _this.platformService = platformService;
+        _this.TextEditorLayout = TextEditorLayout;
+        _this.currentLayoutMode = TextEditorLayout.LEFTRIGHT;
         _this.flgDescRendered = false;
+        _this.renderingRunning = false;
+        _this.renderTimer = undefined;
+        _this.lastRenderUpdate = undefined;
         _this.editFormGroup = _this.fb.group({
             descMd: '',
             descMdRecommended: '',
@@ -43,11 +55,20 @@ var TextEditorComponent = /** @class */ (function (_super) {
             rangeCommands: [],
             commandBlocks: []
         };
+        _this.autoUpdateInterval = 3000;
         _this.descMd = '';
         _this.descMdRecommended = '';
         _this.recommendAvailable = false;
+        _this.availableLayoutModes = [
+            TextEditorLayout.TOPDOWN,
+            TextEditorLayout.LEFTRIGHT
+        ];
+        _this.startLayoutMode = TextEditorLayout.LEFTRIGHT;
         _this.recommendDesc = new EventEmitter();
         _this.changeDesc = new EventEmitter();
+        _this.changeRenderedDescId = new EventEmitter();
+        _this.onLayoutChanged(_this.startLayoutMode || TextEditorLayout.LEFTRIGHT);
+        _this.updateRenderInterval();
         return _this;
     }
     TextEditorComponent.prototype.onCallRecommendDesc = function () {
@@ -57,7 +78,15 @@ var TextEditorComponent = /** @class */ (function (_super) {
     TextEditorComponent.prototype.onInputChanged = function (value, field) {
         if (field === 'descMd') {
             this.changeDesc.emit(value);
+            this.flgDescRendered = false;
         }
+        return false;
+    };
+    TextEditorComponent.prototype.onLayoutChanged = function (layout) {
+        this.currentLayoutMode = layout;
+        // render after layout has changed
+        var me = this;
+        setTimeout(function () { me.renderDesc(true); }, 500);
         return false;
     };
     TextEditorComponent.prototype.useRecommendedDesc = function () {
@@ -71,7 +100,8 @@ var TextEditorComponent = /** @class */ (function (_super) {
         if (!this.platformService.isClient()) {
             return;
         }
-        var textarea = document.querySelector('#descMd');
+        var descId = this.getCurrentDescId();
+        var textarea = document.querySelector('#' + descId);
         if (!textarea || textarea === undefined || textarea === null) {
             return;
         }
@@ -90,7 +120,8 @@ var TextEditorComponent = /** @class */ (function (_super) {
         if (!this.platformService.isClient()) {
             return;
         }
-        var textarea = document.querySelector('#descMd');
+        var descId = this.getCurrentDescId();
+        var textarea = document.querySelector('#' + descId);
         if (!textarea || textarea === undefined || textarea === null) {
             return;
         }
@@ -114,24 +145,65 @@ var TextEditorComponent = /** @class */ (function (_super) {
         this.editFormGroup.patchValue(config);
     };
     TextEditorComponent.prototype.renderDesc = function (force) {
-        if (this.flgDescRendered && !force) {
+        if (this.renderingRunning || (this.flgDescRendered && !force)) {
             return;
         }
+        var curTime = (new Date()).getTime();
+        if (!force && (this.lastRenderUpdate && (curTime - this.lastRenderUpdate) < this.autoUpdateInterval)) {
+            return;
+        }
+        this.renderingRunning = true;
         var desc = this.editFormGroup.getRawValue()['descMd'] || '';
         if (!this.platformService.isClient()) {
+            this.renderingRunning = false;
             return desc;
         }
-        this.flgDescRendered = this.angularMarkdownService.renderMarkdown('#renderedDesc', desc, true);
+        this.flgDescRendered = this.angularMarkdownService.renderMarkdown('#renderedDescTopDown', desc, true);
+        this.flgDescRendered = this.angularMarkdownService.renderMarkdown('#renderedDescLeftRight', desc, true) || this.flgDescRendered;
+        this.renderingRunning = false;
+        this.lastRenderUpdate = curTime;
+        this.changeRenderedDescId.emit(this.getCurrentRenderedDescId());
         return '';
     };
     TextEditorComponent.prototype.updateData = function () {
         this.setValue('descMdRecommended', this.descMdRecommended);
         this.setValue('descMd', this.descMd);
+        this.updateRenderInterval();
+    };
+    TextEditorComponent.prototype.updateRenderInterval = function () {
+        if (this.renderTimer) {
+            clearInterval(this.renderTimer);
+        }
+        if (this.autoUpdateInterval) {
+            var me_1 = this;
+            this.renderTimer = setInterval(function () { me_1.renderDesc(false); }, this.autoUpdateInterval);
+        }
+    };
+    TextEditorComponent.prototype.getCurrentDescId = function () {
+        var descId = 'descMdLeftRight';
+        if (this.isTopDownLayout(this.currentLayoutMode)) {
+            descId = 'descMdTopDown';
+        }
+        return descId;
+    };
+    TextEditorComponent.prototype.getCurrentRenderedDescId = function () {
+        var descId = 'renderedDescLeftRight';
+        if (this.isTopDownLayout(this.currentLayoutMode)) {
+            descId = 'renderedDescTopDown';
+        }
+        return descId;
+    };
+    TextEditorComponent.prototype.isTopDownLayout = function (layout) {
+        return layout !== undefined && (TextEditorLayout.TOPDOWN === layout || TextEditorLayout.TOPDOWNFULLSCREEN === layout);
     };
     __decorate([
         Input(),
         __metadata("design:type", Object)
     ], TextEditorComponent.prototype, "editorCommands", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Object)
+    ], TextEditorComponent.prototype, "autoUpdateInterval", void 0);
     __decorate([
         Input(),
         __metadata("design:type", Object)
@@ -145,6 +217,14 @@ var TextEditorComponent = /** @class */ (function (_super) {
         __metadata("design:type", Object)
     ], TextEditorComponent.prototype, "recommendAvailable", void 0);
     __decorate([
+        Input(),
+        __metadata("design:type", Array)
+    ], TextEditorComponent.prototype, "availableLayoutModes", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Object)
+    ], TextEditorComponent.prototype, "startLayoutMode", void 0);
+    __decorate([
         Output(),
         __metadata("design:type", EventEmitter)
     ], TextEditorComponent.prototype, "recommendDesc", void 0);
@@ -152,6 +232,10 @@ var TextEditorComponent = /** @class */ (function (_super) {
         Output(),
         __metadata("design:type", EventEmitter)
     ], TextEditorComponent.prototype, "changeDesc", void 0);
+    __decorate([
+        Output(),
+        __metadata("design:type", EventEmitter)
+    ], TextEditorComponent.prototype, "changeRenderedDescId", void 0);
     TextEditorComponent = __decorate([
         Component({
             selector: 'app-text-editor',

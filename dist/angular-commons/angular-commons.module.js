@@ -14,6 +14,7 @@ import { DynamicComponentHostDirective } from './components/directives/dynamic-c
 import { IntervalControlComponent } from './components/interval-control/interval-control.component';
 import { DurationPipe } from './pipes/duration.pipe';
 import { TextEditorComponent } from './components/text-editor/text-editor.component';
+import { TranslateModule } from '@ngx-translate/core';
 var AngularCommonsModule = /** @class */ (function () {
     function AngularCommonsModule() {
     }
@@ -31,6 +32,7 @@ var AngularCommonsModule = /** @class */ (function () {
             imports: [
                 BrowserModule,
                 FormsModule,
+                TranslateModule,
                 ReactiveFormsModule
             ],
             exports: [

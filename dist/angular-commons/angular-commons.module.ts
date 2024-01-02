@@ -8,6 +8,7 @@ import {DynamicComponentHostDirective} from './components/directives/dynamic-com
 import {IntervalControlComponent} from './components/interval-control/interval-control.component';
 import {DurationPipe} from './pipes/duration.pipe';
 import {TextEditorComponent} from './components/text-editor/text-editor.component';
+import {TranslateModule} from '@ngx-translate/core';
 
 @NgModule({
     declarations: [
@@ -22,6 +23,7 @@ import {TextEditorComponent} from './components/text-editor/text-editor.componen
     imports: [
         BrowserModule,
         FormsModule,
+        TranslateModule,
         ReactiveFormsModule
     ],
     exports: [

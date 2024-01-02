@@ -64,7 +64,7 @@ var HtmlTogglerRenderer = /** @class */ (function (_super) {
             var filter = togglerCommand.getAttribute('data-togglefilter');
             var type = togglerCommand.getAttribute('data-toggletype');
             var pos = togglerCommand.getAttribute('data-togglepos');
-            this.appendTogglerForElements(filter, type, pos === 'TOGGLER.BEFOR', true);
+            this.appendTogglerForElements(filter, type, pos === 'TOGGLER.BEFORE', true);
         }
     };
     HtmlTogglerRenderer.prototype.addEventListenerForAllToggler = function (parentSelector) {

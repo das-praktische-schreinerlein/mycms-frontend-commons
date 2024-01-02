@@ -103,6 +103,7 @@ export class PDocEditformComponent extends CommonDocEditformComponent<PDocRecord
     };
 
     descMdRecommended  = '';
+    renderedDescId: string = undefined;
 
     constructor(public fb: FormBuilder, protected toastr: ToastrService, protected cd: ChangeDetectorRef,
                 protected appService: GenericAppService, protected pdocSearchFormUtils: PDocSearchFormUtils,
@@ -139,6 +140,10 @@ export class PDocEditformComponent extends CommonDocEditformComponent<PDocRecord
             this.descMdRecommended = undefined;
             this.cd.markForCheck();
         });
+    }
+
+    setRenderedDescId(renderedDescId: string): void {
+        this.renderedDescId = renderedDescId;
     }
 
     isPdfPrintAvailable(): boolean {

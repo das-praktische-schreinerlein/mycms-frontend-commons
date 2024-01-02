@@ -63,7 +63,7 @@ export abstract class HtmlTogglerRenderer extends AbstractHtmlRender {
             const type = togglerCommand.getAttribute('data-toggletype');
             const pos = togglerCommand.getAttribute('data-togglepos');
 
-            this.appendTogglerForElements(filter, type, pos === 'TOGGLER.BEFOR', true);
+            this.appendTogglerForElements(filter, type, pos === 'TOGGLER.BEFORE', true);
         }
     }
 

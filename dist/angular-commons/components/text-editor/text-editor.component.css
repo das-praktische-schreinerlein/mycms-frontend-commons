@@ -26,17 +26,17 @@ textarea.nowrap {
     max-width: 1000px;
 }
 
-#descMd {
+.descMd {
     border: 2px solid grey;
     border-radius: 5px;
 }
 
-#renderedDesc {
+.renderedDesc {
     width: 100%;
     max-width: 1000px;
 }
 
-#renderedDescContainer {
+.renderedDescContainer {
     border: 2px solid grey;
     border-radius: 5px;
     width: 100%;
@@ -65,4 +65,18 @@ span.commandBlockLabel {
 span.rangeCommand {
     padding: 2px;
     border-left: 1px lightgray solid;
+}
+
+.option-link-active {
+    background-color: #0275d8 !important;
+    font-weight: bold;
+    color: white;
+}
+.option-link {
+    display: inline-block;
+    padding: 2px;
+}
+.option-link-inactive:hover {
+    font-size: 21px;
+    background-color: lightblue !important;
 }

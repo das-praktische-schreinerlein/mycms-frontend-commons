@@ -4,6 +4,11 @@ import {FormBuilder, FormGroup} from '@angular/forms';
 import {AngularMarkdownService} from '../../services/angular-markdown.service';
 import {PlatformService} from '../../services/platform.service';
 
+
+export enum TextEditorLayout {
+    TOPDOWN, TOPDOWNFULLSCREEN, LEFTRIGHT, LEFTRIGHTFULLSCREEN
+}
+
 export interface EditorCommand {
     label: string,
     type ?: string
@@ -36,7 +41,14 @@ export interface CommonDocEditorCommandComponentConfig {
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TextEditorComponent extends AbstractInlineComponent {
+    readonly TextEditorLayout = TextEditorLayout;
+
+    currentLayoutMode = TextEditorLayout.LEFTRIGHT;
+
     private flgDescRendered = false;
+    private renderingRunning = false;
+    private renderTimer = undefined;
+    private lastRenderUpdate: number = undefined;
 
     public editFormGroup: FormGroup = this.fb.group({
         descMd: '',
@@ -52,6 +64,9 @@ export class TextEditorComponent extends AbstractInlineComponent {
 
 
     @Input()
+    public autoUpdateInterval = 3000;
+
+    @Input()
     public descMd = '';
 
     @Input()
@@ -60,11 +75,23 @@ export class TextEditorComponent extends AbstractInlineComponent {
     @Input()
     public recommendAvailable ? = false;
 
+    @Input()
+    public availableLayoutModes ?: TextEditorLayout[] = [
+        TextEditorLayout.TOPDOWN,
+        TextEditorLayout.LEFTRIGHT
+    ];
+
+    @Input()
+    public startLayoutMode ? = TextEditorLayout.LEFTRIGHT;
+
     @Output()
     public recommendDesc: EventEmitter<boolean> = new EventEmitter();
 
     @Output()
     public changeDesc: EventEmitter<string> = new EventEmitter();
+
+    @Output()
+    public changeRenderedDescId: EventEmitter<string> = new EventEmitter();
 
     constructor(protected cd: ChangeDetectorRef,
                 public fb: FormBuilder,
@@ -72,17 +99,30 @@ export class TextEditorComponent extends AbstractInlineComponent {
                 protected platformService: PlatformService,
     ) {
         super(cd);
+        this.onLayoutChanged(this.startLayoutMode || TextEditorLayout.LEFTRIGHT);
+        this.updateRenderInterval();
     }
 
     onCallRecommendDesc(): boolean {
-       this.recommendDesc.emit(true);
-       return false;
+        this.recommendDesc.emit(true);
+        return false;
     }
 
     onInputChanged(value: any, field: string): boolean {
         if (field === 'descMd') {
             this.changeDesc.emit(value);
+            this.flgDescRendered = false;
         }
+
+        return false;
+    }
+
+    onLayoutChanged(layout: TextEditorLayout): boolean {
+        this.currentLayoutMode = layout;
+
+        // render after layout has changed
+        const me = this;
+        setTimeout(function () { me.renderDesc(true); }, 500);
 
         return false;
     }
@@ -101,7 +141,8 @@ export class TextEditorComponent extends AbstractInlineComponent {
             return;
         }
 
-        const textarea = <HTMLTextAreaElement> document.querySelector('#descMd');
+        const  descId = this.getCurrentDescId();
+        const textarea = <HTMLTextAreaElement> document.querySelector('#' + descId);
         if (!textarea || textarea === undefined || textarea === null) {
             return;
         }
@@ -126,7 +167,8 @@ export class TextEditorComponent extends AbstractInlineComponent {
             return;
         }
 
-        const textarea = <HTMLTextAreaElement> document.querySelector('#descMd');
+        const  descId = this.getCurrentDescId();
+        const textarea = <HTMLTextAreaElement> document.querySelector('#' + descId);
         if (!textarea || textarea === undefined || textarea === null) {
             return;
         }
@@ -156,16 +198,29 @@ export class TextEditorComponent extends AbstractInlineComponent {
     }
 
     renderDesc(force: boolean): string {
-        if (this.flgDescRendered && !force) {
+        if (this.renderingRunning || (this.flgDescRendered && !force)) {
             return;
         }
 
+        const curTime = (new Date()).getTime();
+        if (!force && (this.lastRenderUpdate && (curTime - this.lastRenderUpdate) < this.autoUpdateInterval)) {
+            return;
+        }
+
+        this.renderingRunning = true;
+
         const desc = this.editFormGroup.getRawValue()['descMd'] || '';
         if (!this.platformService.isClient()) {
+            this.renderingRunning = false;
             return desc;
         }
 
-        this.flgDescRendered = this.angularMarkdownService.renderMarkdown('#renderedDesc', desc, true);
+        this.flgDescRendered = this.angularMarkdownService.renderMarkdown('#renderedDescTopDown', desc, true)
+        this.flgDescRendered = this.angularMarkdownService.renderMarkdown('#renderedDescLeftRight', desc, true) || this.flgDescRendered;
+        this.renderingRunning = false;
+        this.lastRenderUpdate = curTime;
+
+        this.changeRenderedDescId.emit(this.getCurrentRenderedDescId());
 
         return '';
     }
@@ -173,6 +228,41 @@ export class TextEditorComponent extends AbstractInlineComponent {
     protected updateData(): void {
         this.setValue('descMdRecommended', this.descMdRecommended);
         this.setValue('descMd', this.descMd);
+        this.updateRenderInterval();
+    }
+
+    protected updateRenderInterval() {
+        if (this.renderTimer) {
+            clearInterval(this.renderTimer);
+        }
+
+        if (this.autoUpdateInterval) {
+            const me = this;
+
+            this.renderTimer = setInterval(function () { me.renderDesc(false); }, this.autoUpdateInterval);
+        }
+    }
+
+    protected getCurrentDescId() {
+        let descId = 'descMdLeftRight';
+        if (this.isTopDownLayout(this.currentLayoutMode)) {
+            descId = 'descMdTopDown';
+        }
+
+        return descId;
+    }
+
+    protected getCurrentRenderedDescId() {
+        let descId = 'renderedDescLeftRight';
+        if (this.isTopDownLayout(this.currentLayoutMode)) {
+            descId = 'renderedDescTopDown';
+        }
+
+        return descId;
+    }
+
+    protected isTopDownLayout(layout: TextEditorLayout) {
+        return layout !== undefined && (TextEditorLayout.TOPDOWN === layout || TextEditorLayout.TOPDOWNFULLSCREEN === layout);
     }
 
 }

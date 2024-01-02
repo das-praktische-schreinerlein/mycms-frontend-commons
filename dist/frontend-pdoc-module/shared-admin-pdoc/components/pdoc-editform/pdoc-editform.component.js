@@ -118,6 +118,7 @@ var PDocEditformComponent = /** @class */ (function (_super) {
             commandBlocks: []
         };
         _this.descMdRecommended = '';
+        _this.renderedDescId = undefined;
         return _this;
     }
     PDocEditformComponent.prototype.onInputChanged = function (value, field) {
@@ -141,6 +142,9 @@ var PDocEditformComponent = /** @class */ (function (_super) {
             _this.descMdRecommended = undefined;
             _this.cd.markForCheck();
         });
+    };
+    PDocEditformComponent.prototype.setRenderedDescId = function (renderedDescId) {
+        this.renderedDescId = renderedDescId;
     };
     PDocEditformComponent.prototype.isPdfPrintAvailable = function () {
         return this.pdfPrintService.isPrintPdfAvailable();
