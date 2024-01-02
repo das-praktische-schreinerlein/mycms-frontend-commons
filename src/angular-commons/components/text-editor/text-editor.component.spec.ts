@@ -13,6 +13,8 @@ import {SimpleAngularMarkdownService} from '../../services/simple-angular-markdo
 import {AngularMarkdownService} from '../../services/angular-markdown.service';
 import {SimpleAngularHtmlService} from '../../services/simple-angular-html.service';
 import {LayoutService} from '../../services/layout.service';
+import {ToastrServiceStub} from '../../../testing/toasts-stubs';
+import { ToastrService } from 'ngx-toastr';
 
 describe('TextEditorComponent', () => {
     let component: TextEditorComponent;
@@ -26,6 +28,7 @@ describe('TextEditorComponent', () => {
                 TranslateModule.forRoot()
             ],
             providers: [
+                { provide: ToastrService, useValue: new ToastrServiceStub() },
                 TranslateService,
                 {provide: AngularMarkdownService, useClass: SimpleAngularMarkdownService},
                 {provide: AngularHtmlService, useClass: SimpleAngularHtmlService},

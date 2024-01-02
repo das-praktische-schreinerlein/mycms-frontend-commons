@@ -5,6 +5,7 @@ import { AngularMarkdownService } from '../../services/angular-markdown.service'
 import { PlatformService } from '../../services/platform.service';
 import { LayoutService, LayoutSizeData } from '../../services/layout.service';
 import { BehaviorSubject } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
 export declare enum TextEditorLayout {
     TOPDOWN = 0,
     TOPDOWNFULLSCREEN = 1,
@@ -38,6 +39,7 @@ export declare class TextEditorComponent extends AbstractInlineComponent impleme
     protected cd: ChangeDetectorRef;
     fb: FormBuilder;
     protected angularMarkdownService: AngularMarkdownService;
+    protected toastr: ToastrService;
     protected platformService: PlatformService;
     protected layoutService: LayoutService;
     readonly TextEditorLayout: typeof TextEditorLayout;
@@ -67,11 +69,13 @@ export declare class TextEditorComponent extends AbstractInlineComponent impleme
     recommendDesc: EventEmitter<boolean>;
     changeDesc: EventEmitter<string>;
     changeRenderedDescId: EventEmitter<string>;
-    constructor(cd: ChangeDetectorRef, fb: FormBuilder, angularMarkdownService: AngularMarkdownService, platformService: PlatformService, layoutService: LayoutService);
+    constructor(cd: ChangeDetectorRef, fb: FormBuilder, angularMarkdownService: AngularMarkdownService, toastr: ToastrService, platformService: PlatformService, layoutService: LayoutService);
     ngOnInit(): void;
     onCallRecommendDesc(): boolean;
     onInputChanged(value: any, field: string): boolean;
     onLayoutChanged(layout: TextEditorLayout): boolean;
+    onFileSelected(event: any): void;
+    onFileSave(): boolean;
     useRecommendedDesc(): void;
     addSingleCommand(command: SingleEditorCommand): void;
     addRangeCommand(command: RangeEditorCommand): void;
@@ -84,4 +88,5 @@ export declare class TextEditorComponent extends AbstractInlineComponent impleme
     protected isTopDownLayout(layout: TextEditorLayout): boolean;
     protected onResize(layoutSizeData: LayoutSizeData): void;
     protected calcContainerHeight(maxHeight: number, anchor: ElementRef, container: ElementRef): number;
+    protected processFile(file: File): boolean;
 }

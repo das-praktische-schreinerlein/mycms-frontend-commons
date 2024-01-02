@@ -16,7 +16,13 @@
     </ng-container>
 
     <ng-template #editorTopDown>
-        <ng-container *ngTemplateOutlet="layoutSwitch"></ng-container>
+        <div class="col-sm-12">
+            <div class="row">
+                <ng-container *ngTemplateOutlet="layoutSwitch"></ng-container>
+                <ng-container *ngTemplateOutlet="fileLoad"></ng-container>
+                <ng-container *ngTemplateOutlet="fileSave"></ng-container>
+            </div>
+        </div>
         <div class="col-sm-12 form-inline input-group input-group-sm desc-form-block">
             <label class="col-xs-3 col-form-label mr-2" i18n="descMd label|Label for field: descMd@@label.editform.tdoc.descMd">Eingabe im Markdown-Format:</label>
 
@@ -54,7 +60,13 @@
 
     <ng-template #editorLeftRight>
         <div class="col-sm-12">
-            <ng-container *ngTemplateOutlet="layoutSwitch"></ng-container>
+            <div class="col-sm-12">
+                <div class="row">
+                    <ng-container *ngTemplateOutlet="layoutSwitch"></ng-container>
+                    <ng-container *ngTemplateOutlet="fileLoad"></ng-container>
+                    <ng-container *ngTemplateOutlet="fileSave"></ng-container>
+                </div>
+            </div>
             <div class="col-sm-12 form-inline input-group input-group-sm desc-form-block">
                 <ng-container *ngTemplateOutlet="commandBlocks"></ng-container>
             </div>
@@ -130,11 +142,25 @@
     </ng-template>
 
     <ng-template #layoutSwitch>
-        <div class="col-sm-12 form-inline input-group input-group-sm desc-form-block" *ngIf="availableLayoutModes.length > 1">
+        <div class="col-sm-4 form-inline input-group input-group-sm desc-form-block" *ngIf="availableLayoutModes.length > 1">
             <label class="col-xs-3 col-form-label mr-2" i18n="editorLayout label|Label for field: editorLayout@@label.editform.tdoc.editorLayout">Editor-Layout:</label>
             <span *ngFor="let mode of availableLayoutModes" (click)="onLayoutChanged(mode)"
                   [ngClass]="'option-link ' + (mode === currentLayoutMode ? 'option-link-active' : 'option-link-inactive')"
                   [innerHTML]="'textEditorLayout_' + mode | translate" [title]="'textEditorLayout_' + mode | translate"></span>
+        </div>
+    </ng-template>
+
+    <ng-template #fileLoad>
+        <div class="col-sm-4 form-inline input-group input-group-sm">
+            <label class="col-xs-3 col-form-label mr-2" i18n="mdFileLoad label|Label for field: mdFileLoad@@label.editform.tdoc.mdFileLoad">Datei laden:</label>
+            <input type="file" accept=".md" (change)="onFileSelected($event)" />
+        </div>
+    </ng-template>
+
+    <ng-template #fileSave>
+        <div class="col-sm-4 form-inline input-group input-group-sm">
+            <label class="col-xs-3 col-form-label mr-2" i18n="mdFileSave label|Label for field: mdFileSave@@label.editform.tdoc.mdFileSave">Datei speichern:</label>
+            <input type="button" (click)="onFileSave()" value="Export" i18n="mdFileSave label|Label for field: mdFileSave@@label.editform.tdoc.mdFileSave">
         </div>
     </ng-template>
 

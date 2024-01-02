@@ -15,6 +15,9 @@ import {AngularMarkdownService} from '../../services/angular-markdown.service';
 import {PlatformService} from '../../services/platform.service';
 import {LayoutService, LayoutSizeData} from '../../services/layout.service';
 import {BehaviorSubject} from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
+import {AngularHtmlService} from '../../services/angular-html.service';
+import { DateUtils } from '@dps/mycms-commons/dist/commons/utils/date.utils';
 
 
 export enum TextEditorLayout {
@@ -132,7 +135,7 @@ export class TextEditorComponent extends AbstractInlineComponent implements OnIn
 
     constructor(protected cd: ChangeDetectorRef,
                 public fb: FormBuilder,
-                protected angularMarkdownService: AngularMarkdownService,
+                protected angularMarkdownService: AngularMarkdownService, protected toastr: ToastrService,
                 protected platformService: PlatformService, protected layoutService: LayoutService
     ) {
         super(cd);
@@ -176,6 +179,19 @@ export class TextEditorComponent extends AbstractInlineComponent implements OnIn
         return false;
     }
 
+    onFileSelected(event: any) {
+        for (const file of event.srcElement.files) {
+            this.processFile(file);
+        }
+    }
+
+    onFileSave(): boolean {
+        const filename = 'markdown-' + DateUtils.formatToFileNameDate(new Date(), '', '-', '') +  '.md';
+        AngularHtmlService.browserSaveTextAsFile(this.editFormGroup.getRawValue()['descMd'] || '', filename, 'text/markdown');
+
+        return true;
+    }
+
     useRecommendedDesc(): void {
         const descMdRecommended = this.editFormGroup.getRawValue()['descMdRecommended'] || '';
         this.setValue('descMd', descMdRecommended);
@@ -216,7 +232,7 @@ export class TextEditorComponent extends AbstractInlineComponent implements OnIn
             return;
         }
 
-        const  descId = this.getCurrentDescId();
+        const descId = this.getCurrentDescId();
         const textarea = <HTMLTextAreaElement> document.querySelector('#' + descId);
         if (!textarea || textarea === undefined || textarea === null) {
             return;
@@ -351,5 +367,29 @@ export class TextEditorComponent extends AbstractInlineComponent implements OnIn
         }
 
         return maxHeight - (container.nativeElement.getBoundingClientRect().y - anchor.nativeElement.getBoundingClientRect().y);
+    }
+
+    protected processFile(file: File): boolean {
+        const me = this;
+        const reader = new FileReader();
+        const maxLength = 1000000;
+        if (file.size > maxLength) {
+            me.toastr.warning('Die Markdown-Datei darf höchstes ' + maxLength / 1000000 + 'MB sein.', 'Oje!');
+            return;
+        }
+        if (!file.name.toLowerCase().endsWith('.md')) {
+            me.toastr.warning('Es dürfen nur .md Dateien geladen werden.', 'Oje!');
+            return;
+        }
+
+        reader.onload = (function(theFile) {
+            return function(e) {
+                const src = e.target.result;
+                return me.setValue('descMd', src);
+            };
+        })(file);
+
+        // Read in the file as a data URL.
+        reader.readAsText(file);
     }
 }

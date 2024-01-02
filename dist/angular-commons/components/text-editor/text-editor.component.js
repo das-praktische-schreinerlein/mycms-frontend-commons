@@ -26,6 +26,9 @@ import { FormBuilder } from '@angular/forms';
 import { AngularMarkdownService } from '../../services/angular-markdown.service';
 import { PlatformService } from '../../services/platform.service';
 import { LayoutService } from '../../services/layout.service';
+import { ToastrService } from 'ngx-toastr';
+import { AngularHtmlService } from '../../services/angular-html.service';
+import { DateUtils } from '@dps/mycms-commons/dist/commons/utils/date.utils';
 export var TextEditorLayout;
 (function (TextEditorLayout) {
     TextEditorLayout[TextEditorLayout["TOPDOWN"] = 0] = "TOPDOWN";
@@ -35,11 +38,12 @@ export var TextEditorLayout;
 })(TextEditorLayout || (TextEditorLayout = {}));
 var TextEditorComponent = /** @class */ (function (_super) {
     __extends(TextEditorComponent, _super);
-    function TextEditorComponent(cd, fb, angularMarkdownService, platformService, layoutService) {
+    function TextEditorComponent(cd, fb, angularMarkdownService, toastr, platformService, layoutService) {
         var _this = _super.call(this, cd) || this;
         _this.cd = cd;
         _this.fb = fb;
         _this.angularMarkdownService = angularMarkdownService;
+        _this.toastr = toastr;
         _this.platformService = platformService;
         _this.layoutService = layoutService;
         _this.TextEditorLayout = TextEditorLayout;
@@ -76,7 +80,6 @@ var TextEditorComponent = /** @class */ (function (_super) {
         return _this;
     }
     TextEditorComponent.prototype.ngOnInit = function () {
-        // Subscribe to route params
         var me = this;
         this.layoutSizeObservable = this.layoutService.getLayoutSizeData();
         this.layoutSizeObservable.subscribe(function (layoutSizeData) {
@@ -103,6 +106,17 @@ var TextEditorComponent = /** @class */ (function (_super) {
         var me = this;
         setTimeout(function () { me.renderDesc(true); }, 500);
         return false;
+    };
+    TextEditorComponent.prototype.onFileSelected = function (event) {
+        for (var _i = 0, _a = event.srcElement.files; _i < _a.length; _i++) {
+            var file = _a[_i];
+            this.processFile(file);
+        }
+    };
+    TextEditorComponent.prototype.onFileSave = function () {
+        var filename = 'markdown-' + DateUtils.formatToFileNameDate(new Date(), '', '-', '') + '.md';
+        AngularHtmlService.browserSaveTextAsFile(this.editFormGroup.getRawValue()['descMd'] || '', filename, 'text/markdown');
+        return true;
     };
     TextEditorComponent.prototype.useRecommendedDesc = function () {
         var descMdRecommended = this.editFormGroup.getRawValue()['descMdRecommended'] || '';
@@ -242,6 +256,27 @@ var TextEditorComponent = /** @class */ (function (_super) {
         }
         return maxHeight - (container.nativeElement.getBoundingClientRect().y - anchor.nativeElement.getBoundingClientRect().y);
     };
+    TextEditorComponent.prototype.processFile = function (file) {
+        var me = this;
+        var reader = new FileReader();
+        var maxLength = 1000000;
+        if (file.size > maxLength) {
+            me.toastr.warning('Die Markdown-Datei darf höchstes ' + maxLength / 1000000 + 'MB sein.', 'Oje!');
+            return;
+        }
+        if (!file.name.toLowerCase().endsWith('.md')) {
+            me.toastr.warning('Es dürfen nur .md Dateien geladen werden.', 'Oje!');
+            return;
+        }
+        reader.onload = (function (theFile) {
+            return function (e) {
+                var src = e.target.result;
+                return me.setValue('descMd', src);
+            };
+        })(file);
+        // Read in the file as a data URL.
+        reader.readAsText(file);
+    };
     __decorate([
         ViewChild('textEditorTop'),
         __metadata("design:type", ElementRef)
@@ -311,7 +346,7 @@ var TextEditorComponent = /** @class */ (function (_super) {
         }),
         __metadata("design:paramtypes", [ChangeDetectorRef,
             FormBuilder,
-            AngularMarkdownService,
+            AngularMarkdownService, ToastrService,
             PlatformService, LayoutService])
     ], TextEditorComponent);
     return TextEditorComponent;

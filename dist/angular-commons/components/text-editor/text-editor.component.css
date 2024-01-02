@@ -81,3 +81,7 @@ span.rangeCommand {
     font-size: 21px;
     background-color: lightblue !important;
 }
+
+input[type="file"] {
+    max-width: 160px;
+}
