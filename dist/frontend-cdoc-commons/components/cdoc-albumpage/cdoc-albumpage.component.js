@@ -383,8 +383,8 @@ var CommonDocAlbumpageComponent = /** @class */ (function (_super) {
             me.toastr.warning('Die Album-Datei darf höchstes ' + maxLength / 1000000 + 'MB sein.', 'Oje!');
             return;
         }
-        if (!file.name.toLowerCase().endsWith('.mytbalbum.json')) {
-            me.toastr.warning('Es dürfen nur .mytbalbum.json Dateien geladen werden.', 'Oje!');
+        if (!file.name.toLowerCase().endsWith('.json')) {
+            me.toastr.warning('Es dürfen nur .json Dateien geladen werden.', 'Oje!');
             return;
         }
         reader.onload = (function (theFile) {
