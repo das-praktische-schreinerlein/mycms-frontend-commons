@@ -2,6 +2,23 @@
  
 # Versions
 
+## 6.1.0
+- frontend: improved text-editor
+- frontend: fixed album-filename-restrictions
+
+### new features
+- none
+
+### improvements
+- frontend: improved text-editor
+
+### bug fixes
+- frontend: fixed album-filename-restrictions
+
+### breaking changes
+- none
+
+
 ## 6.0.0 (2023-12-22)
 - bumped up deps
 - use StaticPagesDataService instead of PDocDataService
