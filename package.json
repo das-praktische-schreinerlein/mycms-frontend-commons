@@ -28,6 +28,9 @@
   "main": "dist/",
   "types": "dist/",
   "private": true,
+  "dependencyHints": {
+    "jspdf": "fixed to 2.3.1 because all newer till 2.5.1 versions cant gerenate pdf https://github.com/parallax/jsPDF/issues/3315"
+  },
   "peerDependencies": {
     "@angular/animations": ">= 7.2.16",
     "@angular/common": ">= 7.2.16",
