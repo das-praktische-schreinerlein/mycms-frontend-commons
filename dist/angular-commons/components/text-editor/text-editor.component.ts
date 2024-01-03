@@ -15,9 +15,9 @@ import {AngularMarkdownService} from '../../services/angular-markdown.service';
 import {PlatformService} from '../../services/platform.service';
 import {LayoutService, LayoutSizeData} from '../../services/layout.service';
 import {BehaviorSubject} from 'rxjs';
-import { ToastrService } from 'ngx-toastr';
+import {ToastrService} from 'ngx-toastr';
 import {AngularHtmlService} from '../../services/angular-html.service';
-import { DateUtils } from '@dps/mycms-commons/dist/commons/utils/date.utils';
+import {DateUtils} from '@dps/mycms-commons/dist/commons/utils/date.utils';
 
 
 export enum TextEditorLayout {
@@ -107,6 +107,9 @@ export class TextEditorComponent extends AbstractInlineComponent implements OnIn
     public autoUpdateInterval = 3000;
 
     @Input()
+    public sampleDesc ? = '';
+
+    @Input()
     public descMd = '';
 
     @Input()
@@ -190,6 +193,15 @@ export class TextEditorComponent extends AbstractInlineComponent implements OnIn
         AngularHtmlService.browserSaveTextAsFile(this.editFormGroup.getRawValue()['descMd'] || '', filename, 'text/markdown');
 
         return true;
+    }
+
+    onUseSampleDesc(): boolean {
+        const sampleDesc = this.sampleDesc;
+        this.setValue('descMd', sampleDesc);
+        this.onInputChanged(sampleDesc, 'descMd');
+        this.renderDesc(true);
+
+        return false;
     }
 
     useRecommendedDesc(): void {

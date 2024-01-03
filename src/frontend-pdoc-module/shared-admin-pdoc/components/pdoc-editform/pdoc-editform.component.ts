@@ -32,6 +32,7 @@ import {PdfPrintOptions, PdfPrintService} from '../../../../angular-commons/serv
 
 export interface PageDocEditformComponentConfig extends CommonDocEditformComponentConfig {
     editorCommands: CommonDocEditorCommandComponentConfig;
+    sampleDesc: string;
 }
 
 @Component({
@@ -103,6 +104,7 @@ export class PDocEditformComponent extends CommonDocEditformComponent<PDocRecord
     };
 
     descMdRecommended  = '';
+    sampleDesc = '';
     renderedDescId: string = undefined;
 
     constructor(public fb: FormBuilder, protected toastr: ToastrService, protected cd: ChangeDetectorRef,
@@ -219,6 +221,8 @@ export class PDocEditformComponent extends CommonDocEditformComponent<PDocRecord
             singleCommands: [],
             commandBlocks: []
         };
+        let sampleDesc = '';
+
         if (BeanUtils.getValue(config, 'components.pdoc-editor-commands.singleCommands')) {
             editorCommands.singleCommands = BeanUtils.getValue(config, 'components.pdoc-editor-commands.singleCommands');
         }
@@ -228,9 +232,13 @@ export class PDocEditformComponent extends CommonDocEditformComponent<PDocRecord
         if (BeanUtils.getValue(config, 'components.pdoc-editor-commands.commandBlocks')) {
             editorCommands.commandBlocks = BeanUtils.getValue(config, 'components.pdoc-editor-commands.commandBlocks');
         }
+        if (BeanUtils.getValue(config, 'components.pdoc-editor-commands.sampleDesc')) {
+            sampleDesc = BeanUtils.getValue(config, 'components.pdoc-editor-commands.sampleDesc');
+        }
 
         const defaultConfig: PageDocEditformComponentConfig = {
             editorCommands: editorCommands,
+            sampleDesc: sampleDesc,
             suggestionConfigs: suggestionConfig,
             editPrefix: prefix,
             numBeanFieldConfig: {

@@ -118,6 +118,7 @@ var PDocEditformComponent = /** @class */ (function (_super) {
             commandBlocks: []
         };
         _this.descMdRecommended = '';
+        _this.sampleDesc = '';
         _this.renderedDescId = undefined;
         return _this;
     }
@@ -207,6 +208,7 @@ var PDocEditformComponent = /** @class */ (function (_super) {
             singleCommands: [],
             commandBlocks: []
         };
+        var sampleDesc = '';
         if (BeanUtils.getValue(config, 'components.pdoc-editor-commands.singleCommands')) {
             editorCommands.singleCommands = BeanUtils.getValue(config, 'components.pdoc-editor-commands.singleCommands');
         }
@@ -216,8 +218,12 @@ var PDocEditformComponent = /** @class */ (function (_super) {
         if (BeanUtils.getValue(config, 'components.pdoc-editor-commands.commandBlocks')) {
             editorCommands.commandBlocks = BeanUtils.getValue(config, 'components.pdoc-editor-commands.commandBlocks');
         }
+        if (BeanUtils.getValue(config, 'components.pdoc-editor-commands.sampleDesc')) {
+            sampleDesc = BeanUtils.getValue(config, 'components.pdoc-editor-commands.sampleDesc');
+        }
         var defaultConfig = {
             editorCommands: editorCommands,
+            sampleDesc: sampleDesc,
             suggestionConfigs: suggestionConfig,
             editPrefix: prefix,
             numBeanFieldConfig: {},

@@ -66,6 +66,7 @@ var TextEditorComponent = /** @class */ (function (_super) {
             commandBlocks: []
         };
         _this.autoUpdateInterval = 3000;
+        _this.sampleDesc = '';
         _this.descMd = '';
         _this.descMdRecommended = '';
         _this.recommendAvailable = false;
@@ -117,6 +118,13 @@ var TextEditorComponent = /** @class */ (function (_super) {
         var filename = 'markdown-' + DateUtils.formatToFileNameDate(new Date(), '', '-', '') + '.md';
         AngularHtmlService.browserSaveTextAsFile(this.editFormGroup.getRawValue()['descMd'] || '', filename, 'text/markdown');
         return true;
+    };
+    TextEditorComponent.prototype.onUseSampleDesc = function () {
+        var sampleDesc = this.sampleDesc;
+        this.setValue('descMd', sampleDesc);
+        this.onInputChanged(sampleDesc, 'descMd');
+        this.renderDesc(true);
+        return false;
     };
     TextEditorComponent.prototype.useRecommendedDesc = function () {
         var descMdRecommended = this.editFormGroup.getRawValue()['descMdRecommended'] || '';
@@ -305,6 +313,10 @@ var TextEditorComponent = /** @class */ (function (_super) {
         Input(),
         __metadata("design:type", Object)
     ], TextEditorComponent.prototype, "autoUpdateInterval", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Object)
+    ], TextEditorComponent.prototype, "sampleDesc", void 0);
     __decorate([
         Input(),
         __metadata("design:type", Object)

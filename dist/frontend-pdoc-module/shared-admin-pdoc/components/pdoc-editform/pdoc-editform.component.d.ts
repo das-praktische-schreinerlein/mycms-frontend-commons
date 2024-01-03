@@ -22,6 +22,7 @@ import { PrintService } from '../../../../angular-commons/services/print.service
 import { PdfPrintService } from '../../../../angular-commons/services/pdf-print.service';
 export interface PageDocEditformComponentConfig extends CommonDocEditformComponentConfig {
     editorCommands: CommonDocEditorCommandComponentConfig;
+    sampleDesc: string;
 }
 export declare class PDocEditformComponent extends CommonDocEditformComponent<PDocRecord, PDocSearchForm, PDocSearchResult, PDocDataService> {
     fb: FormBuilder;
@@ -59,6 +60,7 @@ export declare class PDocEditformComponent extends CommonDocEditformComponent<PD
     textsSelectSubSectionIds: IMultiSelectTexts;
     editorCommands: CommonDocEditorCommandComponentConfig;
     descMdRecommended: string;
+    sampleDesc: string;
     renderedDescId: string;
     constructor(fb: FormBuilder, toastr: ToastrService, cd: ChangeDetectorRef, appService: GenericAppService, pdocSearchFormUtils: PDocSearchFormUtils, searchFormUtils: SearchFormUtils, pdocDataService: PDocDataService, contentUtils: PDocContentUtils, document: any, pdocNameSuggesterService: PDocNameSuggesterService, pdocDescSuggesterService: PDocDescSuggesterService, router: Router, printService: PrintService, pdfPrintService: PdfPrintService);
     onInputChanged(value: any, field: string): boolean;

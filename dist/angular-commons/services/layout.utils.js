@@ -77,11 +77,16 @@ var LayoutUtils = /** @class */ (function () {
     LayoutUtils.getCssSelectorsForStyleSheetList = function (sheets) {
         var rulesDisplayNone = [];
         for (var i = 0; i < sheets.length; i++) {
-            var sheet = sheets[i];
-            if (!sheet['cssRules']) {
-                continue;
+            try {
+                var sheet = sheets[i];
+                if (!sheet['cssRules']) {
+                    continue;
+                }
+                rulesDisplayNone = rulesDisplayNone.concat(this.getCssSelectorsForCssRules(sheet['cssRules']));
             }
-            rulesDisplayNone = rulesDisplayNone.concat(this.getCssSelectorsForCssRules(sheet['cssRules']));
+            catch (e) {
+                console.warn('error while reading sheets', e);
+            }
         }
         return rulesDisplayNone;
     };

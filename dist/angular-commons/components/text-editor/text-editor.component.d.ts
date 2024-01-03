@@ -61,6 +61,7 @@ export declare class TextEditorComponent extends AbstractInlineComponent impleme
     renderedDescContainerTopDown: ElementRef;
     editorCommands: CommonDocEditorCommandComponentConfig;
     autoUpdateInterval: number;
+    sampleDesc?: string;
     descMd: string;
     descMdRecommended: string;
     recommendAvailable?: boolean;
@@ -76,6 +77,7 @@ export declare class TextEditorComponent extends AbstractInlineComponent impleme
     onLayoutChanged(layout: TextEditorLayout): boolean;
     onFileSelected(event: any): void;
     onFileSave(): boolean;
+    onUseSampleDesc(): boolean;
     useRecommendedDesc(): void;
     addSingleCommand(command: SingleEditorCommand): void;
     addRangeCommand(command: RangeEditorCommand): void;

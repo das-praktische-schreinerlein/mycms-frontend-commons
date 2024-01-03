@@ -120,6 +120,10 @@
                 <span class="commandBlockLabel" (click)="onCallRecommendDesc()">&#x27F8; Generate</span>
             </div>
 
+            <div class="commandBlock commandBlockSample" *ngIf="sampleDesc !== undefined && sampleDesc !== ''">
+                <span class="commandBlockLabel" (click)="onUseSampleDesc()">&#x27F8; Sample</span>
+            </div>
+
             <div class="commandBlock commandBlockRange" *ngIf="editorCommands.rangeCommands && editorCommands.rangeCommands.length > 0">
                 <ng-container *ngFor="let rangeCommand of editorCommands.rangeCommands">
                     <span class="rangeCommand" (click)="addRangeCommand(rangeCommand)">{{rangeCommand.label}}</span>
