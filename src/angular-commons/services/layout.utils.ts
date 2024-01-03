@@ -90,12 +90,16 @@ export class LayoutUtils {
     public static getCssSelectorsForStyleSheetList(sheets: StyleSheetList): string[] {
         let rulesDisplayNone = [];
         for (let i = 0; i < sheets.length; i++) {
-            const sheet = sheets[i];
-            if (!sheet['cssRules']) {
-                continue;
-            }
+            try {
+                const sheet = sheets[i];
+                if (!sheet['cssRules']) {
+                    continue;
+                }
 
-            rulesDisplayNone = rulesDisplayNone.concat(this.getCssSelectorsForCssRules(sheet['cssRules']));
+                rulesDisplayNone = rulesDisplayNone.concat(this.getCssSelectorsForCssRules(sheet['cssRules']));
+            } catch (e) {
+                console.warn('error while reading sheets', e);
+            }
         }
 
         return rulesDisplayNone;
