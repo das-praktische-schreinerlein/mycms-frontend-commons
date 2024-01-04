@@ -2,12 +2,12 @@ import {
     ChangeDetectionStrategy,
     ChangeDetectorRef,
     Component,
+    ElementRef,
     EventEmitter,
     Input,
     OnInit,
     Output,
-    ViewChild,
-    ElementRef
+    ViewChild
 } from '@angular/core';
 import {AbstractInlineComponent} from '../inline.component';
 import {FormBuilder, FormGroup} from '@angular/forms';
@@ -17,8 +17,6 @@ import {LayoutService, LayoutSizeData} from '../../services/layout.service';
 import {BehaviorSubject} from 'rxjs';
 import {ToastrService} from 'ngx-toastr';
 import {AngularHtmlService} from '../../services/angular-html.service';
-import {DateUtils} from '@dps/mycms-commons/dist/commons/utils/date.utils';
-
 
 export enum TextEditorLayout {
     TOPDOWN, TOPDOWNFULLSCREEN, LEFTRIGHT, LEFTRIGHTFULLSCREEN
@@ -110,6 +108,9 @@ export class TextEditorComponent extends AbstractInlineComponent implements OnIn
     public sampleDesc ? = '';
 
     @Input()
+    public suggestedFileName ? = 'document.md';
+
+    @Input()
     public descMd = '';
 
     @Input()
@@ -135,6 +136,9 @@ export class TextEditorComponent extends AbstractInlineComponent implements OnIn
 
     @Output()
     public changeRenderedDescId: EventEmitter<string> = new EventEmitter();
+
+    @Output()
+    public fileLoaded: EventEmitter<string> = new EventEmitter();
 
     constructor(protected cd: ChangeDetectorRef,
                 public fb: FormBuilder,
@@ -189,7 +193,7 @@ export class TextEditorComponent extends AbstractInlineComponent implements OnIn
     }
 
     onFileSave(): boolean {
-        const filename = 'markdown-' + DateUtils.formatToFileNameDate(new Date(), '', '-', '') +  '.md';
+        const filename = this.suggestedFileName;
         AngularHtmlService.browserSaveTextAsFile(this.editFormGroup.getRawValue()['descMd'] || '', filename, 'text/markdown');
 
         return true;
@@ -396,6 +400,8 @@ export class TextEditorComponent extends AbstractInlineComponent implements OnIn
 
         reader.onload = (function(theFile) {
             return function(e) {
+                me.fileLoaded.emit(file.name);
+
                 const src = e.target.result;
                 return me.setValue('descMd', src);
             };

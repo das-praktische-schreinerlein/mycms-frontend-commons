@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, EventEmitter, OnInit, ElementRef } from '@angular/core';
+import { ChangeDetectorRef, ElementRef, EventEmitter, OnInit } from '@angular/core';
 import { AbstractInlineComponent } from '../inline.component';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { AngularMarkdownService } from '../../services/angular-markdown.service';
@@ -62,6 +62,7 @@ export declare class TextEditorComponent extends AbstractInlineComponent impleme
     editorCommands: CommonDocEditorCommandComponentConfig;
     autoUpdateInterval: number;
     sampleDesc?: string;
+    suggestedFileName?: string;
     descMd: string;
     descMdRecommended: string;
     recommendAvailable?: boolean;
@@ -70,6 +71,7 @@ export declare class TextEditorComponent extends AbstractInlineComponent impleme
     recommendDesc: EventEmitter<boolean>;
     changeDesc: EventEmitter<string>;
     changeRenderedDescId: EventEmitter<string>;
+    fileLoaded: EventEmitter<string>;
     constructor(cd: ChangeDetectorRef, fb: FormBuilder, angularMarkdownService: AngularMarkdownService, toastr: ToastrService, platformService: PlatformService, layoutService: LayoutService);
     ngOnInit(): void;
     onCallRecommendDesc(): boolean;

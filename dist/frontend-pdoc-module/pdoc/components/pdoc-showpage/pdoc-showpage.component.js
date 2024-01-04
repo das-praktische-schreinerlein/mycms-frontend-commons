@@ -47,6 +47,7 @@ import { PDocSearchFormConverter } from '../../../shared-pdoc/services/pdoc-sear
 import { COMMON_APP_ENVIRONMENT } from '../../../../frontend-section-commons/common-environment';
 import { PrintService } from '../../../../angular-commons/services/print.service';
 import { PdfPrintService } from '../../../../angular-commons/services/pdf-print.service';
+import { NameUtils } from '@dps/mycms-commons/dist/commons/utils/name.utils';
 var PDocShowPageComponent = /** @class */ (function (_super) {
     __extends(PDocShowPageComponent, _super);
     function PDocShowPageComponent(route, cdocRoutingService, toastr, contentUtils, errorResolver, pageUtils, commonRoutingService, angularMarkdownService, angularHtmlService, cd, trackingProvider, appService, platformService, searchFormConverter, layoutService, elRef, router, environment, printService, pdfPrintService) {
@@ -103,6 +104,7 @@ var PDocShowPageComponent = /** @class */ (function (_super) {
         return false;
     };
     PDocShowPageComponent.prototype.onPrintPdf = function (elementFilterType, filter, width, height, printCssIdRegExp) {
+        var suggestedFileBase = NameUtils.normalizeFileNames(this.record.key);
         var options = {
             printElementFilter: {
                 type: elementFilterType,
@@ -113,7 +115,7 @@ var PDocShowPageComponent = /** @class */ (function (_super) {
                 height: height
             },
             printStyleIdFilter: new RegExp(printCssIdRegExp),
-            fileName: 'filename.pdf',
+            fileName: suggestedFileBase + '.pdf',
             pdfOptions: {
                 orientation: 'portrait',
                 format: 'a4'

@@ -2,6 +2,7 @@ import { AppState } from '@dps/mycms-commons/dist/commons/services/generic-app.s
 import { BeanUtils } from '@dps/mycms-commons/dist/commons/utils/bean.utils';
 import { RoutingState } from '../../angular-commons/services/common-routing.service';
 import { LogUtils } from '@dps/mycms-commons/dist/commons/utils/log.utils';
+import { NameUtils } from '@dps/mycms-commons/dist/commons/utils/name.utils';
 var AbstractAppComponent = /** @class */ (function () {
     function AbstractAppComponent(appService, toastr, translate, router, locale, http, commonRoutingService, cd, platformService, pageUtils, layoutService, environment, printService, pdfPrintService) {
         this.appService = appService;
@@ -69,6 +70,7 @@ var AbstractAppComponent = /** @class */ (function () {
         return false;
     };
     AbstractAppComponent.prototype.onPrintPdf = function (elementFilterType, filter, width, height, printCssIdRegExp) {
+        var suggestedFileBase = NameUtils.normalizeFileNames(document.title || 'document');
         var options = {
             printElementFilter: {
                 type: elementFilterType,
@@ -79,7 +81,7 @@ var AbstractAppComponent = /** @class */ (function () {
                 height: height
             },
             printStyleIdFilter: new RegExp(printCssIdRegExp),
-            fileName: 'filename.pdf',
+            fileName: suggestedFileBase + '.pdf',
             pdfOptions: {
                 orientation: 'portrait',
                 format: 'a4'

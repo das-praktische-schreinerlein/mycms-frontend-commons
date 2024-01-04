@@ -54,6 +54,8 @@ import { PDocSearchFormUtils } from '../../../shared-pdoc/services/pdoc-searchfo
 import { ObjectUtils } from '@dps/mycms-commons/dist/commons/utils/object.utils';
 import { PrintService } from '../../../../angular-commons/services/print.service';
 import { PdfPrintService } from '../../../../angular-commons/services/pdf-print.service';
+import { NameUtils } from '@dps/mycms-commons/dist/commons/utils/name.utils';
+import { FormUtils } from '../../../../angular-commons/services/form.utils';
 var PDocEditformComponent = /** @class */ (function (_super) {
     __extends(PDocEditformComponent, _super);
     function PDocEditformComponent(fb, toastr, cd, appService, pdocSearchFormUtils, searchFormUtils, pdocDataService, contentUtils, document, pdocNameSuggesterService, pdocDescSuggesterService, router, printService, pdfPrintService) {
@@ -117,12 +119,16 @@ var PDocEditformComponent = /** @class */ (function (_super) {
             rangeCommands: [],
             commandBlocks: []
         };
+        _this.suggestedFileBase = 'document';
         _this.descMdRecommended = '';
         _this.sampleDesc = '';
         _this.renderedDescId = undefined;
         return _this;
     }
     PDocEditformComponent.prototype.onInputChanged = function (value, field) {
+        if (field === 'key') {
+            this.suggestedFileBase = NameUtils.normalizeFileNames(value);
+        }
         return false;
     };
     PDocEditformComponent.prototype.recommendName = function () {
@@ -179,7 +185,7 @@ var PDocEditformComponent = /** @class */ (function (_super) {
                 height: height
             },
             printStyleIdFilter: new RegExp(printCssIdRegExp),
-            fileName: 'filename.pdf',
+            fileName: this.suggestedFileBase + '.pdf',
             pdfOptions: {
                 orientation: 'portrait',
                 format: 'a4'
@@ -309,6 +315,7 @@ var PDocEditformComponent = /** @class */ (function (_super) {
     };
     PDocEditformComponent.prototype.updateFormComponents = function () {
         _super.prototype.updateFormComponents.call(this);
+        this.suggestedFileBase = NameUtils.normalizeFileNames(FormUtils.getStringFormValue(this.editFormGroup.getRawValue(), 'key'));
     };
     PDocEditformComponent.prototype.updateOptionValues = function (pdocSearchResult) {
         _super.prototype.updateOptionValues.call(this, pdocSearchResult);

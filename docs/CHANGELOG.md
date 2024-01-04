@@ -3,14 +3,14 @@
 # Versions
 
 ## 6.1.0
-- frontend: improved text-editor
+- frontend: improved text-editor + pdf-support
 - frontend: fixed album-filename-restrictions
 
 ### new features
 - none
 
 ### improvements
-- frontend: improved text-editor
+- frontend: improved text-editor + pdf-support
 
 ### bug fixes
 - frontend: fixed album-filename-restrictions

@@ -14,8 +14,10 @@ import {CommonEnvironment} from '../common-environment';
 import {PdfPrintOptions, PdfPrintService} from '../../angular-commons/services/pdf-print.service';
 import {PrintOptions, PrintService} from '../../angular-commons/services/print.service';
 import {ElementFilterType} from '../../angular-commons/services/layout.utils';
+import {NameUtils} from '@dps/mycms-commons/dist/commons/utils/name.utils';
 
 export abstract class AbstractAppComponent {
+
     showLoadingSpinner = true;
     loadingSpinnerRunning = false;
     showLaw = false;
@@ -90,6 +92,8 @@ export abstract class AbstractAppComponent {
 
     onPrintPdf(elementFilterType: ElementFilterType, filter: string, width?: number, height?: number,
                printCssIdRegExp?: string) {
+        const suggestedFileBase = NameUtils.normalizeFileNames(document.title || 'document');
+
         const options: PdfPrintOptions = {
             printElementFilter: {
                 type: elementFilterType,
@@ -100,7 +104,7 @@ export abstract class AbstractAppComponent {
                 height: height
             },
             printStyleIdFilter: new RegExp(printCssIdRegExp),
-            fileName: 'filename.pdf',
+            fileName: suggestedFileBase + '.pdf',
             pdfOptions: {
                 orientation: 'portrait',
                 format: 'a4'

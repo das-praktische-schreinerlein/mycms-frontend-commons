@@ -20,7 +20,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, Output, ViewChild, ElementRef } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { AbstractInlineComponent } from '../inline.component';
 import { FormBuilder } from '@angular/forms';
 import { AngularMarkdownService } from '../../services/angular-markdown.service';
@@ -28,7 +28,6 @@ import { PlatformService } from '../../services/platform.service';
 import { LayoutService } from '../../services/layout.service';
 import { ToastrService } from 'ngx-toastr';
 import { AngularHtmlService } from '../../services/angular-html.service';
-import { DateUtils } from '@dps/mycms-commons/dist/commons/utils/date.utils';
 export var TextEditorLayout;
 (function (TextEditorLayout) {
     TextEditorLayout[TextEditorLayout["TOPDOWN"] = 0] = "TOPDOWN";
@@ -67,6 +66,7 @@ var TextEditorComponent = /** @class */ (function (_super) {
         };
         _this.autoUpdateInterval = 3000;
         _this.sampleDesc = '';
+        _this.suggestedFileName = 'document.md';
         _this.descMd = '';
         _this.descMdRecommended = '';
         _this.recommendAvailable = false;
@@ -78,6 +78,7 @@ var TextEditorComponent = /** @class */ (function (_super) {
         _this.recommendDesc = new EventEmitter();
         _this.changeDesc = new EventEmitter();
         _this.changeRenderedDescId = new EventEmitter();
+        _this.fileLoaded = new EventEmitter();
         return _this;
     }
     TextEditorComponent.prototype.ngOnInit = function () {
@@ -115,7 +116,7 @@ var TextEditorComponent = /** @class */ (function (_super) {
         }
     };
     TextEditorComponent.prototype.onFileSave = function () {
-        var filename = 'markdown-' + DateUtils.formatToFileNameDate(new Date(), '', '-', '') + '.md';
+        var filename = this.suggestedFileName;
         AngularHtmlService.browserSaveTextAsFile(this.editFormGroup.getRawValue()['descMd'] || '', filename, 'text/markdown');
         return true;
     };
@@ -278,6 +279,7 @@ var TextEditorComponent = /** @class */ (function (_super) {
         }
         reader.onload = (function (theFile) {
             return function (e) {
+                me.fileLoaded.emit(file.name);
                 var src = e.target.result;
                 return me.setValue('descMd', src);
             };
@@ -320,6 +322,10 @@ var TextEditorComponent = /** @class */ (function (_super) {
     __decorate([
         Input(),
         __metadata("design:type", Object)
+    ], TextEditorComponent.prototype, "suggestedFileName", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Object)
     ], TextEditorComponent.prototype, "descMd", void 0);
     __decorate([
         Input(),
@@ -349,6 +355,10 @@ var TextEditorComponent = /** @class */ (function (_super) {
         Output(),
         __metadata("design:type", EventEmitter)
     ], TextEditorComponent.prototype, "changeRenderedDescId", void 0);
+    __decorate([
+        Output(),
+        __metadata("design:type", EventEmitter)
+    ], TextEditorComponent.prototype, "fileLoaded", void 0);
     TextEditorComponent = __decorate([
         Component({
             selector: 'app-text-editor',

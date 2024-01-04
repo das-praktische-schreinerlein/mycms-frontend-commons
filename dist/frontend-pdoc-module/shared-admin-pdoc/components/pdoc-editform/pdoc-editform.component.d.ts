@@ -59,6 +59,7 @@ export declare class PDocEditformComponent extends CommonDocEditformComponent<PD
     textsSelectProfiles: IMultiSelectTexts;
     textsSelectSubSectionIds: IMultiSelectTexts;
     editorCommands: CommonDocEditorCommandComponentConfig;
+    suggestedFileBase: string;
     descMdRecommended: string;
     sampleDesc: string;
     renderedDescId: string;

@@ -29,6 +29,8 @@ import {ObjectUtils} from '@dps/mycms-commons/dist/commons/utils/object.utils';
 import {ElementFilterType} from '../../../../angular-commons/services/layout.utils';
 import {PrintOptions, PrintService} from '../../../../angular-commons/services/print.service';
 import {PdfPrintOptions, PdfPrintService} from '../../../../angular-commons/services/pdf-print.service';
+import {NameUtils} from '@dps/mycms-commons/dist/commons/utils/name.utils';
+import {FormUtils} from '../../../../angular-commons/services/form.utils';
 
 export interface PageDocEditformComponentConfig extends CommonDocEditformComponentConfig {
     editorCommands: CommonDocEditorCommandComponentConfig;
@@ -103,6 +105,7 @@ export class PDocEditformComponent extends CommonDocEditformComponent<PDocRecord
         commandBlocks: []
     };
 
+    suggestedFileBase = 'document';
     descMdRecommended  = '';
     sampleDesc = '';
     renderedDescId: string = undefined;
@@ -118,6 +121,10 @@ export class PDocEditformComponent extends CommonDocEditformComponent<PDocRecord
     }
 
     onInputChanged(value: any, field: string): boolean {
+        if (field === 'key') {
+            this.suggestedFileBase = NameUtils.normalizeFileNames(value);
+        }
+
         return false;
     }
 
@@ -186,7 +193,7 @@ export class PDocEditformComponent extends CommonDocEditformComponent<PDocRecord
                 height: height
             },
             printStyleIdFilter: new RegExp(printCssIdRegExp),
-            fileName: 'filename.pdf',
+            fileName: this.suggestedFileBase + '.pdf',
             pdfOptions: {
                 orientation: 'portrait',
                 format: 'a4'
@@ -335,6 +342,9 @@ export class PDocEditformComponent extends CommonDocEditformComponent<PDocRecord
 
     protected updateFormComponents(): void {
         super.updateFormComponents();
+
+        this.suggestedFileBase = NameUtils.normalizeFileNames(
+            FormUtils.getStringFormValue(this.editFormGroup.getRawValue(), 'key'));
     }
 
     protected updateOptionValues(pdocSearchResult: PDocSearchResult): boolean {

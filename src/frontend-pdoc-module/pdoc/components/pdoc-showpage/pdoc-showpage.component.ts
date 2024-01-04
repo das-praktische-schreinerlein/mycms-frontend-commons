@@ -28,6 +28,7 @@ import {COMMON_APP_ENVIRONMENT, CommonEnvironment} from '../../../../frontend-se
 import {ElementFilterType} from '../../../../angular-commons/services/layout.utils';
 import {PrintOptions, PrintService} from '../../../../angular-commons/services/print.service';
 import {PdfPrintOptions, PdfPrintService} from '../../../../angular-commons/services/pdf-print.service';
+import {NameUtils} from '@dps/mycms-commons/dist/commons/utils/name.utils';
 
 export interface PDocShowpageComponentAvailableTabs {
     ALL_ENTRIES?: boolean;
@@ -118,6 +119,7 @@ export class PDocShowPageComponent extends CommonDocShowpageComponent<PDocRecord
 
     onPrintPdf(elementFilterType: ElementFilterType, filter: string, width?: number, height?: number,
                printCssIdRegExp?: string) {
+        const suggestedFileBase = NameUtils.normalizeFileNames(this.record.key);
         const options: PdfPrintOptions = {
             printElementFilter: {
                 type: elementFilterType,
@@ -128,7 +130,7 @@ export class PDocShowPageComponent extends CommonDocShowpageComponent<PDocRecord
                 height: height
             },
             printStyleIdFilter: new RegExp(printCssIdRegExp),
-            fileName: 'filename.pdf',
+            fileName: suggestedFileBase + '.pdf',
             pdfOptions: {
                 orientation: 'portrait',
                 format: 'a4'
