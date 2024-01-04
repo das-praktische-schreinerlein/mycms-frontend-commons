@@ -42,7 +42,7 @@ var JsPdfGenerator = /** @class */ (function (_super) {
                 scale: (595.26 - 80) / srcWidth,
                 scrollY: 0
             },
-            // does not pass margin: [240, 260, 240, 260],
+            // does not pass margin: [40, 40, 40, 40],
             x: 40,
             y: 40
         })

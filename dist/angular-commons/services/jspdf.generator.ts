@@ -26,7 +26,7 @@ export class JsPdfGenerator extends PdfGenerator {
                 scale: (595.26 - 80) / srcWidth, // 595.26 is the width of A4 page
                 scrollY: 0
             },
-            // does not pass margin: [240, 260, 240, 260],
+            // does not pass margin: [40, 40, 40, 40],
             x: 40,
             y: 40
         })
