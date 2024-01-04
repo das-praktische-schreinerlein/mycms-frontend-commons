@@ -149,6 +149,7 @@ var TextEditorComponent = /** @class */ (function (_super) {
             + command.command
             + oldString.substring(startPos, oldString.length);
         this.setValue('descMd', newString);
+        this.onInputChanged(newString, 'descMd');
         this.renderDesc(true);
         textarea.focus();
         textarea.selectionStart = startPos;
@@ -172,6 +173,7 @@ var TextEditorComponent = /** @class */ (function (_super) {
             + command.commandEnd
             + oldString.substring(endPos, oldString.length);
         this.setValue('descMd', newString);
+        this.onInputChanged(newString, 'descMd');
         this.renderDesc(true);
         textarea.focus();
         textarea.selectionStart = startPos;
@@ -279,9 +281,10 @@ var TextEditorComponent = /** @class */ (function (_super) {
         }
         reader.onload = (function (theFile) {
             return function (e) {
-                me.fileLoaded.emit(file.name);
                 var src = e.target.result;
-                return me.setValue('descMd', src);
+                me.setValue('descMd', src);
+                me.onInputChanged(src, 'descMd');
+                me.fileLoaded.emit(file.name);
             };
         })(file);
         // Read in the file as a data URL.

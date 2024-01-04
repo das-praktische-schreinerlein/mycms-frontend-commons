@@ -236,6 +236,7 @@ export class TextEditorComponent extends AbstractInlineComponent implements OnIn
             + oldString.substring(startPos, oldString.length);
 
         this.setValue('descMd', newString);
+        this.onInputChanged(newString, 'descMd');
         this.renderDesc(true);
 
         textarea.focus();
@@ -265,6 +266,7 @@ export class TextEditorComponent extends AbstractInlineComponent implements OnIn
             + oldString.substring(endPos, oldString.length);
 
         this.setValue('descMd', newString);
+        this.onInputChanged(newString, 'descMd');
         this.renderDesc(true);
 
         textarea.focus();
@@ -400,10 +402,10 @@ export class TextEditorComponent extends AbstractInlineComponent implements OnIn
 
         reader.onload = (function(theFile) {
             return function(e) {
-                me.fileLoaded.emit(file.name);
-
                 const src = e.target.result;
-                return me.setValue('descMd', src);
+                me.setValue('descMd', src);
+                me.onInputChanged(src, 'descMd');
+                me.fileLoaded.emit(file.name);
             };
         })(file);
 
