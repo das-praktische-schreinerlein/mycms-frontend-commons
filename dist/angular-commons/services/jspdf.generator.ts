@@ -15,18 +15,20 @@ export class JsPdfGenerator extends PdfGenerator {
                 orientation: options.pdfOptions.orientation,
                 unit: 'pt',
                 format: options.pdfOptions.format,
-                precision: 16 // or "smart", default is 16
+                precision: 16, // or "smart", default is 16
+                compress: true
             }
         );
 
         const srcWidth = printElement.scrollWidth || printElement['offsetWidth'];
         return pdf.html(<HTMLElement>printElement, {
             html2canvas: {
-                scale: 595.26 / srcWidth, // 595.26 is the width of A4 page
+                scale: (595.26 - 80) / srcWidth, // 595.26 is the width of A4 page
                 scrollY: 0
             },
-            x: 0,
-            y: 0
+            // does not pass margin: [240, 260, 240, 260],
+            x: 40,
+            y: 40
         })
             .then(() => {
                 pdf.save(fileName);

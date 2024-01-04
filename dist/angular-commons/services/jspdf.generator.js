@@ -33,16 +33,18 @@ var JsPdfGenerator = /** @class */ (function (_super) {
             orientation: options.pdfOptions.orientation,
             unit: 'pt',
             format: options.pdfOptions.format,
-            precision: 16 // or "smart", default is 16
+            precision: 16,
+            compress: true
         });
         var srcWidth = printElement.scrollWidth || printElement['offsetWidth'];
         return pdf.html(printElement, {
             html2canvas: {
-                scale: 595.26 / srcWidth,
+                scale: (595.26 - 80) / srcWidth,
                 scrollY: 0
             },
-            x: 0,
-            y: 0
+            // does not pass margin: [240, 260, 240, 260],
+            x: 40,
+            y: 40
         })
             .then(function () {
             pdf.save(fileName);
