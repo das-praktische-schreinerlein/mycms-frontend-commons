@@ -22,7 +22,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 import { Injectable } from '@angular/core';
 import { LayoutUtils } from './layout.utils';
-import { PrintService } from './print.service';
+import { PreviewWindowType, PrintService } from './print.service';
 import { LayoutService } from './layout.service';
 var SimplePrintService = /** @class */ (function (_super) {
     __extends(SimplePrintService, _super);
@@ -31,6 +31,7 @@ var SimplePrintService = /** @class */ (function (_super) {
         _this.layoutService = layoutService;
         return _this;
     }
+    SimplePrintService_1 = SimplePrintService;
     SimplePrintService.prototype.openPrintPreview = function (options) {
         if (!options || !options.printElementFilter) {
             console.error('cant find printElement for print-preview - no printElementFilter applied', options);
@@ -40,7 +41,7 @@ var SimplePrintService = /** @class */ (function (_super) {
             console.error('cant find printElement for print-preview (printElementFilter)', options.printElementFilter);
             return undefined;
         }
-        var printWindow = this.openPrintPreviewWindow(options, 'print_preview');
+        var printWindow = this.openPrintPreviewWindow(options, SimplePrintService_1.PRINT_PREVIEW_WINDOW_ID);
         var printDocument = printWindow.document;
         var previewContainerId = 'printPreview';
         this.copyContentToPrintPreviewDocument(printDocument, doc, previewContainerId, options);
@@ -64,7 +65,41 @@ var SimplePrintService = /** @class */ (function (_super) {
         return true;
     };
     SimplePrintService.prototype.openPrintPreviewWindow = function (options, target) {
-        var printPreviewWindow = window.open('about:blank', target);
+        var previewIFrameContainer = document.getElementById(SimplePrintService_1.PRINT_PREVIEW_IFRAME_CONTAINER_ID);
+        if (previewIFrameContainer === null
+            || (options !== undefined && options.previewWindow !== undefined && options.previewWindow.type !== undefined
+                && options.previewWindow.type !== PreviewWindowType.IFRAME)) {
+            return this.openPrintPreviewRealWindow(options, target);
+        }
+        return this.openPrintPreviewIFrameWindow(options, target);
+    };
+    SimplePrintService.prototype.openPrintPreviewIFrameWindow = function (options, target) {
+        var previewIFrameContainer = document.getElementById(SimplePrintService_1.PRINT_PREVIEW_IFRAME_CONTAINER_ID);
+        if (previewIFrameContainer === undefined) {
+            return;
+        }
+        var printPreviewWindow = document.getElementById(SimplePrintService_1.PRINT_PREVIEW_IFRAME_ID)['contentWindow'];
+        if (printPreviewWindow) {
+            if (options.previewWindow && (options.previewWindow.width || options.previewWindow.height)) {
+                console.log('resize print_preview x/y', options.previewWindow.width || window.innerWidth, options.previewWindow.height || window.innerHeight);
+                printPreviewWindow.resizeTo(options.previewWindow.width || window.innerWidth, options.previewWindow.height || window.innerHeight);
+            }
+            printPreviewWindow.document.open();
+            printPreviewWindow.document.write('');
+            printPreviewWindow.document.close();
+            previewIFrameContainer.style.display = 'block';
+        }
+        return printPreviewWindow;
+    };
+    SimplePrintService.prototype.openPrintPreviewRealWindow = function (options, target) {
+        var features = 'popup=yes;';
+        if (options.previewWindow.width) {
+            features += 'width=' + options.previewWindow.width + ';';
+        }
+        if (options.previewWindow.height) {
+            features += 'height=' + options.previewWindow.height + ';';
+        }
+        var printPreviewWindow = window.open('about:blank', target, features);
         if (options.previewWindow && (options.previewWindow.width || options.previewWindow.height)) {
             console.log('resize print_preview x/y', options.previewWindow.width || window.innerWidth, options.previewWindow.height || window.innerHeight);
             printPreviewWindow.resizeTo(options.previewWindow.width || window.innerWidth, options.previewWindow.height || window.innerHeight);
@@ -106,7 +141,8 @@ var SimplePrintService = /** @class */ (function (_super) {
     SimplePrintService.prototype.isPrintAvailable = function () {
         return this.layoutService.isDesktop() && window.print !== undefined;
     };
-    SimplePrintService = __decorate([
+    var SimplePrintService_1;
+    SimplePrintService = SimplePrintService_1 = __decorate([
         Injectable(),
         __metadata("design:paramtypes", [LayoutService])
     ], SimplePrintService);

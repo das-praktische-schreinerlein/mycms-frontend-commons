@@ -5,9 +5,10 @@
 ## 6.1.0
 - frontend: improved text-editor + pdf-support
 - frontend: fixed album-filename-restrictions
+- frontend: added support for iframe-print-preview for pdf in android-aps ;-)
 
 ### new features
-- none
+- frontend: added support for iframe-print-preview for pdf in android-aps ;-)
 
 ### improvements
 - frontend: improved text-editor + pdf-support

@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {LayoutUtils} from './layout.utils';
-import {PrintOptions, PrintService} from './print.service';
+import {PreviewWindowType, PrintOptions, PrintService} from './print.service';
 import {LayoutService} from './layout.service';
 
 @Injectable()
@@ -23,7 +23,7 @@ export class SimplePrintService extends PrintService {
             return undefined;
         }
 
-        const printWindow = this.openPrintPreviewWindow(options, 'print_preview');
+        const printWindow = this.openPrintPreviewWindow(options, SimplePrintService.PRINT_PREVIEW_WINDOW_ID);
         const printDocument = printWindow.document;
         const previewContainerId = 'printPreview';
         this.copyContentToPrintPreviewDocument(printDocument, doc, previewContainerId, options);
@@ -55,8 +55,53 @@ export class SimplePrintService extends PrintService {
         return true;
     }
 
-    protected openPrintPreviewWindow(options: PrintOptions, target: string) {
-        const printPreviewWindow = window.open('about:blank', target);
+    protected openPrintPreviewWindow(options: PrintOptions, target: string): Window {
+        const previewIFrameContainer = document.getElementById(SimplePrintService.PRINT_PREVIEW_IFRAME_CONTAINER_ID);
+        if (previewIFrameContainer === null
+            || (options !== undefined && options.previewWindow !== undefined && options.previewWindow.type !== undefined
+                && options.previewWindow.type !== PreviewWindowType.IFRAME)) {
+            return this.openPrintPreviewRealWindow(options, target);
+        }
+
+        return this.openPrintPreviewIFrameWindow(options, target);
+    }
+
+    protected openPrintPreviewIFrameWindow(options: PrintOptions, target: string): Window {
+        const previewIFrameContainer = document.getElementById(SimplePrintService.PRINT_PREVIEW_IFRAME_CONTAINER_ID);
+        if (previewIFrameContainer === undefined) {
+            return;
+        }
+
+        const printPreviewWindow = document.getElementById(SimplePrintService.PRINT_PREVIEW_IFRAME_ID)['contentWindow'];
+        if (printPreviewWindow) {
+            if (options.previewWindow && (options.previewWindow.width || options.previewWindow.height)) {
+                console.log('resize print_preview x/y',
+                    options.previewWindow.width || window.innerWidth,
+                    options.previewWindow.height || window.innerHeight);
+                printPreviewWindow.resizeTo(options.previewWindow.width || window.innerWidth,
+                    options.previewWindow.height || window.innerHeight);
+            }
+
+            printPreviewWindow.document.open();
+            printPreviewWindow.document.write('');
+            printPreviewWindow.document.close();
+
+            previewIFrameContainer.style.display = 'block';
+        }
+
+        return printPreviewWindow;
+    }
+
+    protected openPrintPreviewRealWindow(options: PrintOptions, target: string): Window {
+        let features = 'popup=yes;';
+        if (options.previewWindow.width) {
+            features += 'width=' + options.previewWindow.width + ';';
+        }
+        if (options.previewWindow.height) {
+            features += 'height=' + options.previewWindow.height + ';'
+        }
+
+        const printPreviewWindow = window.open('about:blank', target, features);
         if (options.previewWindow && (options.previewWindow.width || options.previewWindow.height)) {
             console.log('resize print_preview x/y',
                 options.previewWindow.width || window.innerWidth,

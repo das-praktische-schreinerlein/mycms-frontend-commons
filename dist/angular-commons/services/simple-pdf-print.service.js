@@ -23,7 +23,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 import { Injectable } from '@angular/core';
 import { LayoutUtils } from './layout.utils';
 import { PdfGenerator, PdfPrintService } from './pdf-print.service';
-import { PrintService } from './print.service';
+import { PreviewWindowType, PrintService } from './print.service';
+import { SimplePrintService } from './simple-print.service';
 var SimplePdfPrintService = /** @class */ (function (_super) {
     __extends(SimplePdfPrintService, _super);
     function SimplePdfPrintService(printService, pdfGenerator) {
@@ -58,7 +59,15 @@ var SimplePdfPrintService = /** @class */ (function (_super) {
         return new Promise(function (resolve) {
             setTimeout(function () {
                 _this.pdfGenerator.generatePdf(printWindow, printElement, options).then(function () {
-                    printWindow.close();
+                    var previewIFrameContainer = document.getElementById(SimplePrintService.PRINT_PREVIEW_IFRAME_CONTAINER_ID);
+                    if (previewIFrameContainer === null
+                        || (options !== undefined && options.previewWindow !== undefined && options.previewWindow.type !== undefined
+                            && options.previewWindow.type !== PreviewWindowType.IFRAME)) {
+                        printWindow.close();
+                    }
+                    else {
+                        previewIFrameContainer.style.display = 'none';
+                    }
                     resolve(printWindow);
                 });
             }, options.waitForRenderingMs);
