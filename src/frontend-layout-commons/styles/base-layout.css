@@ -231,3 +231,14 @@ div.relative-container {
 .command-icon-scroll-to-top span::after {
     content: 'Top \290A';
 }
+
+.content-container-iframeprintpreview {
+    background: lightgrey;
+    opacity: 20;
+    position: fixed;
+    display: none;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 800px;
+}
