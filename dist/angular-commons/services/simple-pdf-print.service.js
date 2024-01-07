@@ -33,10 +33,13 @@ var SimplePdfPrintService = /** @class */ (function (_super) {
         _this.pdfGenerator = pdfGenerator;
         return _this;
     }
+    SimplePdfPrintService_1 = SimplePdfPrintService;
     SimplePdfPrintService.prototype.printPdf = function (options) {
         var _this = this;
+        this.prepareSrcForPrint(options);
         var printWindow = this.printService.openPrintPreview(options);
         if (!printWindow) {
+            this.onErrorPrintDocument(undefined, undefined, undefined, undefined, options);
             return undefined;
         }
         var previewContainerId = 'printPreview';
@@ -44,15 +47,18 @@ var SimplePdfPrintService = /** @class */ (function (_super) {
         var previewContainer = LayoutUtils.extractElementForFilter(printDocument, 'ID', previewContainerId);
         if (!previewContainer) {
             console.error('cant find copied printElement for print-preview (printPreview)', previewContainerId);
+            this.onErrorPrintDocument(printWindow, printDocument, previewContainer, undefined, options);
             return undefined;
         }
         var printElement = LayoutUtils.extractElementForFilter(printDocument, options.printElementFilter.type, options.printElementFilter.value);
         if (!printElement) {
             console.error('cant find copied printElement for print-preview (printPreview)', printElement);
+            this.onErrorPrintDocument(printWindow, printDocument, previewContainer, printElement, options);
             return undefined;
         }
         if (!this.preparePrintPreviewDocumentForPrint(printWindow, printDocument, previewContainer, printElement, options)) {
             console.error('error while preparing print-preview');
+            this.onErrorPrintDocument(printWindow, printDocument, previewContainer, printElement, options);
             return undefined;
         }
         // wait to load all styles;
@@ -68,10 +74,14 @@ var SimplePdfPrintService = /** @class */ (function (_super) {
                     else {
                         previewIFrameContainer.style.display = 'none';
                     }
+                    _this.afterPrintDocument(printWindow, printDocument, previewContainer, printElement, options);
                     resolve(printWindow);
                 });
             }, options.waitForRenderingMs);
         });
+    };
+    SimplePdfPrintService.prototype.isPrintPdfAvailable = function () {
+        return this.pdfGenerator.isPrintPdfAvailable();
     };
     SimplePdfPrintService.prototype.preparePrintPreviewDocumentForPrint = function (printWindow, printDocument, previewContainer, printElement, options) {
         var style = previewContainer.getAttribute('style') || '';
@@ -82,10 +92,24 @@ var SimplePdfPrintService = /** @class */ (function (_super) {
         previewContainer.setAttribute('style', style);
         return true;
     };
-    SimplePdfPrintService.prototype.isPrintPdfAvailable = function () {
-        return this.pdfGenerator.isPrintPdfAvailable();
+    SimplePdfPrintService.prototype.prepareSrcForPrint = function (options) {
+        this.setMediaForPrintPrepareCss('all');
     };
-    SimplePdfPrintService = __decorate([
+    SimplePdfPrintService.prototype.onErrorPrintDocument = function (printWindow, printDocument, previewContainer, printElement, options) {
+        this.setMediaForPrintPrepareCss('print');
+    };
+    SimplePdfPrintService.prototype.afterPrintDocument = function (printWindow, printDocument, previewContainer, printElement, options) {
+        this.setMediaForPrintPrepareCss('print');
+    };
+    SimplePdfPrintService.prototype.setMediaForPrintPrepareCss = function (value) {
+        var stylesheet = document.getElementById(SimplePdfPrintService_1.PRINT_PREPARE_CSS_ID);
+        if (stylesheet !== null) {
+            stylesheet.setAttribute('media', value);
+        }
+    };
+    var SimplePdfPrintService_1;
+    SimplePdfPrintService.PRINT_PREPARE_CSS_ID = 'print-prepare-pdf.css';
+    SimplePdfPrintService = SimplePdfPrintService_1 = __decorate([
         Injectable(),
         __metadata("design:paramtypes", [PrintService, PdfGenerator])
     ], SimplePdfPrintService);

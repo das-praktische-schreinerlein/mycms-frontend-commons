@@ -72,7 +72,27 @@ export class SimplePrintService extends PrintService {
             return;
         }
 
-        const printPreviewWindow = document.getElementById(SimplePrintService.PRINT_PREVIEW_IFRAME_ID)['contentWindow'];
+        let printPreviewIFrame = document.getElementById(SimplePrintService.PRINT_PREVIEW_IFRAME_ID);
+        if (printPreviewIFrame === null) {
+            const ifrm = document.createElement('iframe');
+            ifrm.id = SimplePrintService.PRINT_PREVIEW_IFRAME_ID;
+            ifrm.name = SimplePrintService.PRINT_PREVIEW_IFRAME_ID;
+            ifrm.title = SimplePrintService.PRINT_PREVIEW_IFRAME_ID;
+            ifrm.style.width = '800px';
+            ifrm.style.height = '600px';
+            previewIFrameContainer.appendChild(ifrm);
+
+            printPreviewIFrame = document.getElementById(SimplePrintService.PRINT_PREVIEW_IFRAME_ID);
+            console.log('created printPreviewIFrame',  ifrm.id);
+        } else {
+            console.log('reuse printPreviewIFrame',  SimplePrintService.PRINT_PREVIEW_IFRAME_ID);
+        }
+
+        if (printPreviewIFrame === null) {
+            return;
+        }
+
+        const printPreviewWindow = printPreviewIFrame['contentWindow'];
         if (printPreviewWindow) {
             if (options.previewWindow && (options.previewWindow.width || options.previewWindow.height)) {
                 console.log('resize print_preview x/y',
@@ -102,6 +122,7 @@ export class SimplePrintService extends PrintService {
         }
 
         const printPreviewWindow = window.open('about:blank', target, features);
+        console.log('created printPreviewWindow',  target);
         if (options.previewWindow && (options.previewWindow.width || options.previewWindow.height)) {
             console.log('resize print_preview x/y',
                 options.previewWindow.width || window.innerWidth,

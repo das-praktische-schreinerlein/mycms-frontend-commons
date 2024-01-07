@@ -7,6 +7,24 @@ body {
     display: block;
 }
 
+.fx-bg-theme {
+    background: #F3F7FB !important;
+}
+.fx-bg-type {
+    background: #fcf1b5 !important;
+}
+.fx-bg-name {
+    background: #F3F7FB !important;
+}
+
+.card-footer {
+    background: #F3F7FB !important;
+}
+
+.card-action-buttons, .btn-navigation, .btn-action, .btn-action-icon {
+    display: none !important;
+}
+
 .sectionpage-stacked-sidebar-container {
     display: none;
 }

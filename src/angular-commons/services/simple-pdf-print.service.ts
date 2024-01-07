@@ -6,14 +6,18 @@ import {SimplePrintService} from './simple-print.service';
 
 @Injectable()
 export class SimplePdfPrintService extends PdfPrintService {
+    public static readonly PRINT_PREPARE_CSS_ID = 'print-prepare-pdf.css';
 
     constructor(protected printService: PrintService, protected pdfGenerator: PdfGenerator) {
         super();
     }
 
     public printPdf(options: PdfPrintOptions): Promise<Window> {
+        this.prepareSrcForPrint(options);
+
         const printWindow = this.printService.openPrintPreview(options);
         if (!printWindow) {
+            this.onErrorPrintDocument(undefined, undefined, undefined, undefined, options);
             return undefined;
         }
 
@@ -22,6 +26,7 @@ export class SimplePdfPrintService extends PdfPrintService {
         const previewContainer: Element = LayoutUtils.extractElementForFilter(printDocument, 'ID',  previewContainerId);
         if (!previewContainer) {
             console.error('cant find copied printElement for print-preview (printPreview)', previewContainerId);
+            this.onErrorPrintDocument(printWindow, printDocument, previewContainer, undefined, options);
             return undefined;
         }
 
@@ -30,11 +35,13 @@ export class SimplePdfPrintService extends PdfPrintService {
             options.printElementFilter.value);
         if (!printElement) {
             console.error('cant find copied printElement for print-preview (printPreview)', printElement);
+            this.onErrorPrintDocument(printWindow, printDocument, previewContainer, printElement, options);
             return undefined;
         }
 
         if (!this.preparePrintPreviewDocumentForPrint(printWindow, printDocument, previewContainer, printElement, options)) {
             console.error('error while preparing print-preview');
+            this.onErrorPrintDocument(printWindow, printDocument, previewContainer, printElement, options);
             return undefined;
         }
 
@@ -51,10 +58,15 @@ export class SimplePdfPrintService extends PdfPrintService {
                         previewIFrameContainer.style.display = 'none';
                     }
 
+                    this.afterPrintDocument(printWindow, printDocument, previewContainer, printElement, options);
                     resolve(printWindow);
                 });
             }, options.waitForRenderingMs);
         });
+    }
+
+    public isPrintPdfAvailable(): boolean {
+        return this.pdfGenerator.isPrintPdfAvailable();
     }
 
     protected preparePrintPreviewDocumentForPrint(printWindow: Window, printDocument: Document,
@@ -70,7 +82,24 @@ export class SimplePdfPrintService extends PdfPrintService {
         return true;
     }
 
-    public isPrintPdfAvailable(): boolean {
-        return this.pdfGenerator.isPrintPdfAvailable();
+    protected prepareSrcForPrint(options: PdfPrintOptions) {
+        this.setMediaForPrintPrepareCss('all');
+    }
+
+    protected onErrorPrintDocument(printWindow: Window, printDocument: Document,
+                                   previewContainer: Element, printElement: Element, options: PdfPrintOptions) {
+        this.setMediaForPrintPrepareCss('print');
+    }
+
+    protected afterPrintDocument(printWindow: Window, printDocument: Document,
+                                 previewContainer: Element, printElement: Element, options: PdfPrintOptions) {
+        this.setMediaForPrintPrepareCss('print');
+    }
+
+    protected setMediaForPrintPrepareCss(value: string): void {
+        const stylesheet = document.getElementById(SimplePdfPrintService.PRINT_PREPARE_CSS_ID);
+        if (stylesheet !== null) {
+            stylesheet.setAttribute('media', value);
+        }
     }
 }

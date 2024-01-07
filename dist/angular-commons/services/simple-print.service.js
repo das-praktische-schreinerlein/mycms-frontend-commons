@@ -78,7 +78,25 @@ var SimplePrintService = /** @class */ (function (_super) {
         if (previewIFrameContainer === undefined) {
             return;
         }
-        var printPreviewWindow = document.getElementById(SimplePrintService_1.PRINT_PREVIEW_IFRAME_ID)['contentWindow'];
+        var printPreviewIFrame = document.getElementById(SimplePrintService_1.PRINT_PREVIEW_IFRAME_ID);
+        if (printPreviewIFrame === null) {
+            var ifrm = document.createElement('iframe');
+            ifrm.id = SimplePrintService_1.PRINT_PREVIEW_IFRAME_ID;
+            ifrm.name = SimplePrintService_1.PRINT_PREVIEW_IFRAME_ID;
+            ifrm.title = SimplePrintService_1.PRINT_PREVIEW_IFRAME_ID;
+            ifrm.style.width = '800px';
+            ifrm.style.height = '600px';
+            previewIFrameContainer.appendChild(ifrm);
+            printPreviewIFrame = document.getElementById(SimplePrintService_1.PRINT_PREVIEW_IFRAME_ID);
+            console.log('created printPreviewIFrame', ifrm.id);
+        }
+        else {
+            console.log('reuse printPreviewIFrame', SimplePrintService_1.PRINT_PREVIEW_IFRAME_ID);
+        }
+        if (printPreviewIFrame === null) {
+            return;
+        }
+        var printPreviewWindow = printPreviewIFrame['contentWindow'];
         if (printPreviewWindow) {
             if (options.previewWindow && (options.previewWindow.width || options.previewWindow.height)) {
                 console.log('resize print_preview x/y', options.previewWindow.width || window.innerWidth, options.previewWindow.height || window.innerHeight);
@@ -100,6 +118,7 @@ var SimplePrintService = /** @class */ (function (_super) {
             features += 'height=' + options.previewWindow.height + ';';
         }
         var printPreviewWindow = window.open('about:blank', target, features);
+        console.log('created printPreviewWindow', target);
         if (options.previewWindow && (options.previewWindow.width || options.previewWindow.height)) {
             console.log('resize print_preview x/y', options.previewWindow.width || window.innerWidth, options.previewWindow.height || window.innerHeight);
             printPreviewWindow.resizeTo(options.previewWindow.width || window.innerWidth, options.previewWindow.height || window.innerHeight);
