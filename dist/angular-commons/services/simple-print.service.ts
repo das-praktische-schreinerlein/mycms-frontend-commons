@@ -10,6 +10,10 @@ export class SimplePrintService extends PrintService {
         super();
     }
 
+    public isPrintAvailable(): boolean {
+        return this.layoutService.isDesktop() && window.print !== undefined;
+    }
+
     public openPrintPreview(options: PrintOptions): Window {
         if (!options || !options.printElementFilter) {
             console.error('cant find printElement for print-preview - no printElementFilter applied', options);
@@ -48,6 +52,30 @@ export class SimplePrintService extends PrintService {
         }
 
         return printWindow;
+    }
+
+    public activatePrintStyles(printDocument: Document) {
+        const printCssStyles = [];
+        printDocument.head.querySelectorAll('link, style').forEach(htmlElement => {
+            if (htmlElement.getAttribute('media') === 'print') {
+                htmlElement.remove();
+                printCssStyles.push(<HTMLElement>htmlElement.cloneNode(true));
+                return;
+            }
+
+            if (htmlElement.getAttribute('media') === 'screen') {
+                htmlElement.setAttribute('media', 'blocked');
+            }
+        });
+
+        // put printCss to end override all other styles
+        if (printCssStyles.length > 0) {
+            for (const printCss of printCssStyles) {
+                console.log('append matching printCss-links/styles at the end', printCss.id);
+                printDocument.head.appendChild(printCss);
+                printCss.setAttribute('media', 'all');
+            }
+        }
     }
 
     protected preparePrintPreviewDocumentForPrint(printWindow: Window, printDocument: Document, previewContainer: Element,
@@ -170,9 +198,4 @@ export class SimplePrintService extends PrintService {
             }
         }
     }
-
-    public isPrintAvailable(): boolean {
-        return this.layoutService.isDesktop() && window.print !== undefined;
-    }
-
 }

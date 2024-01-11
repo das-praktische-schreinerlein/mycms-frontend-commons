@@ -34,6 +34,9 @@ var SimplePdfPrintService = /** @class */ (function (_super) {
         return _this;
     }
     SimplePdfPrintService_1 = SimplePdfPrintService;
+    SimplePdfPrintService.prototype.isPrintPdfAvailable = function () {
+        return this.pdfGenerator.isPrintPdfAvailable();
+    };
     SimplePdfPrintService.prototype.printPdf = function (options) {
         var _this = this;
         this.prepareSrcForPrint(options);
@@ -79,9 +82,6 @@ var SimplePdfPrintService = /** @class */ (function (_super) {
                 });
             }, options.waitForRenderingMs);
         });
-    };
-    SimplePdfPrintService.prototype.isPrintPdfAvailable = function () {
-        return this.pdfGenerator.isPrintPdfAvailable();
     };
     SimplePdfPrintService.prototype.preparePrintPreviewDocumentForPrint = function (printWindow, printDocument, previewContainer, printElement, options) {
         var style = previewContainer.getAttribute('style') || '';

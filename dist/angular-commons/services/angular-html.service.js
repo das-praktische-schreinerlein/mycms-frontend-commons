@@ -16,7 +16,7 @@ var AngularHtmlService = /** @class */ (function () {
         }
     };
     AngularHtmlService.browserSaveTextAsFile = function (text, fileName, mimeType) {
-        var blob = new Blob([text], { type: mimeType });
+        var blob = new File([text], fileName, { type: mimeType });
         AngularHtmlService.browserSaveBlobAsFile(blob, fileName, mimeType);
     };
     AngularHtmlService.prototype.renderHtml = function (parentSelector, html, routeLocalLinkWithAngularRouter) {

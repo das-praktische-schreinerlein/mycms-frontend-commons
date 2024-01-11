@@ -12,6 +12,10 @@ export class SimplePdfPrintService extends PdfPrintService {
         super();
     }
 
+    public isPrintPdfAvailable(): boolean {
+        return this.pdfGenerator.isPrintPdfAvailable();
+    }
+
     public printPdf(options: PdfPrintOptions): Promise<Window> {
         this.prepareSrcForPrint(options);
 
@@ -63,10 +67,6 @@ export class SimplePdfPrintService extends PdfPrintService {
                 });
             }, options.waitForRenderingMs);
         });
-    }
-
-    public isPrintPdfAvailable(): boolean {
-        return this.pdfGenerator.isPrintPdfAvailable();
     }
 
     protected preparePrintPreviewDocumentForPrint(printWindow: Window, printDocument: Document,

@@ -32,6 +32,9 @@ var SimplePrintService = /** @class */ (function (_super) {
         return _this;
     }
     SimplePrintService_1 = SimplePrintService;
+    SimplePrintService.prototype.isPrintAvailable = function () {
+        return this.layoutService.isDesktop() && window.print !== undefined;
+    };
     SimplePrintService.prototype.openPrintPreview = function (options) {
         if (!options || !options.printElementFilter) {
             console.error('cant find printElement for print-preview - no printElementFilter applied', options);
@@ -60,6 +63,28 @@ var SimplePrintService = /** @class */ (function (_super) {
             return undefined;
         }
         return printWindow;
+    };
+    SimplePrintService.prototype.activatePrintStyles = function (printDocument) {
+        var printCssStyles = [];
+        printDocument.head.querySelectorAll('link, style').forEach(function (htmlElement) {
+            if (htmlElement.getAttribute('media') === 'print') {
+                htmlElement.remove();
+                printCssStyles.push(htmlElement.cloneNode(true));
+                return;
+            }
+            if (htmlElement.getAttribute('media') === 'screen') {
+                htmlElement.setAttribute('media', 'blocked');
+            }
+        });
+        // put printCss to end override all other styles
+        if (printCssStyles.length > 0) {
+            for (var _i = 0, printCssStyles_1 = printCssStyles; _i < printCssStyles_1.length; _i++) {
+                var printCss = printCssStyles_1[_i];
+                console.log('append matching printCss-links/styles at the end', printCss.id);
+                printDocument.head.appendChild(printCss);
+                printCss.setAttribute('media', 'all');
+            }
+        }
     };
     SimplePrintService.prototype.preparePrintPreviewDocumentForPrint = function (printWindow, printDocument, previewContainer, printElement, options) {
         return true;
@@ -149,16 +174,13 @@ var SimplePrintService = /** @class */ (function (_super) {
         });
         // put printCss to end override all other styles
         if (printCssStyles.length > 0) {
-            for (var _i = 0, printCssStyles_1 = printCssStyles; _i < printCssStyles_1.length; _i++) {
-                var printCss = printCssStyles_1[_i];
+            for (var _i = 0, printCssStyles_2 = printCssStyles; _i < printCssStyles_2.length; _i++) {
+                var printCss = printCssStyles_2[_i];
                 console.log('append matching printCss-links/styles at the end', options.printStyleIdFilter, printCss.id);
                 printDocument.head.appendChild(printCss);
                 printCss.setAttribute('media', 'all');
             }
         }
-    };
-    SimplePrintService.prototype.isPrintAvailable = function () {
-        return this.layoutService.isDesktop() && window.print !== undefined;
     };
     var SimplePrintService_1;
     SimplePrintService = SimplePrintService_1 = __decorate([

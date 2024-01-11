@@ -16,7 +16,7 @@ export abstract class AngularHtmlService {
     }
 
     public static browserSaveTextAsFile(text: string, fileName: string, mimeType: string) {
-        const blob = new Blob([text], { type: mimeType });
+        const blob = new File([text], fileName, { type: mimeType });
         AngularHtmlService.browserSaveBlobAsFile(blob, fileName, mimeType);
     }
 

@@ -21,5 +21,6 @@ export declare abstract class PrintService {
     static readonly PRINT_PREVIEW_IFRAME_ID = "print_preview_iframe";
     static readonly PRINT_PREVIEW_WINDOW_ID = "print_preview_window";
     abstract openPrintPreview(options: PrintOptions): Window;
+    abstract activatePrintStyles(printDocument: Document): any;
     isPrintAvailable(): boolean;
 }
