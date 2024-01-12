@@ -151,10 +151,15 @@ var CommonDocContentUtils = /** @class */ (function () {
         if (keywords === undefined || keywords.length < 1) {
             return keywordKats;
         }
-        for (var _i = 0, blacklist_1 = blacklist; _i < blacklist_1.length; _i++) {
-            var keyword = blacklist_1[_i];
-            if (keywords.indexOf(keyword) > -1) {
-                // TODO remove
+        var availableKeywords = Object.assign([], keywords);
+        if (blacklist.length > 0) {
+            var index = void 0;
+            for (var _i = 0, blacklist_1 = blacklist; _i < blacklist_1.length; _i++) {
+                var pattern = blacklist_1[_i];
+                index = availableKeywords.indexOf(pattern);
+                if (index > -1) {
+                    availableKeywords.splice(index, 1);
+                }
             }
         }
         for (var _a = 0, config_1 = config; _a < config_1.length; _a++) {
@@ -165,7 +170,7 @@ var CommonDocContentUtils = /** @class */ (function () {
                 for (var _d = 0, _e = (possiblePrefixes || []); _d < _e.length; _d++) {
                     var prefix = _e[_d];
                     var searchPrefix = prefix + keyword;
-                    if (keywords.indexOf(searchPrefix) > -1) {
+                    if (availableKeywords.indexOf(searchPrefix) > -1) {
                         keywordFound.push(keyword);
                         break;
                     }

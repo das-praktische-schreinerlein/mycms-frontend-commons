@@ -208,9 +208,15 @@ export class CommonDocContentUtils {
         if (keywords === undefined || keywords.length < 1) {
             return keywordKats;
         }
-        for (const keyword of blacklist) {
-            if (keywords.indexOf(keyword) > -1) {
-                // TODO remove
+
+        const availableKeywords = Object.assign([], keywords);
+        if (blacklist.length > 0) {
+            let index: number;
+            for (const pattern of blacklist) {
+                index = availableKeywords.indexOf(pattern);
+                if (index > -1) {
+                    availableKeywords.splice(index, 1);
+                }
             }
         }
 
@@ -219,7 +225,7 @@ export class CommonDocContentUtils {
             for (const keyword of keywordKat.keywords) {
                 for (const prefix of (possiblePrefixes || [])) {
                     const searchPrefix = prefix + keyword;
-                    if (keywords.indexOf(searchPrefix) > -1) {
+                    if (availableKeywords.indexOf(searchPrefix) > -1) {
                         keywordFound.push(keyword);
                         break;
                     }
