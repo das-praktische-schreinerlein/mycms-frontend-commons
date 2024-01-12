@@ -15,6 +15,7 @@
 
 ### bug fixes
 - frontend: fixed album-filename-restrictions
+- frontend: fixed keyword-blacklist
 
 ### breaking changes
 - none
