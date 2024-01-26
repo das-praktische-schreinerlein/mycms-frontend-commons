@@ -20,9 +20,9 @@
                 </div>
                 {{ renderDesc() }}
             </div>
-            <br clear="all" />
+            <span class="small-linebreak" style="line-height: 1px;display: block;"><br clear="all"/></span>
         </div>
-        <div class="card-footer text-right" style="width: 100%">
+        <div class="card-footer text-right hidden-print" style="width: 100%">
             <div class="card-action-buttons align-bottom" role="group" aria-label="Actions">
                 <app-pdoc-action [record]="record"
                                  [type]="'actionTagsBig'"
@@ -47,7 +47,7 @@
             </ng-container>
         </ng-container>
 
-        <div class="card-footer text-right mt-2" style="width: 100%">
+        <div class="card-footer text-right hidden-print mt-2" style="width: 100%">
             <div class="card-action-buttons align-bottom" role="group" aria-label="Actions">
                 <app-pdoc-simple-search-navigation [record]="record"></app-pdoc-simple-search-navigation>
             </div>
