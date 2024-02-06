@@ -1,0 +1,14 @@
+div.changelogvaluetable .entry {
+    min-width: 81px;
+}
+div.changelogvaluetable .entry .label {
+    min-width: 30px;
+}
+div.changelogvaluetable .entry .value {
+    text-align: right;
+    white-space: nowrap;
+}
+
+div.changelogvaluetable .smallentry {
+    min-width: 0!important;
+}

@@ -33,6 +33,7 @@ import { CommonDocObjectNavigationComponent } from './components/cdoc-object-nav
 import { CommonDocExtendedObjectPropertiesComponent } from './components/cdoc-extended-object-properties/cdoc-extended-object-properties.component';
 import { CommonDocMediaMetaComponent } from './components/cdoc-mediameta/cdoc-mediameta.component';
 import { OdImageEditorComponent } from './components/odimage-editor/odimage-editor.component';
+import { CommonDocChangelogComponent } from './components/cdoc-changelog/cdoc-changelog.component';
 var FrontendCommonDocCommonsModule = /** @class */ (function () {
     function FrontendCommonDocCommonsModule() {
     }
@@ -59,6 +60,7 @@ var FrontendCommonDocCommonsModule = /** @class */ (function () {
                 CommonDocObjectNavigationComponent,
                 CommonDocExtendedObjectPropertiesComponent,
                 CommonDocMediaMetaComponent,
+                CommonDocChangelogComponent,
                 OdImageEditorComponent
             ],
             imports: [
@@ -93,6 +95,7 @@ var FrontendCommonDocCommonsModule = /** @class */ (function () {
                 CommonDocObjectNavigationComponent,
                 CommonDocExtendedObjectPropertiesComponent,
                 CommonDocMediaMetaComponent,
+                CommonDocChangelogComponent,
                 OdImageEditorComponent
             ]
         })
