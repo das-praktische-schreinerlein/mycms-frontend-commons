@@ -23,6 +23,7 @@
             <div class="techvaluetable">
                 <div *ngIf="listItem.currentRecord.playlists !== undefined && listItem.currentRecord.playlists.length > 0" class="entry"><div class="label">Playlists:</div><div class="value">{{listItem.currentRecord.playlists}}</div></div>
             </div>
+            <app-cdoc-changelog [record]="record" [small]="true"></app-cdoc-changelog>
         </div>
     </div>
 </ng-container>
