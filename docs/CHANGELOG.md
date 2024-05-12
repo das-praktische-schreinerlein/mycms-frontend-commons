@@ -2,7 +2,7 @@
  
 # Versions
 
-## 6.1.0
+## 6.1.0 (12.05.2024)
 - frontend: improved text-editor + pdf-support
 - frontend: fixed album-filename-restrictions
 - frontend: added support for iframe-print-preview for pdf in android-aps ;-)
