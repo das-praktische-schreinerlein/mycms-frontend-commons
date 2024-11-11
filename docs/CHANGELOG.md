@@ -2,6 +2,22 @@
  
 # Versions
 
+## 6.2.0
+- improved pdoc-list: render markdown to text
+
+### new features
+- none
+
+### improvements
+- improved pdoc-list: render markdown to text
+
+### bug fixes
+- none
+
+### breaking changes
+- none
+
+
 ## 6.1.0 (2024-05-12)
 - frontend: improved text-editor + pdf-support
 - frontend: fixed album-filename-restrictions

@@ -5,6 +5,7 @@ import {Layout, LayoutService} from '../../../../angular-commons/services/layout
 import {CommonDocListItemComponent} from '../../../../frontend-cdoc-commons/components/cdoc-list-item/cdoc-list-item.component';
 import {PDocContentUtils} from '../../services/pdoc-contentutils.service';
 import {PDocRoutingService} from '../../services/pdoc-routing.service';
+import removeMarkdown from 'markdown-to-text';
 
 @Component({
     selector: 'app-pdoc-list-item',
@@ -39,6 +40,26 @@ export class PDocListItemComponent extends CommonDocListItemComponent {
 
     private getUrl(pdoc: PDocRecord): string {
         return this.cdocRoutingService.getShowUrl(pdoc, '');
+    }
+
+    getDesc(): string {
+        if (!this.record || (this.record.descMd === undefined && this.record.teaser === undefined)) {
+            return;
+        }
+
+        if (this.record.teaser) {
+            return this.record.teaser;
+        }
+
+        if (this.record.descTxt) {
+            return this.record.descTxt;
+        }
+
+        if (this.record.descMd) {
+            return removeMarkdown(this.record.descMd);
+        }
+
+        return '';
     }
 
 }

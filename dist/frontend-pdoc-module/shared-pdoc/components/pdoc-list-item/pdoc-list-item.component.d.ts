@@ -15,4 +15,5 @@ export declare class PDocListItemComponent extends CommonDocListItemComponent {
     submitShow(pdoc: PDocRecord): boolean;
     getShowUrl(info: PDocRecord): SafeUrl;
     private getUrl;
+    getDesc(): string;
 }

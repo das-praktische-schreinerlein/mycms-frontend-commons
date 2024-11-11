@@ -27,6 +27,7 @@ import { Layout, LayoutService } from '../../../../angular-commons/services/layo
 import { CommonDocListItemComponent } from '../../../../frontend-cdoc-commons/components/cdoc-list-item/cdoc-list-item.component';
 import { PDocContentUtils } from '../../services/pdoc-contentutils.service';
 import { PDocRoutingService } from '../../services/pdoc-routing.service';
+import removeMarkdown from 'markdown-to-text';
 var PDocListItemComponent = /** @class */ (function (_super) {
     __extends(PDocListItemComponent, _super);
     function PDocListItemComponent(contentUtils, cd, layoutService, sanitizer, cdocRoutingService) {
@@ -46,6 +47,21 @@ var PDocListItemComponent = /** @class */ (function (_super) {
     };
     PDocListItemComponent.prototype.getUrl = function (pdoc) {
         return this.cdocRoutingService.getShowUrl(pdoc, '');
+    };
+    PDocListItemComponent.prototype.getDesc = function () {
+        if (!this.record || (this.record.descMd === undefined && this.record.teaser === undefined)) {
+            return;
+        }
+        if (this.record.teaser) {
+            return this.record.teaser;
+        }
+        if (this.record.descTxt) {
+            return this.record.descTxt;
+        }
+        if (this.record.descMd) {
+            return removeMarkdown(this.record.descMd);
+        }
+        return '';
     };
     __decorate([
         Input(),

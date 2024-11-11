@@ -12,7 +12,7 @@
                     <app-pdoc-info [record]="record"></app-pdoc-info>
                     <app-cdoc-changelog [record]="record" [small]="true"></app-cdoc-changelog>
                 </div>
-                <p class="card-text teaser">{{record.teaser || record.descTxt || record.descMd | truncate : 300 }}</p>
+                <p class="card-text teaser">{{ this.getDesc() | truncate : 300 }}</p>
                 <a class="btn btn-navigation pull-right" [href]="getShowUrl(record)" (click)="submitShow(record)" i18n="link pdoc listitem|Link show-pdoc listitem@@a.pdocListItem.show">mehr...</a>
                 <app-pdoc-action [record]="listItem.currentRecord" [type]="'actionTagsBig'" (actionTagEvent)="onActionTagEvent($event)"></app-pdoc-action>
             </div>
