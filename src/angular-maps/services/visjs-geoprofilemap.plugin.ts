@@ -84,9 +84,19 @@ export class VisJsGeoProfileMap {
         for (const dataSource of dataSources) {
             let promise: Promise<GeoElement[]>;
             if (dataSource.src !== undefined && dataSource.src.length > 20) {
-                promise = dataSource.geoLoader.loadData(dataSource.src, options);
+                promise = dataSource.geoLoader.loadData(dataSource.src, options).then((result) => {
+                    return Promise.resolve(result)
+                }).catch((error) => {
+                    console.error('error while loading data from src', dataSource.src, error);
+                    return Promise.resolve(undefined);
+                });
             } else {
-                promise = dataSource.geoLoader.loadDataFromUrl(dataSource.url, options);
+                promise = dataSource.geoLoader.loadDataFromUrl(dataSource.url, options).then((result) => {
+                    return Promise.resolve(result)
+                }).catch((error) => {
+                    console.error('error while loading data from url', dataSource.url, error);
+                    return Promise.resolve(undefined);
+                });
             }
 
             promises.push(promise);

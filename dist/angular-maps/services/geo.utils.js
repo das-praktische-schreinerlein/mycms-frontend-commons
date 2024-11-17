@@ -4,7 +4,7 @@ var GeoUtils = /** @class */ (function () {
     function GeoUtils() {
     }
     GeoUtils.createLatLng = function (lat, lng, alt, time) {
-        return time !== undefined
+        return time !== undefined && time !== null
             ? new LatLngTime(Number(lat), Number(lng), Number(alt), time)
             : alt !== undefined
                 ? new LatLng(Number(lat), Number(lng), Number(alt))

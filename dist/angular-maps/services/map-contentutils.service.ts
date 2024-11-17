@@ -21,7 +21,7 @@ export class MapContentUtils {
                                    trackColors?: TrackColors): ChartElement[] {
         const trackUrl = record.gpsTrackBasefile;
 
-        const isImage = (record.type === 'IMAGE' || record.type === 'VIDEO');
+        const isImage = (record.type === 'IMAGE' || record.type === 'VIDEO' || record.type === 'POI');
         const showTrack = ((trackUrl !== undefined && trackUrl.length > 0)
             || (record.gpsTrackSrc !== undefined && record.gpsTrackSrc !== null && record.gpsTrackSrc.length > 0))
             && (!isImage || showImageTrackAndGeoPos);

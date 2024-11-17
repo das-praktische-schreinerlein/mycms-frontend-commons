@@ -4,6 +4,7 @@
 
 ## 6.2.0
 - improved pdoc-list: render markdown to text
+- fixed pasing nd rendering of profile-maps
 
 ### new features
 - none
@@ -12,7 +13,7 @@
 - improved pdoc-list: render markdown to text
 
 ### bug fixes
-- none
+- fixed pasing nd rendering of profile-maps
 
 ### breaking changes
 - none

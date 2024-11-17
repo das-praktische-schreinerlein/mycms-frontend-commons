@@ -156,10 +156,10 @@ var VisJsProfileChartComponent = /** @class */ (function (_super) {
                     '"color":"Red",' +
                     '"colorIdx":"0",' +
                     '"type":"' + chartElement.type + '",' +
-                    '"header":["lat","lon","ele"],' +
+                    '"header":["lat","lon","ele","time"],' +
                     '"records":[[' + point.lat + ', ' + point.lng
                     + ', ' + (point.alt ? point.alt : 0)
-                    + ', ' + (point['time'] ? '"' + point['time'] + '"' : undefined) + ']]}}';
+                    + ', ' + (point['time'] ? '"' + point['time'] + '"' : 'null') + ']]}}';
                 loader = this.jsonLoader;
             }
             else {

@@ -67,16 +67,29 @@ var VisJsGeoProfileMap = /** @class */ (function () {
     VisJsGeoProfileMap.prototype.addData = function (dataSources, element, options) {
         var me = this;
         var promises = [];
-        for (var _i = 0, dataSources_1 = dataSources; _i < dataSources_1.length; _i++) {
-            var dataSource = dataSources_1[_i];
+        var _loop_1 = function (dataSource) {
             var promise = void 0;
             if (dataSource.src !== undefined && dataSource.src.length > 20) {
-                promise = dataSource.geoLoader.loadData(dataSource.src, options);
+                promise = dataSource.geoLoader.loadData(dataSource.src, options).then(function (result) {
+                    return Promise.resolve(result);
+                }).catch(function (error) {
+                    console.error('error while loading data from src', dataSource.src, error);
+                    return Promise.resolve(undefined);
+                });
             }
             else {
-                promise = dataSource.geoLoader.loadDataFromUrl(dataSource.url, options);
+                promise = dataSource.geoLoader.loadDataFromUrl(dataSource.url, options).then(function (result) {
+                    return Promise.resolve(result);
+                }).catch(function (error) {
+                    console.error('error while loading data from url', dataSource.url, error);
+                    return Promise.resolve(undefined);
+                });
             }
             promises.push(promise);
+        };
+        for (var _i = 0, dataSources_1 = dataSources; _i < dataSources_1.length; _i++) {
+            var dataSource = dataSources_1[_i];
+            _loop_1(dataSource);
         }
         return Promise.all(promises).then(function onLoaded(arrGeoElements) {
             var allGeoElements = [];

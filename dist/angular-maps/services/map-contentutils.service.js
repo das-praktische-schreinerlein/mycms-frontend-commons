@@ -20,7 +20,7 @@ var MapContentUtils = /** @class */ (function () {
     };
     MapContentUtils.prototype.createChartElementForDocRecord = function (record, code, showImageTrackAndGeoPos, trackColors) {
         var trackUrl = record.gpsTrackBasefile;
-        var isImage = (record.type === 'IMAGE' || record.type === 'VIDEO');
+        var isImage = (record.type === 'IMAGE' || record.type === 'VIDEO' || record.type === 'POI');
         var showTrack = ((trackUrl !== undefined && trackUrl.length > 0)
             || (record.gpsTrackSrc !== undefined && record.gpsTrackSrc !== null && record.gpsTrackSrc.length > 0))
             && (!isImage || showImageTrackAndGeoPos);

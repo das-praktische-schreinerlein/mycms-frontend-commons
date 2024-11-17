@@ -3,7 +3,7 @@ import {GeoElement, GeoElementType, LatLngTime} from './geo.parser';
 
 export class GeoUtils  {
     public static createLatLng(lat: string | number, lng: string | number, alt?: number, time?: Date): LatLng {
-        return time !== undefined
+        return time !== undefined && time !== null
             ? new LatLngTime(Number(lat), Number(lng), Number(alt), time)
             : alt !== undefined
                 ? new LatLng(Number(lat), Number(lng), Number(alt))
