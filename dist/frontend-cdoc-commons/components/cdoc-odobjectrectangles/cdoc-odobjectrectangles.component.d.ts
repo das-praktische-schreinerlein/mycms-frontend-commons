@@ -5,5 +5,6 @@ export declare class CommonDocODObjectRectanglesComponent extends CommonDocODObj
     protected appService: GenericAppService;
     protected cd: ChangeDetectorRef;
     width: number;
+    rotateFlag?: boolean;
     constructor(appService: GenericAppService, cd: ChangeDetectorRef);
 }

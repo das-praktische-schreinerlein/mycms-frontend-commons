@@ -13,6 +13,9 @@ export class CommonDocODObjectRectanglesComponent extends CommonDocODObjectDetai
     @Input()
     public width: number;
 
+    @Input()
+    public rotateFlag? = false;
+
     constructor(protected appService: GenericAppService, protected cd: ChangeDetectorRef) {
         super(appService, cd);
     }

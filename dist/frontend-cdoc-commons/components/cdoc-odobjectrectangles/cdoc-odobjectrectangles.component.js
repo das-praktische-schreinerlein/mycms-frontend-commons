@@ -29,12 +29,17 @@ var CommonDocODObjectRectanglesComponent = /** @class */ (function (_super) {
         var _this = _super.call(this, appService, cd) || this;
         _this.appService = appService;
         _this.cd = cd;
+        _this.rotateFlag = false;
         return _this;
     }
     __decorate([
         Input(),
         __metadata("design:type", Number)
     ], CommonDocODObjectRectanglesComponent.prototype, "width", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Object)
+    ], CommonDocODObjectRectanglesComponent.prototype, "rotateFlag", void 0);
     CommonDocODObjectRectanglesComponent = __decorate([
         Component({
             selector: 'app-cdoc-odobjectrectangles',

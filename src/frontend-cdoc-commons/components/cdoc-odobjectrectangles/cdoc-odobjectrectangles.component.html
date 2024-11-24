@@ -1,9 +1,9 @@
 <ng-container *ngFor="let object of objects">
     <div class="objects-rectangle"
          [ngClass]="'odimgobject-state-' + object.state"
-         [ngStyle]="{'top': (width / object.imgWidth * (object.objY || 0)) + 'px',
-                                                'left': (width / object.imgWidth * (object.objX || 0)) + 'px',
-                                                'width': (width / object.imgWidth * object.objWidth) + 'px',
-                                                'height': (width / object.imgWidth * object.objHeight) + 'px'}">{{ showKeyColumn === true ? object.name + ' ' + object.key : object.name}}
+         [ngStyle]="{'top': width / (!rotateFlag ? object.imgWidth / (object.objY || 0) : object.imgHeight / (object.objX || 0)) + 'px',
+                                        'left': width / (!rotateFlag ? object.imgWidth / (object.objX || 0) : object.imgHeight / ((object.imgHeight - object.objY - object.objHeight) || 0)) + 'px',
+                                        'width': (width / (!rotateFlag ? object.imgWidth / object.objWidth : object.imgHeight / object.objHeight)) + 'px',
+                                        'height': (width / (!rotateFlag ? object.imgWidth / object.objHeight : object.imgHeight / object.objWidth)) + 'px'}">{{ object.name + ' ' + object.key}}
     </div>
 </ng-container>
