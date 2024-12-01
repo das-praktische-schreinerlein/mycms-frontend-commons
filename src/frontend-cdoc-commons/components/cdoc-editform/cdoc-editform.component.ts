@@ -15,6 +15,7 @@ import {CommonDocDataService} from '@dps/mycms-commons/dist/search-commons/servi
 import {CommonDocContentUtils, KeywordSuggestion} from '../../services/cdoc-contentutils.service';
 import {CommonDocSearchFormUtils} from '../../services/cdoc-searchform-utils.service';
 import {AbstractInlineComponent} from '../../../angular-commons/components/inline.component';
+import {GenericSearchOptions} from '@dps/mycms-commons/dist/search-commons/services/generic-search.service';
 
 export enum CommonDocEditformComponentForwardMode {
     SHOW, BACK_TO_SEARCH, BACK_TO_SOURCE_SHOW, BACK_TO_SOURCE_EDIT
@@ -54,6 +55,12 @@ export abstract class CommonDocEditformComponent<R extends CommonDocRecord, F ex
     protected stringBeanFieldConfig = {};
     protected stringArrayBeanFieldConfig = {};
     protected inputSuggestionValueConfig = {};
+    protected searchOptions: GenericSearchOptions = {
+        loadDetailsMode: 'none',
+        showFacets: true,
+        loadTrack: false,
+        showForm: false
+    }
 
     modalEditOutletName: string;
     modalShowOutletName: string;
@@ -387,12 +394,7 @@ export abstract class CommonDocEditformComponent<R extends CommonDocRecord, F ex
     protected fillFacets(record: R): void {
         const me = this;
         const searchForm = this.cdocDataService.newSearchForm({type: record.type});
-        this.cdocDataService.search(searchForm,
-            {
-                showFacets: true, // []
-                loadTrack: false,
-                showForm: false
-            }).then(function doneSearch(cdocSearchResult: S) {
+        this.cdocDataService.search(searchForm, this.searchOptions).then(function doneSearch(cdocSearchResult: S) {
             me.updateOptionValues(cdocSearchResult);
             me.updateSuggestionValues(cdocSearchResult);
             me.cd.markForCheck();

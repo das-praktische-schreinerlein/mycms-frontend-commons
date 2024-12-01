@@ -36,6 +36,7 @@ import {SearchFormUtils} from '../../angular-commons/services/searchform-utils.s
 import {AngularHtmlService} from '../../angular-commons/services/angular-html.service';
 import {CommonDocSearchFormUtils} from '../services/cdoc-searchform-utils.service';
 import {Location} from '@angular/common';
+import {GenericSearchOptions} from '@dps/mycms-commons/dist/search-commons/services/generic-search.service';
 
 export interface CommonDocSearchpageComponentConfig extends CommonPageComponentComponentConfig {
     maxAllowedM3UExportItems: number;
@@ -66,6 +67,12 @@ export abstract class CommonDocSearchpageComponent<R extends CommonDocRecord, F 
     availableCreateActionType: String;
     availableCreateActionTypes: String[] = [];
     defaultLayoutPerType = {};
+    searchOptions: GenericSearchOptions = {
+        loadDetailsMode: undefined,
+        showFacets: true,
+        loadTrack: true,
+        showForm: true
+    }
 
     multiActionSelectValueMap = new Map<string, IMultiSelectOption[]>();
 
@@ -549,11 +556,7 @@ export abstract class CommonDocSearchpageComponent<R extends CommonDocRecord, F 
         this.showLoadingSpinner = true;
         this.cd.markForCheck();
         const me = this;
-        this.cdocDataService.search(this.searchForm, {
-            showFacets: true,
-            loadTrack: true,
-            showForm: true
-        }).then(function doneSearch(cdocSearchResult) {
+        this.cdocDataService.search(this.searchForm, this.searchOptions).then(function doneSearch(cdocSearchResult) {
             if (cdocSearchResult === undefined) {
                 // console.log('empty searchResult', mdocSearchResult);
                 me.initialized = true;

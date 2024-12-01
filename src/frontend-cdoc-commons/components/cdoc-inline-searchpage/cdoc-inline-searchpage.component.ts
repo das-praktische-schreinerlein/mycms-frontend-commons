@@ -19,6 +19,7 @@ import {CommonDocSearchFormUtils} from '../../services/cdoc-searchform-utils.ser
 import {CommonDocMultiActionManager} from '../../services/cdoc-multiaction.manager';
 import {AngularHtmlService} from '../../../angular-commons/services/angular-html.service';
 import {BeanUtils} from '@dps/mycms-commons/dist/commons/utils/bean.utils';
+import {GenericSearchOptions} from '@dps/mycms-commons/dist/search-commons/services/generic-search.service';
 
 export interface CommonDocInlineSearchpageComponentConfig {
     maxAllowedM3UExportItems: number;
@@ -29,6 +30,14 @@ export class CommonDocInlineSearchpageComponent <R extends CommonDocRecord, F ex
     implements OnInit, OnDestroy {
     protected initialized = false;
     protected appStateSubscription: Subscription;
+    protected searchOptions: GenericSearchOptions = {
+        loadDetailsMode: undefined,
+        showFacets: false,
+        loadTrack: false,
+        showForm: false
+    }
+    protected defaultLoadDetailsMode = undefined;
+
 
     showLoadingSpinner = false;
     Layout = Layout;
@@ -63,6 +72,9 @@ export class CommonDocInlineSearchpageComponent <R extends CommonDocRecord, F ex
 
     @Input()
     public loadTrack ? = false;
+
+    @Input()
+    public loadDetailsMode ?: string = undefined;
 
     @Input()
     public showOnlyIfRecordsFound = true;
@@ -298,12 +310,13 @@ export class CommonDocInlineSearchpageComponent <R extends CommonDocRecord, F ex
         const me = this;
         me.showLoadingSpinner = true;
         me.cd.markForCheck();
-        this.cdocDataService.search(this.searchForm,
-            {
-                showFacets: this.showForm || this.loadFacets || (this.showTimetable ? ['week_is', 'month_is'] : false),
-                loadTrack: this.loadTrack,
-                showForm: this.showForm
-         }).then(function doneSearch(cdocSearchResult) {
+
+        this.searchOptions.loadDetailsMode = this.loadDetailsMode || this.defaultLoadDetailsMode;
+        this.searchOptions.showFacets = this.showForm || this.loadFacets || (this.showTimetable ? ['week_is', 'month_is'] : false);
+        this.searchOptions.loadTrack = this.loadTrack;
+        this.searchOptions. showForm = this.showForm;
+
+        this.cdocDataService.search(this.searchForm, this.searchOptions).then(function doneSearch(cdocSearchResult) {
             me.showLoadingSpinner = false;
 
             if (cdocSearchResult === undefined) {
