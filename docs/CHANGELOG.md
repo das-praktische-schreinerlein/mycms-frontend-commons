@@ -6,6 +6,7 @@
 - improved pdoc-list: render markdown to text
 - fixed parsing and rendering of profile-maps
 - fixed rendering of object-rectangles for portrait-format-pictures
+- set parameter loadDetailsMode of GenericSearchOptions on server-requests of cdoc-components
 
 ### new features
 - none
@@ -18,7 +19,7 @@
 - fixed rendering of object-rectangles for portrait-format-pictures
 
 ### breaking changes
-- none
+- set parameter loadDetailsMode of GenericSearchOptions on server-requests of cdoc-components
 
 
 ## 6.1.0 (2024-05-12)
