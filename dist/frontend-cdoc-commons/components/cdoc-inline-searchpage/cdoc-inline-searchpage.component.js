@@ -44,6 +44,13 @@ var CommonDocInlineSearchpageComponent = /** @class */ (function (_super) {
         _this.cdocSearchFormUtils = cdocSearchFormUtils;
         _this.multiActionManager = multiActionManager;
         _this.initialized = false;
+        _this.searchOptions = {
+            loadDetailsMode: undefined,
+            showFacets: false,
+            loadTrack: false,
+            showForm: false
+        };
+        _this.defaultLoadDetailsMode = undefined;
         _this.showLoadingSpinner = false;
         _this.Layout = Layout;
         _this.m3uExportAvailable = false;
@@ -58,6 +65,7 @@ var CommonDocInlineSearchpageComponent = /** @class */ (function (_super) {
         _this.showResultList = false;
         _this.loadFacets = false;
         _this.loadTrack = false;
+        _this.loadDetailsMode = undefined;
         _this.showOnlyIfRecordsFound = true;
         _this.showMultiActionHeader = false;
         _this.baseSearchUrl = 'cdoc/';
@@ -218,11 +226,11 @@ var CommonDocInlineSearchpageComponent = /** @class */ (function (_super) {
         var me = this;
         me.showLoadingSpinner = true;
         me.cd.markForCheck();
-        this.cdocDataService.search(this.searchForm, {
-            showFacets: this.showForm || this.loadFacets || (this.showTimetable ? ['week_is', 'month_is'] : false),
-            loadTrack: this.loadTrack,
-            showForm: this.showForm
-        }).then(function doneSearch(cdocSearchResult) {
+        this.searchOptions.loadDetailsMode = this.loadDetailsMode || this.defaultLoadDetailsMode;
+        this.searchOptions.showFacets = this.showForm || this.loadFacets || (this.showTimetable ? ['week_is', 'month_is'] : false);
+        this.searchOptions.loadTrack = this.loadTrack;
+        this.searchOptions.showForm = this.showForm;
+        this.cdocDataService.search(this.searchForm, this.searchOptions).then(function doneSearch(cdocSearchResult) {
             me.showLoadingSpinner = false;
             if (cdocSearchResult === undefined) {
                 // console.log('empty searchResult', cdocSearchResult);
@@ -294,6 +302,10 @@ var CommonDocInlineSearchpageComponent = /** @class */ (function (_super) {
         Input(),
         __metadata("design:type", Object)
     ], CommonDocInlineSearchpageComponent.prototype, "loadTrack", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", String)
+    ], CommonDocInlineSearchpageComponent.prototype, "loadDetailsMode", void 0);
     __decorate([
         Input(),
         __metadata("design:type", Object)

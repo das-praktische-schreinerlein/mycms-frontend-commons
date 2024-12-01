@@ -57,6 +57,12 @@ var CommonDocSearchpageComponent = /** @class */ (function (_super) {
         _this.maxAllowedM3UExportItems = -1;
         _this.availableCreateActionTypes = [];
         _this.defaultLayoutPerType = {};
+        _this.searchOptions = {
+            loadDetailsMode: undefined,
+            showFacets: true,
+            loadTrack: true,
+            showForm: true
+        };
         _this.multiActionSelectValueMap = new Map();
         _this.searchForm = cdocDataService.newSearchForm({});
         _this.searchResult = cdocDataService.newSearchResult(_this.searchForm, 0, [], new Facets());
@@ -456,11 +462,7 @@ var CommonDocSearchpageComponent = /** @class */ (function (_super) {
         this.showLoadingSpinner = true;
         this.cd.markForCheck();
         var me = this;
-        this.cdocDataService.search(this.searchForm, {
-            showFacets: true,
-            loadTrack: true,
-            showForm: true
-        }).then(function doneSearch(cdocSearchResult) {
+        this.cdocDataService.search(this.searchForm, this.searchOptions).then(function doneSearch(cdocSearchResult) {
             if (cdocSearchResult === undefined) {
                 // console.log('empty searchResult', mdocSearchResult);
                 me.initialized = true;

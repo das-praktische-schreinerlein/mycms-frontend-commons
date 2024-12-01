@@ -82,6 +82,12 @@ var GenericCommonDocAssignFormComponent = /** @class */ (function (_super) {
         _this.facetValues = {};
         _this.newId = undefined;
         _this.newIdNullFlag = undefined;
+        _this.searchOptions = {
+            loadDetailsMode: 'none',
+            showFacets: true,
+            loadTrack: false,
+            showForm: false
+        };
         return _this;
     }
     GenericCommonDocAssignFormComponent.prototype.ngOnInit = function () {
@@ -239,11 +245,8 @@ var GenericCommonDocAssignFormComponent = /** @class */ (function (_super) {
         me.checkFormAndSetValidFlag();
         var searchForm = me.cdocDataService.createDefaultSearchForm();
         searchForm.type = searchType;
-        me.cdocDataService.search(searchForm, {
-            showFacets: facetNames,
-            loadTrack: false,
-            showForm: false
-        }).then(function doneSearch(cdocSearchResult) {
+        me.searchOptions.showFacets = facetNames;
+        me.cdocDataService.search(searchForm, me.searchOptions).then(function doneSearch(cdocSearchResult) {
             me.processFacetResults(searchForm, cdocSearchResult);
             me.checkFormAndSetValidFlag();
         }).catch(function errorSearch(reason) {

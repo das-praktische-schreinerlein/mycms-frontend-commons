@@ -11,6 +11,7 @@ import { ActionTagFormResultType } from '../cdoc-actiontags/cdoc-actiontags.comp
 import { CommonDocDataService } from '@dps/mycms-commons/dist/search-commons/services/cdoc-data.service';
 import { CommonDocSearchForm } from '@dps/mycms-commons/dist/search-commons/model/forms/cdoc-searchform';
 import { CommonDocSearchResult } from '@dps/mycms-commons/dist/search-commons/model/container/cdoc-searchresult';
+import { GenericSearchOptions } from '@dps/mycms-commons/dist/search-commons/services/generic-search.service';
 export interface GenericCommonDocAssignFormComponentResultType extends ActionTagFormResultType {
     action: string;
     ids: string[];
@@ -42,6 +43,7 @@ export declare abstract class GenericCommonDocAssignFormComponent<R extends Comm
     protected facetValues: {};
     protected newId: string;
     protected newIdNullFlag: boolean;
+    protected searchOptions: GenericSearchOptions;
     protected constructor(fb: FormBuilder, activeModal: NgbActiveModal, cd: ChangeDetectorRef, searchFormUtils: SearchFormUtils, cdocDataService: D, toastr: ToastrService);
     ngOnInit(): void;
     onCancel(): boolean;

@@ -24,6 +24,7 @@ import { IMultiSelectOption } from 'angular-2-dropdown-multiselect';
 import { SearchFormUtils } from '../../angular-commons/services/searchform-utils.service';
 import { CommonDocSearchFormUtils } from '../services/cdoc-searchform-utils.service';
 import { Location } from '@angular/common';
+import { GenericSearchOptions } from '@dps/mycms-commons/dist/search-commons/services/generic-search.service';
 export interface CommonDocSearchpageComponentConfig extends CommonPageComponentComponentConfig {
     maxAllowedM3UExportItems: number;
     availableCreateActionTypes: String[];
@@ -68,6 +69,7 @@ export declare abstract class CommonDocSearchpageComponent<R extends CommonDocRe
     availableCreateActionType: String;
     availableCreateActionTypes: String[];
     defaultLayoutPerType: {};
+    searchOptions: GenericSearchOptions;
     multiActionSelectValueMap: Map<string, IMultiSelectOption[]>;
     constructor(route: ActivatedRoute, commonRoutingService: CommonRoutingService, errorResolver: ErrorResolver, cdocDataService: D, searchFormConverter: GenericSearchFormConverter<F>, cdocRoutingService: CommonDocRoutingService, toastr: ToastrService, pageUtils: PageUtils, cd: ChangeDetectorRef, trackingProvider: GenericTrackingService, appService: GenericAppService, platformService: PlatformService, layoutService: LayoutService, searchFormUtils: SearchFormUtils, cdocSearchFormUtils: CommonDocSearchFormUtils, multiActionManager: CommonDocMultiActionManager<R, F, S, D>, environment: CommonEnvironment, location: Location);
     protected configureProcessing(): void;

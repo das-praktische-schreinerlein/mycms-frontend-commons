@@ -4,6 +4,7 @@ import {CommonDocDataService} from '@dps/mycms-commons/dist/search-commons/servi
 import {CommonDocSearchForm} from '@dps/mycms-commons/dist/search-commons/model/forms/cdoc-searchform';
 import {CommonDocSearchResult} from '@dps/mycms-commons/dist/search-commons/model/container/cdoc-searchresult';
 import {StringUtils} from '@dps/mycms-commons/dist/commons/utils/string.utils';
+import {GenericSearchOptions} from '@dps/mycms-commons/dist/search-commons/services/generic-search.service';
 
 // tslint:disable-next-line:no-empty-interface
 export interface CommonDocListSuggesterEnvironment extends SuggesterEnvironment {
@@ -24,6 +25,12 @@ export abstract class CommonDocListSuggesterService<R extends CommonDocRecord, F
         [/ \d\d\.\d\d\.\d\d\d\d/, ''],
         [/mit .*? (durch |von |ab |bei |in |nach )+/, '$1']
     ];
+    protected searchOptions: GenericSearchOptions = {
+        loadDetailsMode: 'none',
+        showFacets: false,
+        loadTrack: false,
+        showForm: false
+    }
 
     protected constructor(protected commonDocDataService: CommonDocDataService<R, F, S>) {
     }
@@ -35,11 +42,7 @@ export abstract class CommonDocListSuggesterService<R extends CommonDocRecord, F
             const searchForm = this.createListItemSearchForm(form, environment);
             this.appendFiltersToListItemSearchForm(searchForm, form, environment);
 
-            return this.commonDocDataService.search(searchForm, {
-                showForm: false,
-                loadTrack: false,
-                showFacets: false
-            }).then(searchResult => {
+            return this.commonDocDataService.search(searchForm, this.searchOptions).then(searchResult => {
                 if (searchResult && searchResult.recordCount > 0) {
                     listItems = searchResult.currentRecords;
                 }

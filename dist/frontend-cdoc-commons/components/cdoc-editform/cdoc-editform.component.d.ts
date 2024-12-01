@@ -13,6 +13,7 @@ import { CommonDocDataService } from '@dps/mycms-commons/dist/search-commons/ser
 import { CommonDocContentUtils, KeywordSuggestion } from '../../services/cdoc-contentutils.service';
 import { CommonDocSearchFormUtils } from '../../services/cdoc-searchform-utils.service';
 import { AbstractInlineComponent } from '../../../angular-commons/components/inline.component';
+import { GenericSearchOptions } from '@dps/mycms-commons/dist/search-commons/services/generic-search.service';
 export declare enum CommonDocEditformComponentForwardMode {
     SHOW = 0,
     BACK_TO_SEARCH = 1,
@@ -52,6 +53,7 @@ export declare abstract class CommonDocEditformComponent<R extends CommonDocReco
     protected stringBeanFieldConfig: {};
     protected stringArrayBeanFieldConfig: {};
     protected inputSuggestionValueConfig: {};
+    protected searchOptions: GenericSearchOptions;
     modalEditOutletName: string;
     modalShowOutletName: string;
     optionsSelect: {};

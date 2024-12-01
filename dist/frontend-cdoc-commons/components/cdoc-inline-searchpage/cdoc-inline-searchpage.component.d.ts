@@ -16,6 +16,7 @@ import { IMultiSelectOption } from 'angular-2-dropdown-multiselect';
 import { SearchFormUtils } from '../../../angular-commons/services/searchform-utils.service';
 import { CommonDocSearchFormUtils } from '../../services/cdoc-searchform-utils.service';
 import { CommonDocMultiActionManager } from '../../services/cdoc-multiaction.manager';
+import { GenericSearchOptions } from '@dps/mycms-commons/dist/search-commons/services/generic-search.service';
 export interface CommonDocInlineSearchpageComponentConfig {
     maxAllowedM3UExportItems: number;
 }
@@ -34,6 +35,8 @@ export declare class CommonDocInlineSearchpageComponent<R extends CommonDocRecor
     protected multiActionManager: CommonDocMultiActionManager<R, F, S, D>;
     protected initialized: boolean;
     protected appStateSubscription: Subscription;
+    protected searchOptions: GenericSearchOptions;
+    protected defaultLoadDetailsMode: any;
     showLoadingSpinner: boolean;
     Layout: typeof Layout;
     m3uExportAvailable: boolean;
@@ -51,6 +54,7 @@ export declare class CommonDocInlineSearchpageComponent<R extends CommonDocRecor
     showResultList?: boolean;
     loadFacets?: boolean;
     loadTrack?: boolean;
+    loadDetailsMode?: string;
     showOnlyIfRecordsFound: boolean;
     showMultiActionHeader?: boolean;
     label: string;

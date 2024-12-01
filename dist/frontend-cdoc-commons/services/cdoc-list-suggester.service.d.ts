@@ -3,6 +3,7 @@ import { CommonDocRecord } from '@dps/mycms-commons/dist/search-commons/model/re
 import { CommonDocDataService } from '@dps/mycms-commons/dist/search-commons/services/cdoc-data.service';
 import { CommonDocSearchForm } from '@dps/mycms-commons/dist/search-commons/model/forms/cdoc-searchform';
 import { CommonDocSearchResult } from '@dps/mycms-commons/dist/search-commons/model/container/cdoc-searchresult';
+import { GenericSearchOptions } from '@dps/mycms-commons/dist/search-commons/services/generic-search.service';
 export interface CommonDocListSuggesterEnvironment extends SuggesterEnvironment {
 }
 export interface CommonDocListSuggesterConfiguration {
@@ -15,6 +16,7 @@ export interface CommonDocListSuggesterConfiguration {
 export declare abstract class CommonDocListSuggesterService<R extends CommonDocRecord, F extends CommonDocSearchForm, S extends CommonDocSearchResult<R, F>> implements SuggesterService {
     protected commonDocDataService: CommonDocDataService<R, F, S>;
     protected DEFAULT_NAME_REPLACEMENTS: [RegExp, string][];
+    protected searchOptions: GenericSearchOptions;
     protected constructor(commonDocDataService: CommonDocDataService<R, F, S>);
     suggest(form: {}, environment: CommonDocListSuggesterEnvironment): Promise<string>;
     protected abstract getConfiguration(environment: CommonDocListSuggesterEnvironment): CommonDocListSuggesterConfiguration;

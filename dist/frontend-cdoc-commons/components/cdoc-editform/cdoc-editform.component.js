@@ -57,6 +57,12 @@ var CommonDocEditformComponent = /** @class */ (function (_super) {
         _this.stringBeanFieldConfig = {};
         _this.stringArrayBeanFieldConfig = {};
         _this.inputSuggestionValueConfig = {};
+        _this.searchOptions = {
+            loadDetailsMode: 'none',
+            showFacets: true,
+            loadTrack: false,
+            showForm: false
+        };
         _this.optionsSelect = {};
         _this.inputSuggestionValues = {};
         _this.CommonDocEditformComponentForwardMode = CommonDocEditformComponentForwardMode;
@@ -308,11 +314,7 @@ var CommonDocEditformComponent = /** @class */ (function (_super) {
     CommonDocEditformComponent.prototype.fillFacets = function (record) {
         var me = this;
         var searchForm = this.cdocDataService.newSearchForm({ type: record.type });
-        this.cdocDataService.search(searchForm, {
-            showFacets: true,
-            loadTrack: false,
-            showForm: false
-        }).then(function doneSearch(cdocSearchResult) {
+        this.cdocDataService.search(searchForm, this.searchOptions).then(function doneSearch(cdocSearchResult) {
             me.updateOptionValues(cdocSearchResult);
             me.updateSuggestionValues(cdocSearchResult);
             me.cd.markForCheck();

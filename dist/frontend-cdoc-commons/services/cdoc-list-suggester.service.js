@@ -6,6 +6,12 @@ var CommonDocListSuggesterService = /** @class */ (function () {
             [/ \d\d\.\d\d\.\d\d\d\d/, ''],
             [/mit .*? (durch |von |ab |bei |in |nach )+/, '$1']
         ];
+        this.searchOptions = {
+            loadDetailsMode: 'none',
+            showFacets: false,
+            loadTrack: false,
+            showForm: false
+        };
     }
     CommonDocListSuggesterService.prototype.suggest = function (form, environment) {
         var _this = this;
@@ -14,11 +20,7 @@ var CommonDocListSuggesterService = /** @class */ (function () {
             var listItems = [];
             var searchForm = _this.createListItemSearchForm(form, environment);
             _this.appendFiltersToListItemSearchForm(searchForm, form, environment);
-            return _this.commonDocDataService.search(searchForm, {
-                showForm: false,
-                loadTrack: false,
-                showFacets: false
-            }).then(function (searchResult) {
+            return _this.commonDocDataService.search(searchForm, _this.searchOptions).then(function (searchResult) {
                 if (searchResult && searchResult.recordCount > 0) {
                     listItems = searchResult.currentRecords;
                 }

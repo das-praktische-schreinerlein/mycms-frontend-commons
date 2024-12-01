@@ -13,6 +13,7 @@ import {ActionTagFormResultType} from '../cdoc-actiontags/cdoc-actiontags.compon
 import {CommonDocDataService} from '@dps/mycms-commons/dist/search-commons/services/cdoc-data.service';
 import {CommonDocSearchForm} from '@dps/mycms-commons/dist/search-commons/model/forms/cdoc-searchform';
 import {CommonDocSearchResult} from '@dps/mycms-commons/dist/search-commons/model/container/cdoc-searchresult';
+import {GenericSearchOptions} from '@dps/mycms-commons/dist/search-commons/services/generic-search.service';
 
 export interface GenericCommonDocAssignFormComponentResultType extends ActionTagFormResultType {
     action: string;
@@ -82,6 +83,13 @@ export abstract class GenericCommonDocAssignFormComponent<R extends CommonDocRec
     protected facetValues = {};
     protected newId: string = undefined;
     protected newIdNullFlag: boolean = undefined;
+    protected searchOptions: GenericSearchOptions = {
+        loadDetailsMode: 'none',
+        showFacets: true,
+        loadTrack: false,
+        showForm: false
+    }
+
 
     protected constructor(public fb: FormBuilder, public activeModal: NgbActiveModal, protected cd: ChangeDetectorRef,
                 protected searchFormUtils: SearchFormUtils, protected cdocDataService: D,
@@ -275,11 +283,9 @@ export abstract class GenericCommonDocAssignFormComponent<R extends CommonDocRec
 
         const searchForm: F = me.cdocDataService.createDefaultSearchForm();
         searchForm.type = searchType;
-        me.cdocDataService.search(searchForm, {
-                showFacets: facetNames,
-                loadTrack: false,
-                showForm: false
-            }).then(function doneSearch(cdocSearchResult) {
+        me.searchOptions.showFacets = facetNames;
+
+        me.cdocDataService.search(searchForm, me.searchOptions).then(function doneSearch(cdocSearchResult) {
                 me.processFacetResults(searchForm, cdocSearchResult);
                 me.checkFormAndSetValidFlag();
         }).catch(function errorSearch(reason) {
