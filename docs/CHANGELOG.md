@@ -2,7 +2,7 @@
  
 # Versions
 
-## 6.2.0
+## 6.2.0 (2025-01-27)
 - improved pdoc-list: render markdown to text
 - fixed parsing and rendering of profile-maps
 - fixed rendering of object-rectangles for portrait-format-pictures
@@ -20,7 +20,7 @@
 
 ### breaking changes
 - set parameter loadDetailsMode of GenericSearchOptions on server-requests of cdoc-components
-
+- add "markdown-to-text" as requirement for pdoc-list
 
 ## 6.1.0 (2024-05-12)
 - frontend: improved text-editor + pdf-support
