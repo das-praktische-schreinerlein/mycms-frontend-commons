@@ -25,6 +25,12 @@ export class CommonDocKeywordsComponent extends AbstractInlineComponent implemen
     @Input()
     public record: CommonDocRecord;
 
+    @Input()
+    public splitByRowCount ? = 0;
+
+    @Input()
+    public maxColumnsToSplit ? = 1;
+
     constructor(protected appService: GenericAppService, protected cd: ChangeDetectorRef) {
         super(cd);
     }

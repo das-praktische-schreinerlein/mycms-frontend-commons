@@ -35,6 +35,12 @@ export class CommonDocTagsStateComponent extends AbstractInlineComponent {
     @Input()
     public prefix = '';
 
+    @Input()
+    public splitByRowCount ? = 0;
+
+    @Input()
+    public maxColumnsToSplit ? = 1;
+
     @Output()
     public unsetTag: EventEmitter<string> = new EventEmitter();
 

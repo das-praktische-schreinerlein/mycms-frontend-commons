@@ -34,6 +34,8 @@ var CommonDocKeywordsComponent = /** @class */ (function (_super) {
         _this.blacklist = [];
         _this.keywordsConfig = [];
         _this.possiblePrefixes = [];
+        _this.splitByRowCount = 0;
+        _this.maxColumnsToSplit = 1;
         return _this;
     }
     CommonDocKeywordsComponent.prototype.ngOnInit = function () {
@@ -76,6 +78,14 @@ var CommonDocKeywordsComponent = /** @class */ (function (_super) {
         Input(),
         __metadata("design:type", CommonDocRecord)
     ], CommonDocKeywordsComponent.prototype, "record", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Object)
+    ], CommonDocKeywordsComponent.prototype, "splitByRowCount", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Object)
+    ], CommonDocKeywordsComponent.prototype, "maxColumnsToSplit", void 0);
     CommonDocKeywordsComponent = __decorate([
         Component({
             selector: 'app-cdoc-keywords',

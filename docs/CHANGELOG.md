@@ -3,14 +3,16 @@
 # Versions
 
 ## 6.3.0
-- none
+- components: added optional autosplit to columns to tags and optimized layout
+- maps: use german openstreetmap-style
 
 ### new features
 - none
 
 ### improvements
-- none
-
+- components: added optional autosplit to columns to tags and optimized layout
+- maps: use german openstreetmap-style
+ 
 ### bug fixes
 - none
 

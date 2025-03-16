@@ -15,6 +15,8 @@ export declare class CommonDocKeywordsComponent extends AbstractInlineComponent 
     keywordsConfig: StructuredKeyword[];
     possiblePrefixes: any[];
     record: CommonDocRecord;
+    splitByRowCount?: number;
+    maxColumnsToSplit?: number;
     constructor(appService: GenericAppService, cd: ChangeDetectorRef);
     ngOnInit(): void;
     protected getComponentConfig(config: {}): CommonDocKeywordsComponentConfig;

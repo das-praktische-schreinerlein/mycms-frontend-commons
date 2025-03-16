@@ -28,8 +28,8 @@ export class LeafletMapComponent extends AbstractMapComponent {
     mapHeight = '390px';
 
     // create the tile layer with correct attribution
-    private osmUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
-    private osmAttrib = 'Map data © <a href="https://openstreetmap.org">OpenStreetMap</a> contributors';
+    private osmUrl = 'https://tile.openstreetmap.de/{z}/{x}/{y}.png';
+    private osmAttrib = 'Map data © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
     private osm = new TileLayer(this.osmUrl, {
         minZoom: 1, maxZoom: 16,
         attribution: this.osmAttrib

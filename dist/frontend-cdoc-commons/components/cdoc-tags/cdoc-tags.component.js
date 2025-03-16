@@ -23,6 +23,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input } from '@angular/core';
 import { CommonDocContentUtils } from '../../services/cdoc-contentutils.service';
 import { AbstractInlineComponent } from '../../../angular-commons/components/inline.component';
+import { ObjectUtils } from '@dps/mycms-commons/dist/commons/utils/object.utils';
 var CommonDocTagsComponent = /** @class */ (function (_super) {
     __extends(CommonDocTagsComponent, _super);
     function CommonDocTagsComponent(contentUtils, cd) {
@@ -32,6 +33,8 @@ var CommonDocTagsComponent = /** @class */ (function (_super) {
         _this.tagsKats = [];
         _this.possiblePrefixes = [];
         _this.blacklist = [];
+        _this.splitByRowCount = 0;
+        _this.maxColumnsToSplit = 1;
         return _this;
     }
     CommonDocTagsComponent.prototype.updateData = function () {
@@ -39,7 +42,8 @@ var CommonDocTagsComponent = /** @class */ (function (_super) {
         if (this.tags === undefined) {
             return;
         }
-        this.tagsKats = this.contentUtils.getStructuredKeywords(this.tagsConfig, this.tags.split(', '), this.blacklist, this.possiblePrefixes);
+        var tags = this.contentUtils.getStructuredKeywords(this.tagsConfig, this.tags.split(', '), this.blacklist, this.possiblePrefixes);
+        this.tagsKats = ObjectUtils.splitArrayIntoTable(tags, this.splitByRowCount, this.maxColumnsToSplit);
     };
     __decorate([
         Input(),
@@ -57,6 +61,14 @@ var CommonDocTagsComponent = /** @class */ (function (_super) {
         Input(),
         __metadata("design:type", Object)
     ], CommonDocTagsComponent.prototype, "blacklist", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Object)
+    ], CommonDocTagsComponent.prototype, "splitByRowCount", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Object)
+    ], CommonDocTagsComponent.prototype, "maxColumnsToSplit", void 0);
     CommonDocTagsComponent = __decorate([
         Component({
             selector: 'app-cdoc-tags',

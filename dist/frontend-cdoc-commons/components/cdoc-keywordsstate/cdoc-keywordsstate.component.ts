@@ -35,6 +35,15 @@ export class CommonDocKeywordsStateComponent extends AbstractInlineComponent imp
     @Input()
     public suggestions?: string[] = [];
 
+    @Input()
+    public tagsEnvironment?: {} = {};
+
+    @Input()
+    public splitByRowCount ? = 0;
+
+    @Input()
+    public maxColumnsToSplit ? = 1;
+
     @Output()
     public unsetKeyword: EventEmitter<string> = new EventEmitter();
 
@@ -43,9 +52,6 @@ export class CommonDocKeywordsStateComponent extends AbstractInlineComponent imp
 
     @Output()
     public tagsFound: EventEmitter<StructuredKeywordState[]> = new EventEmitter();
-
-    @Input()
-    public tagsEnvironment?: {} = {};
 
     constructor(protected appService: GenericAppService, protected cd: ChangeDetectorRef) {
         super(cd);

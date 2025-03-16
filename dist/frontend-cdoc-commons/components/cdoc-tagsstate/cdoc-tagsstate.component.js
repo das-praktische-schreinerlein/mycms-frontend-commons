@@ -35,6 +35,8 @@ var CommonDocTagsStateComponent = /** @class */ (function (_super) {
         _this.tagsEnvironment = {};
         _this.possiblePrefixes = [];
         _this.prefix = '';
+        _this.splitByRowCount = 0;
+        _this.maxColumnsToSplit = 1;
         _this.unsetTag = new EventEmitter();
         _this.setTag = new EventEmitter();
         _this.tagsFound = new EventEmitter();
@@ -74,6 +76,14 @@ var CommonDocTagsStateComponent = /** @class */ (function (_super) {
         Input(),
         __metadata("design:type", Object)
     ], CommonDocTagsStateComponent.prototype, "prefix", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Object)
+    ], CommonDocTagsStateComponent.prototype, "splitByRowCount", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Object)
+    ], CommonDocTagsStateComponent.prototype, "maxColumnsToSplit", void 0);
     __decorate([
         Output(),
         __metadata("design:type", EventEmitter)

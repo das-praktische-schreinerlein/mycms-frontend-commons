@@ -36,8 +36,8 @@ var LeafletMapComponent = /** @class */ (function (_super) {
         var _this = _super.call(this, http) || this;
         _this.mapHeight = '390px';
         // create the tile layer with correct attribution
-        _this.osmUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
-        _this.osmAttrib = 'Map data © <a href="https://openstreetmap.org">OpenStreetMap</a> contributors';
+        _this.osmUrl = 'https://tile.openstreetmap.de/{z}/{x}/{y}.png';
+        _this.osmAttrib = 'Map data © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
         _this.osm = new TileLayer(_this.osmUrl, {
             minZoom: 1, maxZoom: 16,
             attribution: _this.osmAttrib

@@ -34,10 +34,12 @@ var CommonDocKeywordsStateComponent = /** @class */ (function (_super) {
         _this.keywordsConfig = [];
         _this.prefix = '';
         _this.suggestions = [];
+        _this.tagsEnvironment = {};
+        _this.splitByRowCount = 0;
+        _this.maxColumnsToSplit = 1;
         _this.unsetKeyword = new EventEmitter();
         _this.setKeyword = new EventEmitter();
         _this.tagsFound = new EventEmitter();
-        _this.tagsEnvironment = {};
         return _this;
     }
     CommonDocKeywordsStateComponent.prototype.ngOnInit = function () {
@@ -91,6 +93,18 @@ var CommonDocKeywordsStateComponent = /** @class */ (function (_super) {
         __metadata("design:type", Array)
     ], CommonDocKeywordsStateComponent.prototype, "suggestions", void 0);
     __decorate([
+        Input(),
+        __metadata("design:type", Object)
+    ], CommonDocKeywordsStateComponent.prototype, "tagsEnvironment", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Object)
+    ], CommonDocKeywordsStateComponent.prototype, "splitByRowCount", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Object)
+    ], CommonDocKeywordsStateComponent.prototype, "maxColumnsToSplit", void 0);
+    __decorate([
         Output(),
         __metadata("design:type", EventEmitter)
     ], CommonDocKeywordsStateComponent.prototype, "unsetKeyword", void 0);
@@ -102,10 +116,6 @@ var CommonDocKeywordsStateComponent = /** @class */ (function (_super) {
         Output(),
         __metadata("design:type", EventEmitter)
     ], CommonDocKeywordsStateComponent.prototype, "tagsFound", void 0);
-    __decorate([
-        Input(),
-        __metadata("design:type", Object)
-    ], CommonDocKeywordsStateComponent.prototype, "tagsEnvironment", void 0);
     CommonDocKeywordsStateComponent = __decorate([
         Component({
             selector: 'app-cdoc-keywordsstate',

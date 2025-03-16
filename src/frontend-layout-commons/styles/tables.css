@@ -3,6 +3,10 @@ div.techvaluetable {
     border: 1px solid #bfccd3;
     vertical-align: top;
 }
+div.techvaluetable .column {
+    display: inline-block;
+    vertical-align: top;
+}
 div.techvaluetable .entry {
     font-size: 0.75rem;
     vertical-align: top;
@@ -20,14 +24,14 @@ div.techvaluetable .entry .value {
     vertical-align: top;
 }
 
-@media(max-width: 399px) {
+@media(max-width: 460px) {
     div.techvaluetable .entry .value {
-        max-width: 180px;
+        max-width: 160px;
     }
 }
-@media(min-width: 430px) and (max-width: 767px) {
+@media(min-width: 461px) and (max-width: 767px) {
     div.techvaluetable .entry .value {
-        max-width: 300px;
+        max-width: 280px;
     }
 }
 @media(min-width: 768px) {

@@ -4,11 +4,13 @@ import { AbstractInlineComponent } from '../../../angular-commons/components/inl
 export declare class CommonDocTagsComponent extends AbstractInlineComponent {
     private contentUtils;
     protected cd: ChangeDetectorRef;
-    tagsKats: StructuredKeyword[];
+    tagsKats: StructuredKeyword[][];
     tags: string;
     tagsConfig: StructuredKeyword[];
     possiblePrefixes: any[];
     blacklist: any[];
+    splitByRowCount?: number;
+    maxColumnsToSplit?: number;
     constructor(contentUtils: CommonDocContentUtils, cd: ChangeDetectorRef);
     protected updateData(): void;
 }

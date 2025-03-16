@@ -15,10 +15,12 @@ export declare class CommonDocKeywordsStateComponent extends AbstractInlineCompo
     prefix: string;
     keywords: string;
     suggestions?: string[];
+    tagsEnvironment?: {};
+    splitByRowCount?: number;
+    maxColumnsToSplit?: number;
     unsetKeyword: EventEmitter<string>;
     setKeyword: EventEmitter<string>;
     tagsFound: EventEmitter<StructuredKeywordState[]>;
-    tagsEnvironment?: {};
     constructor(appService: GenericAppService, cd: ChangeDetectorRef);
     ngOnInit(): void;
     doSetKeyword(keyword: string): void;

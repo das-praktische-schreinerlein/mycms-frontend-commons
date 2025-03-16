@@ -12,6 +12,8 @@ export declare class CommonDocTagsStateComponent extends AbstractInlineComponent
     tagsEnvironment?: {};
     possiblePrefixes: any[];
     prefix: string;
+    splitByRowCount?: number;
+    maxColumnsToSplit?: number;
     unsetTag: EventEmitter<string>;
     setTag: EventEmitter<string>;
     tagsFound: EventEmitter<StructuredKeywordState[]>;
