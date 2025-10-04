@@ -2,7 +2,7 @@
  
 # Versions
 
-## 6.3.0
+## 6.3.0 (2025-10-04)
 - components: added optional autosplit to columns to tags and optimized layout
 - maps: use german openstreetmap-style
 
